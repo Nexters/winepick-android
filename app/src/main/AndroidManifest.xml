@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="kr.co.nexters.winepick" >
+    xmlns:tools="http://schemas.android.com/tools"
+    package="kr.co.nexters.winepick">
+
+    <uses-permission android:name="android.permission.INTERNET" />                                  <!-- 인터넷 기능 -->
 
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
-        <activity android:name=".MainActivity" >
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
+        tools:targetApi="m">
+        <activity android:name=".example.java.normal.JavaDefaultActivity">
+        </activity>
+        <activity android:name="kr.co.nexters.wine.example.kotlin.normal.KotlinDefaultActivity">
+        </activity>
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
