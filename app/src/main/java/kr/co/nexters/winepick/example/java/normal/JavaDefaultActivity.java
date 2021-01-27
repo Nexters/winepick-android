@@ -45,6 +45,7 @@ public class JavaDefaultActivity extends BaseActivity<ActivityJavaDefaultBinding
             Toast.makeText(this, binding.tvTitle.getText(), Toast.LENGTH_SHORT).show();
         });
 
+
         // 특정 프레임 레이아웃에 Fragment 을 로딩하기 위해 사용하는 로직 (Fragment 사용안할 시 필요 없는 코드)
         BaseFragmentKt.navigate(new JavaDefaultFragment(), getSupportFragmentManager(), binding.flFragment.getId());
     }
