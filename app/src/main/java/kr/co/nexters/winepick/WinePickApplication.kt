@@ -1,4 +1,4 @@
-package kr.co.nexters.wine
+package kr.co.nexters.winepick
 
 import android.app.Application
 

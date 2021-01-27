@@ -17,7 +17,11 @@
         tools:targetApi="m">
         <activity android:name=".example.java.normal.JavaDefaultActivity">
         </activity>
-        <activity android:name="kr.co.nexters.wine.example.kotlin.normal.KotlinDefaultActivity">
+        <activity android:name=".example.kotlin.normal.KotlinDefaultActivity">
+        </activity>
+        <activity android:name=".example.java.viewmodel.JavaViewModelActivity">
+        </activity>
+        <activity android:name=".example.kotlin.viewmodel.KotlinViewModelActivity">
         </activity>
         <activity android:name=".MainActivity">
             <intent-filter>

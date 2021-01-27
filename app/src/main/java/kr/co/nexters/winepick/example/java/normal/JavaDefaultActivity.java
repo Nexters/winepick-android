@@ -8,6 +8,7 @@ import org.jetbrains.annotations.Nullable;
 import kr.co.nexters.winepick.R;
 import kr.co.nexters.winepick.base.BaseActivity;
 import kr.co.nexters.winepick.base.BaseFragmentKt;
+import kr.co.nexters.winepick.base.BaseViewModel;
 import kr.co.nexters.winepick.databinding.ActivityJavaDefaultBinding;
 
 /**
@@ -21,6 +22,15 @@ public class JavaDefaultActivity extends BaseActivity<ActivityJavaDefaultBinding
      */
     public JavaDefaultActivity() {
         super(R.layout.activity_java_default);
+    }
+
+    /**
+     * ViewModel 을 사용하지 않으므로 null 리턴
+     */
+    @Nullable
+    @Override
+    protected BaseViewModel getViewModel() {
+        return null;
     }
 
     @Override

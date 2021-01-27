@@ -1,9 +1,10 @@
-package kr.co.nexters.wine.example.kotlin.normal
+package kr.co.nexters.winepick.example.kotlin.normal
 
 import android.os.Bundle
 import android.widget.Toast
 import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.base.BaseActivity
+import kr.co.nexters.winepick.base.BaseViewModel
 import kr.co.nexters.winepick.base.navigate
 import kr.co.nexters.winepick.databinding.ActivityKotlinDefaultBinding
 
@@ -15,6 +16,9 @@ import kr.co.nexters.winepick.databinding.ActivityKotlinDefaultBinding
 class KotlinDefaultActivity : BaseActivity<ActivityKotlinDefaultBinding>(
     R.layout.activity_kotlin_default
 ) {
+    override val viewModel: BaseViewModel?
+        get() = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.apply {

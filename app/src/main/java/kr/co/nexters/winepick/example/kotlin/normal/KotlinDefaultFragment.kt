@@ -1,10 +1,11 @@
-package kr.co.nexters.wine.example.kotlin.normal
+package kr.co.nexters.winepick.example.kotlin.normal
 
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.base.BaseFragment
+import kr.co.nexters.winepick.base.BaseViewModel
 import kr.co.nexters.winepick.databinding.FragmentKotlinDefaultBinding
 
 /**
@@ -15,6 +16,9 @@ import kr.co.nexters.winepick.databinding.FragmentKotlinDefaultBinding
 class KotlinDefaultFragment : BaseFragment<FragmentKotlinDefaultBinding>(
     R.layout.fragment_kotlin_default
 ) {
+    override val viewModel: BaseViewModel?
+        get() = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

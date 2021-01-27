@@ -18,6 +18,8 @@ import androidx.lifecycle.ViewModelProvider
  * @param layoutResId 레이아웃 Resource Id
  *
  * @property binding 바인딩 객체
+ * @property viewModel ViewModel 객체
+ * @property viewModelFactory ViewModel 을 사용하기 위해 반드시 필요한 ViewModelFactory
  *
  * @since v1.0.0 / 2020.01.28
  */
@@ -25,6 +27,11 @@ abstract class BaseFragment<B : ViewDataBinding>(
     @LayoutRes val layoutResId: Int
 ) : Fragment() {
     lateinit var binding: B
+
+    protected abstract val viewModel: BaseViewModel?
+    val viewModelFactory: ViewModelProvider.AndroidViewModelFactory by lazy {
+        ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
