@@ -92,6 +92,7 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: '9.0.4'
+          java-package: jdk
 
       # CI 2. 현재 시간 설정 및 출력 내용 확인
       # [Get Current Time](https://github.com/marketplace/actions/get-current-time)
