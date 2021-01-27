@@ -31,7 +31,7 @@ public class JavaViewModelActivity extends BaseActivity<ActivityJavaViewmodelBin
      */
     @NotNull
     @Override
-    protected JavaViewModel getViewModel() {
+    public JavaViewModel getViewModel() {
         return new ViewModelProvider(this, getViewModelFactory()).get(JavaViewModel.class);
     }
 

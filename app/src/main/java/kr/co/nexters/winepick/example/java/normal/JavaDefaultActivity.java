@@ -29,7 +29,7 @@ public class JavaDefaultActivity extends BaseActivity<ActivityJavaDefaultBinding
      */
     @Nullable
     @Override
-    protected BaseViewModel getViewModel() {
+    public BaseViewModel getViewModel() {
         return null;
     }
 

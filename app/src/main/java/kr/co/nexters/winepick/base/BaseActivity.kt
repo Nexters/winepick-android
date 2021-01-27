@@ -23,7 +23,7 @@ abstract class BaseActivity<B : ViewDataBinding>(
 ) : AppCompatActivity() {
     protected lateinit var binding: B
 
-    protected abstract val viewModel: BaseViewModel?
+    abstract val viewModel: BaseViewModel?
     val viewModelFactory: ViewModelProvider.AndroidViewModelFactory by lazy {
         ViewModelProvider.AndroidViewModelFactory.getInstance(application)
     }
