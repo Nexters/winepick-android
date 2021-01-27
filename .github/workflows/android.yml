@@ -117,7 +117,7 @@ jobs:
 
       # CI 4. 프로젝트 빌드
       - name: CI 5. 프로젝트 빌드
-        run: ./gradlew compileDevelopDebugUnitTestJavaWithJavac
+        run: ./gradlew compiledebugUnitTestJavaWithJavac
 
       # CI 5. 프로젝트 Unit 테스트
       # CI 5-1. Push 일 경우 실행
