@@ -1,4 +1,4 @@
-package kr.co.nexters.winepick.feature.riflockle7
+package kr.co.nexters.winepick.deprecated
 
 import android.util.Log
 import io.ktor.client.*

@@ -1,4 +1,4 @@
-package kr.co.nexters.winepick.feature.riflockle7
+package kr.co.nexters.winepick.test
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

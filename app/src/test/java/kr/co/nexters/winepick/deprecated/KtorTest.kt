@@ -1,14 +1,14 @@
-package kr.co.nexters.winepick.riflockle7
+package kr.co.nexters.winepick.deprecated
 
 import io.ktor.client.request.*
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.buildJsonObject
-import kr.co.nexters.winepick.feature.riflockle7.DummyDetailMovie
-import kr.co.nexters.winepick.feature.riflockle7.DummyMovieCommentResponse
-import kr.co.nexters.winepick.feature.riflockle7.DummyMovieResponse
-import kr.co.nexters.winepick.feature.riflockle7.KtorModules.BASE_URL
-import kr.co.nexters.winepick.feature.riflockle7.KtorModules.createHttpClient
+import kr.co.nexters.winepick.test.DummyDetailMovie
+import kr.co.nexters.winepick.test.DummyMovieCommentResponse
+import kr.co.nexters.winepick.test.DummyMovieResponse
+import kr.co.nexters.winepick.deprecated.KtorModules.BASE_URL
+import kr.co.nexters.winepick.deprecated.KtorModules.createHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody
 import okio.Buffer

@@ -1,4 +1,4 @@
-package kr.co.nexters.winepick.feature.riflockle7
+package kr.co.nexters.winepick.util
 
 /**
  * kotlinx.serialization 을 사용하기 위해 만들어둔 모듈

@@ -1,8 +1,8 @@
 package kr.co.nexters.winepick.network
 
-import kr.co.nexters.winepick.feature.riflockle7.DummyDetailMovie
-import kr.co.nexters.winepick.feature.riflockle7.DummyMovieCommentResponse
-import kr.co.nexters.winepick.feature.riflockle7.DummyMovieResponse
+import kr.co.nexters.winepick.test.DummyDetailMovie
+import kr.co.nexters.winepick.test.DummyMovieCommentResponse
+import kr.co.nexters.winepick.test.DummyMovieResponse
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.Body

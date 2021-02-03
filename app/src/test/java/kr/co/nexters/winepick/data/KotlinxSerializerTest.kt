@@ -1,11 +1,11 @@
-package kr.co.nexters.winepick.riflockle7
+package kr.co.nexters.winepick.data
 
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import kr.co.nexters.winepick.feature.riflockle7.DummyMovie
-import kr.co.nexters.winepick.feature.riflockle7.getDummy
+import kr.co.nexters.winepick.test.DummyMovie
+import kr.co.nexters.winepick.test.getDummy
 import org.junit.Assert
 import org.junit.Test
 

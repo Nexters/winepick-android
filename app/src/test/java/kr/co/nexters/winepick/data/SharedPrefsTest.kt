@@ -1,9 +1,9 @@
-package kr.co.nexters.winepick.riflockle7
+package kr.co.nexters.winepick.data
 
 import androidx.test.core.app.ApplicationProvider
 import kotlinx.coroutines.runBlocking
 import kr.co.nexters.winepick.WinePickApplication
-import kr.co.nexters.winepick.feature.riflockle7.SharedPrefs
+import kr.co.nexters.winepick.util.SharedPrefs
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before

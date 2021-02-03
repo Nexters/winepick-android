@@ -1,7 +1,7 @@
 @file:UseContextualSerialization(URL::class)
 @file:UseSerializers(URLSerializer::class)
 
-package kr.co.nexters.winepick.feature.riflockle7
+package kr.co.nexters.winepick.test
 
 import kotlinx.serialization.*
 import kotlinx.serialization.descriptors.PrimitiveKind

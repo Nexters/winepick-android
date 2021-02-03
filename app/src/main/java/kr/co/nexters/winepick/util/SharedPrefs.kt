@@ -1,4 +1,4 @@
-package kr.co.nexters.winepick.feature.riflockle7
+package kr.co.nexters.winepick.util
 
 import android.app.Activity
 import android.content.SharedPreferences
