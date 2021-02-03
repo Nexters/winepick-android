@@ -20,4 +20,6 @@ data class DummyMovieCommentResponse(
     val movie_id: String,
     @SerialName("contents")
     val contents: String,
+    @SerialName("id")
+    val id: String,
 )
