@@ -27,7 +27,7 @@ data class DummyMovie(
     @SerialName(value = "reservation_grade")
     val reservationGrade: Int,
     @SerialName(value = "reservation_rate")
-    val reservationRate: Double,
+    val reservationRate: Float,
     @SerialName(value = "thumb")
     val thumb: URL?,
     @SerialName(value = "title")
@@ -51,7 +51,7 @@ fun getDummy(): DummyMovie = DummyMovie(
     grade = 15,
     id = "5a54be21e8a71d136fb536a1",
     reservationGrade = 6,
-    reservationRate = 61.69,
+    reservationRate = 61.69f,
     thumb = URL("https://raw.githubusercontent.com/riflockle7/ref/master/1.%20ImageRef/padakpadak/6.jpg"),
     title = "꾼",
     userRating = 5,

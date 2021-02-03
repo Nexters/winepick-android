@@ -1,4 +1,4 @@
-package kr.co.nexters.winepick.kotlinxSerializer
+package kr.co.nexters.winepick.riflockle7
 
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.decodeFromString
