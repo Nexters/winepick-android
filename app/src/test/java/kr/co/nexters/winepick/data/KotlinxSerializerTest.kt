@@ -4,8 +4,8 @@ import kotlinx.serialization.KSerializer
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import kr.co.nexters.winepick.test.DummyMovie
-import kr.co.nexters.winepick.test.getDummy
+import kr.co.nexters.winepick.data.model.DummyMovie
+import kr.co.nexters.winepick.data.model.getDummy
 import org.junit.Assert
 import org.junit.Test
 

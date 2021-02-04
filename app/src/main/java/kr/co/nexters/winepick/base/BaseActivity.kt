@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
+import kotlinx.coroutines.*
 
 /**
  * BaseActivity
@@ -23,6 +24,14 @@ abstract class BaseActivity<B : ViewDataBinding>(
 ) : AppCompatActivity() {
     protected lateinit var binding: B
 
+    /**
+     * [Dispatchers.Main]을 기본으로 사용하고
+     * [onDestroy]에서 [cancel][CoroutineScope.cancel] 되는 코루틴 스코프
+     *
+     * @see [Coroutine 공식문서 Coroutine scope](https://kotlinlang.org/docs/reference/coroutines/coroutine-context-and-dispatchers.html#coroutine-scope)
+     */
+    val uiScope: CoroutineScope = MainScope()
+
     abstract val viewModel: BaseViewModel?
     val viewModelFactory: ViewModelProvider.AndroidViewModelFactory by lazy {
         ViewModelProvider.AndroidViewModelFactory.getInstance(application)
@@ -31,5 +40,13 @@ abstract class BaseActivity<B : ViewDataBinding>(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, layoutResId)
+
+        /** [uiScope] 사용 예 */
+        uiScope.launch { }
+    }
+
+    override fun onDestroy() {
+        uiScope.cancel()
+        super.onDestroy()
     }
 }

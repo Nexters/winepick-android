@@ -1,4 +1,4 @@
-package kr.co.nexters.winepick.test
+package kr.co.nexters.winepick.data.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

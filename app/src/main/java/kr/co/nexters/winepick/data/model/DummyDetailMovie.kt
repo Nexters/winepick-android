@@ -1,7 +1,7 @@
 @file:UseContextualSerialization(URL::class)
 @file:UseSerializers(URLSerializer::class)
 
-package kr.co.nexters.winepick.test
+package kr.co.nexters.winepick.data.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

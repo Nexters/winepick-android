@@ -1,8 +1,9 @@
 package kr.co.nexters.winepick.network
 
-import kr.co.nexters.winepick.test.DummyDetailMovie
-import kr.co.nexters.winepick.test.DummyMovieCommentResponse
-import kr.co.nexters.winepick.test.DummyMovieResponse
+import io.reactivex.rxjava3.core.Single
+import kr.co.nexters.winepick.data.model.DummyDetailMovie
+import kr.co.nexters.winepick.data.response.DummyMovieCommentResponse
+import kr.co.nexters.winepick.data.response.DummyMovieResponse
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.Body
@@ -22,6 +23,16 @@ interface TestService {
         @Query("order_type") orderType: Int
     ): Call<DummyMovieResponse>
 
+    @GET("movies/")
+    fun getMoviesRx(
+        @Query("order_type") orderType: Int
+    ): Single<DummyMovieResponse>
+
+    @GET("movie/")
+    fun getMovieRx(
+        @Query("id") id: String
+    ): Single<DummyDetailMovie>
+
     @GET("movie/")
     fun getMovie(
         @Query("id") id: String
@@ -31,4 +42,9 @@ interface TestService {
     fun postComment(
         @Body data: RequestBody
     ): Call<DummyMovieCommentResponse>
+
+    @POST("comment/")
+    fun postCommentRx(
+        @Body data: RequestBody
+    ): Single<DummyMovieCommentResponse>
 }
