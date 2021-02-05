@@ -3,7 +3,8 @@ package kr.co.nexters.winepick.util
 import android.app.Activity
 import android.content.SharedPreferences
 import androidx.annotation.VisibleForTesting
-import kr.co.nexters.winepick.BuildConfig
+import androidx.viewbinding.BuildConfig
+import com.airbnb.lottie.BuildConfig.APPLICATION_ID
 import kr.co.nexters.winepick.WinePickApplication
 import org.jetbrains.annotations.NotNull
 
@@ -15,7 +16,7 @@ import org.jetbrains.annotations.NotNull
 object SharedPrefs {
     private val sharedPreferences: SharedPreferences by lazy {
         WinePickApplication.appContext.getSharedPreferences(
-            BuildConfig.APPLICATION_ID,
+            com.airbnb.lottie.BuildConfig.APPLICATION_ID,
             Activity.MODE_PRIVATE
         )
     }
