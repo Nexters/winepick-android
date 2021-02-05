@@ -2,7 +2,7 @@ package kr.co.nexters.winepick.example.kotlin.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import kr.co.nexters.winepick.base.BaseViewModel
+import kr.co.nexters.winepick.ui.base.BaseViewModel
 
 /**
  * Kotlin 에서 사용하는 ViewModel 예

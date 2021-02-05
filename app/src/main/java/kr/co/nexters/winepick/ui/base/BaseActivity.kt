@@ -1,4 +1,4 @@
-package kr.co.nexters.winepick.base
+package kr.co.nexters.winepick.ui.base
 
 import android.os.Bundle
 import androidx.annotation.LayoutRes

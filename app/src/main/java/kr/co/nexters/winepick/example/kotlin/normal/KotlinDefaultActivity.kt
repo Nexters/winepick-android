@@ -3,9 +3,9 @@ package kr.co.nexters.winepick.example.kotlin.normal
 import android.os.Bundle
 import android.widget.Toast
 import kr.co.nexters.winepick.R
-import kr.co.nexters.winepick.base.BaseActivity
-import kr.co.nexters.winepick.base.BaseViewModel
-import kr.co.nexters.winepick.base.navigate
+import kr.co.nexters.winepick.ui.base.BaseActivity
+import kr.co.nexters.winepick.ui.base.BaseViewModel
+import kr.co.nexters.winepick.ui.base.navigate
 import kr.co.nexters.winepick.databinding.ActivityKotlinDefaultBinding
 
 /**

@@ -9,8 +9,8 @@ import org.jetbrains.annotations.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 import kr.co.nexters.winepick.BR;
 import kr.co.nexters.winepick.R;
-import kr.co.nexters.winepick.base.BaseActivity;
-import kr.co.nexters.winepick.base.BaseFragmentKt;
+import kr.co.nexters.winepick.ui.base.BaseActivity;
+import kr.co.nexters.winepick.ui.base.BaseFragmentKt;
 import kr.co.nexters.winepick.databinding.ActivityJavaViewmodelBinding;
 
 /**

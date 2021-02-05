@@ -1,4 +1,4 @@
-package kr.co.nexters.winepick.base
+package kr.co.nexters.winepick.ui.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

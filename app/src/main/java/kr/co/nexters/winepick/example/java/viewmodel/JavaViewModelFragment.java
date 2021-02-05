@@ -10,7 +10,7 @@ import org.jetbrains.annotations.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 import kr.co.nexters.winepick.BR;
 import kr.co.nexters.winepick.R;
-import kr.co.nexters.winepick.base.BaseFragment;
+import kr.co.nexters.winepick.ui.base.BaseFragment;
 import kr.co.nexters.winepick.databinding.FragmentJavaViewmodelBinding;
 
 /**

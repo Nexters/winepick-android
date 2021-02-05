@@ -6,9 +6,9 @@ import android.widget.Toast;
 import org.jetbrains.annotations.Nullable;
 
 import kr.co.nexters.winepick.R;
-import kr.co.nexters.winepick.base.BaseActivity;
-import kr.co.nexters.winepick.base.BaseFragmentKt;
-import kr.co.nexters.winepick.base.BaseViewModel;
+import kr.co.nexters.winepick.ui.base.BaseActivity;
+import kr.co.nexters.winepick.ui.base.BaseFragmentKt;
+import kr.co.nexters.winepick.ui.base.BaseViewModel;
 import kr.co.nexters.winepick.databinding.ActivityJavaDefaultBinding;
 
 /**
