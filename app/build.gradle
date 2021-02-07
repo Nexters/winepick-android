@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlinx-serialization'
+apply plugin: 'dagger.hilt.android.plugin'
 
 android {
     compileSdkVersion 30
@@ -42,6 +43,7 @@ android {
     dataBinding {
         enabled = true
     }
+
 }
 
 dependencies {
@@ -96,8 +98,8 @@ dependencies {
     implementation("io.ktor:ktor-client-serialization-jvm:1.5.1")
     implementation("io.ktor:ktor-client-logging-jvm:1.5.1")
 
-    //lottie
-    implementation 'com.airbnb.android:lottie:3.4.1'
+//    //lottie
+//    implementation 'com.airbnb.android:lottie:3.4.1'
 
     //timber
     implementation 'com.jakewharton.timber:timber:4.7.1'
@@ -107,5 +109,18 @@ dependencies {
     kapt 'com.github.bumptech.glide:compiler:4.11.0'
     implementation "com.github.bumptech.glide:okhttp3-integration:4.11.0"
     kapt "android.arch.lifecycle:compiler:1.1.1"
+
+    implementation group: 'com.kakao.sdk', name: 'usermgmt', version: '1.30.0'
+
+    implementation "com.kakao.sdk:v2-user:2.3.0" // 카카오 로그인
+    implementation "com.kakao.sdk:v2-talk:2.3.0" // 친구, 메시지(카카오톡)
+    implementation "com.kakao.sdk:v2-story:2.3.0" // 카카오스토리
+    implementation "com.kakao.sdk:v2-link:2.3.0" // 메시지(카카오링크)
+    implementation "com.kakao.sdk:v2-navi:2.3.0" // 카카오내비
+
+
+    // dagger - hilt
+    implementation "com.google.dagger:hilt-android:2.28-alpha"
+    kapt "com.google.dagger:hilt-android-compiler:2.28-alpha"
 
 }

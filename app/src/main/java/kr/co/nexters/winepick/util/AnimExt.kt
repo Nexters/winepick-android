@@ -2,8 +2,6 @@ package kr.co.nexters.winepick.util
 
 import android.view.View
 import android.view.animation.AlphaAnimation
-import com.uniview.allconnect.util.setGone
-import com.uniview.allconnect.util.setVisible
 
 fun View.fadeIn(mills: Int) {
     AlphaAnimation(0f, 1f).apply {
