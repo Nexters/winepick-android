@@ -28,15 +28,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data android:host="oauth"
-                    android:scheme="kakao052379413c8be96782d448c5c38bef44" />
-            </intent-filter>
-        </activity>
         <activity android:name=".example.java.normal.JavaDefaultActivity"></activity>
         <activity android:name=".example.kotlin.normal.KotlinDefaultActivity"></activity>
         <activity android:name=".example.java.viewmodel.JavaViewModelActivity"></activity>
