@@ -18,18 +18,16 @@ import timber.log.Timber
 @HiltAndroidApp
 class WinePickApplication : Application() {
     companion object {
-        lateinit var appContext : Context
-        private var instance : WinePickApplication? = null
+        var appContext : WinePickApplication? = null
 
         fun getGlobalApplicationContext(): WinePickApplication? {
-            checkNotNull(instance) { "This Application does not inherit com.kakao.GlobalApplication" }
-            return instance
+            checkNotNull(appContext) { "This Application does not inherit com.kakao.GlobalApplication" }
+            return appContext
         }
     }
     override fun onCreate() {
         super.onCreate()
         Timber.plant(Timber.DebugTree())
-        instance = this
         appContext = this
         KakaoSDK.init(KakaoSDKApapter())
 

@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull
  */
 object SharedPrefs {
     private val sharedPreferences: SharedPreferences by lazy {
-        WinePickApplication.appContext.getSharedPreferences(
+        WinePickApplication.appContext!!.getSharedPreferences(
             kr.co.nexters.winepick.BuildConfig.APPLICATION_ID,
             Activity.MODE_PRIVATE
         )
