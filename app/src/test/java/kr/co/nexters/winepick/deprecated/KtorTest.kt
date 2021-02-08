@@ -4,6 +4,7 @@ import io.ktor.client.request.*
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.buildJsonObject
+import kr.co.nexters.winepick.base.AndroidBaseTest
 import kr.co.nexters.winepick.data.model.DummyDetailMovie
 import kr.co.nexters.winepick.data.response.DummyMovieCommentResponse
 import kr.co.nexters.winepick.data.response.DummyMovieResponse
@@ -14,8 +15,6 @@ import okhttp3.RequestBody
 import okio.Buffer
 import org.junit.Assert
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.RobolectricTestRunner
 import java.io.IOException
 import java.net.URL
 
@@ -24,8 +23,7 @@ import java.net.URL
  *
  * @since v1.0.0 / 2021.02.02
  */
-@RunWith(RobolectricTestRunner::class)
-class KtorTest {
+class KtorTest : AndroidBaseTest() {
     companion object {
         val httpClient = createHttpClient()
     }

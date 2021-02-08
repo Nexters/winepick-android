@@ -1,11 +1,10 @@
 package kr.co.nexters.winepick.api
 
-import androidx.test.core.app.ApplicationProvider
 import io.reactivex.rxjava3.observers.DisposableSingleObserver
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.buildJsonObject
-import kr.co.nexters.winepick.WinePickApplication
+import kr.co.nexters.winepick.base.AndroidBaseTest
 import kr.co.nexters.winepick.data.model.DummyDetailMovie
 import kr.co.nexters.winepick.data.repository.TestRepository
 import kr.co.nexters.winepick.data.response.DummyMovieCommentResponse
@@ -14,10 +13,7 @@ import kr.co.nexters.winepick.network.NetworkModules
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.junit.Assert
-import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.RobolectricTestRunner
 import java.net.URL
 
 /**
@@ -25,13 +21,7 @@ import java.net.URL
  *
  * @since v1.0.0 / 2021.02.04
  */
-@RunWith(RobolectricTestRunner::class)
-class Retrofit2Test {
-    @Before
-    fun setup() {
-        WinePickApplication.appContext = ApplicationProvider.getApplicationContext()
-    }
-
+class Retrofit2Test: AndroidBaseTest() {
     @Test
     fun retrofit2DefaultTest() {
         // WHEN 1. "/movies" GET 요청 시
