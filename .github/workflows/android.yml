@@ -1,0 +1,298 @@
+name: Android CI
+
+# github actions 를 실행할 조건 설정
+on:
+  push:
+    branches:
+      - '*'
+
+  pull_request:
+    branches:
+      - 'develop'
+      - 'master'
+
+# 실행할 job 설정
+jobs:
+  # CI 작업
+  integration:
+    runs-on: ubuntu-16.04
+    steps:
+      # 데이터 로깅 작업 : 작업을 위한 로깅 작업을 진행한다.
+      # 로깅1. github context
+      - name: 로깅1. GitHub context 확인
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+        if: always()
+
+      # 로깅2. job context
+      - name: 로깅2. job context 확인
+        env:
+          JOB_CONTEXT: ${{ toJson(job) }}
+        run: echo "$JOB_CONTEXT"
+        if: always()
+
+      # 로깅3. steps context
+      - name: 로깅3. steps context 확인
+        env:
+          STEPS_CONTEXT: ${{ toJson(steps) }}
+        run: echo "$STEPS_CONTEXT"
+        if: always()
+
+      # 로깅4. runner context
+      - name: 로깅4. runner context 확인
+        env:
+          RUNNER_CONTEXT: ${{ toJson(runner) }}
+        run: echo "$RUNNER_CONTEXT"
+        if: always()
+
+      # 로깅5. strategy context
+      - name: 로깅5. strategy context 확인
+        env:
+          STRATEGY_CONTEXT: ${{ toJson(strategy) }}
+        run: echo "$STRATEGY_CONTEXT"
+        if: always()
+
+      # 로깅6. matrix context
+      - name: 로깅6. matrix context 확인
+        env:
+          MATRIX_CONTEXT: ${{ toJson(matrix) }}
+        run: echo "$MATRIX_CONTEXT"
+        if: always()
+
+      # 로깅7. PUSH 조건 확인
+      - name: 로깅7. PUSH ANDROID 글자 있는지 확인 | ${{ github.event.head_commit.message }}
+        run: echo "PUSH ANDROID 글자 있는지 확인 (있으면 실행 됨)"
+        if: contains(github.event.head_commit.message, 'ANDROID')
+
+      # 로깅8. PR 조건 확인
+      - name: 로깅8. PR ANDROID 글자 있는지 확인 | ${{ github.event.pull_request.title }}
+        run: echo "PR ANDROID 글자 있는지 확인 (있으면 실행 됨)"
+        if: contains(github.event.pull_request.title, 'ANDROID')
+
+
+      # 데이터 선언 작업 : 각 이벤트에서 사용할 파라미터를 세팅한다.
+      # 선언1. event 가 PUSH 일 경우, merge 대상 repository 설정
+      - name: 선언1. repository 이름 가져오기 (Push 일때만 실행)
+        id: get_repo_name
+        run: echo ::set-output name=REPO_NAME::$(echo $GITHUB_REF | cut -d / -f 3)
+        if: github.event_name == 'push'
+
+      # 선언2. event 가 PR 일 경우, merge 시키는 이슈 번호 설정
+      - name: 선언2. 이슈 번호 가져오기 (PR 일때만 실행)
+        id: get_issue_num
+        run: echo ::set-output name=ISSUE_NUM::${GITHUB_HEAD_REF##*/}
+        if: github.event_name == 'pull_request'
+
+
+      # CI 작업 : CI 작업을 진행한다.
+      # CI 1. 체크아웃 사용 및 jdk 1.8 설정
+      - uses: actions/checkout@v2
+      - name: CI 1. 체크아웃 사용 및 JDK 1.8 설정
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+
+      # CI 2. 현재 시간 설정 및 출력 내용 확인
+      # [Get Current Time](https://github.com/marketplace/actions/get-current-time)
+      # CI 2-1. 현재 시간 설정하기
+      - name: CI 2-1. 현재 시간 설정하기
+        uses: 1466587594/get-current-time@v1
+        id: current-time
+        with:
+          format: YYYY.MM.DD_LT
+          utcOffset: "+09:00"
+        if: always()
+      # CI 2-2. 현재 시간 내용 확인
+      - name: CI 2-2. 현재 시간 내용 확인
+        env:
+          TIME: "${{ steps.current-time.outputs.time }}"
+          F_TIME: "${{ steps.current-time.outputs.formattedTime }}"
+        run: echo $TIME $F_TIME
+        if: always()
+
+      # CI 3. 의존성 라이브러리 다운로드
+      - name: CI 3. 의존성 라이브러리 다운로드
+        run: ./gradlew androidDependencies
+
+      # CI 4. 프로젝트 빌드
+      - name: CI 5. 프로젝트 빌드
+        run: ./gradlew compiledebugUnitTestJavaWithJavac
+
+      # CI 5. 프로젝트 Unit 테스트
+      # CI 5-1. Push 일 경우 실행
+      - name: CI 5-1. ${{ steps.get_repo_name.outputs.REPO_NAME }} Unit 테스트
+        run: ./gradlew testdebugUnitTest
+        if: github.event_name == 'push'
+
+      # CI 5-2. PR 일 경우 실행
+      - name: CI 5-2. ${{ steps.get_issue_num.outputs.ISSUE_NUM }} Unit 테스트
+        run: ./gradlew testdebugUnitTest
+        if: github.event_name == 'pull_request'
+
+      # CI 6. 슬랙 메시지 전송
+      # [action-slack](https://github.com/marketplace/actions/action-slack)
+      # CI 6-1. Push 전용 성공 메시지 전송
+      - name: CI 6-1. Push 전용 성공 메시지 전송
+        uses: 8398a7/action-slack@v2.6.0
+        with:
+          status: custom
+          payload: |
+            {
+              "text": ":white_check_mark: ${{ github.event_name }} ${{ job.status }}",
+              "attachments": [{
+                "title": "${{ github.workflow }}",
+                "title_link": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+                "text": "<${{ github.event.head_commit.url}}|push commit link>",
+                "fields": [
+                  {
+                    title: 'Event_name',
+                    value: "${{ github.event_name }}",
+                    short: true
+                  },
+                  {
+                    title: 'Change_Logs',
+                    value: "<https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>",
+                    short: true
+                  },
+                  {
+                    title: 'author',
+                    value: "${{ github.actor }}",
+                    short: true
+                  }
+                ],
+                "footer": "${{ github.event.head_commit.committer.name }} at ${{ steps.current-time.outputs.formattedTime }}",
+                "color": "good"
+              }]
+            }
+          author_name: ${{ github.head_ref }} Build & Test ${{ job.status }}
+          icon_url: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+        # secret 설정 (참고 link : https://codeac.tistory.com/112)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GIT_HUB_TOKEN }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_ANDROID_CI_WEBHOOK }}
+        if: github.event_name == 'push' && success()
+
+      # CI 6-2. Push 전용 실패 메시지 전송
+      - name: CI 6-2. Push 전용 실패 메시지 전송
+        uses: 8398a7/action-slack@v2.6.0
+        with:
+          status: custom
+          payload: |
+            {
+              "text": ":no_entry: ${{ github.event_name }} ${{ job.status }}",
+              "attachments": [{
+                "title": "${{ github.workflow }}",
+                "title_link": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+                "text": "<${{ github.event.head_commit.url}}|push commit link>",
+                "fields": [
+                  {
+                    title: 'Event_name',
+                    value: "${{ github.event_name }}",
+                    short: true
+                  },
+                  {
+                    title: 'Change_Logs',
+                    value: "<https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>",
+                    short: true
+                  },
+                  {
+                    title: 'author',
+                    value: "${{ github.actor }}",
+                    short: true
+                  }
+                ],
+                "footer": "${{ github.event.head_commit.committer.name }} at ${{ steps.current-time.outputs.formattedTime }}",
+                "color": "danger"
+              }]
+            }
+          author_name: ${{ github.head_ref }} Build & Test ${{ job.status }}
+          icon_url: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+        # secret 설정 (참고 link : https://codeac.tistory.com/112)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GIT_HUB_TOKEN }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_ANDROID_CI_WEBHOOK }}
+        if: github.event_name == 'push' && failure()
+
+      # CI 6-3. PR 전용 성공 메시지 전송
+      - name: CI 6-3. PR 전용 성공 메시지 전송
+        uses: 8398a7/action-slack@v2.6.0
+        with:
+          status: custom
+          payload: |
+            {
+              "text": ":white_check_mark: ${{ github.event_name }} ${{ job.status }}",
+              "attachments": [{
+                "title": "${{ github.workflow }}",
+                "title_link": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+                "text": "<${{ github.event.pull_request.html_url }}|pull request link>",
+                "fields": [
+                  {
+                    title: 'Event_name',
+                    value: "${{ github.event_name }}",
+                    short: true
+                  },
+                  {
+                    title: 'Change_Logs',
+                    value: "<https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>",
+                    short: true
+                  },
+                  {
+                    title: 'author',
+                    value: "${{ github.actor }}",
+                    short: true
+                  }
+                ],
+                "footer": "${{ github.actor }} at ${{ steps.current-time.outputs.formattedTime }}",
+                "color": "good"
+              }]
+            }
+          author_name: ${{ github.head_ref }} Build & Test ${{ job.status }}
+          icon_url: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+        # secret 설정 (참고 link : https://codeac.tistory.com/112)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GIT_HUB_TOKEN }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_ANDROID_CI_WEBHOOK }}
+        if: github.event_name == 'pull_request' && success()
+
+      # CI 6-4. PR 전용 실패 메시지 전송
+      - name: CI 6-4. PR 전용 실패 메시지 전송
+        uses: 8398a7/action-slack@v2.6.0
+        with:
+          status: custom
+          payload: |
+            {
+              "text": ":no_entry: ${{ github.event_name }} ${{ job.status }}",
+              "attachments": [{
+                "title": "${{ github.workflow }}",
+                "title_link": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+                "text": "<${{ github.event.pull_request.html_url }}|pull request link>",
+                "fields": [
+                  {
+                    title: 'Event_name',
+                    value: "${{ github.event_name }}",
+                    short: true
+                  },
+                  {
+                    title: 'Change_Logs',
+                    value: "<https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>",
+                    short: true
+                  },
+                  {
+                    title: 'author',
+                    value: "${{ github.actor }}",
+                    short: true
+                  }
+                ],
+                "footer": "${{ github.actor }} at ${{ steps.current-time.outputs.formattedTime }}",
+                "color": "danger"
+              }]
+            }
+          author_name: ${{ github.head_ref }} Build & Test ${{ job.status }}
+          icon_url: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+        # secret 설정 (참고 link : https://codeac.tistory.com/112)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GIT_HUB_TOKEN }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_ANDROID_CI_WEBHOOK }}
+        if: github.event_name == 'pull_request' && failure()
+
