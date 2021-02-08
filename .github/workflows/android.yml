@@ -115,6 +115,9 @@ jobs:
       - name: CI 3-1. Decrypt kakao_app_key
         run: gpg --quiet --batch --yes --always-trust --decrypt --passphrase="$KAKAO_APP_KEY_TAR_PWD" --output kakao_app_key.tar kakao_app_key.tar.gpg
 
+        env:
+          KAKAO_APP_KEY_TAR_PWD: ${{ secrets.KAKAO_APP_KEY_TAR_PWD }}
+
       # CI 3-2. kakao_app_key.tar 압축 풀기 (지정되었던 경로로 자동으로 파일이 만들어짐)
       - name: CI 3-2. kakao_app_key.tar 압축 풀기
         run: tar xvf kakao_app_key.tar
