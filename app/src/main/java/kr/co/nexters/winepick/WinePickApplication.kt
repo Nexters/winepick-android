@@ -3,7 +3,6 @@ package kr.co.nexters.winepick
 import android.app.Application
 import android.content.Context
 import com.kakao.auth.*
-import com.kakao.sdk.common.KakaoSdk
 import dagger.hilt.android.HiltAndroidApp
 import kr.co.nexters.winepick.WinePickApplication.Companion.getGlobalApplicationContext
 import timber.log.Timber
@@ -18,11 +17,11 @@ import timber.log.Timber
 @HiltAndroidApp
 class WinePickApplication : Application() {
     companion object {
-        var appContext : WinePickApplication? = null
+        var appContext : Context? = null
 
-        fun getGlobalApplicationContext(): WinePickApplication? {
+        fun getGlobalApplicationContext(): Context {
             checkNotNull(appContext) { "This Application does not inherit com.kakao.GlobalApplication" }
-            return appContext
+            return appContext!!
         }
     }
     override fun onCreate() {
@@ -30,7 +29,6 @@ class WinePickApplication : Application() {
         Timber.plant(Timber.DebugTree())
         appContext = this
         KakaoSDK.init(KakaoSDKApapter())
-
     }
 
 }
