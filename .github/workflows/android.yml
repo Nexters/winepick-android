@@ -111,29 +111,37 @@ jobs:
         run: echo $TIME $F_TIME
         if: always()
 
-      # CI 3. 의존성 라이브러리 다운로드
-      - name: CI 3. 의존성 라이브러리 다운로드
+      # CI 3-1. kakao_app_key gpg 해독
+      - name: CI 3-1. Decrypt kakao_app_key
+        run: gpg --quiet --batch --yes --always-trust --decrypt --passphrase="$KAKAO_APP_KEY_TAR_PWD" --output kakao_app_key.tar kakao_app_key.tar.gpg
+
+      # CI 3-2. kakao_app_key.tar 압축 풀기 (지정되었던 경로로 자동으로 파일이 만들어짐)
+      - name: CI 3-2. kakao_app_key.tar 압축 풀기
+        run: tar xvf kakao_app_key.tar
+
+      # CI 4. 의존성 라이브러리 다운로드
+      - name: CI 4. 의존성 라이브러리 다운로드
         run: ./gradlew androidDependencies
 
-      # CI 4. 프로젝트 빌드
+      # CI 5. 프로젝트 빌드
       - name: CI 5. 프로젝트 빌드
         run: ./gradlew compiledebugUnitTestJavaWithJavac
 
-      # CI 5. 프로젝트 Unit 테스트
-      # CI 5-1. Push 일 경우 실행
-      - name: CI 5-1. ${{ steps.get_repo_name.outputs.REPO_NAME }} Unit 테스트
+      # CI 6. 프로젝트 Unit 테스트
+      # CI 6-1. Push 일 경우 실행
+      - name: CI 6-1. ${{ steps.get_repo_name.outputs.REPO_NAME }} Unit 테스트
         run: ./gradlew testdebugUnitTest
         if: github.event_name == 'push'
 
-      # CI 5-2. PR 일 경우 실행
-      - name: CI 5-2. ${{ steps.get_issue_num.outputs.ISSUE_NUM }} Unit 테스트
+      # CI 6-2. PR 일 경우 실행
+      - name: CI 6-2. ${{ steps.get_issue_num.outputs.ISSUE_NUM }} Unit 테스트
         run: ./gradlew testdebugUnitTest
         if: github.event_name == 'pull_request'
 
-      # CI 6. 슬랙 메시지 전송
+      # CI 7. 슬랙 메시지 전송
       # [action-slack](https://github.com/marketplace/actions/action-slack)
-      # CI 6-1. Push 전용 성공 메시지 전송
-      - name: CI 6-1. Push 전용 성공 메시지 전송
+      # CI 7-1. Push 전용 성공 메시지 전송
+      - name: CI 7-1. Push 전용 성공 메시지 전송
         uses: 8398a7/action-slack@v2.6.0
         with:
           status: custom
@@ -173,8 +181,8 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_ANDROID_CI_WEBHOOK }}
         if: github.event_name == 'push' && success()
 
-      # CI 6-2. Push 전용 실패 메시지 전송
-      - name: CI 6-2. Push 전용 실패 메시지 전송
+      # CI 7-2. Push 전용 실패 메시지 전송
+      - name: CI 7-2. Push 전용 실패 메시지 전송
         uses: 8398a7/action-slack@v2.6.0
         with:
           status: custom
@@ -214,8 +222,8 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_ANDROID_CI_WEBHOOK }}
         if: github.event_name == 'push' && failure()
 
-      # CI 6-3. PR 전용 성공 메시지 전송
-      - name: CI 6-3. PR 전용 성공 메시지 전송
+      # CI 7-3. PR 전용 성공 메시지 전송
+      - name: CI 7-3. PR 전용 성공 메시지 전송
         uses: 8398a7/action-slack@v2.6.0
         with:
           status: custom
@@ -255,8 +263,8 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_ANDROID_CI_WEBHOOK }}
         if: github.event_name == 'pull_request' && success()
 
-      # CI 6-4. PR 전용 실패 메시지 전송
-      - name: CI 6-4. PR 전용 실패 메시지 전송
+      # CI 7-4. PR 전용 실패 메시지 전송
+      - name: CI 7-4. PR 전용 실패 메시지 전송
         uses: 8398a7/action-slack@v2.6.0
         with:
           status: custom
