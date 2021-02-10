@@ -2,7 +2,7 @@ package kr.co.nexters.winepick.data.repository
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import kr.co.nexters.winepick.data.model.wine.WineResult
+import kr.co.nexters.winepick.data.model.remote.wine.WineResult
 import kr.co.nexters.winepick.data.source.WineDataSource
 
 /**

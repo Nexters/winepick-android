@@ -5,6 +5,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import kr.co.nexters.winepick.BR
 import kr.co.nexters.winepick.R
+import kr.co.nexters.winepick.data.repository.SearchRepository
 import kr.co.nexters.winepick.databinding.ActivitySearchBinding
 import kr.co.nexters.winepick.ui.base.BaseActivity
 import kr.co.nexters.winepick.util.hideKeyboard
@@ -27,18 +28,19 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
 
         binding.apply {
             rvResults.adapter = SearchResultAdapter(viewModel)
+            rvCurrents.adapter = SearchCurrentAdapter(viewModel)
         }
 
         subscribeUI()
     }
 
     fun subscribeUI() {
-        viewModel.results.observe(this, Observer {
+        viewModel.results.observe(this, {
             binding.tvResultTitle.text =
                 String.format(getString(R.string.searchResultTitle), it.size)
         })
 
-        viewModel.searchFrontPage.observe(this, Observer {
+        viewModel.searchFrontPage.observe(this, {
             if (it == SearchFront.DEFAULT) {
                 binding.etQuery.hideKeyboard()
             }
@@ -46,11 +48,15 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
 
         viewModel.searchAction.subscribe {
             when (it) {
-                SearchAction.QUERY_RESET -> binding.etQuery.text?.clear()
+                SearchAction.QUERY_RESET -> {
+                    binding.etQuery.text?.clear()
+                    binding.etQuery.clearFocus()
+                }
                 SearchAction.QUERY_SEARCH -> binding.etQuery.clearFocus()
                 SearchAction.EDIT_FILTER -> {
                     // TODO 필터 변경 화면으로 이동하는 로직 구현하기
                     toast("필터 변경 화면으로 이동")
+                    binding.etQuery.clearFocus()
                 }
                 else -> Timber.i("SearchAction.NONE")
             }

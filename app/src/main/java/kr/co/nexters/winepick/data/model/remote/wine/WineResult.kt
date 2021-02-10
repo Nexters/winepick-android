@@ -1,4 +1,4 @@
-package kr.co.nexters.winepick.data.model.wine
+package kr.co.nexters.winepick.data.model.remote.wine
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

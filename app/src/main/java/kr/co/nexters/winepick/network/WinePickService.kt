@@ -1,8 +1,8 @@
 package kr.co.nexters.winepick.network
 
 import kr.co.nexters.winepick.data.model.WinePickResponse
-import kr.co.nexters.winepick.data.model.wine.WineResult
-import kr.co.nexters.winepick.data.model.wine.WinesResult
+import kr.co.nexters.winepick.data.model.remote.wine.WineResult
+import kr.co.nexters.winepick.data.model.remote.wine.WinesResult
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path

@@ -6,7 +6,7 @@ package kr.co.nexters.winepick.data.constant
  * @since v1.0.0 / 2021.02.09
  */
 object Constant {
-
+    const val PREF_KEY_SEARCH_CURRENT = "PREF_KEY_SEARCH_CURRENT"
 }
 
 /**

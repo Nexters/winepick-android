@@ -8,7 +8,9 @@ import androidx.lifecycle.viewModelScope
 import io.reactivex.rxjava3.subjects.PublishSubject
 import kotlinx.coroutines.launch
 import kr.co.nexters.winepick.R
-import kr.co.nexters.winepick.data.model.wine.WineResult
+import kr.co.nexters.winepick.data.model.local.SearchCurrent
+import kr.co.nexters.winepick.data.model.remote.wine.WineResult
+import kr.co.nexters.winepick.data.repository.SearchRepository
 import kr.co.nexters.winepick.data.repository.WineRepository
 import kr.co.nexters.winepick.ui.base.BaseViewModel
 import timber.log.Timber
@@ -32,6 +34,9 @@ class SearchViewModel : BaseViewModel() {
     /** 검색 결과 list */
     private val _results = MutableLiveData<List<WineResult>>(listOf())
     val results: LiveData<List<WineResult>> = _results
+
+    /** 검색 목록 list */
+    val currents: LiveData<List<SearchCurrent>> = SearchRepository.styledSearchCurrents
 
     /** 가장 맨 앞에 보여야 할 화면. 보여야 할 내용은 [SearchFront] 참고 */
     private val _searchFrontPage = MutableLiveData<SearchFront>(SearchFront.DEFAULT)
@@ -57,35 +62,20 @@ class SearchViewModel : BaseViewModel() {
         when {
             // 포커스 된 상태이고 텍스트에 입력된 내용이 없으면 추천 레이아웃을 보여준다.
             hasFocus && query.value.isNullOrEmpty() -> {
-                Timber.i("$hasFocus ${SearchFront.RECOMMEND}")
+                Timber.i("focusChanged $hasFocus ${SearchFront.RECOMMEND}")
                 _searchFrontPage.value = SearchFront.RECOMMEND
             }
             // 포커스 된 상태이고 텍스트에 입력된 내용이 있으면 최근 검색어 레이아웃을 보여준다.
             hasFocus && query.value!!.isNotEmpty() -> {
-                Timber.i("$hasFocus ${SearchFront.CURRENT}")
+                Timber.i("focusChanged $hasFocus ${SearchFront.CURRENT}")
                 _searchFrontPage.value = SearchFront.CURRENT
             }
             // 아무 상황도 아니라면 그냥 화면을 보여준다.
             else -> {
-                Timber.i("$hasFocus ${SearchFront.DEFAULT}")
+                Timber.i("focusChanged $hasFocus ${SearchFront.DEFAULT}")
                 _searchFrontPage.value = SearchFront.DEFAULT
             }
         }
-    }
-
-    /** 입력 내용 지우기 버튼을 누를 시 실행되는 로직 */
-    fun queryResetClick() {
-        query.value = ""
-        _searchAction.onNext(SearchAction.QUERY_RESET)
-    }
-
-    /** 검색 버튼 누를 시 실행되는 로직 */
-    fun querySearchClick() {
-        viewModelScope.launch {
-            _results.value = WineRepository.getWines(query.value!!, 0)?.wineResult ?: listOf()
-        }
-
-        _searchAction.onNext(SearchAction.QUERY_SEARCH)
     }
 
     /**
@@ -96,19 +86,51 @@ class SearchViewModel : BaseViewModel() {
     fun queryAfterTextChanged(s: Editable) {
         Timber.i("queryAfterTextChanged : s : $s")
 
+        // 만약 Default 인 상태에서 query 의 값이 변경되었을 경우에는
+        // 추천, 최근 검색어 화면이 보이지 않는 상태이므로 그대로 끝낸다.
+        if (_searchFrontPage.value?.equals(SearchFront.DEFAULT) == true) return
+
         // 텍스트에 입력된 내용이 없으면 추천 레이아웃을 보여준다.
         if (s.isEmpty()) {
             Timber.i(tag, "${SearchFront.RECOMMEND}")
             _searchFrontPage.value = SearchFront.RECOMMEND
         } else {
+            viewModelScope.launch { SearchRepository.stylingSearchCurrent(s.toString()) }
+
             Timber.i(tag, "${SearchFront.CURRENT}")
             _searchFrontPage.value = SearchFront.CURRENT
+
         }
     }
 
+    /** 입력 내용 지우기 버튼을 누를 시 실행되는 로직 */
+    fun queryResetClick() {
+        query.value = ""
+        _searchAction.onNext(SearchAction.QUERY_RESET)
+    }
+
     /**
-     * 필터 변경을 누를 경우 동작하는 로직
+     * 검색 버튼 누를 시 실행되는 로직
+     *
+     * @param queryValue 검색할 키워드 (기본값은 query liveData 내의 value 이다.)
      */
+    fun querySearchClick(queryValue: String) {
+        if (!query.value.equals(queryValue)) {
+            query.value = queryValue
+        }
+
+        viewModelScope.launch {
+            SearchRepository.addSearchCurrent(
+                SearchCurrent(System.currentTimeMillis(), queryValue),
+                queryValue
+            )
+            _results.value = WineRepository.getWines(queryValue, 0)?.wineResult ?: listOf()
+        }
+
+        _searchAction.onNext(SearchAction.QUERY_SEARCH)
+    }
+
+    /** 필터 변경을 누를 경우 동작하는 로직 */
     fun filterEditClick() {
         _searchAction.onNext(SearchAction.EDIT_FILTER)
     }

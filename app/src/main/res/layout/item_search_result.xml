@@ -8,7 +8,7 @@
 
         <variable
             name="searchResult"
-            type="kr.co.nexters.winepick.data.model.wine.WineResult" />
+            type="kr.co.nexters.winepick.data.model.remote.wine.WineResult" />
 
         <variable
             name="vm"
@@ -18,160 +18,136 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:paddingVertical="16dp">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/img_image"
-            android:layout_width="wrap_content"
+            android:id="@+id/img_search_result_image"
+            android:layout_width="120dp"
             android:layout_height="0dp"
-            android:background="@drawable/ic_launcher_background"
+            android:background="@drawable/item_search_result_dummy"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="W, 2:1"
+            app:layout_constraintDimensionRatio="W, 4:3"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/item_search_result_dummy" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/btn_heart"
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btn_search_result_heart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@mipmap/ic_launcher"
-            app:layout_constraintLeft_toLeftOf="@id/img_image"
-            app:layout_constraintTop_toTopOf="@id/img_image" />
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/btn_heart"
+            app:layout_constraintLeft_toLeftOf="@id/img_search_result_image"
+            app:layout_constraintTop_toTopOf="@id/img_search_result_image" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_result_right"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/img_image"
+            app:layout_constraintLeft_toRightOf="@id/img_search_result_image"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_result_name"
+                android:id="@+id/tv_search_result_nm_kor"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@{searchResult.nmKor}"
+                android:textColor="#000000"
+                android:textSize="15sp"
+                android:textStyle="normal"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="라포데리나 브루넬로 디 몬탈치노" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_result_made_in"
+                android:id="@+id/tv_search_result_country"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
                 android:text="@{searchResult.country}"
+                android:textColor="#adadad"
+                android:textSize="11sp"
+                android:textStyle="normal"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_result_name"
+                app:layout_constraintTop_toBottomOf="@id/tv_search_result_nm_kor"
                 tools:text="몰도바" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_result_price"
+                android:id="@+id/tv_search_result_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
                 android:text="@{@string/searchResultPrice(searchResult.price)}"
+                android:textColor="#000000"
+                android:textSize="15sp"
+                android:textStyle="bold"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_result_made_in"
+                app:layout_constraintTop_toBottomOf="@id/tv_search_result_country"
                 tools:text="31,300원" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layout_result_tastes"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:id="@+id/layout_search_result_tastes"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:padding="4dp"
+                android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent">
 
-                <include
-                    android:id="@+id/layout_item_search_taste_1"
-                    layout="@layout/layout_item_search_taste"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintHorizontal_chainStyle="spread_inside"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@+id/v_result_taste_divider1"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:title="@{`단맛`}"
-                    tools:value="@{searchResult.sweetness}" />
+                    android:orientation="horizontal">
 
-                <View
-                    android:id="@+id/v_result_taste_divider1"
-                    android:layout_width="1dp"
-                    android:layout_height="16dp"
-                    android:background="#000000"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintHorizontal_chainStyle="spread_inside"
-                    app:layout_constraintLeft_toRightOf="@+id/layout_item_search_taste_1"
-                    app:layout_constraintRight_toLeftOf="@+id/layout_item_search_taste_2"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    <include
+                        android:id="@+id/layout_search_result_taste_sweetness"
+                        layout="@layout/layout_search_result_taste"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:title="@{`단맛`}"
+                        tools:value="@{searchResult.sweetness}" />
 
-                <include
-                    android:id="@+id/layout_item_search_taste_2"
-                    layout="@layout/layout_item_search_taste"
+                    <include
+                        android:id="@+id/layout_search_result_taste_acidity"
+                        layout="@layout/layout_search_result_taste"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        tools:title="@{`산미`}"
+                        tools:value="@{searchResult.acidity}" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintHorizontal_chainStyle="spread_inside"
-                    app:layout_constraintLeft_toRightOf="@+id/v_result_taste_divider1"
-                    app:layout_constraintRight_toLeftOf="@id/v_result_taste_divider2"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:title="@{`산미`}"
-                    tools:value="@{searchResult.acidity}" />
+                    android:layout_marginTop="6dp"
+                    android:orientation="horizontal">
 
-                <View
-                    android:id="@+id/v_result_taste_divider2"
-                    android:layout_width="1dp"
-                    android:layout_height="16dp"
-                    android:background="#000000"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintHorizontal_chainStyle="spread_inside"
-                    app:layout_constraintLeft_toRightOf="@+id/layout_item_search_taste_2"
-                    app:layout_constraintRight_toLeftOf="@+id/layout_item_search_taste_3"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    <include
+                        android:id="@+id/layout_search_result_taste_body"
+                        layout="@layout/layout_search_result_taste"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:title="@{`묵직함`}"
+                        tools:value="@{searchResult.body}" />
 
-                <include
-                    android:id="@+id/layout_item_search_taste_3"
-                    layout="@layout/layout_item_search_taste"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintHorizontal_chainStyle="spread_inside"
-                    app:layout_constraintLeft_toRightOf="@+id/v_result_taste_divider2"
-                    app:layout_constraintRight_toLeftOf="@id/v_result_taste_divider3"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:title="@{`묵직함`}"
-                    tools:value="@{searchResult.body}" />
+                    <include
+                        android:id="@+id/layout_search_result_taste_tannin"
+                        layout="@layout/layout_search_result_taste"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="6dp"
+                        tools:title="@{`부드러움`}"
+                        tools:value="@{searchResult.tannin}" />
+                </LinearLayout>
 
-                <View
-                    android:id="@+id/v_result_taste_divider3"
-                    android:layout_width="1dp"
-                    android:layout_height="16dp"
-                    android:background="#000000"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintHorizontal_chainStyle="spread_inside"
-                    app:layout_constraintLeft_toRightOf="@+id/layout_item_search_taste_3"
-                    app:layout_constraintRight_toLeftOf="@id/layout_item_search_taste_4"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <include
-                    android:id="@+id/layout_item_search_taste_4"
-                    layout="@layout/layout_item_search_taste"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintHorizontal_chainStyle="spread_inside"
-                    app:layout_constraintLeft_toRightOf="@+id/v_result_taste_divider3"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:title="@{`부드러움`}"
-                    tools:value="@{searchResult.tannin}" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

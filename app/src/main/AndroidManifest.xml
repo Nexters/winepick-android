@@ -19,16 +19,17 @@
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
-            android:value="@string/kakao_app_key"/>
+            android:value="@string/kakao_app_key" />
 
-        <activity android:name=".ui.login.LoginActivity">
-        </activity>
+        <activity android:name=".ui.login.LoginActivity"></activity>
         <activity android:name=".example.java.normal.JavaDefaultActivity"></activity>
         <activity android:name=".example.kotlin.normal.KotlinDefaultActivity"></activity>
         <activity android:name=".example.java.viewmodel.JavaViewModelActivity"></activity>
         <activity android:name=".example.kotlin.viewmodel.KotlinViewModelActivity"></activity>
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".ui.search.SearchActivity">
+        <activity android:name=".MainActivity" />
+        <activity
+            android:name=".ui.search.SearchActivity"
+            android:theme="@style/AppNoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

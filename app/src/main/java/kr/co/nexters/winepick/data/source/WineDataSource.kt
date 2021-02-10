@@ -2,10 +2,10 @@ package kr.co.nexters.winepick.data.source
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import kr.co.nexters.winepick.data.model.wine.WineResult
-import kr.co.nexters.winepick.data.model.wine.WinesResult
-import kr.co.nexters.winepick.data.model.wine.getWineResponse
-import kr.co.nexters.winepick.data.model.wine.getWinesResponse
+import kr.co.nexters.winepick.data.model.remote.wine.WineResult
+import kr.co.nexters.winepick.data.model.remote.wine.WinesResult
+import kr.co.nexters.winepick.data.model.remote.wine.getWineResponse
+import kr.co.nexters.winepick.data.model.remote.wine.getWinesResponse
 import kr.co.nexters.winepick.network.NetworkModules
 import kr.co.nexters.winepick.network.NetworkModules.send
 import kr.co.nexters.winepick.network.WinePickService
