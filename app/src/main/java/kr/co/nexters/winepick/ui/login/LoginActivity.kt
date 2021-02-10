@@ -21,6 +21,7 @@ import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.databinding.ActivityLoginBinding
 import kr.co.nexters.winepick.ui.base.BaseActivity
 import kr.co.nexters.winepick.ui.base.BaseViewModel
+import kr.co.nexters.winepick.ui.home.HomeActivity
 import kr.co.nexters.winepick.util.startActivity
 import timber.log.Timber
 
@@ -38,11 +39,13 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(
                     Timber.e("로그인 성공")
                     Timber.e("${result!!.kakaoAccount.birthday}")
                     Timber.e("${result!!.kakaoAccount.profile.nickname}")
-                    startActivity(MainActivity::class)
-
+                    Intent(applicationContext,HomeActivity::class.java).apply {
+                        putExtra("mode","user")
+                    }.run { startActivity(this) }
                 }
 
                 override fun onSessionClosed(errorResult: ErrorResult?) {
+                    Timber.e("SessionClose - ${errorResult}")
                 }
 
             })
@@ -58,6 +61,12 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(
         Session.getCurrentSession().addCallback(sessionCallback)
         binding.setVariable(BR.vm, viewModel)
         binding.apply {
+            tvGuest.text = "먼저 둘러보고 싶어요."
+            tvGuest.setOnClickListener {
+                Intent(applicationContext,HomeActivity::class.java).apply {
+                    putExtra("mode","guest")
+                }.run { startActivity(this) }
+            }
         }
 
     }

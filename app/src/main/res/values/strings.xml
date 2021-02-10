@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">WinePick</string>
+    <string name="app_name_lower">winepick</string>
 </resources>

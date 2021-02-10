@@ -16,7 +16,7 @@
         android:fontStyle="normal"/>
 
     <font
-        android:font="@font/notosans_cjk_kr_regural"
+        android:font="@font/notosans_cjk_kr_regular"
         android:fontWeight="600"
         android:fontStyle="normal"/>
 
