@@ -1,11 +1,9 @@
 package kr.co.nexters.winepick.ui.search
 
 import android.os.Bundle
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import kr.co.nexters.winepick.BR
 import kr.co.nexters.winepick.R
-import kr.co.nexters.winepick.data.repository.SearchRepository
 import kr.co.nexters.winepick.databinding.ActivitySearchBinding
 import kr.co.nexters.winepick.ui.base.BaseActivity
 import kr.co.nexters.winepick.util.hideKeyboard
@@ -28,7 +26,8 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
 
         binding.apply {
             rvResults.adapter = SearchResultAdapter(viewModel)
-            rvCurrents.adapter = SearchCurrentAdapter(viewModel)
+            rvCurrents.adapter = SearchRelativeAdapter(viewModel)
+            // rvRecommends.adapter = SearchRecommendAdapter(viewModel)
         }
 
         subscribeUI()

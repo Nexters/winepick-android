@@ -15,11 +15,17 @@ class WineApiTest : AndroidBaseTest() {
     /** [WineDataSource.getWines] 테스트 */
     @Test
     fun getWinesTest() = runBlocking {
-        val result = WineDataSource.getWines("", 2)
+        val result = WineDataSource.getWines("", 0)
 
-        print("$result")
+        println("$result")
 
         Assert.assertNotNull(result)
+
+        val resultEmptyList = WineDataSource.getWines("", 3)
+
+        println("$resultEmptyList")
+
+        Assert.assertNotNull(resultEmptyList)
     }
 
     /** [WineDataSource.getWine] 테스트 */

@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import io.reactivex.rxjava3.subjects.PublishSubject
 import kotlinx.coroutines.launch
 import kr.co.nexters.winepick.R
-import kr.co.nexters.winepick.data.model.local.SearchCurrent
 import kr.co.nexters.winepick.data.model.remote.wine.WineResult
 import kr.co.nexters.winepick.data.repository.SearchRepository
 import kr.co.nexters.winepick.data.repository.WineRepository
@@ -25,7 +24,7 @@ class SearchViewModel : BaseViewModel() {
     val tag = this::class.java.canonicalName
 
     /** 검색 창 입력 내용 */
-    val query = MutableLiveData<String>("")
+    val query = MutableLiveData("")
 
     /** filter 적용 개수 */
     private val _filterNum = MutableLiveData(0)
@@ -36,7 +35,12 @@ class SearchViewModel : BaseViewModel() {
     val results: LiveData<List<WineResult>> = _results
 
     /** 검색 목록 list */
-    val currents: LiveData<List<SearchCurrent>> = SearchRepository.styledSearchCurrents
+    val currents: LiveData<List<String>> = SearchRepository.styledWineInfos
+
+    /** 검색 목록 list */
+    private val _recommends = MutableLiveData(listOf("혼자 집에서 쉴때", "집들이 선물", "20대에게 인기 많은"))
+    val recommends: LiveData<List<String>> = _recommends
+
 
     /** 가장 맨 앞에 보여야 할 화면. 보여야 할 내용은 [SearchFront] 참고 */
     private val _searchFrontPage = MutableLiveData<SearchFront>(SearchFront.DEFAULT)
@@ -95,7 +99,7 @@ class SearchViewModel : BaseViewModel() {
             Timber.i(tag, "${SearchFront.RECOMMEND}")
             _searchFrontPage.value = SearchFront.RECOMMEND
         } else {
-            viewModelScope.launch { SearchRepository.stylingSearchCurrent(s.toString()) }
+            viewModelScope.launch { SearchRepository.getWineInfosLikeQuery(s.toString()) }
 
             Timber.i(tag, "${SearchFront.CURRENT}")
             _searchFrontPage.value = SearchFront.CURRENT
@@ -120,10 +124,7 @@ class SearchViewModel : BaseViewModel() {
         }
 
         viewModelScope.launch {
-            SearchRepository.addSearchCurrent(
-                SearchCurrent(System.currentTimeMillis(), queryValue),
-                queryValue
-            )
+            SearchRepository.getWineInfosLikeQuery(queryValue)
             _results.value = WineRepository.getWines(queryValue, 0)?.wineResult ?: listOf()
         }
 

@@ -3,11 +3,12 @@ package kr.co.nexters.winepick.local
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import kotlinx.coroutines.runBlocking
 import kr.co.nexters.winepick.base.AndroidBaseTest
-import kr.co.nexters.winepick.data.model.local.SearchCurrent
 import kr.co.nexters.winepick.data.repository.SearchRepository
-import kr.co.nexters.winepick.data.source.WineDataSource
 import kr.co.nexters.winepick.util.SharedPrefs
-import org.junit.*
+import org.junit.After
+import org.junit.Assert
+import org.junit.Rule
+import org.junit.Test
 
 /**
  * 검색 화면에서의 Test
@@ -24,36 +25,40 @@ class SearchTest : AndroidBaseTest() {
         SharedPrefs.clear()
     }
 
-    /** [SearchRepository.addSearchCurrent] 테스트 */
+    /** [SearchRepository.getWineInfosLikeQuery] 테스트 */
     @Test
-    fun searchCurrentTest() = runBlocking {
-        SearchRepository.addSearchCurrent(SearchCurrent(0, "ab"))
-        println(SearchRepository.searchCurrents)
-        SearchRepository.addSearchCurrent(SearchCurrent(1, "ac"))
-        println(SearchRepository.searchCurrents)
-        SearchRepository.addSearchCurrent(SearchCurrent(2, "ab"))
+    fun searchRelativeTest() = runBlocking {
+        val filteredWineInfos = SearchRepository.getWineInfosLikeQuery("M")
+        println(filteredWineInfos)
+        Assert.assertNotEquals(filteredWineInfos.size, 0)
 
-        Assert.assertEquals(SearchRepository.searchCurrents[0].time, 2L)
-        Assert.assertEquals(SearchRepository.searchCurrents[0].value, "ab")
+        val filteredEmptyWineInfos = SearchRepository.getWineInfosLikeQuery("OX")
+        println(filteredEmptyWineInfos)
+        Assert.assertEquals(filteredEmptyWineInfos.size, 0)
     }
 
-    /** [SearchRepository.addSearchCurrent] 테스트 */
+    /** [SearchRepository.stylingWineInfos] 테스트 */
     @Test
-    fun searchStyledCurrentTest() = runBlocking {
-        SearchRepository.addSearchCurrent(SearchCurrent(0, "ab"))
-        println(SearchRepository.searchCurrents)
-        SearchRepository.addSearchCurrent(SearchCurrent(1, "ac"))
-        println(SearchRepository.searchCurrents)
+    fun searchRelativeTestStyling() = runBlocking {
+        val filteredWineInfos = SearchRepository.getWineInfosLikeQuery("M")
+        println(filteredWineInfos)
+        SearchRepository.stylingWineInfos(filteredWineInfos, "M").forEach {
+            print("$it, ")
+            it.matches("<.+?>".toRegex())
+        }
 
-        SearchRepository.stylingSearchCurrent("a")
-        println(SearchRepository.styledSearchCurrents.value)
+        val filteredWineInfosLowerCase = SearchRepository.getWineInfosLikeQuery("m")
+        println(filteredWineInfosLowerCase)
+        SearchRepository.stylingWineInfos(filteredWineInfosLowerCase, "m").forEach {
+            print("$it, ")
+            it.matches("<.+?>".toRegex())
+        }
 
-        Assert.assertEquals(SearchRepository.styledSearchCurrents.value?.get(0)?.time, 1L)
-        Assert.assertEquals(SearchRepository.styledSearchCurrents.value?.get(0)?.value, "<b>a</b>c")
-    }
-
-    /** [WineDataSource.getWine] 테스트 */
-    @Test
-    fun getWineTest() = runBlocking {
+        val filteredEmptyWineInfos = SearchRepository.getWineInfosLikeQuery("OX")
+        println(filteredEmptyWineInfos)
+        SearchRepository.stylingWineInfos(filteredEmptyWineInfos, "M").forEach {
+            Assert.assertTrue(false)
+        }
+        Assert.assertEquals(filteredEmptyWineInfos.size, 0)
     }
 }

@@ -227,6 +227,7 @@
                 android:id="@+id/tv_recommend_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="빠른 키워드"
                 android:textColor="#000000"
                 android:textSize="14sp"
                 android:textStyle="normal"
@@ -239,6 +240,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_recommends"
+                submitList="@{vm.recommends}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -249,7 +251,7 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_recommend_title"
                 app:layout_constraintVertical_chainStyle="packed"
-                tools:listitem="@layout/item_search_recommand" />
+                tools:listitem="@layout/item_search_recommend" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -272,14 +274,14 @@
                 submitList="@{vm.currents}"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                tools:listitem="@layout/item_search_current"
                 android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_chainStyle="packed" />
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:listitem="@layout/item_search_relative" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

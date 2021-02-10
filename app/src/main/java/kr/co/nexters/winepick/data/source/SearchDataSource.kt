@@ -1,11 +1,11 @@
 package kr.co.nexters.winepick.data.source
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import kotlinx.serialization.builtins.ListSerializer
-import kotlinx.serialization.json.Json
-import kr.co.nexters.winepick.data.constant.Constant.PREF_KEY_SEARCH_CURRENT
-import kr.co.nexters.winepick.data.model.local.SearchCurrent
+import kotlinx.serialization.builtins.serializer
+import kotlinx.serialization.json.*
+import kr.co.nexters.winepick.R
+import kr.co.nexters.winepick.WinePickApplication
+import kr.co.nexters.winepick.data.constant.Constant.PREF_KEY_WINE_INFOS
 import kr.co.nexters.winepick.util.SharedPrefs
 
 /**
@@ -15,37 +15,26 @@ import kr.co.nexters.winepick.util.SharedPrefs
  */
 object SearchDataSource {
     /**
-     * SharedPreference 내에 저장되어 있는 [SearchCurrent] 데이터를 모두 불러온다.
-     * 초기 단계에서만 진행한다.
+     * SharedPreference 내에 저장되어 있는 wine_info 정보들을 가져온다.
+     * SharedPrefs 에 저장된 내용이 없을 시 [R.array.wine_info] 에서 값을 가져와 set 한 후 그 값을 리턴한다.
      */
-    fun getSearchCurrents(): List<SearchCurrent> = Json.decodeFromString(
-        ListSerializer(SearchCurrent.serializer()),
-        SharedPrefs[PREF_KEY_SEARCH_CURRENT, "[]"]!!
-    )
+    fun getWineInfos(): List<String> {
+        if (!SharedPrefs.contains(PREF_KEY_WINE_INFOS)) {
+            val wineInfos = WinePickApplication.getGlobalApplicationContext()
+                .resources.getStringArray(R.array.wine_info)
 
-    /** [SearchCurrent] 를 새로 세팅한다. */
-    private suspend fun updateSearchCurrents(
-        list: List<SearchCurrent>
-    ) = withContext(Dispatchers.IO) {
-        val jsonString = Json.encodeToString(ListSerializer(SearchCurrent.serializer()), list)
+            val jsonString = Json.encodeToString(
+                ListSerializer(String.serializer()), wineInfos.toList()
+            )
 
-        SharedPrefs[PREF_KEY_SEARCH_CURRENT] = jsonString
-    }
+            SharedPrefs[PREF_KEY_WINE_INFOS] = jsonString
 
-    /** [list] 에 새로운 [searchCurrent] 를 추가한다. */
-    suspend fun addSearchCurrent(
-        list: List<SearchCurrent>, searchCurrent: SearchCurrent
-    ): List<SearchCurrent> = withContext(Dispatchers.IO) {
-        val newList =
-            // 동일한 value 가 있는 경우 그 값을 뺀다.
-            list.filter { searchCurrent.value != it.value }
-                // 맨 앞에 새로운 데이터를 추가한다.
-                .toMutableList().apply { add(0, searchCurrent) }
-                // 1000 개만 가지고 오고 나머지는 버린다.
-                .take(1000)
-
-        updateSearchCurrents(newList)
-
-        return@withContext newList
+            return wineInfos.toList()
+        } else {
+            return Json.decodeFromString(
+                ListSerializer(String.serializer()),
+                SharedPrefs[PREF_KEY_WINE_INFOS, "[]"] ?: "[]"
+            )
+        }
     }
 }
