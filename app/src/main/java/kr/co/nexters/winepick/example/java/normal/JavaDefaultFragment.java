@@ -8,8 +8,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import kr.co.nexters.winepick.R;
-import kr.co.nexters.winepick.base.BaseFragment;
-import kr.co.nexters.winepick.base.BaseViewModel;
+import kr.co.nexters.winepick.ui.base.BaseFragment;
+import kr.co.nexters.winepick.ui.base.BaseViewModel;
 import kr.co.nexters.winepick.databinding.FragmentJavaDefaultBinding;
 
 /**

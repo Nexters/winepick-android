@@ -2,7 +2,7 @@ package kr.co.nexters.winepick.example.java.viewmodel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import kr.co.nexters.winepick.base.BaseViewModel;
+import kr.co.nexters.winepick.ui.base.BaseViewModel;
 
 /**
  * 자바에서 사용하는 ViewModel

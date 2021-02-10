@@ -1,23 +1,18 @@
 package kr.co.nexters.winepick.data
 
-import androidx.test.core.app.ApplicationProvider
 import kotlinx.coroutines.runBlocking
-import kr.co.nexters.winepick.WinePickApplication
+import kr.co.nexters.winepick.base.AndroidBaseTest
 import kr.co.nexters.winepick.util.SharedPrefs
 import org.junit.After
 import org.junit.Assert
-import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.RobolectricTestRunner
 
 /**
  * SharedPrefs 테스트
  *
  * @since v1.0.0 / 2021.02.03
  */
-@RunWith(RobolectricTestRunner::class)
-class SharedPrefsTest {
+class SharedPrefsTest : AndroidBaseTest() {
     companion object {
         val stringKey = "StringKey"
         val intKey = "IntKey"
@@ -26,13 +21,8 @@ class SharedPrefsTest {
         val booleanKey = "BooleanKey"
     }
 
-    @Before
-    fun setup() {
-        WinePickApplication.appContext = ApplicationProvider.getApplicationContext()
-    }
-
     @After
-    fun teardown() {
+    fun tearDown(){
         // 프리퍼런스 초기화
         SharedPrefs.clear()
     }

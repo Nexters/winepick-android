@@ -2,6 +2,10 @@ package kr.co.nexters.winepick.network
 
 import android.content.Context
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 import kotlinx.serialization.json.Json
 import kr.co.nexters.winepick.BuildConfig
 import kr.co.nexters.winepick.WinePickApplication
@@ -16,6 +20,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Singleton
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
@@ -26,12 +31,15 @@ import kotlin.coroutines.suspendCoroutine
  *
  * @since v1.0.0 / 2021.02.04
  */
+
+@Module
+@InstallIn (ApplicationComponent::class)
 object NetworkModules {
     const val CONNECT_TIMEOUT = 15
     const val WRITE_TIMEOUT = 15
     const val READ_TIMEOUT = 15
 
-    private val cache = provideOkHttpCache(WinePickApplication.appContext)
+    private val cache = provideOkHttpCache(WinePickApplication.getGlobalApplicationContext())
     private val interceptor = provideInterceptor(null)
     private val loggingInterceptor = provideLoggingInterceptor()
     private val okHttpClient = provideOkHttpClient(cache, interceptor, loggingInterceptor)
@@ -91,6 +99,7 @@ object NetworkModules {
             .addInterceptor(loggingInterceptor)
             .build()
     }
+
 
     /** 실제 서비스에서 사용하는 Retrofit2 Service */
     private fun provideWinePickService(okHttpClient: OkHttpClient?): WinePickService {
