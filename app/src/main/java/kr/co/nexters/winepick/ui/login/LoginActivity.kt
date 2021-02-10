@@ -33,12 +33,12 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(
     }
     val sessionCallback: ISessionCallback = object : ISessionCallback {
         override fun onSessionOpened() {
-            Timber.e("로그인 성공")
+            Timber.d("로그인 성공")
             UserManagement.getInstance().me(object : MeV2ResponseCallback() {
                 override fun onSuccess(result: MeV2Response?) {
-                    Timber.e("로그인 성공")
-                    Timber.e("${result!!.kakaoAccount.birthday}")
-                    Timber.e("${result!!.kakaoAccount.profile.nickname}")
+                    Timber.d("로그인 성공")
+                    Timber.d("${result!!.kakaoAccount.birthday}")
+                    Timber.d("${result!!.kakaoAccount.profile.nickname}")
                     Intent(applicationContext,HomeActivity::class.java).apply {
                         putExtra("mode","user")
                     }.run { startActivity(this) }
@@ -73,7 +73,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (Session.getCurrentSession().handleActivityResult(requestCode,resultCode,data)) {
-            Timber.e("현재 세션")
+            Timber.d("현재 세션")
             return
         }
         super.onActivityResult(requestCode, resultCode, data)
