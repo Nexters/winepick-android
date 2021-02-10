@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.nexters.winepick.R
-import kr.co.nexters.winepick.data.model.SearchResult
+import kr.co.nexters.winepick.data.model.wine.WineResult
 import kr.co.nexters.winepick.databinding.ItemSearchResultBinding
 
 /**
@@ -16,7 +16,7 @@ import kr.co.nexters.winepick.databinding.ItemSearchResultBinding
  * @since v1.0.0 / 2021.02.08
  */
 class SearchResultAdapter(val vm: SearchViewModel) :
-    ListAdapter<SearchResult, SearchResultViewHolder>(SearchResultDiffUtilCallBack) {
+    ListAdapter<WineResult, SearchResultViewHolder>(SearchResultDiffUtilCallBack) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchResultViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding: ItemSearchResultBinding =
@@ -33,23 +33,23 @@ class SearchResultAdapter(val vm: SearchViewModel) :
 class SearchResultViewHolder(private val binding: ItemSearchResultBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(searchResult: SearchResult, vm: SearchViewModel) {
+    fun bind(searchResult: WineResult, vm: SearchViewModel) {
         binding.searchResult = searchResult
         binding.vm = vm
     }
 }
 
-object SearchResultDiffUtilCallBack : DiffUtil.ItemCallback<SearchResult>() {
+object SearchResultDiffUtilCallBack : DiffUtil.ItemCallback<WineResult>() {
     override fun areItemsTheSame(
-        oldItem: SearchResult,
-        newItem: SearchResult
+        oldItem: WineResult,
+        newItem: WineResult
     ): Boolean {
-        return oldItem.name == newItem.name
+        return oldItem.nmKor == newItem.nmKor
     }
 
     override fun areContentsTheSame(
-        oldItem: SearchResult,
-        newItem: SearchResult
+        oldItem: WineResult,
+        newItem: WineResult
     ): Boolean {
         return oldItem.hashCode() == newItem.hashCode()
     }

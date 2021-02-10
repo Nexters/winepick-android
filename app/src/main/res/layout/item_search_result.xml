@@ -8,7 +8,7 @@
 
         <variable
             name="searchResult"
-            type="kr.co.nexters.winepick.data.model.SearchResult" />
+            type="kr.co.nexters.winepick.data.model.wine.WineResult" />
 
         <variable
             name="vm"
@@ -52,7 +52,7 @@
                 android:id="@+id/tv_result_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{searchResult.name}"
+                android:text="@{searchResult.nmKor}"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -62,7 +62,7 @@
                 android:id="@+id/tv_result_made_in"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{searchResult.madeIn}"
+                android:text="@{searchResult.country}"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_result_name"
@@ -97,7 +97,7 @@
                     app:layout_constraintRight_toLeftOf="@+id/v_result_taste_divider1"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:title="@{`단맛`}"
-                    tools:value="@{searchResult.taste1}" />
+                    tools:value="@{searchResult.sweetness}" />
 
                 <View
                     android:id="@+id/v_result_taste_divider1"
@@ -121,7 +121,7 @@
                     app:layout_constraintRight_toLeftOf="@id/v_result_taste_divider2"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:title="@{`산미`}"
-                    tools:value="@{searchResult.taste2}" />
+                    tools:value="@{searchResult.acidity}" />
 
                 <View
                     android:id="@+id/v_result_taste_divider2"
@@ -145,7 +145,7 @@
                     app:layout_constraintRight_toLeftOf="@id/v_result_taste_divider3"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:title="@{`묵직함`}"
-                    tools:value="@{searchResult.taste3}" />
+                    tools:value="@{searchResult.body}" />
 
                 <View
                     android:id="@+id/v_result_taste_divider3"
@@ -169,7 +169,7 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:title="@{`부드러움`}"
-                    tools:value="@{searchResult.taste4}" />
+                    tools:value="@{searchResult.tannin}" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

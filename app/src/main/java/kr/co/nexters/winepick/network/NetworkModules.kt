@@ -104,7 +104,7 @@ object NetworkModules {
     /** 실제 서비스에서 사용하는 Retrofit2 Service */
     private fun provideWinePickService(okHttpClient: OkHttpClient?): WinePickService {
         return Retrofit.Builder()
-            .baseUrl("http://padakpadak.run.goorm.io/")
+            .baseUrl("http://ec2-3-35-107-29.ap-northeast-2.compute.amazonaws.com:8080/")
             .addConverterFactory(Json.asConverterFactory("application/json; charset=utf-8".toMediaType()))
             .client(okHttpClient)
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())

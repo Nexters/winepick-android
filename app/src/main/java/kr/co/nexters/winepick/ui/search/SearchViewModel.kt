@@ -1,7 +1,6 @@
 package kr.co.nexters.winepick.ui.search
 
 import android.text.Editable
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,8 +8,8 @@ import androidx.lifecycle.viewModelScope
 import io.reactivex.rxjava3.subjects.PublishSubject
 import kotlinx.coroutines.launch
 import kr.co.nexters.winepick.R
-import kr.co.nexters.winepick.data.model.SearchResult
-import kr.co.nexters.winepick.data.repository.SearchRepository
+import kr.co.nexters.winepick.data.model.wine.WineResult
+import kr.co.nexters.winepick.data.repository.WineRepository
 import kr.co.nexters.winepick.ui.base.BaseViewModel
 import timber.log.Timber
 
@@ -31,8 +30,8 @@ class SearchViewModel : BaseViewModel() {
     val filterNum: LiveData<Int> = _filterNum
 
     /** 검색 결과 list */
-    private val _results = MutableLiveData<List<SearchResult>>(listOf())
-    val results: LiveData<List<SearchResult>> = _results
+    private val _results = MutableLiveData<List<WineResult>>(listOf())
+    val results: LiveData<List<WineResult>> = _results
 
     /** 가장 맨 앞에 보여야 할 화면. 보여야 할 내용은 [SearchFront] 참고 */
     private val _searchFrontPage = MutableLiveData<SearchFront>(SearchFront.DEFAULT)
@@ -83,10 +82,9 @@ class SearchViewModel : BaseViewModel() {
     /** 검색 버튼 누를 시 실행되는 로직 */
     fun querySearchClick() {
         viewModelScope.launch {
-            _results.value = SearchRepository.getSearchResults(query.value!!, 0)
-                .apply { _filterNum.value = this.size }
-
+            _results.value = WineRepository.getWines(query.value!!, 0)?.wineResult ?: listOf()
         }
+
         _searchAction.onNext(SearchAction.QUERY_SEARCH)
     }
 
@@ -118,9 +116,9 @@ class SearchViewModel : BaseViewModel() {
     /**
      * [검색 결과 아이템 화면][R.layout.item_search_result] 에서 하트 버튼을 누를 경우 동작하는 로직
      *
-     * @param searchResult 검색결과 아이템이 가지고 있는 [검색 결과 아이템 데이터][SearchResult] 정보
+     * @param wineResult 검색결과 아이템이 가지고 있는 [검색 결과 아이템 데이터][WineResult] 정보
      */
-    fun searchResultHeartClick(searchResult: SearchResult) {
+    fun searchResultHeartClick(wineResult: WineResult) {
         // TODO 좋아요 추가/취소 구현하기
     }
 }
