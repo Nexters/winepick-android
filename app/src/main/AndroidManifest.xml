@@ -22,17 +22,19 @@
             android:value="@string/kakao_app_key"/>
 
         <activity android:name=".ui.login.LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".example.java.normal.JavaDefaultActivity"></activity>
         <activity android:name=".example.kotlin.normal.KotlinDefaultActivity"></activity>
         <activity android:name=".example.java.viewmodel.JavaViewModelActivity"></activity>
         <activity android:name=".example.kotlin.viewmodel.KotlinViewModelActivity"></activity>
         <activity android:name=".MainActivity"/>
+        <activity android:name=".ui.search.SearchActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
