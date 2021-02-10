@@ -78,6 +78,9 @@ fun getWinesResponse(): WinePickResponse<WinesResult> = Json.decodeFromString(""
             "acidity": 3,
             "body": 3,
             "tannin": 3,
+            "feeling": "드라이한 화이트지만, 달달하게 잘 익은 배의 풍미로 시작되어 크리미한 질감까지 블라인딩 와인의 장점을 살린 와인",
+            "suitWho": null,
+            "suitEvent": null,
             "suitFood": "찹스테이크, 양고기",
             "likes": 0
           },
@@ -92,6 +95,9 @@ fun getWinesResponse(): WinePickResponse<WinesResult> = Json.decodeFromString(""
             "acidity": 3,
             "body": 3,
             "tannin": 3,
+            "feeling": "밝은 루비색을 띠고 있으며 잘 익은 체리의 달콤하고 풍부한 향과 실크처럼 부드럽게 다듬어진 탄닌의 맛이 느껴지는 와인",
+            "suitWho": null,
+            "suitEvent": null,
             "suitFood": "찹스테이크, 양고기",
             "likes": 0
           },
@@ -106,7 +112,10 @@ fun getWinesResponse(): WinePickResponse<WinesResult> = Json.decodeFromString(""
             "acidity": 3,
             "body": 3,
             "tannin": 3,
-            "suitFood": "찹스테이크, 고기",
+            "feeling": "",
+            "suitWho": null,
+            "suitEvent": null,
+            "suitFood": "곡이",
             "likes": 0
           }
         ],
