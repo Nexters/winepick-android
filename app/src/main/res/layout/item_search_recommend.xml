@@ -6,21 +6,30 @@
 
     <data>
 
+        <variable
+            name="searchRecommend"
+            type="String" />
+
+        <variable
+            name="vm"
+            type="kr.co.nexters.winepick.ui.search.SearchViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_search_recommand_title"
-            android:layout_width="match_parent"
+            android:id="@+id/tv_search_recommend_title"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
             android:background="@drawable/bg_search_recommend_item"
             android:gravity="center"
             android:paddingHorizontal="20dp"
             android:paddingVertical="14dp"
+            android:text="@{searchRecommend}"
             android:textColor="#6f6f6f"
             android:textSize="15sp"
             android:textStyle="normal"

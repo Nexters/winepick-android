@@ -241,9 +241,10 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_recommends"
                 submitList="@{vm.recommends}"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="26dp"
                 android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"
