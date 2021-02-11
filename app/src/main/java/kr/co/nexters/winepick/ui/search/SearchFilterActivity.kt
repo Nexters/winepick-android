@@ -1,9 +1,11 @@
 package kr.co.nexters.winepick.ui.search
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import kr.co.nexters.winepick.BR
 import kr.co.nexters.winepick.R
+import kr.co.nexters.winepick.data.constant.Constant
 import kr.co.nexters.winepick.databinding.ActivitySearchFilterBinding
 import kr.co.nexters.winepick.ui.base.BaseActivity
 
@@ -26,5 +28,12 @@ class SearchFilterActivity : BaseActivity<ActivitySearchFilterBinding>(
         binding.apply {
 
         }
+    }
+
+    override fun onBackPressed() {
+        setResult(
+            Constant.REQ_CODE_GO_TO_FILTER,
+            Intent().apply { putExtra(Constant.INT_EXTRA_FILTER_NUM, 3) })
+        super.onBackPressed()
     }
 }
