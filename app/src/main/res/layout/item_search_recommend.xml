@@ -30,7 +30,7 @@
             android:paddingHorizontal="20dp"
             android:paddingVertical="14dp"
             android:text="@{searchRecommend}"
-            android:textColor="#6f6f6f"
+            android:textColor="@color/search_recommend_item_text_color"
             android:textSize="15sp"
             android:textStyle="normal"
             app:layout_constraintBottom_toBottomOf="parent"

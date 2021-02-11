@@ -4,12 +4,24 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
 
+    <!-- default -->
+    <color name="transparent">#00000000</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+
     <!-- login  -->
     <color name="colorBlack">#000000</color>
     <color name="colorBlack80">#80000000</color>
     <color name="colorBlack07">#07000000</color>
-    
+
     <!-- main -->
     <color name="colorLightRed">#f25942</color>
+
+    <!-- search -->
+    <color name="search_query_reset_text_color">#262626</color>
+    <color name="search_recommend_item_background">#F2F2F2</color>
+    <color name="search_recommend_item_text_color">#6F6F6F</color>
+    <color name="search_relative_item_divider_color">#F3F3F3</color>
+    <color name="search_result_country_text_color">#ADADAD</color>
 
 </resources>

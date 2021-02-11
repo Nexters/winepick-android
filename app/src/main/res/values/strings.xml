@@ -1,12 +1,19 @@
 <resources>
     <string name="app_name">WinePick</string>
-    <string name="search_result_taste_value">%d</string>
 
-    <!-- 검색 화면 -->
+    <!-- search -->
     <!-- DataBinding String.format 링크 : https://gogorchg.tistory.com/entry/AndroidDataBinding-String-Format-%EC%A0%81%EC%9A%A9%ED%95%98%EA%B8%B0 -->
-    <string name="searchFilterTitle" formatted="false">필터 %d개 적용 중</string>
-    <string name="searchResultTitle" formatted="false">검색 결과 총 %d개</string>
-    <string name="searchResultPrice" formatted="false">%d원</string>
+    <string name="search_query_reset">취소</string>
+    <string name="search_query_hint">검색어 입력</string>
+
+    <string name="search_filter_title">필터 %d개 적용 중</string>
+    <string name="search_filter_edit">변경</string>
+
+    <string name="search_result_empty">결과가 없습니다.\n빠른 키워드로 검색해보세요.</string>
+    <string name="search_result_title">검색 결과 총 %d개</string>
+    <string name="search_result_price">%d원</string>
+    <string name="search_recommend_title">빠른 키워드</string>
+    <string name="search_result_taste_value">%d</string>
     <string-array name="wine_info">
         <item>라포데리나 브루넬로 디 몬탈치노 DOCG</item>
         <item>몬떼 레온 리미티드 에디션</item>

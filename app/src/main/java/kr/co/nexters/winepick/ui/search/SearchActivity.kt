@@ -36,7 +36,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
     fun subscribeUI() {
         viewModel.results.observe(this, {
             binding.tvResultTitle.text =
-                String.format(getString(R.string.searchResultTitle), it.size)
+                String.format(getString(R.string.search_result_title), it.size)
         })
 
         viewModel.searchFrontPage.observe(this, {
