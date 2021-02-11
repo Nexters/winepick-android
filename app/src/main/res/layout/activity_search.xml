@@ -264,7 +264,7 @@
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:paddingHorizontal="24dp"
-            app:isInvisible="@{!(vm.searchFrontPage == SearchFront.CURRENT)}"
+            app:isInvisible="@{vm.currents.size() == 0 || !(vm.searchFrontPage == SearchFront.CURRENT)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
