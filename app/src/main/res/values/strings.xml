@@ -5,15 +5,28 @@
     <!-- DataBinding String.format 링크 : https://gogorchg.tistory.com/entry/AndroidDataBinding-String-Format-%EC%A0%81%EC%9A%A9%ED%95%98%EA%B8%B0 -->
     <string name="search_query_reset">취소</string>
     <string name="search_query_hint">검색어 입력</string>
-
-    <string name="search_filter_title">필터 %d개 적용 중</string>
+    <string name="search_filter_info">필터 %d개 적용 중</string>
     <string name="search_filter_edit">변경</string>
-
     <string name="search_result_empty">결과가 없습니다.\n빠른 키워드로 검색해보세요.</string>
     <string name="search_result_title">검색 결과 총 %d개</string>
     <string name="search_result_price">%d원</string>
     <string name="search_recommend_title">빠른 키워드</string>
     <string name="search_result_taste_value">%d</string>
+
+    <!-- search filter -->
+    <string name="search_filter_title">상세 필터</string>
+    <string name="search_filter_confirm">적용</string>
+    <string name="search_filter_taste_title">먹고싶은 와인의 맛은?</string>
+    <string name="search_filter_taste_content">도수</string>
+    <string name="search_filter_taste_type">종류</string>
+    <string name="search_filter_taste_taste">맛</string>
+    <string name="search_filter_situation_title">와인과 함께하는 상황은?</string>
+    <string name="search_filter_situation_event">이벤트</string>
+    <string name="search_filter_situation_food">음식</string>
+    <string name="search_filter_where_title">와인을 구매하고 싶은 곳은?</string>
+    <string name="search_filter_where_convenience">편의점</string>
+    <string name="search_filter_confirm_bottom">적용하기</string>
+
     <string-array name="wine_info">
         <item>라포데리나 브루넬로 디 몬탈치노 DOCG</item>
         <item>몬떼 레온 리미티드 에디션</item>

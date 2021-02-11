@@ -24,4 +24,10 @@
     <color name="search_relative_item_divider_color">#F3F3F3</color>
     <color name="search_result_country_text_color">#ADADAD</color>
 
+    <!-- search filter -->
+    <color name="search_filter_layout_gray_background">#05000000</color>
+    <color name="search_filter_item_background">#0C000000</color>
+    <color name="search_filter_item_text_color">#4C000000</color>
+    <color name="search_filter_confirm_bottom_background">#EBEBEB</color>
+    <color name="search_filter_confirm_bottom_text_color">#80000000</color>
 </resources>

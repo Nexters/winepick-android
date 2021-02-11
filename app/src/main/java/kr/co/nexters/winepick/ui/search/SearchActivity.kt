@@ -7,6 +7,7 @@ import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.databinding.ActivitySearchBinding
 import kr.co.nexters.winepick.ui.base.BaseActivity
 import kr.co.nexters.winepick.util.hideKeyboard
+import kr.co.nexters.winepick.util.startActivity
 import kr.co.nexters.winepick.util.toast
 import timber.log.Timber
 
@@ -53,9 +54,9 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
                 }
                 SearchAction.QUERY_SEARCH -> binding.etQuery.clearFocus()
                 SearchAction.EDIT_FILTER -> {
-                    // TODO 필터 변경 화면으로 이동하는 로직 구현하기
                     toast("필터 변경 화면으로 이동")
                     binding.etQuery.clearFocus()
+                    startActivity(SearchFilterActivity::class)
                 }
                 else -> Timber.i("SearchAction.NONE")
             }

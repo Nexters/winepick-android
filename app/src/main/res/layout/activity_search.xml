@@ -119,14 +119,14 @@
             app:layout_constraintTop_toBottomOf="@+id/layout_search_query">
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_filter_title"
+                android:id="@+id/tv_filter_info"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_search_filter_title"
                 android:gravity="center_vertical"
                 android:paddingVertical="14dp"
                 android:paddingStart="20dp"
-                android:text="@{@string/search_filter_title(vm.filterNum)}"
+                android:text="@{@string/search_filter_info(vm.filterNum)}"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="normal"
@@ -151,7 +151,7 @@
                 android:textSize="14sp"
                 android:textStyle="normal"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="@+id/tv_filter_title"
+                app:layout_constraintLeft_toRightOf="@+id/tv_filter_info"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:onSingleClick="@{vm::filterEditClick}" />
