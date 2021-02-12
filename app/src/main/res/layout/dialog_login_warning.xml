@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/bg_home_white_15">
+
+      <androidx.constraintlayout.widget.Guideline
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:id="@+id/guideline_left"
+          app:layout_constraintGuide_begin="16dp"
+          android:orientation="vertical"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/guideline_right"
+        app:layout_constraintGuide_end="16dp"
+        android:orientation="vertical"/>
+
+
+    <TextView
+        android:id="@+id/tv_login_warning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="로그인 하시겠습니까?"
+        android:textSize="16sp"
+        android:textColor="@color/colorBlack"
+        android:fontFamily="@font/notosans_cjk_kr_bold"
+        android:includeFontPadding="false"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+
+    <TextView
+        android:id="@+id/tv_login_warning_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="@string/login_warning_like"
+        android:textColor="@color/colorBlack"
+        android:textSize="14sp"
+        android:fontFamily="@font/notosans_cjk_kr_light"
+        android:includeFontPadding="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_login_warning"
+        android:layout_marginTop="16dp"/>
+
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_login_warning_no"
+        android:background="@drawable/bg_home_white_15"
+        android:text="아니오"
+        android:paddingVertical="14dp"
+        android:textSize="15sp"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/notosans_cjk_kr_regular"
+        android:includeFontPadding="false"
+        android:textColor="@color/colorGray82"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintEnd_toStartOf="@id/tv_login_warning_yes"
+        app:layout_constraintStart_toStartOf="@id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@id/tv_login_warning_content"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_login_warning_yes"
+        android:background="@drawable/bg_login_warning_black_10"
+        android:text="네"
+        android:gravity="center"
+        android:paddingVertical="14dp"
+        android:textSize="15sp"
+        android:layout_marginStart="4dp"
+        android:textColor="@color/colorWhite"
+        android:fontFamily="@font/notosans_cjk_kr_regular"
+        android:includeFontPadding="false"
+        app:layout_constraintStart_toEndOf="@id/tv_login_warning_no"
+        app:layout_constraintEnd_toEndOf="@id/guideline_right"
+        app:layout_constraintTop_toTopOf="@id/tv_login_warning_no"/>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

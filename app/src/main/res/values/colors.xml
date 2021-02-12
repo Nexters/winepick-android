@@ -12,4 +12,9 @@
     <!-- main -->
     <color name="colorLightRed">#f25942</color>
 
+    <!--login_warning -->
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorBlack19">#19000000</color>
+    <color name="colorGray82">#828282</color>
+
 </resources>
