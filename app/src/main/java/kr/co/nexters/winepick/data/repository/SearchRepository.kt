@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import kr.co.nexters.winepick.data.model.local.SearchFilterItem
 import kr.co.nexters.winepick.data.source.SearchDataSource
 import kr.co.nexters.winepick.ui.search.SearchActivity
 import java.util.*
@@ -19,6 +20,10 @@ object SearchRepository {
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     val wineInfos: List<String> = SearchDataSource.getWineInfos()
 
+    /** 초기 필터 목록 */
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    val searchFilterItems: List<SearchFilterItem> = SearchDataSource.getSearchFilterItems()
+
     /**
      * 스타일링된 검색 목록
      *
@@ -27,6 +32,11 @@ object SearchRepository {
      */
     private val _styledWineInfos = MutableLiveData<List<String>>(listOf())
     val styledWineInfos: LiveData<List<String>> = _styledWineInfos
+
+    /** 유저가 필터 설정한 내역 */
+    private val _userSearchFilterItems = searchFilterItems.toMutableList()
+    val userSearchFilterItems: List<SearchFilterItem> = _userSearchFilterItems
+
 
     /**
      * 특정 query 에 일치하는 와인 목록을 찾는다.
@@ -64,5 +74,39 @@ object SearchRepository {
         _styledWineInfos.postValue(styledWineInfos)
 
         return@withContext styledWineInfos
+    }
+
+    /**
+     * [newUpdateItem], [prevUpdatedItem] 와 매치되는 정보를 변경한다.
+     *
+     * @param newUpdateItem 새로 업데이트 해줘야 하는 item
+     * @param prevUpdatedItem 중복 선택이 안되는 아이템인 경우 롤백 시켜야 하는 item
+     *
+     * @return 성공했는지 유무
+     */
+    fun updateFilterItems(
+        newUpdateItem: SearchFilterItem,
+        prevUpdatedItem: SearchFilterItem? = null
+    ): Boolean {
+        val newList = mutableListOf<SearchFilterItem>().apply {
+            addAll(
+                _userSearchFilterItems.apply {
+                    // newUpdateItem 처리
+                    removeAt(newUpdateItem.id)
+                    add(newUpdateItem.id, newUpdateItem)
+
+                    // prevUpdatedItem 처리
+                    prevUpdatedItem?.let {
+                        removeAt(it.id)
+                        add(it.id, it)
+                    }
+                }
+            )
+        }
+
+        _userSearchFilterItems.clear()
+        _userSearchFilterItems.addAll(newList)
+
+        return true
     }
 }

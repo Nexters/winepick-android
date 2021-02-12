@@ -61,4 +61,11 @@ class SearchTest : AndroidBaseTest() {
         }
         Assert.assertEquals(filteredEmptyWineInfos.size, 0)
     }
+
+    @Test
+    fun searchFilterItemTest() {
+        val abcd = SearchRepository.searchFilterItems.groupBy { it.category }
+        abcd.keys.sortedBy { it.ordinal }
+        print(abcd)
+    }
 }
