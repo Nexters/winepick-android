@@ -50,4 +50,14 @@ class SearchFilterViewModel : BaseViewModel() {
             prevUpdatedItem?.let { _changeSearchFilterItem.value = prevUpdatedItem }
         }
     }
+
+    fun replaceFilterItem(needToReplaceItem: SearchFilterItem, newSliderValue : String) {
+        Timber.i("needToUpdateItem = $needToReplaceItem")
+
+        val newUpdatedItem = needToReplaceItem.copy(value = newSliderValue)
+
+        if(SearchRepository.updateFilterItems(newUpdatedItem)){
+            _changeSearchFilterItem.value = newUpdatedItem
+        }
+    }
 }

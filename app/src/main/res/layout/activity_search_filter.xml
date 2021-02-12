@@ -125,14 +125,39 @@
                     app:layout_constraintTop_toBottomOf="@+id/tv_search_filter_taste_title"
                     tools:text="@string/search_filter_taste_content" />
 
-                <View
-                    android:id="@+id/sb_search_filter_taste_content"
+                <LinearLayout
+                    android:id="@+id/layout_search_filter_taste_content"
                     android:layout_width="0dp"
-                    android:layout_height="36dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_search_filter_taste_content"
                     app:layout_constraintLeft_toRightOf="@+id/gl_search_filter_taste"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/tv_search_filter_taste_content" />
+                    app:layout_constraintRight_toRightOf="parent">
+
+                    <com.google.android.material.slider.RangeSlider
+                        android:id="@+id/sb_search_filter_taste_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:stepSize="1.0"
+                        android:valueFrom="4.0"
+                        app:labelStyle="@style/SearchFilterToolTipTheme"
+                        android:valueTo="13.0"
+                        app:minSeparation="1dp"
+                        app:thumbColor="@color/search_filter_tastes_content_track_active"
+                        app:thumbRadius="5dp"
+                        app:tickVisible="false"
+                        app:trackColorActive="@color/search_filter_tastes_content_track_active"
+                        app:trackColorInactive="@color/search_filter_tastes_content_track_inactive"
+                        app:trackHeight="6dp"
+                        app:values="@array/search_filter_taste_initial_contents" />
+
+                    <!--                    <androidx.constraintlayout.widget.ConstraintLayout-->
+                    <!--                        android:id="@+id/layout_search_filter_taste_content_texts"-->
+                    <!--                        android:layout_width="match_parent"-->
+                    <!--                        android:layout_height="16dp"-->
+                    <!--                        android:paddingLeft="14dp"-->
+                    <!--                        android:paddingRight="12dp" />-->
+                </LinearLayout>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_search_filter_taste_type"

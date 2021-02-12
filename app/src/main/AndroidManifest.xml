@@ -36,7 +36,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.search.SearchFilterActivity" />
+        <activity
+            android:name=".ui.search.SearchFilterActivity"
+            android:theme="@style/SearchFilterNoActionBar" />
     </application>
 
 </manifest>

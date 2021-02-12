@@ -26,6 +26,10 @@
     <string name="search_filter_where_title">와인을 구매하고 싶은 곳은?</string>
     <string name="search_filter_where_convenience">편의점</string>
     <string name="search_filter_confirm_bottom">적용하기</string>
+    <array name="search_filter_taste_initial_contents">
+        <item>4.0</item>
+        <item>13.0</item>
+    </array>
 
     <string-array name="wine_info">
         <item>라포데리나 브루넬로 디 몬탈치노 DOCG</item>
