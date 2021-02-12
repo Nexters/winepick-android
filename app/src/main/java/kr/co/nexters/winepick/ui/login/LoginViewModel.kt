@@ -11,17 +11,20 @@ import kr.co.nexters.winepick.ui.base.BaseViewModel
  */
 class LoginViewModel : BaseViewModel() {
     private var _login = MutableLiveData<String>()
-    var login: LiveData<String> = _login
+
+    var login : LiveData<String> = _login
 
     /** 생성자 */
     init {
-        _login.value = "카카오 로그인 하기"
+        _login.value = MutableLiveData<String>().value
+
     }
 
     /** 제목을 변경한다. UI 에서 [_title] 에 직접 접근하는 것을 막기 위해 사용한다. */
     fun editTitle(title: String) {
         _login.value = title
     }
+
 
     /** UI 의 onDestroy 개념으로 생각하면 편할듯 */
     override fun onCleared() {
