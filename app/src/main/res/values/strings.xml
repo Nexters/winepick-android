@@ -1,8 +1,7 @@
 <resources>
     <string name="app_name">WinePick</string>
-
+      <string name="app_name_lower">winepick</string>
     <!-- login warning -->
     <string name="login_warning_title">로그인 하시겠습니까?</string>
     <string name="login_warning_like">좋아요 기능은\n로그인이 필요합니다.</string>
-
 </resources>
