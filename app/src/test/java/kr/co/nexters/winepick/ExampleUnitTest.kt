@@ -1,17 +1,21 @@
 package kr.co.nexters.winepick
 
+import androidx.test.core.app.ActivityScenario
+import kr.co.nexters.winepick.base.AndroidBaseTest
+import kr.co.nexters.winepick.example.kotlin.viewmodel.KotlinViewModelActivity
 import org.junit.Test
 
-import org.junit.Assert.*
 
 /**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
+ * example 패키지 내에 있는 activity 를 테스트한다.
  */
-class ExampleUnitTest {
+class ExampleUnitTest : AndroidBaseTest() {
     @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+    fun kotlinViewModelActivityTitleTest() {
+        ActivityScenario.launch(KotlinViewModelActivity::class.java).use { scenario ->
+            scenario.onActivity { activity: KotlinViewModelActivity ->
+                assert(activity.viewModel.title.value == "코틀린 액티비티 테스트")
+            }
+        }
     }
 }

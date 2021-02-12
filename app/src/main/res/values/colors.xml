@@ -3,4 +3,18 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+
+    <!-- login  -->
+    <color name="colorBlack">#000000</color>
+    <color name="colorBlack80">#80000000</color>
+    <color name="colorBlack07">#07000000</color>
+    
+    <!-- main -->
+    <color name="colorLightRed">#f25942</color>
+
+    <!--login_warning -->
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorBlack19">#19000000</color>
+    <color name="colorGray82">#828282</color>
+
 </resources>
