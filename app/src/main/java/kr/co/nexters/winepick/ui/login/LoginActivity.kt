@@ -16,6 +16,7 @@ import com.kakao.usermgmt.UserManagement
 import com.kakao.usermgmt.callback.MeV2ResponseCallback
 import com.kakao.usermgmt.response.MeV2Response
 import com.kakao.util.exception.KakaoException
+import dagger.hilt.android.AndroidEntryPoint
 import kr.co.nexters.winepick.MainActivity
 import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.databinding.ActivityLoginBinding
@@ -25,6 +26,7 @@ import kr.co.nexters.winepick.ui.home.HomeActivity
 import kr.co.nexters.winepick.util.startActivity
 import timber.log.Timber
 
+@AndroidEntryPoint
 class LoginActivity : BaseActivity<ActivityLoginBinding>(
     R.layout.activity_login
 ) {

@@ -13,5 +13,10 @@
     <color name="colorLightRed">#f25942</color>
     <color name="colorWhite">#ffffff</color>
     <color name="colorWhite4c">#4cffffff</color>
+    <color name="colorGrayeb">#ebebeb</color>
+    <color name="colorGray82">#828282</color>
+    <color name="colorGrayf9">#f9f9f9</color>
+
+
 
 </resources>
