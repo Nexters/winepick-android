@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">WinePick</string>
     <string name="app_name_lower">winepick</string>
+    <string name="home_guest_title">나에게 어울리는 와인은?</string>
+    <string name="home_guest_subtitle">나온 결과에 딱 맞는 와인도 추천해줘요.</string>
+    <string name="wine_search">와인 검색하기</string>
+    <string name="home_search_title">오늘은 어떤 와인을\n도전해볼까요?</string>
+    <string name="home_wine_type">내 와인타입</string>
 </resources>

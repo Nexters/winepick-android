@@ -37,11 +37,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(
             UserManagement.getInstance().me(object : MeV2ResponseCallback() {
                 override fun onSuccess(result: MeV2Response?) {
                     Timber.d("로그인 성공")
-                    Timber.d("${result!!.kakaoAccount.birthday}")
                     Timber.d("${result!!.kakaoAccount.profile.nickname}")
-                    Intent(applicationContext,HomeActivity::class.java).apply {
-                        putExtra("mode","user")
-                    }.run { startActivity(this) }
+                    Timber.d("connect - ${result!!.connectedAt}")
+                    binding.vm!!.editUser(true)
+                    startActivity(HomeActivity::class)
                 }
 
                 override fun onSessionClosed(errorResult: ErrorResult?) {
@@ -63,9 +62,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(
         binding.apply {
             tvGuest.text = "먼저 둘러보고 싶어요."
             tvGuest.setOnClickListener {
-                Intent(applicationContext,HomeActivity::class.java).apply {
-                    putExtra("mode","guest")
-                }.run { startActivity(this) }
+                startActivity(HomeActivity::class)
             }
         }
 
