@@ -24,8 +24,10 @@
 
 
 
+    <!-- survey -->
+    <color name="colorWhite">#FFFFFF</color>
+  
     <!--login_warning -->
-    <color name="colorWhite">#ffffff</color>
     <color name="colorBlack19">#19000000</color>
 
     <!-- search -->
@@ -43,4 +45,5 @@
     <color name="search_filter_confirm_bottom_text_color">#80000000</color>
     <color name="search_filter_tastes_content_track_active">#f25942</color>
     <color name="search_filter_tastes_content_track_inactive">#EAEAEA</color>
+
 </resources>
