@@ -39,4 +39,5 @@
     <color name="search_filter_confirm_bottom_text_color">#80000000</color>
     <color name="search_filter_tastes_content_track_active">#f25942</color>
     <color name="search_filter_tastes_content_track_inactive">#EAEAEA</color>
+
 </resources>
