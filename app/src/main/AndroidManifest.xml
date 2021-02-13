@@ -21,6 +21,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
+        <activity android:name=".ui.home.HomeActivity"></activity>
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
@@ -28,7 +29,6 @@
 
         <activity android:name=".ui.login.LoginActivity" />
         <activity android:name=".ui.survey.SurveyActivity" >
-
         </activity>
         <activity android:name=".ui.survey.SurveyResultActivity">
             <intent-filter>
@@ -46,9 +46,7 @@
                     android:host="@string/kakaolink_host" />
             </intent-filter>
         </activity>
-
         <activity android:name=".ui.survey.ScreenSlidePagerActivity" />
-
         <activity android:name=".example.java.normal.JavaDefaultActivity" />
         <activity android:name=".example.kotlin.normal.KotlinDefaultActivity" />
         <activity android:name=".example.java.viewmodel.JavaViewModelActivity" />

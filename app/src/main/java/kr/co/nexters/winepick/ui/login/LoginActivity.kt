@@ -21,6 +21,7 @@ import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.databinding.ActivityLoginBinding
 import kr.co.nexters.winepick.ui.base.BaseActivity
 import kr.co.nexters.winepick.ui.base.BaseViewModel
+import kr.co.nexters.winepick.ui.home.HomeActivity
 import kr.co.nexters.winepick.util.startActivity
 import timber.log.Timber
 
@@ -32,17 +33,19 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(
     }
     val sessionCallback: ISessionCallback = object : ISessionCallback {
         override fun onSessionOpened() {
-            Timber.e("로그인 성공")
+            Timber.d("로그인 성공")
             UserManagement.getInstance().me(object : MeV2ResponseCallback() {
                 override fun onSuccess(result: MeV2Response?) {
-                    Timber.e("로그인 성공")
-                    Timber.e("${result!!.kakaoAccount.birthday}")
-                    Timber.e("${result!!.kakaoAccount.profile.nickname}")
-                    startActivity(MainActivity::class)
-
+                    Timber.d("로그인 성공")
+                    Timber.d("${result!!.kakaoAccount.birthday}")
+                    Timber.d("${result!!.kakaoAccount.profile.nickname}")
+                    Intent(applicationContext,HomeActivity::class.java).apply {
+                        putExtra("mode","user")
+                    }.run { startActivity(this) }
                 }
 
                 override fun onSessionClosed(errorResult: ErrorResult?) {
+                    Timber.e("SessionClose - ${errorResult}")
                 }
 
             })
@@ -58,13 +61,19 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(
         Session.getCurrentSession().addCallback(sessionCallback)
         binding.setVariable(BR.vm, viewModel)
         binding.apply {
+            tvGuest.text = "먼저 둘러보고 싶어요."
+            tvGuest.setOnClickListener {
+                Intent(applicationContext,HomeActivity::class.java).apply {
+                    putExtra("mode","guest")
+                }.run { startActivity(this) }
+            }
         }
 
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (Session.getCurrentSession().handleActivityResult(requestCode,resultCode,data)) {
-            Timber.e("현재 세션")
+            Timber.d("현재 세션")
             return
         }
         super.onActivityResult(requestCode, resultCode, data)

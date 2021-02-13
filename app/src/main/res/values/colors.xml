@@ -7,11 +7,16 @@
     <!-- login  -->
     <color name="colorBlack">#000000</color>
     <color name="colorBlack80">#80000000</color>
-    <color name="colorBlack07">#07000000</color>
+    <color name="colorGray">#F5F5F5</color>
     
     <!-- main -->
     <color name="colorLightRed">#f25942</color>
 
     <!-- survey -->
     <color name="colorWhite">#FFFFFF</color>
+  
+    <!--login_warning -->
+    <color name="colorBlack19">#19000000</color>
+    <color name="colorGray82">#828282</color>
+
 </resources>
