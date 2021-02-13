@@ -47,8 +47,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.survey.ScreenSlidePagerActivity" />
-
         <activity android:name=".example.java.normal.JavaDefaultActivity" />
         <activity android:name=".example.kotlin.normal.KotlinDefaultActivity" />
         <activity android:name=".example.java.viewmodel.JavaViewModelActivity" />
