@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="kr.co.nexters.winepick.util.ext.StringExtKt" />
+
+        <variable
+            name="searchRelative"
+            type="String" />
+
+        <variable
+            name="vm"
+            type="kr.co.nexters.winepick.ui.search.SearchViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_search_current_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingVertical="12dp"
+            android:text="@{StringExtKt.htmlStyling(searchRelative)}"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="아이스 loius white wine" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/search_relative_item_divider_color"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_search_current_title" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

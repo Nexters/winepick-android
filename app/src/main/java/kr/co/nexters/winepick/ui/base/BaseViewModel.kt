@@ -48,4 +48,12 @@ open class BaseViewModel : ViewModel() {
     protected fun Disposable.addDisposable() {
         compositeDisposable.add(this)
     }
+
+    /**
+     * UI 단계에서 onResume 일 시 실행해주어야 하는 로직을 명세한다.
+     * 필수가 아니므로 추상화는 하지 않는다.
+     */
+    open fun onResume() {
+
+    }
 }

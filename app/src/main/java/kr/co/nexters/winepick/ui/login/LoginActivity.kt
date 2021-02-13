@@ -23,6 +23,7 @@ import kr.co.nexters.winepick.databinding.ActivityLoginBinding
 import kr.co.nexters.winepick.ui.base.BaseActivity
 import kr.co.nexters.winepick.ui.base.BaseViewModel
 import kr.co.nexters.winepick.ui.home.HomeActivity
+import kr.co.nexters.winepick.ui.search.SearchActivity
 import kr.co.nexters.winepick.util.startActivity
 import timber.log.Timber
 
@@ -65,6 +66,15 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(
             tvGuest.text = "먼저 둘러보고 싶어요."
             tvGuest.setOnClickListener {
                 startActivity(HomeActivity::class)
+            }
+
+            // TODO 검색화면을 볼 수 있도록 하기 위해 임시 구현된 로직 (배포 시에는 삭제한다)
+            var count = 0
+            tvAppName.setOnClickListener {
+                if (count++ > 10) {
+                    startActivity(SearchActivity::class, false, null)
+                    count = 0
+                }
             }
         }
 
