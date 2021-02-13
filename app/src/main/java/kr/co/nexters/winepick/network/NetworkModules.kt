@@ -33,7 +33,7 @@ import kotlin.coroutines.suspendCoroutine
  */
 
 @Module
-@InstallIn (ApplicationComponent::class)
+@InstallIn(ApplicationComponent::class)
 object NetworkModules {
     const val CONNECT_TIMEOUT = 15
     const val WRITE_TIMEOUT = 15
@@ -61,15 +61,22 @@ object NetworkModules {
      */
     private fun provideInterceptor(prefs: String?): Interceptor {
         return Interceptor { chain: Interceptor.Chain ->
+            // wine/filter 인 경우, "?" 가 인코딩 되어있는지 확인 후 인코딩 풀어주기
+            val request = chain.request()
+            var newUrl = request.url.toString()
+            if (newUrl.contains("v2/api/wine/filter"))
+                newUrl = newUrl.replace("%3F", "?")
+
+            val builder = chain.request().newBuilder()
+                .url(newUrl)
+
             if (prefs?.isNotEmpty() == true) {
-//                val bearer = "BEARER $prefs"
-                val builder = chain.request().newBuilder()
-//                    .header("Authorization", bearer)
-//                    .header("Accept", "application/json")
-                return@Interceptor chain.proceed(builder.build())
-            } else {
-                return@Interceptor chain.proceed(chain.request())
+                val bearer = "BEARER $prefs"
+                builder.header("Authorization", bearer)
+                    .header("Accept", "application/json")
             }
+
+            return@Interceptor chain.proceed(builder.build())
         }
     }
 
@@ -104,7 +111,7 @@ object NetworkModules {
     /** 실제 서비스에서 사용하는 Retrofit2 Service */
     private fun provideWinePickService(okHttpClient: OkHttpClient?): WinePickService {
         return Retrofit.Builder()
-            .baseUrl("http://padakpadak.run.goorm.io/")
+            .baseUrl("http://ec2-3-35-107-29.ap-northeast-2.compute.amazonaws.com:8080/")
             .addConverterFactory(Json.asConverterFactory("application/json; charset=utf-8".toMediaType()))
             .client(okHttpClient)
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())

@@ -6,4 +6,429 @@
     <!-- login warning -->
     <string name="login_warning_title">로그인 하시겠습니까?</string>
     <string name="login_warning_like">좋아요 기능은\n로그인이 필요합니다.</string>
+
+    <!-- search -->
+    <!-- DataBinding String.format 링크 : https://gogorchg.tistory.com/entry/AndroidDataBinding-String-Format-%EC%A0%81%EC%9A%A9%ED%95%98%EA%B8%B0 -->
+    <string name="search_query_reset">취소</string>
+    <string name="search_query_hint">검색어 입력</string>
+    <string name="search_filter_info">필터 %d개 적용 중</string>
+    <string name="search_filter_edit">변경</string>
+    <string name="search_result_empty">결과가 없습니다.\n빠른 키워드로 검색해보세요.</string>
+    <string name="search_result_title">검색 결과 총 %d개</string>
+    <string name="search_result_price">%d원</string>
+    <string name="search_recommend_title">빠른 키워드</string>
+    <string name="search_result_taste_value">%d</string>
+
+    <!-- search filter -->
+    <string name="search_filter_title">상세 필터</string>
+    <string name="search_filter_confirm">적용</string>
+    <string name="search_filter_taste_title">먹고싶은 와인의 맛은?</string>
+    <string name="search_filter_taste_content">도수</string>
+    <string name="search_filter_taste_type">종류</string>
+    <string name="search_filter_taste_taste">맛</string>
+    <string name="search_filter_situation_title">와인과 함께하는 상황은?</string>
+    <string name="search_filter_situation_event">이벤트</string>
+    <string name="search_filter_situation_food">음식</string>
+    <string name="search_filter_where_title">와인을 구매하고 싶은 곳은?</string>
+    <string name="search_filter_where_convenience">편의점</string>
+    <string name="search_filter_confirm_bottom">적용하기</string>
+    <array name="search_filter_taste_initial_contents">
+        <item>4.0</item>
+        <item>13.0</item>
+    </array>
+
+    <string-array name="wine_info">
+        <item>라포데리나 브루넬로 디 몬탈치노 DOCG</item>
+        <item>몬떼 레온 리미티드 에디션</item>
+        <item>헨켈 스파클링 매그넘</item>
+        <item>포지오 알살레 끼안띠 클라시코</item>
+        <item>델리카토 블랙스탈리온 트랜센던트 까베르네 소비뇽</item>
+        <item>트라피체 아스띠까 메를로-말벡</item>
+        <item>산페드로 아미고 카쇼</item>
+        <item>비네암 바이오 풀 말벡</item>
+        <item>친자노 아스티 750</item>
+        <item>트라피체 핀카 라스 팔마스 카베르네 소비뇽</item>
+        <item>디자이아 스파클링 브뤼</item>
+        <item>친자노 프로세코</item>
+        <item>친자노 프로스프리츠</item>
+        <item>포르타 6 브랑코 NV</item>
+        <item>도멘 바로나크</item>
+        <item>에이바이 아카시아 샤르도네</item>
+        <item>콘차이토로 유니온 38 레세르바 시라</item>
+        <item>에이바이 아카시아 피노누아</item>
+        <item>핀카 라스 모라스 말벡</item>
+        <item>깔라나 오가닉</item>
+        <item>GCC 샤또 데스미라이 2013</item>
+        <item>샤또 보쉔 꼬뜨 뒤 론 `성실핏`</item>
+        <item>본 투비 와인</item>
+        <item>샤또 그랑 페랑 테르 아무레즈</item>
+        <item>LA PODERINA BRUNELLO EI MONTALCINO DOCG</item>
+        <item>Monte Leon Limited Edition</item>
+        <item>Henkell Trocken</item>
+        <item>Poggio Al Sale Chianti Classico</item>
+        <item>Black Stallion Transcendent Cabernet Sauvignon</item>
+        <item>Astica Merlot-Malbec</item>
+        <item>Amigo Cabernet Sauvignon</item>
+        <item>Bordeaux Vineam Bio Full Malbec</item>
+        <item>CINZANO ASTI</item>
+        <item>Finca Las Palmas Cabernet Sauvignon</item>
+        <item>DEZAIA SPARKLING BRUT</item>
+        <item>CINZANO PROSECCO</item>
+        <item>CINZANO PRO-SPRITZ</item>
+        <item>PORTA 6 Branco</item>
+        <item>Domaine De Baronarques</item>
+        <item>A by Acacia Chardonnay</item>
+        <item>Union 38 Reserva Syrah</item>
+        <item>A by Acacia Pinot Noir</item>
+        <item>Finca Las Moras Malbec</item>
+        <item>Calana Organic</item>
+        <item>Chateau Cos Labory</item>
+        <item>Chateau Beauchene Cotes du Rhone Sans Sulfites</item>
+        <item>Born to be Wine</item>
+        <item>Bordeaux Vineam Chateau Grand Ferrand Terre Amoureuse</item>
+        <item>G7 까베네쇼비뇽</item>
+        <item>G7 멜롯</item>
+        <item>쁘띠폴리</item>
+        <item>데스티노 띤또</item>
+        <item>피치니 끼안띠</item>
+        <item>운두라가 U 까베르네 소비뇽</item>
+        <item>피치니 메모로</item>
+        <item>라 크라사드 까베네 시라</item>
+        <item>모나리자 비노 로쏘</item>
+        <item>신포니아 까베네 쇼비뇽</item>
+        <item>몬테스클래식 까베네쇼비뇽</item>
+        <item>몬테스알파 까베네쇼비뇽</item>
+        <item>옐로우테일 멜롯</item>
+        <item>옐로우테일 쉬라즈</item>
+        <item>옐로우테일 까베네쇼비뇽</item>
+        <item>핀까엘 오리엔 까베네쇼비뇽</item>
+        <item>핀까엘 오리엔 말벡</item>
+        <item>운두라가 시바리스 까베네</item>
+        <item>운두라가 시바리스 멜롯</item>
+        <item>페데리코 파테니나 크리안자</item>
+        <item>운두라가 알리웬 까베네까르미네르</item>
+        <item>로스바스코스 까쇼 스페셜</item>
+        <item>샤또 몽페라 스페셜 셀렉션</item>
+        <item>로스바스코스 그랑 리저브</item>
+        <item>카멜로드 피노누아</item>
+        <item>운두라가 알리웬 까베네 멜롯</item>
+        <item>투바인 까베네소비뇽</item>
+        <item>블랙타워 레드</item>
+        <item>투바인 멜롯</item>
+        <item>아발론 캘리포니아</item>
+        <item>샤또 기봉</item>
+        <item>라피트 보르도 레드</item>
+        <item>산타아나 클래식 말벡</item>
+        <item>코노수르 비시클레타 까르미네르</item>
+        <item>페데리코 파테니나 리제르바</item>
+        <item>디아블로 까베네 쇼비뇽</item>
+        <item>라피트 프라이빗 메독</item>
+        <item>코노수르 비시클레타 까베네쇼비뇽</item>
+        <item>이기갈 꼬뜨 뒤 론 루즈</item>
+        <item>콜럼비아 크레스트 그랜드 에스테이트 골드</item>
+        <item>콜럼비아 크레스트 그랜드 에스테이트 까베네 쇼비뇽</item>
+        <item>코노수르 비시클레타 피노누아</item>
+        <item>그랜드 에스테이트 멜롯</item>
+        <item>그랜드 에스테이트 시라</item>
+        <item>데블스 콜렉션 레드</item>
+        <item>벨트악스 돈펠더 </item>
+        <item>샤또 몽페라</item>
+        <item>코노수르 싱글빈야드 까베네쇼비뇽</item>
+        <item>코노수르 싱글빈야드 멜롯</item>
+        <item>코노수르 싱글빈야드 쉬라 </item>
+        <item>피치니 메모로 로쏘</item>
+        <item>쌩클레어 피노누아</item>
+        <item>콜럼비아 크레스트 H3 까베르네 소비뇽</item>
+        <item>콜럼비아 크레스트 H3 멜롯</item>
+        <item>아차발 페레 말벡 멘도자</item>
+        <item>이기갈 지공다스</item>
+        <item>닥터 린드만 쉬라즈</item>
+        <item>캄포린도 크리안자 </item>
+        <item>카르멘 까베네쇼비뇽</item>
+        <item>앙드레 끌루에 상파뉴 브륏 그랑리저브</item>
+        <item>미안더 모스카토</item>
+        <item>G7 샤도네이</item>
+        <item>칸티 프로세코</item>
+        <item>피치니 프로세코 엑스트라 드라이</item>
+        <item>피치니 메모로 화이트</item>
+        <item>미안더 핑크 모스카토</item>
+        <item>미안더 모스카토</item>
+        <item>옐로우테일 쇼비뇽블랑</item>
+        <item>옐로우테일 샤도네이</item>
+        <item>울프블라스 이글호크 스파클링 브륏</item>
+        <item>옐로우테일 모스카토</item>
+        <item>반피 티아라 모스카토</item>
+        <item>아랄디카 모스카토 다스티 돌체</item>
+        <item>모나리자 비노 비앙코</item>
+        <item>아랄디카 아스티 스푸만테</item>
+        <item>운두라가 브륏</item>
+        <item>페데리코 파테니나 까바 브륏</item>
+        <item>몬테스 클래식 샤도네이</item>
+        <item>빌라엠골드</item>
+        <item>칸티 모스카토 파밀리아 </item>
+        <item>코노 쇼비뇽 블랑</item>
+        <item>운두라가 드 미섹</item>
+        <item>코노수르 비시클레타 샤도네이</item>
+        <item>시즌스 비달 아이스바인</item>
+        <item>코노수르 스파클링 로제</item>
+        <item>쌩클레어 쇼비뇽블랑</item>
+        <item>칸티 모스카토 다스티</item>
+        <item>까사 산토르 솔라 아스티 세코 DOCG</item>
+        <item>산테로 스푸만테 </item>
+        <item>앙드레 끌루에 샹파뉴 실버 브륏</item>
+        <item>이기갈 꼬뜨 뒤 론 블랑</item>
+        <item>G7 Cabernet Sauvignon</item>
+        <item>G7 Merlot</item>
+        <item>Petites Folies</item>
+        <item>Destino Tinto</item>
+        <item>Piccini, Chianti</item>
+        <item>Undurraga, U Cabenet Sauvignon</item>
+        <item>Piccini, Memoro Red</item>
+        <item>La Croisade, Cabernet Syrah</item>
+        <item>MonnaLisa Vino Rosso d"Italia</item>
+        <item>Sinfonia Cabernet Sauvignon</item>
+        <item>Montes Classic Cabernet Sauvignon</item>
+        <item>Montes Alpha Cabernet Sauvignon</item>
+        <item>Yellow Tail, Merlot</item>
+        <item>Yellow Tail, Shiraz</item>
+        <item>Yellow Tail, Cabernet Sauvignon</item>
+        <item>Finca el Origen Cabernet Sauvignon</item>
+        <item>Finca el Orgen Malbec</item>
+        <item>Undurraga, Sibaris Cabernet Sauvignon</item>
+        <item>Undurraga, Sibaris Merlot</item>
+        <item>Federico Paternina, Gran Reserva</item>
+        <item>Undurraga, Aliwen Cabernet Sauvignon Carmenere</item>
+        <item>Los Vascos Special Selection Cabernet Sauvignon</item>
+        <item>Chateau Mont Perat Special Selection</item>
+        <item>Los Vascos Grande Reserve Cabernet Sauvignon</item>
+        <item>Carmel Road Monterey Pinot Noir</item>
+        <item>Undurraga, Aliwen Reserva Cabernet Sauvignon</item>
+        <item>Columbia Crest, Two Vines Cabernet Sauvignon</item>
+        <item>Black Tower Red</item>
+        <item>Columbia Crest, Two Vines Merlot</item>
+        <item>Avalon, California</item>
+        <item>Chateau Guibon Red</item>
+        <item>Lafite Bordeaux Red</item>
+        <item>Santa Ana Malbec</item>
+        <item>Cono Sur, Bicicleta Carmenere</item>
+        <item>Federico Paternina, Reserva</item>
+        <item>Diablo Carbernet Sauvignon</item>
+        <item>Lafite Medoc</item>
+        <item>Cono Sur, Bicicleta Cabernet Sauvignon</item>
+        <item>E. Guigal, Cotes du Rhone Rouge</item>
+        <item>Columbia Crest Grand Estate Limited Release Gold</item>
+        <item>Columbia Crest Grand Estate Cabernet Sauvignon</item>
+        <item>Cono Sur, Bicicleta Pinot Noir</item>
+        <item>Columbia Crest, Grand Estates Merlot</item>
+        <item>Columbia Crest, Grand Estate Syrah</item>
+        <item>Devil"s Collection</item>
+        <item>Weltachs Dornfelder</item>
+        <item>Chateau Mont Perat</item>
+        <item>Cono Sur, Single Vineyard Cabernet Sauvignon</item>
+        <item>Cono Sur, Single Vineyard Merlot</item>
+        <item>Cono Sur, Single Vineyard Syrah</item>
+        <item>Piccini Memoro Rosso</item>
+        <item>Saint Clair, Pinot Noir</item>
+        <item>Columbia Crest, H3 Cabernet Sauvignon</item>
+        <item>Columbia Crest, H3 Merlot</item>
+        <item>Achaval Ferrer Mendoza Malbec</item>
+        <item>E.Guigal, Gigondas</item>
+        <item>Lindemans Bin Shiraz</item>
+        <item>Campo Lindo Crianza</item>
+        <item>Carmen, Gold Reserve Cabernet Sauvignon</item>
+        <item>Champagne Andre Clouet, Brut Grande Reserve</item>
+        <item>Meander White Moscato</item>
+        <item>G7 Chardonnay</item>
+        <item>Canti Prosecco </item>
+        <item>Piccini, Prosecco Vino Spumante Extra Dry</item>
+        <item>Piccini, Memoro White</item>
+        <item>Meander Pink Moscato</item>
+        <item>Meander White Moscato</item>
+        <item>Yellow Tail Semillon Sauvignon Blanc</item>
+        <item>Yellow Tail, Chardonnay</item>
+        <item>Wolf Blass, Eaglehawk Sparkling Cuvee Brut</item>
+        <item>Yellow Tail, Moscato</item>
+        <item>Banfi Tiara Moscato</item>
+        <item>Araldica, Moscato d"Asti Dolce</item>
+        <item>Vino Bianco D" Italia</item>
+        <item>Tesco Asti Spumante</item>
+        <item>Undurraga, Sparking Brut</item>
+        <item>Federico Paternina Cava Brut</item>
+        <item>Montes, Classic Chardonnay</item>
+        <item>Villa M Gold</item>
+        <item>Canti Moscato Famiglia</item>
+        <item>Cono Sur, Sauvignon Blanc</item>
+        <item>Undurraga, Sparking Demi Sec</item>
+        <item>Cono Sur, Bicicleta Chardonnay</item>
+        <item>Seasons Vidal Icevine</item>
+        <item>Cono Sur, Sparkling Brut Rose</item>
+        <item>Saint Clair, Pioneer Block Sauvignon Blanc</item>
+        <item>Canti, Moscato d"Asti</item>
+        <item>Casa Santorsola, Moscato d"Asti</item>
+        <item>Santero, Spumante</item>
+        <item>Andre Clouet, Brut Nature Silver Brut</item>
+        <item>E.Guigal Cotes du Rhone Blanc</item>
+        <item>마인크랑 그라우페르트</item>
+        <item>굿 인텐션스 렐러티블리 화이트</item>
+        <item>델링퀀트 록산느 더레이져</item>
+        <item>마인크랑 블라우부르군더</item>
+        <item>디히터트라움 브륏 나뚜르</item>
+        <item>샤또 딸보 2016</item>
+        <item>칼에어베스 카비넷 매그넘</item>
+        <item>만소 데 벨라스코</item>
+        <item>콘스탄시아 에이직 세미용</item>
+        <item>니포자노 끼안티 리제르바</item>
+        <item>팬폴즈 맥스 프로미스쉬랴</item>
+        <item>비네롱 드뷕시 크레망로제</item>
+        <item>텍스트북 나파 샤도네이</item>
+        <item>1865 셀렉티드 매그넘</item>
+        <item>에스쿠도 로호 블랜드 매그넘</item>
+        <item>텍스트북 나파 까베르네</item>
+        <item>끼사노바 디네리 몬탈치노</item>
+        <item>로버시 바롤로</item>
+        <item>코스타 메디아나 아마로네</item>
+        <item>로버시 바르바레스코</item>
+        <item>브레드앤버터 나파 까버네</item>
+        <item>브레드앤버터 피노누아</item>
+        <item>스펠바운드 까베르네</item>
+        <item>스펠바운드 쁘띠 쉬라</item>
+        <item>디아블로 매그넘</item>
+        <item>핀카바카라 타임웨이츠</item>
+        <item>레젠다 프리미티보 디 만두리아</item>
+        <item>에디찌오네 콜렉션</item>
+        <item>카멜로드 몬테레이 피노 누아</item>
+        <item>졸라 프리미티보 디 만두리아</item>
+        <item>보글 에션셜 레드</item>
+        <item>한 샤도네이</item>
+        <item>아르볼레다 시라</item>
+        <item>실레니 CS 소비뇽 블랑</item>
+        <item>루이에슈너 소떼른</item>
+        <item>산페드로 1865 리미티드 쉬라</item>
+        <item>샤또 딸보 2017</item>
+        <item>발디비에소 싱글비니야드 카베르네소비뇽</item>
+        <item>윈담 빈555 쉬라즈</item>
+        <item>프리시전 네비게이터 카베르네 소비뇽</item>
+        <item>모나스테리오 리제르바</item>
+        <item>에보디아</item>
+        <item>프란지아 레드 3리터</item>
+        <item>프란지아 화이트 3리터</item>
+        <item>솔레아 네로 다볼라</item>
+        <item>테라마터 리제르바 까버네</item>
+        <item>엘레베 시라 그르나슈</item>
+        <item>빅토리아 토니포트</item>
+        <item>GCF, 꼬뜨 드 뵈프</item>
+        <item>파이 레드 블렌드</item>
+        <item>GCF, 프뤼 드 메르</item>
+        <item>군트럼 콘스탄틴 리슬링</item>
+        <item>미션서드 까버네시라 세트</item>
+        <item>매누아 그리뇽 까버네 6입</item>
+        <item>오이스터베이 쇼비뇽블랑</item>
+        <item>타리마 힐</item>
+        <item>콜럼비아크레스트샤도네이</item>
+        <item>MEINKLANG Graupert</item>
+        <item>Good Intentions Relatively White</item>
+        <item>DELINQUENTE Roxanne The Razor</item>
+        <item>MEINKLANG Blauburguner</item>
+        <item>Dichtertraum Weissburgunder Brut Nature</item>
+        <item>Chateau Talbot 16</item>
+        <item>Karl Erbes, Kabinett Magnum</item>
+        <item>Manso de Velasco</item>
+        <item>Constantia Uitsig Semilon</item>
+        <item>Frescobaldi Nipozzano Riserva</item>
+        <item>Penfolds MAX"s The promise Shiraz</item>
+        <item>Vignerons de Buxy, Cremant de Bourgogne Brut Rose</item>
+        <item>Textbook, Napa Chardonnay</item>
+        <item>1865 Selected Vineyard Cabernet Sauvignon</item>
+        <item>Escudo Rojo Blend Magnum</item>
+        <item>Textbook, Napa Cabernet Sauvignon</item>
+        <item>Casanova di neri, Rosso di Montalcino</item>
+        <item>Roversi Barolo</item>
+        <item>Costa Mediana Amarone</item>
+        <item>Roversi Barbaresco</item>
+        <item>Bread&amp;Butter, Napa Cabernet Sauvignon</item>
+        <item>Bread&amp;Butter, Pinot Noir</item>
+        <item>Spellbound, Cabernet Sauvignon</item>
+        <item>Spellbound, Petite Sirah</item>
+        <item>Diablo Cabernet Sauvignon Magnum</item>
+        <item>Finca Bacara, Time Waits For No One</item>
+        <item>Legenda Primitivo di Manduria</item>
+        <item>Edizione Collection</item>
+        <item>Carmel Road Monterey Pinot Noir</item>
+        <item>Zolla Primitivo di Manduria</item>
+        <item>Bogle, Essential Red</item>
+        <item>Hahn, Chardonnay</item>
+        <item>Arboleda, Syrah</item>
+        <item>Sileni, Cellar Selection Sauvignon Blanc</item>
+        <item>Louis Eschenauer Sauternes</item>
+        <item>SanPedro 1865 Limited Edition Syrah</item>
+        <item>Chateau Talbot 17</item>
+        <item>Valdivieso Single Vineyard Cabernet Sauvignon</item>
+        <item>BIN 555 Shiraz</item>
+        <item>Precision, Navigator Cabernet Sauvignon</item>
+        <item>Monasterio Riserva</item>
+        <item>Evodia</item>
+        <item>FRANZIA California Red</item>
+        <item>FRANZIA Chardonnay</item>
+        <item>Solea Nero d"Avola</item>
+        <item>TerraMater Vineyard Reserve Cabernet Sauvignon</item>
+        <item>Eleve, Syrah Grenache</item>
+        <item>Victoria Tawny Port</item>
+        <item>Cote de Boeuf</item>
+        <item>FYI Red Blend</item>
+        <item>Fruits de Mer</item>
+        <item>guntrum riesling louis konstantin</item>
+        <item>Mission Sud Cabernet Syrah</item>
+        <item>Manoir Grignon</item>
+        <item>Oyster Bay Sauvignon Blanc</item>
+        <item>Tarima Hill</item>
+        <item>Columbia Crest H3 Chardonnay</item>
+        <item>샤또 라피트 로칠드</item>
+        <item>샤또 마고</item>
+        <item>샤또 무통 로칠드</item>
+        <item>샤또오브리옹</item>
+        <item>킬러맨즈런GSM</item>
+        <item>하이직 모노폴, 블루 탑 브뤼</item>
+        <item>아포틱 인페르노</item>
+        <item>페나솔블랑코</item>
+        <item>산타캐롤리나</item>
+        <item>카르멘멜롯</item>
+        <item>울프블라스이글호크</item>
+        <item>배비치 포비든 소비뇽 (배비치, 포비든 바인 말보로 소비뇽 블랑)</item>
+        <item>조닌 끼안티</item>
+        <item>카스텔로모스카토 (조닌, 카스텔로 델 포지오 모스카토 다스티)</item>
+        <item>조닌프로세코</item>
+        <item>베린저파운더스 에스테이트 카버네 소비뇽</item>
+        <item>스위트 듀 아이스</item>
+        <item>K 빈트너스 샤롯데</item>
+        <item>아방 가르데</item>
+        <item>샤또오마지네</item>
+        <item>샤또에메</item>
+        <item>반피르리메</item>
+        <item>샤또라뚜르2012</item>
+        <item>팔리니리몬첼로500</item>
+        <item>칼로로시 아이스 피치</item>
+        <item>Chateau Lafite Rothschild</item>
+        <item>Chateau Margaux</item>
+        <item>Chateau Mouton Rothschild</item>
+        <item>Chateau Haut Brion</item>
+        <item>Killerman"s Run Cabernet Sauvignon</item>
+        <item>Heidsieck Monopole, Blue Top Brut</item>
+        <item>Apothic inferno</item>
+        <item>Penasol, Blanco</item>
+        <item>Santa Carolina</item>
+        <item>Carmen Merlot</item>
+        <item>Wolf Blass Eaglehawk</item>
+        <item>Babich, Forbidden Vine Malborough Sauvigonon Blanc</item>
+        <item>Zonnin Chianti</item>
+        <item>Zonin, Castello del Poggio Moscato d"Asti</item>
+        <item>Zonin Prosecco</item>
+        <item>Beringer Founder"s Estate Carbernet Sauvignon</item>
+        <item>Sweet Dew Ice </item>
+        <item>K Vintners, Charlotte</item>
+        <item>Moselland, Avantgarde</item>
+        <item>Banfi Le Rime</item>
+        <item>Chateau Latour 2012</item>
+        <item>Pallini Limoncello</item>
+        <item>Carlo Rossi ICE Peach</item>
+    </string-array>
 </resources>

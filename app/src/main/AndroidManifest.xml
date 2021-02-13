@@ -46,12 +46,24 @@
                     android:host="@string/kakaolink_host" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.survey.ScreenSlidePagerActivity" />
+        <activity android:name=".ui.survey.ScreenSlidePagerActivity"/>
         <activity android:name=".example.java.normal.JavaDefaultActivity" />
         <activity android:name=".example.kotlin.normal.KotlinDefaultActivity" />
         <activity android:name=".example.java.viewmodel.JavaViewModelActivity" />
         <activity android:name=".example.kotlin.viewmodel.KotlinViewModelActivity" />
         <activity android:name=".MainActivity" />
+        <activity
+            android:name=".ui.search.SearchActivity"
+            android:theme="@style/AppNoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.search.SearchFilterActivity"
+            android:theme="@style/SearchFilterNoActionBar" />
     </application>
 
 </manifest>

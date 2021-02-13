@@ -1,0 +1,118 @@
+name: Android CD
+
+# github actions 를 실행할 조건 설정
+on:
+  push:
+    tags:
+      - '*'
+      - '!v*'
+
+# 실행할 job 설정
+jobs:
+  # CD 작업
+  test-deploy:
+    runs-on: ubuntu-16.04
+    steps:
+      # 데이터 로깅 작업 : 작업을 위한 로깅 작업을 진행한다.
+      # 로깅1. github context
+      - name: 로깅1. GitHub context 확인
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+        if: always()
+
+      # 로깅2. job context
+      - name: 로깅2. job context 확인
+        env:
+          JOB_CONTEXT: ${{ toJson(job) }}
+        run: echo "$JOB_CONTEXT"
+        if: always()
+
+      # 로깅3. steps context
+      - name: 로깅3. steps context 확인
+        env:
+          STEPS_CONTEXT: ${{ toJson(steps) }}
+        run: echo "$STEPS_CONTEXT"
+        if: always()
+
+      # 로깅4. runner context
+      - name: 로깅4. runner context 확인
+        env:
+          RUNNER_CONTEXT: ${{ toJson(runner) }}
+        run: echo "$RUNNER_CONTEXT"
+        if: always()
+
+      # 로깅5. strategy context
+      - name: 로깅5. strategy context 확인
+        env:
+          STRATEGY_CONTEXT: ${{ toJson(strategy) }}
+        run: echo "$STRATEGY_CONTEXT"
+        if: always()
+
+      # 로깅6. matrix context
+      - name: 로깅6. matrix context 확인
+        env:
+          MATRIX_CONTEXT: ${{ toJson(matrix) }}
+        run: echo "$MATRIX_CONTEXT"
+        if: always()
+
+      # CD 2. 테스트용 apk 만들기 및 슬랙 메시지 전송
+      # [slack-upload-file](https://github.com/marketplace/actions/slack-upload-file)
+      - run: ./gradlew assembleDebug
+      - uses: MeilCli/slack-upload-file@v1
+        with:
+          slack_token: ${{ secrets.SLACK_READ_WRITE_TOKEN }}
+          channels: ${{ secrets.SLACK_CHANNEL_DEPLOY }}
+          file_path: 'app/build/outputs/apk/debug/app-debug.apk'
+          file_name: 'app-debug.apk'
+          file_type: 'apk'
+          initial_comment: '${{ github.ref }} 테스트 앱 슬랙 배포 성공'
+
+      # CD 3. 테스트용 apk artifact github actions 에 업로드
+      - name: CD 3. 테스트용 apk artifact 업로드
+        uses: actions/upload-artifact@v2
+        with:
+          name: app-debug.apk
+          path: app/build/outputs/apk/debug/app-debug.apk
+
+      # CD 4. 실패할 경우 슬랙에 실패 메시지 전송
+      - name: CI 7-4. PR 전용 실패 메시지 전송
+        uses: 8398a7/action-slack@v2.6.0
+        with:
+          status: custom
+          payload: |
+            {
+              "text": ":no_entry: ${{ github.event_name }} ${{ job.status }}",
+              "attachments": [{
+                "title": "${{ github.workflow }}",
+                "title_link": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+                "text": "<${{ github.event.pull_request.html_url }}|pull request link>",
+                "fields": [
+                  {
+                    title: 'Event_name',
+                    value: "${{ github.event_name }}",
+                    short: true
+                  },
+                  {
+                    title: 'Change_Logs',
+                    value: "<https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>",
+                    short: true
+                  },
+                  {
+                    title: 'author',
+                    value: "${{ github.actor }}",
+                    short: true
+                  }
+                ],
+                "footer": "${{ github.actor }} at ${{ steps.current-time.outputs.formattedTime }}",
+                "color": "danger"
+              }]
+            }
+          author_name: ${{ github.head_ref }} Build & Test ${{ job.status }}
+          icon_url: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+        # secret 설정 (참고 link : https://codeac.tistory.com/112)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GIT_HUB_TOKEN }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_ANDROID_CD_WEBHOOK }}
+        if: failure()
+
