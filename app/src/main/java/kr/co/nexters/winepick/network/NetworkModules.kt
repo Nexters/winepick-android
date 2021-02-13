@@ -38,7 +38,7 @@ object NetworkModules {
     const val WRITE_TIMEOUT = 15
     const val READ_TIMEOUT = 15
 
-    private val cache = provideOkHttpCache(WinePickApplication.getGlobalApplicationContext())
+    private val cache = provideOkHttpCache(WinePickApplication.appContext!!)
     private val interceptor = provideInterceptor(null)
     private val loggingInterceptor = provideLoggingInterceptor()
     private val okHttpClient = provideOkHttpClient(cache, interceptor, loggingInterceptor)

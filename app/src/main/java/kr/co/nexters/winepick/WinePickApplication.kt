@@ -3,6 +3,7 @@ package kr.co.nexters.winepick
 import android.app.Application
 import android.content.Context
 import com.kakao.auth.*
+import com.kakao.sdk.common.KakaoSdk
 import dagger.hilt.android.HiltAndroidApp
 import kr.co.nexters.winepick.WinePickApplication.Companion.getGlobalApplicationContext
 import kr.co.nexters.winepick.di.moduleList
@@ -29,7 +30,7 @@ class WinePickApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         appContext = this
-        KakaoSDK.init(KakaoSDKApapter())
+        KakaoSdk.init(this,getString(R.string.kakao_app_key))
         initTimber()
         startKoinModules()
     }
@@ -43,38 +44,6 @@ class WinePickApplication : Application() {
 
     private fun initTimber() {
         Timber.plant(Timber.DebugTree())
-    }
-
-}
-
-class KakaoSDKApapter : KakaoAdapter() {
-    override fun getApplicationConfig(): IApplicationConfig {
-        return IApplicationConfig { getGlobalApplicationContext() }
-    }
-
-    override fun getSessionConfig(): ISessionConfig {
-        return object : ISessionConfig {
-            override fun getAuthTypes(): Array<AuthType> {
-                return arrayOf(AuthType.KAKAO_LOGIN_ALL)
-            }
-
-            override fun isUsingWebviewTimer(): Boolean {
-                return false
-            }
-
-            override fun isSecureMode(): Boolean {
-                return false
-            }
-
-            override fun getApprovalType(): ApprovalType? {
-                return ApprovalType.INDIVIDUAL
-            }
-
-            override fun isSaveFormData(): Boolean {
-                return true
-            }
-
-        }
     }
 
 }
