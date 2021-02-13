@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/current_survey_number_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="38dp"
+        android:layout_marginStart="24dp"
+        android:lineSpacingExtra="0sp"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:textStyle="normal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"
+        android:text="01" />
+
+    <TextView
+        android:id="@+id/all_survey_number_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="23dp"
+        android:lineSpacingExtra="0sp"
+        android:textColor="#828282"
+        android:textSize="13sp"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="@+id/current_survey_number_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/current_survey_number_text"
+        android:text="01 / 06" />
+
+    <TextView
+        android:id="@+id/survey_question_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="51dp"
+        android:lineSpacingExtra="11sp"
+        android:textColor="#000000"
+        android:textSize="19sp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/current_survey_number_text"
+        app:layout_constraintTop_toBottomOf="@+id/current_survey_number_text"
+        android:text="오늘은 와인이 마시고 싶은 날이에요.
+친구랑 만나기로 했을 때 내 역할은?" />
+
+    <Button
+        android:background="@drawable/pressed_button_radius"
+        android:textColor="@drawable/pressed_button_color"
+        android:id="@+id/survey_answer_A"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="40dp"
+        android:text="Button"
+        app:layout_constraintEnd_toEndOf="@+id/all_survey_number_text"
+        app:layout_constraintStart_toStartOf="@+id/survey_question_text"
+        app:layout_constraintTop_toBottomOf="@+id/survey_question_text" />
+
+    <Button
+        android:background="@drawable/pressed_button_radius"
+        android:textColor="@drawable/pressed_button_color"
+        android:id="@+id/survey_answer_B"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="16dp"
+        android:text="Button"
+        app:layout_constraintEnd_toEndOf="@+id/all_survey_number_text"
+        app:layout_constraintStart_toStartOf="@+id/survey_question_text"
+        app:layout_constraintTop_toBottomOf="@+id/survey_answer_A" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

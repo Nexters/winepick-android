@@ -17,8 +17,10 @@
     <!-- main -->
     <color name="colorLightRed">#f25942</color>
 
+    <!-- survey -->
+    <color name="colorWhite">#FFFFFF</color>
+  
     <!--login_warning -->
-    <color name="colorWhite">#ffffff</color>
     <color name="colorBlack19">#19000000</color>
     <color name="colorGray82">#828282</color>
 
@@ -37,4 +39,5 @@
     <color name="search_filter_confirm_bottom_text_color">#80000000</color>
     <color name="search_filter_tastes_content_track_active">#f25942</color>
     <color name="search_filter_tastes_content_track_inactive">#EAEAEA</color>
+
 </resources>
