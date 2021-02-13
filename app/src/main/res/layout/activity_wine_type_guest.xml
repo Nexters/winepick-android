@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:text="@string/home_wine_type_guest"
         android:textSize="16sp"
-        android:textColor="@color/colorBlack"
+        android:textColor="@color/black"
         android:gravity="center"
         android:includeFontPadding="false"
         app:layout_constraintVertical_bias="0.48"
@@ -46,6 +46,6 @@
         android:paddingVertical="20dp"
         android:includeFontPadding="false"
         android:fontFamily="@font/notosans_cjk_kr_regular"
-        android:textColor="@color/colorWhite"/>
+        android:textColor="@color/white"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

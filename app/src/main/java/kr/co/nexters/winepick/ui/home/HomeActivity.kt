@@ -2,6 +2,7 @@ package kr.co.nexters.winepick.ui.home
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.ViewModelProvider
 import com.kakao.auth.Session
@@ -21,11 +22,19 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(
         ViewModelProvider(this, viewModelFactory).get(HomeViewModel::class.java)
     }
 
+    private var mode : String = "guest"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.setVariable(BR.vm, viewModel)
-        binding.setVariable(BR.vm, viewModel)
         binding.apply {
+            mode = intent!!.getStringExtra("mode").toString()
+            if (mode == "user") {
+                binding.layoutHomeGuest.visibility = View.INVISIBLE
+                binding.clHomeUser.visibility = View.VISIBLE
+            }
+
+
         }
 
 

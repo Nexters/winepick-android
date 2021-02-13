@@ -13,7 +13,7 @@
         android:id="@+id/tv_rv_recent_title"
         android:layout_marginLeft="24dp"
         tools:text="라포데니아브루넬로~~~"
-        android:textColor="@color/colorBlack"
+        android:textColor="@color/black"
         android:fontFamily="@font/notosans_cjk_kr_regular"
         android:includeFontPadding="false"
         android:textSize="14sp"

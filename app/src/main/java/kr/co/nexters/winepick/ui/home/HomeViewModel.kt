@@ -11,7 +11,6 @@ import kr.co.nexters.winepick.ui.base.BaseViewModel
  */
 class HomeViewModel : BaseViewModel() {
     private var _home = MutableLiveData<String>()
-
     var home : LiveData<String> = _home
 
 

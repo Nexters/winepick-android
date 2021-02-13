@@ -4,61 +4,97 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/iv_guest_shadow"
+        android:src="@drawable/rectangle_home"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/cl_guest_content"
+        android:paddingHorizontal="20dp"
+        android:layout_marginHorizontal="24dp"
+        app:layout_constraintTop_toTopOf="@id/iv_guest_shadow"
+        app:layout_constraintBottom_toBottomOf="@id/iv_guest_shadow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_home_guest_title"
+        android:text="@string/home_guest_title"
+        android:fontFamily="@font/notosans_cjk_kr_bold"
+        android:textSize="18sp"
+        android:includeFontPadding="false"
+        app:layout_constraintVertical_chainStyle="spread"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/tv_home_guest_subtitle"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:paddingBottom="16dp"
-        android:paddingHorizontal="16dp"
-        android:elevation="10dp"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginVertical="16dp"
-        android:background="@drawable/bg_home_white_20"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_home_guest_subtitle"
+        android:text="@string/home_guest_subtitle"
+        android:fontFamily="@font/notosans_cjk_kr_light"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:includeFontPadding="false"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_home_guest_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:layout_marginHorizontal="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="3:1.8"
+        android:id="@+id/iv_home_guest"
+        android:layout_marginTop="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_home_guest_subtitle" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_home_guest_title"
-            android:text="@string/home_guest_title"
-            android:fontFamily="@font/notosans_cjk_kr_bold"
-            android:textSize="18sp"
-            android:layout_marginTop="40dp"
-            android:includeFontPadding="false"
-            app:layout_constraintVertical_chainStyle="spread"
-            android:textColor="@color/colorBlack"
-            app:layout_constraintTop_toBottomOf="@id/tv_home_guest_subtitle"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_home_guest_subtitle"
-            android:text="@string/home_guest_subtitle"
-            android:fontFamily="@font/notosans_cjk_kr_light"
-            android:textSize="15sp"
-            android:textColor="@color/colorBlack"
-            android:includeFontPadding="false"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@id/tv_home_guest_title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintDimensionRatio="6:4"
-            android:id="@+id/iv_home_guest"
-            android:layout_marginTop="16dp"
+            android:id="@+id/cl_guest_type"
+            android:layout_marginTop="20dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_home_guest_subtitle"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@id/iv_home_guest">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_guest_type"
+                android:text="@string/home_guest_start"
+                android:textSize="16sp"
+                android:includeFontPadding="false"
+                android:textColor="@color/black"
+                android:fontFamily="@font/notosans_cjk_kr_medium"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/back_arrow_right"
+                app:layout_constraintTop_toTopOf="@id/tv_guest_type"
+                app:layout_constraintBottom_toBottomOf="@id/tv_guest_type"
+                app:layout_constraintLeft_toRightOf="@id/tv_guest_type"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

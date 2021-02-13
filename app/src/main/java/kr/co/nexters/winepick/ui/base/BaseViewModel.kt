@@ -16,9 +16,6 @@ import timber.log.Timber
  */
 open class BaseViewModel : ViewModel() {
     private val compositeDisposable = CompositeDisposable()
-    private var _isUser = MutableLiveData<Boolean>(false)
-
-    var isUser : MutableLiveData<Boolean> = _isUser
     /** 생성자 개념으로 생각하면 편할듯 */
     init {
         /**
@@ -35,9 +32,6 @@ open class BaseViewModel : ViewModel() {
     override fun onCleared() {
         compositeDisposable.clear()
         super.onCleared()
-    }
-    fun editUser(boolean: Boolean) {
-        _isUser.value = boolean
     }
 
     /**

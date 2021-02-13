@@ -12,6 +12,7 @@
     <string name="home_wine_research">최근에 검색한 와인</string>
     <string name="home_wine_research_content">클릭하면 검색 결과로 이어져요.</string>
     <string name="home_wine_type_guest">로그인하고\n나에게 맞는 와인을 추천받아보세요!</string>
+    <string name="home_guest_start">시작하기</string>
 
     <!--login-->
     <string name="logout">로그아웃</string>
@@ -22,6 +23,9 @@
     <!-- login warning -->
     <string name="login_warning_title">로그인 하시겠습니까?</string>
     <string name="login_warning_like">좋아요 기능은\n로그인이 필요합니다.</string>
+
+    <!-- home_like -->
+    <string name="home_like_num">좋아요한 와인 %d</string>
 
     <!-- search -->
     <!-- DataBinding String.format 링크 : https://gogorchg.tistory.com/entry/AndroidDataBinding-String-Format-%EC%A0%81%EC%9A%A9%ED%95%98%EA%B8%B0 -->
