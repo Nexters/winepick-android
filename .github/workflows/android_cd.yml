@@ -1,4 +1,4 @@
-name: Android CI
+name: Android CD
 
 # github actions 를 실행할 조건 설정
 on:
