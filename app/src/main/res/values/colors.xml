@@ -4,11 +4,16 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
 
+    <!-- default -->
+    <color name="transparent">#00000000</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+
     <!-- login  -->
     <color name="colorBlack">#000000</color>
     <color name="colorBlack80">#80000000</color>
     <color name="colorGray">#F5F5F5</color>
-    
+
     <!-- main -->
     <color name="colorLightRed">#f25942</color>
 
@@ -17,4 +22,19 @@
     <color name="colorBlack19">#19000000</color>
     <color name="colorGray82">#828282</color>
 
+    <!-- search -->
+    <color name="search_query_reset_text_color">#262626</color>
+    <color name="search_recommend_item_background">#F2F2F2</color>
+    <color name="search_recommend_item_text_color">#6F6F6F</color>
+    <color name="search_relative_item_divider_color">#F3F3F3</color>
+    <color name="search_result_country_text_color">#ADADAD</color>
+
+    <!-- search filter -->
+    <color name="search_filter_layout_gray_background">#05000000</color>
+    <color name="search_filter_item_background">#0C000000</color>
+    <color name="search_filter_item_text_color">#4C000000</color>
+    <color name="search_filter_confirm_bottom_background">#EBEBEB</color>
+    <color name="search_filter_confirm_bottom_text_color">#80000000</color>
+    <color name="search_filter_tastes_content_track_active">#f25942</color>
+    <color name="search_filter_tastes_content_track_inactive">#EAEAEA</color>
 </resources>
