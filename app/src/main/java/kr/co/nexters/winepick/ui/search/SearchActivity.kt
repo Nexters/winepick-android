@@ -11,6 +11,7 @@ import kr.co.nexters.winepick.databinding.ActivitySearchBinding
 import kr.co.nexters.winepick.ui.base.ActivityResult
 import kr.co.nexters.winepick.ui.base.BaseActivity
 import kr.co.nexters.winepick.util.hideKeyboard
+import kr.co.nexters.winepick.util.setOnSingleClickListener
 import kr.co.nexters.winepick.util.toast
 import timber.log.Timber
 
@@ -29,6 +30,8 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
         binding.setVariable(BR.vm, viewModel)
 
         binding.apply {
+            btnSearchBack.setOnSingleClickListener { onBackPressed() }
+
             rvResults.adapter = SearchResultAdapter(viewModel)
             rvCurrents.adapter = SearchRelativeAdapter(viewModel)
             rvRecommends.adapter = SearchRecommendAdapter(viewModel)
