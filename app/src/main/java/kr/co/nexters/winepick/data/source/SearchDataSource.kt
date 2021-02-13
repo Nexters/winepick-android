@@ -10,6 +10,7 @@ import kr.co.nexters.winepick.data.model.local.SearchFilterCategory
 import kr.co.nexters.winepick.data.model.local.SearchFilterGroup
 import kr.co.nexters.winepick.data.model.local.SearchFilterItem
 import kr.co.nexters.winepick.util.SharedPrefs
+import org.koin.core.context.GlobalContext
 
 /**
  * 와인 api 요청 시 사용하는 DataSource
@@ -23,7 +24,7 @@ object SearchDataSource {
      */
     fun getWineInfos(): List<String> {
         if (!SharedPrefs.contains(PREF_KEY_WINE_INFOS)) {
-            val wineInfos = WinePickApplication.getGlobalApplicationContext()
+            val wineInfos = WinePickApplication.appContext!!
                 .resources.getStringArray(R.array.wine_info)
 
             val jsonString = Json.encodeToString(

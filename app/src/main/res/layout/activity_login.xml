@@ -47,10 +47,11 @@
             app:layout_constraintEnd_toEndOf="parent"/>
 
 
-        <com.kakao.usermgmt.LoginButton
-            android:layout_width="match_parent"
+        <ImageView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btn_login"
+            android:src="@drawable/kakao_login_large_wide"
             android:layout_marginTop="32dp"
             app:layout_constraintTop_toBottomOf="@id/tv_app_explain"
             app:layout_constraintBottom_toTopOf="@id/tv_guest"
@@ -64,10 +65,10 @@
             android:layout_height="wrap_content"
             android:background="@drawable/bg_login_guest"
             android:id="@+id/tv_guest"
-            tools:text="먼저 둘러보고 싶어요."
-            android:fontFamily="@font/notosans_cjk_kr_medium"
-            android:textColor="@color/colorBlack"
-            android:textSize="16sp"
+            android:text="먼저 둘러보고 싶어요."
+            android:fontFamily="@font/notosans_cjk_kr_regular"
+            android:textColor="@color/black"
+            android:textSize="15sp"
             android:textAlignment="center"
             android:paddingVertical="4dp"
             app:layout_constraintTop_toBottomOf="@id/btn_login"
