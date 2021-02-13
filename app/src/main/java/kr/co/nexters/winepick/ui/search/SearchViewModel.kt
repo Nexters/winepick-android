@@ -27,7 +27,7 @@ class SearchViewModel : BaseViewModel() {
     val query = MutableLiveData("")
 
     /** filter 적용 개수 */
-    private val _filterNum = MutableLiveData(0)
+    private val _filterNum = MutableLiveData(1)
     val filterNum: LiveData<Int> = _filterNum
 
     /** 검색 결과 list */
@@ -55,6 +55,12 @@ class SearchViewModel : BaseViewModel() {
 
     init {
         _searchAction.onNext(SearchAction.NONE)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // 도수의 경우 2개로 인식되므로 -1 처리를 해준다.
+        _filterNum.value = SearchRepository.userSearchFilterItems.filter { it.selected }.size - 1
     }
 
     /**
@@ -143,6 +149,11 @@ class SearchViewModel : BaseViewModel() {
      */
     fun searchResultHeartClick(wineResult: WineResult) {
         // TODO 좋아요 추가/취소 구현하기
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        SearchRepository.filterItemsClear()
     }
 }
 

@@ -37,6 +37,12 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
         subscribeUI()
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        viewModel.onResume()
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 

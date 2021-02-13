@@ -109,4 +109,10 @@ object SearchRepository {
 
         return true
     }
+
+    /** 필터 적용되었던 내용을 원상태로 복구시킨다. */
+    fun filterItemsClear() {
+        _userSearchFilterItems.clear()
+        _userSearchFilterItems.addAll(searchFilterItems)
+    }
 }
