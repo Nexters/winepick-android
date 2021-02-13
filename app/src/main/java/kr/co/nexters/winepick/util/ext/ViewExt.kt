@@ -80,3 +80,8 @@ fun AppCompatEditText.setTextWatcher(
             afterTextChanged?.afterTextChanged(text)
         })
 }
+
+@BindingAdapter("isSelected")
+fun View.setSelected(newIsSelected: Boolean) {
+    this.isSelected = newIsSelected
+}

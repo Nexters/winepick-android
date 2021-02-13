@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -28,6 +29,7 @@
         android:textColor="@{searchFilterItem.selected == true ? @color/white : @color/search_filter_item_text_color }"
         android:textSize="14dp"
         android:textStyle="normal"
+        app:isSelected="@{searchFilterItem.selected}"
         tools:enabled="false"
         tools:text="CU" />
 </layout>
