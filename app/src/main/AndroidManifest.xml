@@ -21,21 +21,15 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
+        <activity android:name=".ui.home.HomeActivity"></activity>
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_app_key" />
 
         <activity android:name=".ui.login.LoginActivity" />
-        <activity android:name=".ui.survey.SurveyActivity" >
-
-        </activity>
+        <activity android:name=".ui.survey.SurveyActivity" />
         <activity android:name=".ui.survey.SurveyResultActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
             <intent-filter>
                 <action android:name="android:intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -47,11 +41,24 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".example.java.normal.JavaDefaultActivity" />
-        <activity android:name=".example.kotlin.normal.KotlinDefaultActivity" />
-        <activity android:name=".example.java.viewmodel.JavaViewModelActivity" />
-        <activity android:name=".example.kotlin.viewmodel.KotlinViewModelActivity" />
+        <activity android:name=".example.java.normal.JavaDefaultActivity"></activity>
+        <activity android:name=".example.kotlin.normal.KotlinDefaultActivity"></activity>
+        <activity android:name=".example.java.viewmodel.JavaViewModelActivity"></activity>
+        <activity android:name=".example.kotlin.viewmodel.KotlinViewModelActivity"></activity>
         <activity android:name=".MainActivity" />
+        <activity
+            android:name=".ui.search.SearchActivity"
+            android:theme="@style/AppNoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.search.SearchFilterActivity"
+            android:theme="@style/SearchFilterNoActionBar" />
+
     </application>
 
 </manifest>
