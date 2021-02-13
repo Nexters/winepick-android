@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".ui.home.LikeListActivity"></activity>
+        <activity android:name=".ui.like.LikeListActivity"></activity>
         <activity android:name=".ui.home.TypeDetailActivity" />
         <activity android:name=".ui.home.HomeActivity" />
 

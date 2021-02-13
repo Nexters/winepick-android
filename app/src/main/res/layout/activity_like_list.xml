@@ -8,18 +8,29 @@
         <import type="android.view.View"/>
         <variable
             name="vm"
-            type="kr.co.nexters.winepick.ui.home.HomeViewModel" />
+            type="kr.co.nexters.winepick.ui.like.LikeViewModel" />
     </data>
 
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:descendantFocusability="blocksDescendants"
-        tools:context=".ui.home.LikeListActivity">
+        android:layout_height="match_parent"
+        android:paddingHorizontal="24dp">
 
 
-    </androidx.core.widget.NestedScrollView>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/iv_back"
+            android:src="@drawable/back_arrow"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="20dp"/>
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </layout>

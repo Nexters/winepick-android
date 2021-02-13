@@ -29,7 +29,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="42dp"
+                android:paddingTop="16dp"
                 android:background="@color/colorWhite"
                 android:id="@+id/cl_wine_type_title">
 
@@ -82,6 +82,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/tv_wine_type_name"
                     tools:text="내이름은 무술이"
+                    android:layout_marginTop="40dp"
                     android:fontFamily="@font/notosans_cjk_kr_regular"
                     android:textSize="16sp"
                     android:textColor="@color/colorBlack"

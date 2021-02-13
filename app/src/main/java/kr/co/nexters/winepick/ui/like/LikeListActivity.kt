@@ -1,4 +1,4 @@
-package kr.co.nexters.winepick.ui.home
+package kr.co.nexters.winepick.ui.like
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

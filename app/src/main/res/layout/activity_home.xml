@@ -34,12 +34,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_app_name"
-            app:layout_constraintVertical_bias="0.064"
+            android:layout_marginTop="16dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="@id/guideline_left"
-            android:paddingVertical="18dp"
             android:text="@string/app_name_lower"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:textColor="@color/colorBlack"
             android:fontFamily="@font/montserrat_extrabold"
             android:includeFontPadding="false"
@@ -49,12 +47,14 @@
             layout="@layout/activity_home_guest"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="@{vm.isUser() ? View.GONE : View.VISIBLE}"
+            android:visibility="visible"
             app:layout_constraintVertical_bias="0.098"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_app_name"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
+<!--            android:visibility="@{vm.isUser() ? View.GONE : View.VISIBLE}"-->
+
 
 
 
@@ -62,12 +62,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/cl_home_user"
-            android:visibility="@{vm.isUser() ? View.VISIBLE : View.GONE}"
+            android:visibility="gone"
             app:layout_constraintVertical_bias="0.026"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_app_name"
             app:layout_constraintEnd_toEndOf="@id/guideline_right"
             app:layout_constraintStart_toStartOf="@id/guideline_left">
+<!--            android:visibility="@{vm.isUser() ? View.VISIBLE : View.GONE}"-->
+
 
             <TextView
                 android:layout_width="wrap_content"
