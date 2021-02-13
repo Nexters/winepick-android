@@ -125,7 +125,7 @@ class SearchViewModel : BaseViewModel() {
 
         viewModelScope.launch {
             SearchRepository.getWineInfosLikeQuery(queryValue)
-            _results.value = WineRepository.getWines(queryValue, 0)?.wineResult ?: listOf()
+            _results.value = WineRepository.getWines(10, 0)?.wineResult ?: listOf()
         }
 
         _searchAction.onNext(SearchAction.QUERY_SEARCH)

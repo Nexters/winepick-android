@@ -33,7 +33,7 @@ import kotlin.coroutines.suspendCoroutine
  */
 
 @Module
-@InstallIn (ApplicationComponent::class)
+@InstallIn(ApplicationComponent::class)
 object NetworkModules {
     const val CONNECT_TIMEOUT = 15
     const val WRITE_TIMEOUT = 15
@@ -61,15 +61,22 @@ object NetworkModules {
      */
     private fun provideInterceptor(prefs: String?): Interceptor {
         return Interceptor { chain: Interceptor.Chain ->
+            // wine/filter 인 경우, "?" 가 인코딩 되어있는지 확인 후 인코딩 풀어주기
+            val request = chain.request()
+            var newUrl = request.url.toString()
+            if (newUrl.contains("v2/api/wine/filter"))
+                newUrl = newUrl.replace("%3F", "?")
+
+            val builder = chain.request().newBuilder()
+                .url(newUrl)
+
             if (prefs?.isNotEmpty() == true) {
-//                val bearer = "BEARER $prefs"
-                val builder = chain.request().newBuilder()
-//                    .header("Authorization", bearer)
-//                    .header("Accept", "application/json")
-                return@Interceptor chain.proceed(builder.build())
-            } else {
-                return@Interceptor chain.proceed(chain.request())
+                val bearer = "BEARER $prefs"
+                builder.header("Authorization", bearer)
+                    .header("Accept", "application/json")
             }
+
+            return@Interceptor chain.proceed(builder.build())
         }
     }
 
