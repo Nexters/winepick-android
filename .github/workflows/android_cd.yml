@@ -5,7 +5,6 @@ on:
   push:
     tags:
       - '*'
-      - '!v*'
 
 # 실행할 job 설정
 jobs:
