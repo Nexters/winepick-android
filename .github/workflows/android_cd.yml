@@ -55,9 +55,8 @@ jobs:
         run: echo "$MATRIX_CONTEXT"
         if: always()
 
-      # CI 2. 테스트용 apk 만들기 및 슬랙 메시지 전송
+      # CD 2. 테스트용 apk 만들기 및 슬랙 메시지 전송
       # [slack-upload-file](https://github.com/marketplace/actions/slack-upload-file)
-      - name: CD 2. 테스트용 apk 만들기 및 슬랙 메시지 전송
       - run: ./gradlew assembleDebug
       - uses: MeilCli/slack-upload-file@v1
         with:
