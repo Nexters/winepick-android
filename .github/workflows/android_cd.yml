@@ -1,8 +1,17 @@
+---
 name: Android CD
 
 # github actions 를 실행할 조건 설정
+# tag 를 푸시하는 경우를 캐치하려 했으나 생각대로 되지 않아 브랜치 분기조건도 추가함
 on:
+  pull_request:
+    branches:
+      - 'master'
   push:
+    branches:
+      - 'develop'
+      - 'master'
+      - '*/cd*'
     tags:
       - '*'
 
