@@ -8,7 +8,7 @@ package kr.co.nexters.winepick.data.constant
 object Constant {
     const val PREF_KEY_WINE_INFOS = "PREF_KEY_WINE_INFOS"
 
-    const val INT_EXTRA_FILTER_NUM = "INT_EXTRA_FILTER_NUM"
+    const val BOOL_EXTRA_SEARCH_NEED_UPDATE = "BOOL_EXTRA_SEARCH_NEED_UPDATE"
 
     const val REQ_CODE_GO_TO_FILTER = 1
 }

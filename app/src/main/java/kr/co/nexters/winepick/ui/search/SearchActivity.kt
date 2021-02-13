@@ -80,7 +80,17 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
                         val intent = Intent(this@SearchActivity, SearchFilterActivity::class.java)
                         val result = startActivity(intent, Constant.REQ_CODE_GO_TO_FILTER)
 
-                        Timber.i("${result.data?.getIntExtra(Constant.INT_EXTRA_FILTER_NUM, 0)}")
+                        val needToUpdate = result.data?.getBooleanExtra(
+                            Constant.BOOL_EXTRA_SEARCH_NEED_UPDATE,
+                            false
+                        ) ?: false
+
+                        Timber.i("$needToUpdate")
+
+                        if (needToUpdate) {
+                            toast("검색 화면 목록 갱신 시작")
+                            viewModel.querySearchClick()
+                        }
                     }
                 }
                 else -> Timber.i("SearchAction.NONE")

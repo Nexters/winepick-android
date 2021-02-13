@@ -110,9 +110,15 @@ object SearchRepository {
         return true
     }
 
-    /** 필터 적용되었던 내용을 원상태로 복구시킨다. */
+    /** 필터 적용되었던 내용을 기본 제공해주는 필터 설정내용대로 복구시킨다. */
     fun filterItemsClear() {
         _userSearchFilterItems.clear()
         _userSearchFilterItems.addAll(searchFilterItems)
+    }
+
+    /** 특정 데이터로 필터 설정 내용을 롤백시켜야 하는 경우라면 이 로직을 사용한다. */
+    fun rollbackFilterItems(prevSearchFilterItems: List<SearchFilterItem>) {
+        _userSearchFilterItems.clear()
+        _userSearchFilterItems.addAll(prevSearchFilterItems)
     }
 }

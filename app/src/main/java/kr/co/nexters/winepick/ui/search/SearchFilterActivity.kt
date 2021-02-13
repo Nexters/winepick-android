@@ -37,23 +37,29 @@ class SearchFilterActivity : BaseActivity<ActivitySearchFilterBinding>(
         ViewModelProvider(this, viewModelFactory).get(SearchFilterViewModel::class.java)
     }
 
-    val searchFilterItemMap = mutableMapOf<AppCompatTextView, SearchFilterItem>()
-    val searchFilterContentTexts = mutableMapOf<String, AppCompatTextView>()
+    // (터치하는 텍스트 버튼 -> 데이터) Map
+    private val searchFilterItemMap = mutableMapOf<AppCompatTextView, SearchFilterItem>()
+
+    // 도수 Range Slide 에서 사용하는 (도수 숫자 -> 텍스트뷰) Map
+    // TODO Range Slider 마개조하면서 활용할 예정
+    private val searchFilterContentTexts = mutableMapOf<String, AppCompatTextView>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.setVariable(BR.vm, viewModel)
 
         binding.apply {
-
+            btnSearchFilterBack.setOnSingleClickListener { onBackPressedAtSearchFilter() }
+            btnSearchFilterConfirmBottom.setOnSingleClickListener { onBackPressedAtSearchFilter(true) }
+            btnSearchFilterConfirm.setOnSingleClickListener { onBackPressedAtSearchFilter(true) }
         }
 
         subscribeUI()
     }
 
     private fun subscribeUI() {
-        viewModel.searchFilterItems.observe(this, { generateFilterItems(it) })
-        viewModel.changeSearchFilterItem.observe(this, { newSearchFilterItem ->
+        viewModel.prevFilterItems.observe(this, { generateFilterItems(it) })
+        viewModel.changedFilterItem.observe(this, { newSearchFilterItem ->
             // 도수인 경우 별도의 갱신 작업을 진행하지 않는다.
             if (newSearchFilterItem.group == SearchFilterGroup.CONTENT) return@observe
 
@@ -167,11 +173,28 @@ class SearchFilterActivity : BaseActivity<ActivitySearchFilterBinding>(
         }
     }
 
-    override fun onBackPressed() {
+    /**
+     * [SearchFilterActivity] 에서 화면을 이탈하려 할 때에는 반드시 이걸 사용해야 한다.
+     *
+     * @param needToCheck 필터 아이템 변동 여부 확인을 해야할 시 (ex. 적용하기 버튼 누를 시)
+     */
+    fun onBackPressedAtSearchFilter(needToCheck: Boolean = false) {
         setResult(
             Constant.REQ_CODE_GO_TO_FILTER,
-            Intent().apply { putExtra(Constant.INT_EXTRA_FILTER_NUM, 3) })
+            Intent().apply {
+                putExtra(
+                    Constant.BOOL_EXTRA_SEARCH_NEED_UPDATE,
+                    viewModel.checkFilterItemChanged(needToCheck)
+                )
+            }
+        )
+
         super.onBackPressed()
+    }
+
+    /** [onBackPressedAtSearchFilter] 을 강제로 실행하도록 한다. */
+    override fun onBackPressed() {
+        onBackPressedAtSearchFilter(false)
     }
 
     /**
@@ -372,4 +395,3 @@ class SearchFilterActivity : BaseActivity<ActivitySearchFilterBinding>(
         }
     }
 }
-

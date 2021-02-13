@@ -124,7 +124,7 @@ class SearchViewModel : BaseViewModel() {
      *
      * @param queryValue 검색할 키워드 (기본값은 query liveData 내의 value 이다.)
      */
-    fun querySearchClick(queryValue: String) {
+    fun querySearchClick(queryValue: String = query.value ?: "") {
         if (!query.value.equals(queryValue)) {
             query.value = queryValue
         }

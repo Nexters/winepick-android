@@ -15,18 +15,25 @@ import timber.log.Timber
  * @since v1.0.0 / 2021.02.06
  */
 class SearchFilterViewModel : BaseViewModel() {
-    /** 단순히 맨 처음 View 만들기 작업을 위해 존재하는 LiveData 이며 사용할 일 없는 변수 */
-    private val _searchFilterItems = MutableLiveData<List<SearchFilterItem>>(listOf())
-    val searchFilterItems: LiveData<List<SearchFilterItem>> = _searchFilterItems
+    /** 맨 처음 View 만들기 작업을 위해, 마지막에서 필터 변동 여부를 체크하기위해 사용하는 LiveData */
+    private val _prevFilterItems = MutableLiveData<List<SearchFilterItem>>(listOf())
+    val prevFilterItems: LiveData<List<SearchFilterItem>> = _prevFilterItems
 
-    /** 필터 아이템 선택으로 인해 selected 가 바뀌어야 하는 필터 아이템 */
-    val _changeSearchFilterItem = MutableLiveData<SearchFilterItem>()
-    val changeSearchFilterItem: LiveData<SearchFilterItem> = _changeSearchFilterItem
+    /** 값이 바뀌었는지를 확인하기 위한 list 이며, 마지막에서 필터 변동 여부 체크에서만 활용하는 변수 */
+    private val _changedFilterItems = mutableListOf<SearchFilterItem>()
+    private val changedFilterItems: List<SearchFilterItem> = _changedFilterItems
+
+    /** 필터 아이템 선택으로 인해 UI 변경이 필요한 필터 아이템 */
+    private val _changeSearchFilterItem = MutableLiveData<SearchFilterItem>()
+    val changedFilterItem: LiveData<SearchFilterItem> = _changeSearchFilterItem
 
     init {
-        _searchFilterItems.value = SearchRepository.userSearchFilterItems
+        _prevFilterItems.value = mutableListOf<SearchFilterItem>()
+            .apply { addAll(SearchRepository.userSearchFilterItems) }
+        _changedFilterItems.addAll(SearchRepository.userSearchFilterItems)
     }
 
+    /** 클릭으로 인해 변경된, 필터 아이템 내용을 반영한다. */
     fun searchFilterItemClick(needToUpdateItem: SearchFilterItem) {
         Timber.i("needToUpdateItem = $needToUpdateItem")
 
@@ -36,28 +43,71 @@ class SearchFilterViewModel : BaseViewModel() {
             // 중복 불가능한 경우
             else -> {
                 // 비활성화 시켜주어야 하는 아이템 찾기 (등록한 게 없는 경우 null)
-                val tempItem = searchFilterItems.value?.firstOrNull {
+                val tempItem = prevFilterItems.value?.firstOrNull {
                     (it.group == needToUpdateItem.group) && it.selected
                 }
                 tempItem?.copy(selected = !tempItem.selected)
             }
         }
 
-        val newUpdateItem = needToUpdateItem.copy(selected = !needToUpdateItem.selected)
+        val newUpdatedItem = needToUpdateItem.copy(selected = !needToUpdateItem.selected)
 
-        if (SearchRepository.updateFilterItems(newUpdateItem, prevUpdatedItem)) {
-            _changeSearchFilterItem.value = newUpdateItem
-            prevUpdatedItem?.let { _changeSearchFilterItem.value = prevUpdatedItem }
+        if (SearchRepository.updateFilterItems(newUpdatedItem, prevUpdatedItem)) {
+            logChangedFilterItems(newUpdatedItem)
+            _changeSearchFilterItem.value = newUpdatedItem
+            prevUpdatedItem?.let {
+                logChangedFilterItems(prevUpdatedItem)
+                _changeSearchFilterItem.value = prevUpdatedItem
+            }
         }
     }
 
-    fun replaceFilterItem(needToReplaceItem: SearchFilterItem, newSliderValue : String) {
+    /**
+     * range slide 로 인해 변경된, 필터 아이템 내용을 반영한다.
+     * 클릭이 아닌 즉시 수정이 필요한 아이템에는 이 로직을 사용한다.
+     */
+    fun replaceFilterItem(needToReplaceItem: SearchFilterItem, newSliderValue: String) {
         Timber.i("needToUpdateItem = $needToReplaceItem")
 
         val newUpdatedItem = needToReplaceItem.copy(value = newSliderValue)
 
-        if(SearchRepository.updateFilterItems(newUpdatedItem)){
+        if (SearchRepository.updateFilterItems(newUpdatedItem)) {
+            logChangedFilterItems(newUpdatedItem)
             _changeSearchFilterItem.value = newUpdatedItem
         }
+    }
+
+    /** [changedFilterItems] 에 변경된 내역을 로깅한다. */
+    private fun logChangedFilterItems(newUpdatedItem: SearchFilterItem) {
+        _changedFilterItems.removeAt(newUpdatedItem.id)
+        _changedFilterItems.add(newUpdatedItem.id, newUpdatedItem)
+    }
+
+    /**
+     * [prevFilterItems] 와 [changedFilterItems] 을 비교하여 변경된 내용이 있는지 확인한다.
+     *
+     * 변동이 없다면 [SearchRepository.userSearchFilterItems] 도 롤백시키는 로직도 있기 때문에
+     * 반드시 마지막 [SearchFilterActivity.onBackPressedAtSearchFilter] 에서만 이 로직을 실행한다.
+     *
+     * @param needToCheck 변경 여부를 확인해야 하는지에 대한 flag
+     *
+     * @return [SearchActivity] 에서 검색 목록 갱신 작업을 해야하는지에 대한 flag
+     */
+    fun checkFilterItemChanged(needToCheck: Boolean): Boolean {
+        val needToUpdate = false
+
+        if (needToCheck)
+            prevFilterItems.value!!.zip(changedFilterItems) { prev, changed ->
+                if (prev != changed) {
+                    return true
+                }
+            }
+
+        // 여기까지 왔으면 변경된 내용이 없거나, 변경된 내역을 기억하면 안되는 것이므로
+        // SearchRepository 에 저장되어 있는 내용도 롤백시킨다.
+        // (prevFilterItems 은 null 일 수가 없다.)
+        SearchRepository.rollbackFilterItems(prevFilterItems.value!!)
+
+        return needToUpdate
     }
 }
