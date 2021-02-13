@@ -12,4 +12,6 @@
     <!-- main -->
     <color name="colorLightRed">#f25942</color>
 
+    <!-- survey -->
+    <color name="colorWhite">#FFFFFF</color>
 </resources>
