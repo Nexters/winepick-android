@@ -202,10 +202,52 @@ class SearchFilterActivity : BaseActivity<ActivitySearchFilterBinding>(
      */
     private fun AppCompatTextView.changeSearchFilterItemUI(searchFilterItem: SearchFilterItem) {
         this.isSelected = searchFilterItem.selected
-        if (searchFilterItem.selected) {
-            setTextColor(ContextCompat.getColor(context, R.color.white))
-        } else {
-            setTextColor(ContextCompat.getColor(context, R.color.search_filter_item_text_color))
+
+        when (searchFilterItem.id) {
+            31 -> { // "CU"
+                if(searchFilterItem.selected){
+                    setTextColor(ContextCompat.getColor(context, R.color.white))
+                    setBackgroundResource(R.drawable.bg_search_filter_item_c_cu_selected)
+                } else {
+                    setTextColor(ContextCompat.getColor(context, R.color.search_filter_item_text_color))
+                    setBackgroundResource(R.drawable.bg_search_filter_item_unselected)
+                }
+            }
+            32 -> { // "GS25"
+                if(searchFilterItem.selected){
+                    setTextColor(ContextCompat.getColor(context, R.color.white))
+                    setBackgroundResource(R.drawable.bg_search_filter_item_c_gs_25_selected)
+                } else {
+                    setTextColor(ContextCompat.getColor(context, R.color.search_filter_item_text_color))
+                    setBackgroundResource(R.drawable.bg_search_filter_item_unselected)
+                }
+            }
+            33 -> { // "이마트 24"
+                if(searchFilterItem.selected){
+                    setTextColor(ContextCompat.getColor(context, R.color.black))
+                    setBackgroundResource(R.drawable.bg_search_filter_item_c_emart_24_selected)
+                } else {
+                    setTextColor(ContextCompat.getColor(context, R.color.search_filter_item_text_color))
+                    setBackgroundResource(R.drawable.bg_search_filter_item_unselected)
+                }
+            }
+            34 -> { // "세븐일레븐"
+                if(searchFilterItem.selected){
+                    setTextColor(ContextCompat.getColor(context, R.color.white))
+                    setBackgroundResource(R.drawable.bg_search_filter_item_c_seven_eleven_selected)
+                } else {
+                    setTextColor(ContextCompat.getColor(context, R.color.search_filter_item_text_color))
+                    setBackgroundResource(R.drawable.bg_search_filter_item_unselected)
+                }
+            }
+
+            else -> { // "나머지"
+                if (searchFilterItem.selected) {
+                    setTextColor(ContextCompat.getColor(context, R.color.white))
+                } else {
+                    setTextColor(ContextCompat.getColor(context, R.color.search_filter_item_text_color))
+                }
+            }
         }
     }
 
