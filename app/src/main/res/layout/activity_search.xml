@@ -200,8 +200,16 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="결과가 없습니다.\n빠른 키워드로 검색해보세요." />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/view_shadows"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:background="@drawable/bottom_shadows"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/layout_search_result" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_search_recommend"
@@ -265,7 +273,6 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_currents"
                 submitList="@{vm.currents}"
-                tools:visibility="gone"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:orientation="vertical"
@@ -275,7 +282,8 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_chainStyle="packed"
-                tools:listitem="@layout/item_search_relative" />
+                tools:listitem="@layout/item_search_relative"
+                tools:visibility="gone" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
