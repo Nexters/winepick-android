@@ -20,6 +20,8 @@ import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
+
+// TODO Hilt 을 사용한 AuthModule
 @InstallIn(ActivityComponent::class)
 @Module
 object AuthModule{

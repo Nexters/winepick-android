@@ -6,6 +6,9 @@ import androidx.core.content.edit
 import timber.log.Timber
 import java.util.*
 
+/**
+ *  Koin을 사용한 AuthModule
+ */
 class AuthManager(context: Context) {
 
     private val preferences = context.getSharedPreferences(
