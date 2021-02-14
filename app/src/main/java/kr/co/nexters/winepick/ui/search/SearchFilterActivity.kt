@@ -50,7 +50,6 @@ class SearchFilterActivity : BaseActivity<ActivitySearchFilterBinding>(
 
         binding.apply {
             btnSearchFilterBack.setOnSingleClickListener { onBackPressedAtSearchFilter() }
-            btnSearchFilterConfirmBottom.setOnSingleClickListener { onBackPressedAtSearchFilter(true) }
             btnSearchFilterConfirm.setOnSingleClickListener { onBackPressedAtSearchFilter(true) }
         }
 
