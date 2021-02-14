@@ -16,72 +16,62 @@ import com.kakao.usermgmt.UserManagement
 import com.kakao.usermgmt.callback.MeV2ResponseCallback
 import com.kakao.usermgmt.response.MeV2Response
 import com.kakao.util.exception.KakaoException
-import dagger.hilt.android.AndroidEntryPoint
-import kr.co.nexters.winepick.AuthModule
 import kr.co.nexters.winepick.MainActivity
 import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.databinding.ActivityLoginBinding
+import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.BaseActivity
 import kr.co.nexters.winepick.ui.base.BaseViewModel
 import kr.co.nexters.winepick.ui.home.HomeActivity
 import kr.co.nexters.winepick.ui.search.SearchActivity
 import kr.co.nexters.winepick.util.startActivity
+import org.koin.android.ext.android.inject
+import org.koin.experimental.property.inject
 import timber.log.Timber
-import javax.inject.Inject
 
-@AndroidEntryPoint
 class LoginActivity : BaseActivity<ActivityLoginBinding>(
     R.layout.activity_login
 ) {
     override val viewModel: LoginViewModel by lazy {
         ViewModelProvider(this, viewModelFactory).get(LoginViewModel::class.java)
     }
-
-    @Inject lateinit var authModule: AuthModule
-
-    val sessionCallback: ISessionCallback = object : ISessionCallback {
-        override fun onSessionOpened() {
-            Timber.d("SessionOpen!")
-            UserManagement.getInstance().me(object : MeV2ResponseCallback() {
-                override fun onSuccess(result: MeV2Response?) {
-                    Timber.d("로그인 성공")
-                    Timber.d("${result!!.kakaoAccount.profile.nickname}")
-                    Timber.d("connect - ${result!!.connectedAt}")
-                    authModule.token = result!!.groupUserToken.toString()
-                    Timber.e("${authModule.token}")
-
-                    Intent(applicationContext,HomeActivity::class.java).apply {
-                        putExtra("mode","user")
-                    }.run {
-                       startActivity(this.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-                    }
+    private val authManager : AuthManager by inject()
 
 
-                }
-
-                override fun onSessionClosed(errorResult: ErrorResult?) {
-                    Timber.e("SessionClose! - ${errorResult}")
-                }
-
-            })
+    val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
+        if (error != null) {
+            Timber.e("로그인 실패 ${error}")
+            //Login Fail
         }
-
-        override fun onSessionOpenFailed(exception: KakaoException?) {
-            Timber.e("로그인 실패 - ${exception}")
+        else if (token != null) {
+            //Login Success
+            Timber.d("로그인 성공")
+            authManager.apply {
+                this.token = token.accessToken
+            }
+            Timber.e("로그인성공 - 토큰 ${authManager.token}")
+            Intent(applicationContext,HomeActivity::class.java).apply {
+                putExtra("mode","user")
+            }.run { startActivity(this) }
         }
     }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Session.getCurrentSession().addCallback(sessionCallback)
         binding.setVariable(BR.vm, viewModel)
         binding.apply {
-            tvGuest.text = "먼저 둘러보고 싶어요."
-            tvGuest.setOnClickListener {
-                Intent(applicationContext,HomeActivity::class.java).apply {
-                    putExtra("mode","guest")
-                }.run {
-                    startActivity(this.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+            btnLogin.setOnClickListener {
+                LoginClient.instance.run {
+                    if (isKakaoTalkLoginAvailable(this@LoginActivity)) {
+                        loginWithKakaoTalk(this@LoginActivity, callback = callback)
+                    } else {
+                        loginWithKakaoAccount(this@LoginActivity, callback = callback)
+                    }
+                }
+                tvGuest.setOnClickListener {
+                    Intent(applicationContext, HomeActivity::class.java).apply {
+                        putExtra("mode", "guest")
+                    }.run { startActivity(this) }
+
                 }
             }
 
@@ -89,19 +79,11 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(
             var count = 0
             tvAppName.setOnClickListener {
                 if (count++ > 10) {
+                    startActivity(SearchActivity::class, false, null)
                     count = 0
                 }
             }
         }
-
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (Session.getCurrentSession().handleActivityResult(requestCode,resultCode,data)) {
-            Timber.d("현재 세션")
-            return
-        }
-        super.onActivityResult(requestCode, resultCode, data)
 
     }
 }
