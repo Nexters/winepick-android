@@ -33,7 +33,6 @@
                 android:id="@+id/btn_search_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
                 android:background="@null"
                 android:paddingStart="24dp"
                 android:paddingTop="12dp"
