@@ -23,7 +23,7 @@
         tools:targetApi="m">
         <activity android:name=".ui.like.LikeListActivity"></activity>
         <activity android:name=".ui.home.TypeDetailActivity" />
-        <activity android:name=".ui.home.HomeActivity" />
+        <activity android:name=".ui.home.HomeActivity"/>
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"

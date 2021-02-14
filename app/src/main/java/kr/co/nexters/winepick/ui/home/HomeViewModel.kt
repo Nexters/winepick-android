@@ -12,11 +12,14 @@ import kr.co.nexters.winepick.ui.base.BaseViewModel
 class HomeViewModel : BaseViewModel() {
     private var _home = MutableLiveData<String>()
     var home : LiveData<String> = _home
+    private var _likecnt = MutableLiveData<Int>()
+    var likeCnt : LiveData<Int> = _likecnt
 
 
     /** 생성자 */
     init {
         _home.value = MutableLiveData<String>().value
+        _likecnt.value = 0
 
     }
 
@@ -24,6 +27,7 @@ class HomeViewModel : BaseViewModel() {
     fun editTitle(title: String) {
         _home.value = title
     }
+
 
     /** UI 의 onDestroy 개념으로 생각하면 편할듯 */
     override fun onCleared() {

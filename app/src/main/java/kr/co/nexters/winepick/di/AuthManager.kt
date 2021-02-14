@@ -56,6 +56,16 @@ class AuthManager(context: Context) {
             }
         }
 
+    var test_type: String
+        get(){
+            return preferences.getString(TEST,null).orEmpty()
+        }
+        set(value){
+            preferences.edit{
+                putString(TEST, value)
+            }
+        }
+
 
     private companion object {
         const val AUTH_PREFERENCES = "auth"
@@ -63,5 +73,6 @@ class AuthManager(context: Context) {
         const val AUTO_LOGIN_KEY = "auto"
         const val FIRST_KEY = "first"
         const val EXPIRE_KEY = "expire"
+        const val TEST = "test"
     }
 }
