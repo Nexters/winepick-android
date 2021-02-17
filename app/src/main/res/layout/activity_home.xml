@@ -40,7 +40,7 @@
             android:textColor="@color/black"
             android:fontFamily="@font/montserrat_extrabold"
             android:includeFontPadding="false"
-            android:textSize="18sp" />
+            android:textSize="18dp" />
 
         <include
             android:id="@+id/layout_home_guest"
@@ -75,7 +75,7 @@
                 android:text="@string/home_search_title"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:textSize="18sp"
+                android:textSize="18dp"
                 android:textColor="@color/black"
                 android:fontFamily="@font/notosans_cjk_kr_light"
                 android:includeFontPadding="false"/>
@@ -98,7 +98,7 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintBottom_toBottomOf="@id/iv_home_arrow"
                     android:textColor="@color/colorBlack80"
-                    android:textSize="12sp"
+                    android:textSize="12dp"
                     android:fontFamily="@font/notosans_cjk_kr_regular"
                     android:includeFontPadding="false"
                     android:lineSpacingExtra="18sp"
@@ -136,7 +136,7 @@
                 android:id="@+id/tv_recommend_wine1"
                 tools:text="#연말에 어울리는 와인"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="14dp"
                 android:lineSpacingExtra="16sp"
                 android:letterSpacing="-0.02"
                 android:layout_marginBottom="10dp"
@@ -157,7 +157,7 @@
                 android:paddingHorizontal="18dp"
                 android:paddingVertical="14dp"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="14dp"
                 android:includeFontPadding="false"
                 android:fontFamily="@font/notosans_cjk_kr_medium"
                 app:layout_constraintTop_toBottomOf="@id/iv_home_type"
@@ -185,7 +185,7 @@
             android:text="@string/wine_search"
             android:maxWidth="56dp"
             android:textColor="@color/white"
-            android:textSize="16sp"
+            android:textSize="16dp"
             android:gravity="center"
             app:layout_constraintDimensionRatio="5:1"
             app:layout_constrainedWidth="true"
@@ -247,7 +247,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:foregroundGravity="center"
             android:gravity="center"
-            android:textSize="10sp"
+            android:textSize="10dp"
             android:fontFamily="@font/notosans_cjk_kr_medium"
             android:textColor="@color/white" />
 

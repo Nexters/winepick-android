@@ -14,7 +14,7 @@
         android:text="@string/like_cancel"
         android:textColor="@color/colorWhite"
         android:fontFamily="@font/notosans_cjk_kr_regular"
-        android:textSize="14sp"
+        android:textSize="14dp"
         android:gravity="center"
         android:includeFontPadding="false"
         app:layout_constraintTop_toTopOf="parent"

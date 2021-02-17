@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:text="@{title}"
             android:textColor="@color/black"
-            android:textSize="12sp"
+            android:textSize="12dp"
             android:textStyle="normal"
             tools:text="단맛" />
 
@@ -38,7 +38,7 @@
             android:layout_marginStart="4dp"
             android:text="@{Integer.toString(value)}"
             android:textColor="@color/black"
-            android:textSize="12sp"
+            android:textSize="12dp"
             android:textStyle="normal"
             tools:text="3" />
 

@@ -37,7 +37,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(
     }
     private val authManager : AuthManager by inject()
 
-
     val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
         if (error != null) {
             Timber.e("로그인 실패 ${error}")

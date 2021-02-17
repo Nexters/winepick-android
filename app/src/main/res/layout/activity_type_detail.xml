@@ -50,7 +50,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/home_wine_type"
                     android:textColor="@color/black"
-                    android:textSize="18sp"
+                    android:textSize="18dp"
                     android:fontFamily="@font/notosans_cjk_kr_regular"
                     android:includeFontPadding="false"
                     app:layout_constraintTop_toTopOf="parent"
@@ -84,7 +84,7 @@
                     tools:text="내이름은 무술이"
                     android:layout_marginTop="40dp"
                     android:fontFamily="@font/notosans_cjk_kr_regular"
-                    android:textSize="16sp"
+                    android:textSize="16dp"
                     android:textColor="@color/black"
                     android:includeFontPadding="false"
                     app:layout_constraintTop_toBottomOf="@id/iv_wine_type"
@@ -101,7 +101,7 @@
                     tools:text="모여모여 친목형,펭귄"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/notosans_cjk_kr_bold"
-                    android:textSize="20sp"
+                    android:textSize="20dp"
                     android:textColor="@color/black"
                     android:includeFontPadding="false"/>
 
@@ -119,7 +119,7 @@
                     android:fontFamily="@font/notosans_cjk_kr_light"
                     android:includeFontPadding="false"
                     android:lineSpacingExtra="12sp"
-                    android:textSize="14sp"/>
+                    android:textSize="14dp"/>
 
 
                 <TextView

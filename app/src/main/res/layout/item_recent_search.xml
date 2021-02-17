@@ -16,7 +16,7 @@
         android:textColor="@color/black"
         android:fontFamily="@font/notosans_cjk_kr_regular"
         android:includeFontPadding="false"
-        android:textSize="14sp"
+        android:textSize="14dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
