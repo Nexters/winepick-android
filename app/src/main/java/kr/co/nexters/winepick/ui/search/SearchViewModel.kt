@@ -37,11 +37,6 @@ class SearchViewModel : BaseViewModel() {
     /** 검색 목록 list */
     val currents: LiveData<List<String>> = SearchRepository.styledWineInfos
 
-    /** 검색 목록 list */
-    private val _recommends = MutableLiveData(listOf("혼자 집에서 쉴때", "집들이 선물", "20대에게 인기 많은"))
-    val recommends: LiveData<List<String>> = _recommends
-
-
     /** 가장 맨 앞에 보여야 할 화면. 보여야 할 내용은 [SearchFront] 참고 */
     private val _searchFrontPage = MutableLiveData<SearchFront>(SearchFront.DEFAULT)
     val searchFrontPage: LiveData<SearchFront> = _searchFrontPage

@@ -26,8 +26,9 @@
 
     <!-- search -->
     <color name="search_query_reset_text_color">#262626</color>
+    <color name="search_recommend_title_text_color">#AAAAAA</color>
     <color name="search_recommend_item_background">#F2F2F2</color>
-    <color name="search_recommend_item_text_color">#6F6F6F</color>
+    <color name="search_recommend_item_text_color">#000000</color>
     <color name="search_relative_item_divider_color">#F3F3F3</color>
     <color name="search_result_country_text_color">#ADADAD</color>
 

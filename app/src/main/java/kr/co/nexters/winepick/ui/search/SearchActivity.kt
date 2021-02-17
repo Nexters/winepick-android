@@ -34,7 +34,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
 
             rvResults.adapter = SearchResultAdapter(viewModel)
             rvCurrents.adapter = SearchRelativeAdapter(viewModel)
-            rvRecommends.adapter = SearchRecommendAdapter(viewModel)
+            rvRecommends.adapter = SearchRecommendAdapter(viewModel, resources.getStringArray(R.array.search_recommends))
         }
 
         subscribeUI()
