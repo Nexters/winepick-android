@@ -151,6 +151,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="24dp"
+                android:visibility="@{vm.isSearch() ? View.VISIBLE : View.GONE}"
                 android:id="@+id/cl_wine_type_search">
 
                 <TextView
@@ -182,7 +183,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/rv_story"
+                    android:id="@+id/rv_search"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     android:orientation="vertical"
                     android:layout_marginTop="16dp"

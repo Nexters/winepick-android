@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_like_title"
                 app:layout_constraintVertical_bias="0.83"
-                android:text="@string/home_like_num"
+                android:text="@{@string/home_like_num(vm.likeNum)}"
                 android:textSize="20dp"
                 android:textColor="@color/black"
                 android:fontFamily="@font/notosans_cjk_kr_bold"

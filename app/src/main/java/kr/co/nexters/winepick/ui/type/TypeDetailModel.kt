@@ -28,11 +28,21 @@ class TypeDetailModel(private val repo : WinePickRepository, private val auth : 
     val isUser : LiveData<Boolean>
         get() = _isUser
 
+
+    private var _isSearch : MutableLiveData<Boolean> = MutableLiveData()
+    val isSearch : LiveData<Boolean>
+        get() = _isSearch
+
+
     /** 생성자 */
     init {
         _isUser.value = false
         if (auth.token != "guest") {
             _isUser.value = true
+        }
+        _isSearch.value = false
+        if (auth.recent_search1 != null && !auth.recent_search1.isNullOrBlank() ) {
+            _isSearch.value = true
         }
     }
     fun searchClick() {

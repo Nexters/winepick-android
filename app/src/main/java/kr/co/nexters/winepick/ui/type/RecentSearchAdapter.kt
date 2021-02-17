@@ -1,18 +1,13 @@
 package kr.co.nexters.winepick.type
 
-import android.graphics.Color
-import android.os.Parcel
-import android.os.Parcelable
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.util.inflate
-import timber.log.Timber
 
-class RecentSearchRecycler() : RecyclerView.Adapter<RecentSearchRecycler.ViewHolder>() {
+class RecentSearchAdapter() : RecyclerView.Adapter<RecentSearchAdapter.ViewHolder>() {
 
     private var data : List<String> = emptyList()
 

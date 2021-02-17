@@ -66,6 +66,26 @@ class AuthManager(context: Context) {
                 putInt(ID,value)
             }
         }
+    var recent_search1: String?
+        get(){
+            return preferences.getString(RECENT_SEARCH1,null).orEmpty()
+        }
+        set(value){
+            preferences.edit{
+                putString(RECENT_SEARCH1, value)
+            }
+        }
+
+    var recent_search2: String?
+        get(){
+            return preferences.getString(RECENT_SEARCH2,null).orEmpty()
+        }
+        set(value){
+            preferences.edit{
+                putString(RECENT_SEARCH2, value)
+            }
+        }
+
 
 
     private companion object {
@@ -75,7 +95,8 @@ class AuthManager(context: Context) {
         const val FIRST_KEY = "first"
         const val EXPIRE_KEY = "expire"
         const val TEST = "test"
-        const val RECENT_SEARCH = "search"
+        const val RECENT_SEARCH1 = "search1"
+        const val RECENT_SEARCH2 = "search2"
         const val ID = "id"
     }
 }

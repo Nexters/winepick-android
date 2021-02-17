@@ -29,6 +29,8 @@ public class SurveyActivity extends FragmentActivity {
     public void testType() {
         authManager = new AuthManager(getApplicationContext());
         authManager.setTest_type("A");
+        authManager.setRecent_search1("최근검색어1");
+        authManager.setRecent_search2("최근검색어2");
     }
     public void onFragmentChange(int fragmentNum) {
         //프래그먼트의 번호에 따라 다르게 작동하는 조건문

@@ -1,11 +1,16 @@
 package kr.co.nexters.winepick.ui.type
 
 import android.os.Bundle
+import android.view.View
 import kr.co.nexters.winepick.BR
 import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.databinding.ActivityTypeDetailBinding
 import kr.co.nexters.winepick.di.AuthManager
+import kr.co.nexters.winepick.type.RecentSearchAdapter
 import kr.co.nexters.winepick.ui.base.BaseActivity
+import kr.co.nexters.winepick.ui.search.SearchActivity
+import kr.co.nexters.winepick.util.VerticalItemDecorator
+import kr.co.nexters.winepick.util.startActivity
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -14,6 +19,8 @@ class TypeDetailActivity : BaseActivity<ActivityTypeDetailBinding>(
 ) {
     override val viewModel : TypeDetailModel by viewModel<TypeDetailModel>()
     private val authManager : AuthManager by inject()
+    private val searchRecycler : RecentSearchAdapter by lazy { RecentSearchAdapter() }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.setVariable(BR.vm, viewModel)
@@ -22,8 +29,24 @@ class TypeDetailActivity : BaseActivity<ActivityTypeDetailBinding>(
             ivTypeBack.setOnClickListener { finish() }
         }
 
+        initRecycler()
+    }
+    private fun initRecycler() {
+        binding.rvSearch.apply {
+            adapter = searchRecycler
+            addItemDecoration(VerticalItemDecorator(16))
+        }
+        if (authManager.recent_search1 != null && !authManager.recent_search1.isNullOrBlank() ) {
+            searchRecycler.initData(listOf<String>(authManager.recent_search1!!, authManager.recent_search2!!))
+        }
 
 
+        searchRecycler.setOnItemClickListener(object : RecentSearchAdapter.OnItemClickListener {
+            override fun onItemClick(v: View, data: String, pos: Int) {
+               //TODO SearchActivity 검색 처리해야함  !
+                startActivity(SearchActivity::class, false)
+            }
+        })
     }
 
 }

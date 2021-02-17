@@ -1,5 +1,6 @@
 package kr.co.nexters.winepick.data.model.remote.wine
 
+import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
@@ -30,48 +31,63 @@ import kr.co.nexters.winepick.network.WinePickService
  */
 @Serializable
 data class WineResult(
+    @SerializedName("acidity")
     @SerialName("acidity")
     val acidity: Int,
 
+    @SerializedName("body")
     @SerialName("body")
     val body: Int,
 
+    @SerializedName("category")
     @SerialName("category")
     val category: String,
 
+    @SerializedName("country")
     @SerialName("country")
     val country: String,
 
+    @SerializedName("felling")
     @SerialName("feeling")
     val feeling: String,
 
+    @SerializedName("id")
     @SerialName("id")
     val id: Int,
 
+    @SerializedName("likes")
     @SerialName("likes")
     val likes: Int,
 
+    @SerializedName("nmEng")
     @SerialName("nmEng")
     val nmEng: String,
 
+    @SerializedName("nmKor")
     @SerialName("nmKor")
     val nmKor: String,
 
+    @SerializedName("price")
     @SerialName("price")
     val price: Int,
 
+    @SerializedName("suitEvent")
     @SerialName("suitEvent")
     val suitEvent: String?,
 
+    @SerializedName("suitFood")
     @SerialName("suitFood")
     val suitFood: String?,
 
+    @SerializedName("suitWho")
     @SerialName("suitWho")
     val suitWho: String?,
 
+    @SerializedName("sweetness")
     @SerialName("sweetness")
     val sweetness: Int,
 
+    @SerializedName("tannin")
     @SerialName("tannin")
     val tannin: Int
 )
