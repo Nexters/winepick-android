@@ -38,16 +38,6 @@ class AuthManager(context: Context) {
             }
         }
 
-    var first: Boolean
-        get() {
-            return preferences.getBoolean(FIRST_KEY, false)
-        }
-        set(value) {
-            preferences.edit {
-                putBoolean(FIRST_KEY, value)
-            }
-        }
-
     var expire: Long
         get(){
             return preferences.getLong(EXPIRE_KEY,0)
@@ -67,6 +57,15 @@ class AuthManager(context: Context) {
                 putString(TEST, value)
             }
         }
+    var id : Int
+        get(){
+            return preferences.getInt(ID,0)
+        }
+        set(value){
+            preferences.edit{
+                putInt(ID,value)
+            }
+        }
 
 
     private companion object {
@@ -77,5 +76,6 @@ class AuthManager(context: Context) {
         const val EXPIRE_KEY = "expire"
         const val TEST = "test"
         const val RECENT_SEARCH = "search"
+        const val ID = "id"
     }
 }

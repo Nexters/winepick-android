@@ -1,19 +1,20 @@
 package kr.co.nexters.winepick.data.response
 
+import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import java.util.*
 
-@Serializable
+
 data class UserInfoData(
-    @SerialName("createdAt")
+    @SerializedName("createdAt")
     val createdAt : String? = null,
-    @SerialName("updatedAt")
+    @SerializedName("updatedAt")
     val updatedAt : String? = null,
-    @SerialName("id")
+    @SerializedName("id")
     val id : Int? = null,
-    @SerialName("accessToken")
+    @SerializedName("accessToken")
     val accessToken : String? = null,
-    @SerialName("personalityType")
+    @SerializedName("personalityType")
     val personalityType : String? = null
 )

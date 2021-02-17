@@ -35,9 +35,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(
     R.layout.activity_login
 ) {
     override val viewModel : LoginViewModel by viewModel<LoginViewModel>()
-//    override val viewModel: LoginViewModel by lazy {
-//        ViewModelProvider(this, viewModelFactory).get(LoginViewModel::class.java)
-//    }
     private val authManager : AuthManager by inject()
 
     val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
@@ -53,9 +50,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(
             }
             Timber.e("로그인성공 - 토큰 ${authManager.token}")
             viewModel.addUserInfo(token.accessToken)
-            Intent(WinePickApplication.appContext, HomeActivity::class.java).apply {
-                putExtra("mode","user")
-            }.run { startActivity(this) }
+            startActivity(HomeActivity::class, true)
         }
     }
 
@@ -73,10 +68,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(
                 }
             }
             tvGuest.setOnClickListener {
-                Intent(applicationContext, HomeActivity::class.java).apply {
-                    putExtra("mode", "guest")
-                }.run { startActivity(this) }
-
+                authManager.token = "guest"
+                startActivity(HomeActivity::class, true)
             }
 
             // TODO 검색화면을 볼 수 있도록 하기 위해 임시 구현된 로직 (배포 시에는 삭제한다)

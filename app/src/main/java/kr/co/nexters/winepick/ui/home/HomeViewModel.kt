@@ -2,6 +2,8 @@ package kr.co.nexters.winepick.ui.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import kr.co.nexters.winepick.data.repository.WinePickRepository
+import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.BaseViewModel
 
 /**
@@ -9,11 +11,14 @@ import kr.co.nexters.winepick.ui.base.BaseViewModel
  *
  * @since v1.0.0 / 2021.01.28
  */
-class HomeViewModel : BaseViewModel() {
+class HomeViewModel(private val repo : WinePickRepository, private val authManager : AuthManager) : BaseViewModel() {
     private var _home = MutableLiveData<String>()
     var home : LiveData<String> = _home
     private var _likecnt = MutableLiveData<Int>()
     var likeCnt : LiveData<Int> = _likecnt
+
+    private var _checkTest : MutableLiveData<Boolean> = MutableLiveData()
+    var checkTest : LiveData<Boolean> = _checkTest
 
 
     /** 생성자 */
@@ -21,11 +26,10 @@ class HomeViewModel : BaseViewModel() {
         _home.value = MutableLiveData<String>().value
         _likecnt.value = 0
 
-    }
+        if (!authManager.test_type.isNullOrEmpty()) {
+            _checkTest.value = true
+        }
 
-    /** 제목을 변경한다. UI 에서 [_title] 에 직접 접근하는 것을 막기 위해 사용한다. */
-    fun editTitle(title: String) {
-        _home.value = title
     }
 
 

@@ -21,7 +21,7 @@ import timber.log.Timber
  *
  * @since v1.0.0 / 2021.01.28
  */
-class LoginViewModel(private val repo : WinePickRepository) : BaseViewModel() {
+class LoginViewModel(private val repo : WinePickRepository, private val authManager: AuthManager) : BaseViewModel() {
     private var _login = MutableLiveData<String>()
     var login : LiveData<String> = _login
     /** 생성자 */
@@ -39,10 +39,11 @@ class LoginViewModel(private val repo : WinePickRepository) : BaseViewModel() {
         repo.postUser(
             data = UserData(token),
             onSuccess = {
-                        Timber.e("ddd?")
+                authManager.token = it.accessToken.toString()
+                authManager.autoLogin = true
+                authManager.id = it.id!!
             },
             onFailure = {
-
             }
         )
     }

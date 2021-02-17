@@ -19,47 +19,19 @@ import kr.co.nexters.winepick.ui.login.LoginViewModel
 import kr.co.nexters.winepick.ui.login.getKakaoHashKey
 import kr.co.nexters.winepick.util.initLoginWarningDialog
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
 
 class HomeActivity : BaseActivity<ActivityHomeBinding>(
         R.layout.activity_home
 ) {
-    override val viewModel: HomeViewModel by lazy {
-        ViewModelProvider(this, viewModelFactory).get(HomeViewModel::class.java)
-    }
+    override val viewModel : HomeViewModel by viewModel<HomeViewModel>()
     private val authManager : AuthManager by inject()
-
-    private var mode : String = "guest"
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.setVariable(BR.vm, viewModel)
-        binding.apply {
-            mode = intent!!.getStringExtra("mode").toString()
-            if (mode == "user") {
-                if (!authManager.test_type.isNullOrEmpty()) {
-                    binding.clHomeUser.visibility = View.VISIBLE
-                    binding.layoutHomeGuest.clHomeGuest.visibility = View.INVISIBLE
-                }
-                binding.layoutHomeGuest.clHomeGuest.visibility = View.VISIBLE
-                binding.clLikeNum.visibility = View.VISIBLE
-            }
 
-            binding.layoutHomeGuest.clGuestType.setOnClickListener {
-                //TODO 테스트 검사하는 창 전환해야함
-            }
-
-            binding.clLikeBox.setOnClickListener {
-                if (mode == "guest") {
-
-                }
-            }
-
-
-
-
-        }
 
 
     }
