@@ -1,12 +1,13 @@
 package kr.co.nexters.winepick.network
 
-import kr.co.nexters.winepick.data.model.WinePickResponse
+import kr.co.nexters.winepick.data.model.*
 import kr.co.nexters.winepick.data.model.remote.wine.WineResult
 import kr.co.nexters.winepick.data.model.remote.wine.WinesResult
+import kr.co.nexters.winepick.data.response.PersonalityType
+import kr.co.nexters.winepick.data.response.getUserData
+import kr.co.nexters.winepick.data.response.postUserData
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 /**
  * 실제 서비스에서 사용하는 Retrofit2 인터페이스
@@ -40,4 +41,56 @@ interface WinePickService {
         // page : 해당 페이지
         // sort : id 기준으로 내림차순/오름차순 정렬 가능 유무
     ): Call<WinePickResponse<WinesResult>>
+
+
+    /**
+     * updateUser
+     */
+    @POST("v2/api/user/accessToken")
+    fun postUserAccessToken(
+        @Body data: TokenInfo
+    ) : Call<WinePickResponse<Unit>>
+
+    /**
+     * addLike
+     */
+    @POST("v2/api/like")
+    fun postLike(
+        @Body data : LikeWine
+    ) : Call<WinePickResponse<Unit>>
+
+    /**
+     * getLikesWineList
+     */
+    @GET("v2/api/like/{userId}")
+    fun getLikesWineList(
+        @Path("userId") userId : Int
+    ) : Call<WinePickResponse<List<WineList>>>
+
+    @PUT("v2/api/like/{userId}/{wineId}")
+    fun deleteLike(
+        @Path("userId") userId : Int,
+        @Path("wineId") wineId: Int
+    ) : Call<WinePickResponse<Unit>>
+
+    /**
+     * addUser
+     */
+    @POST("v2/api/user/")
+    fun postUser(
+        @Body data : UserData
+    ) : Call<WinePickResponse<postUserData>>
+
+    @GET("v2/api/user/me/{accessToken}")
+    fun getUser(
+        @Path("accessToken") accessToken : String
+     ) : Call<WinePickResponse<getUserData>>
+
+    /**
+     * getUserPersonality
+     */
+    @GET ("v2/api/result/{resultId}")
+    fun getResult(
+        @Path("resultId") resultId : Int
+    ) : Call<WinePickResponse<PersonalityType>>
 }

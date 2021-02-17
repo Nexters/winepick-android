@@ -3,6 +3,10 @@ package kr.co.nexters.winepick.di
 import kr.co.nexters.winepick.data.repository.WinePickRepository
 import kr.co.nexters.winepick.network.WinePickService
 import kr.co.nexters.winepick.ui.base.BaseViewModel
+import kr.co.nexters.winepick.ui.home.HomeViewModel
+import kr.co.nexters.winepick.ui.type.TypeDetailModel
+import kr.co.nexters.winepick.ui.like.LikeViewModel
+import kr.co.nexters.winepick.ui.login.LoginViewModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -49,6 +53,11 @@ val apiModule = module {
 
 val viewModelModule = module {
     viewModel { BaseViewModel() }
+    viewModel { LoginViewModel(get(), get()) }
+    viewModel { HomeViewModel(get(), get()) }
+    viewModel { TypeDetailModel(get(), get()) }
+    viewModel { LikeViewModel(get(), get()) }
+
 }
 
 val repositoryModule = module {
@@ -58,6 +67,7 @@ val repositoryModule = module {
 val authModule = module {
     single { AuthManager(get())  }
 }
+
 val moduleList = listOf(
     netModule,
     viewModelModule,
