@@ -21,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="좋아요한 와인에\n담겼어요!"
-        android:textSize="14do"
+        android:textSize="14dp"
         android:gravity="center"
         android:layout_marginTop="16dp"
         android:includeFontPadding="false"

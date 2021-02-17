@@ -3,8 +3,10 @@ package kr.co.nexters.winepick.di
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
+import kr.co.nexters.winepick.data.model.LikeWine
 import timber.log.Timber
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  *  Koin을 사용한 AuthModule
@@ -74,5 +76,6 @@ class AuthManager(context: Context) {
         const val FIRST_KEY = "first"
         const val EXPIRE_KEY = "expire"
         const val TEST = "test"
+        const val RECENT_SEARCH = "search"
     }
 }

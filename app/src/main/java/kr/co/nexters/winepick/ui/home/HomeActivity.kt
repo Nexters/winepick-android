@@ -52,7 +52,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(
 
             binding.clLikeBox.setOnClickListener {
                 if (mode == "guest") {
-                    initLoginWarningDialog(applicationContext)
+
                 }
             }
 

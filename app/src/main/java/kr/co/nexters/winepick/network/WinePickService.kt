@@ -3,6 +3,7 @@ package kr.co.nexters.winepick.network
 import kr.co.nexters.winepick.data.model.*
 import kr.co.nexters.winepick.data.model.remote.wine.WineResult
 import kr.co.nexters.winepick.data.model.remote.wine.WinesResult
+import kr.co.nexters.winepick.data.response.UserInfoData
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -69,4 +70,12 @@ interface WinePickService {
         @Path("userId") userId : Int,
         @Path("wineId") wineId: Int
     ) : Call<WinePickResponse<Unit>>
+
+    /**
+     * addUser
+     */
+    @POST("v2/api/user/")
+    fun postUser(
+        @Body data : UserData
+    ) : Call<WinePickResponse<UserInfoData>>
 }
