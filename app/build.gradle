@@ -40,8 +40,9 @@ android {
         }
     }
 
-    dataBinding {
-        enabled = true
+    buildFeatures{
+        dataBinding = true // for data binding
+        viewBinding = true // for view binding
     }
 
 }
@@ -147,4 +148,8 @@ dependencies {
     implementation "org.koin:koin-androidx-fragment:$koin_version"
     // Koin AndroidX Experimental features
     implementation "org.koin:koin-androidx-ext:$koin_version"
+
+    implementation "androidx.core:core-ktx:1.1.0" // 1.2.0-rc01
+
+
 }

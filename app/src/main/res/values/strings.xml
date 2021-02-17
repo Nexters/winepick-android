@@ -20,6 +20,8 @@
     <string name="login">로그인 하기</string>
 
 
+    <!--typedetail-->
+    <string name="type_title">당신의 성향은</string>
 
     <!-- login warning -->
     <string name="login_warning_title">로그인 하시겠습니까?</string>

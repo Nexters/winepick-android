@@ -48,7 +48,7 @@ class AuthManager(context: Context) {
             }
         }
 
-    var test_type: String
+    var test_type: String?
         get(){
             return preferences.getString(TEST,null).orEmpty()
         }

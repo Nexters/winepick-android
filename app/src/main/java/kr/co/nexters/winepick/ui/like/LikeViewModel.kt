@@ -2,6 +2,8 @@ package kr.co.nexters.winepick.ui.like
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import kr.co.nexters.winepick.data.repository.WinePickRepository
+import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.BaseViewModel
 
 /**
@@ -9,7 +11,7 @@ import kr.co.nexters.winepick.ui.base.BaseViewModel
  *
  * @since v1.0.0 / 2021.01.28
  */
-class LikeViewModel : BaseViewModel() {
+class LikeViewModel(private val repo : WinePickRepository, private val auth: AuthManager) : BaseViewModel() {
     private var _like_num = MutableLiveData<Int>()
 
     var likeNum : LiveData<Int> = _like_num

@@ -6,13 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.ViewModelProvider
 import com.kakao.auth.Session
+import kr.co.nexters.winepick.BR
 import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.WinePickApplication
 import kr.co.nexters.winepick.databinding.ActivityHomeBinding
-import kr.co.nexters.winepick.databinding.ActivityLoginBinding
 import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.BaseActivity
 import kr.co.nexters.winepick.ui.login.LoginViewModel
@@ -31,8 +30,12 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.setVariable(BR.vm, viewModel)
+        binding.vm!!.getUserLikes()
 
-
+        //TODO test를 위해 임의로 만들어놈
+        if (authManager.test_type != null) {
+            binding.vm!!.setUserPersonalType()
+        }
 
     }
 

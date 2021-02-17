@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 import java.util.*
 
 
-data class UserInfoData(
+data class postUserData(
     @SerializedName("createdAt")
     val createdAt : String? = null,
     @SerializedName("updatedAt")

@@ -1,12 +1,14 @@
 package kr.co.nexters.winepick.data.repository
 
 
-import io.reactivex.rxjava3.internal.operators.single.SingleDoOnSuccess
+import com.kakao.auth.authorization.accesstoken.AccessToken
 import kr.co.nexters.winepick.data.model.LikeWine
 import kr.co.nexters.winepick.data.model.TokenInfo
 import kr.co.nexters.winepick.data.model.UserData
 import kr.co.nexters.winepick.data.model.WineList
-import kr.co.nexters.winepick.data.response.UserInfoData
+import kr.co.nexters.winepick.data.response.PersonalityType
+import kr.co.nexters.winepick.data.response.getUserData
+import kr.co.nexters.winepick.data.response.postUserData
 import kr.co.nexters.winepick.network.WinePickService
 import kr.co.nexters.winepick.util.safeEnqueue
 
@@ -63,10 +65,34 @@ class WinePickRepository(private val api: WinePickService) {
 
     fun postUser(
         data : UserData,
-        onSuccess: (UserInfoData) -> Unit,
+        onSuccess: (postUserData) -> Unit,
         onFailure: () -> Unit
     ) {
         api.postUser(data).safeEnqueue(
+            onSuccess = { onSuccess(it!!.result!!) },
+            onFailure = { onFailure() },
+            onError = { onFailure() }
+        )
+    }
+
+    fun getUser(
+        accessToken: String,
+        onSuccess: (getUserData) -> Unit,
+        onFailure: () -> Unit
+    ) {
+        api.getUser(accessToken).safeEnqueue(
+            onSuccess = { onSuccess(it!!.result!!) },
+            onFailure = { onFailure() },
+            onError = { onFailure() }
+        )
+    }
+
+    fun getResult(
+        resultId : Int,
+        onSuccess: (PersonalityType) -> Unit,
+        onFailure: () -> Unit
+    ) {
+        api.getResult(resultId).safeEnqueue(
             onSuccess = { onSuccess(it!!.result!!) },
             onFailure = { onFailure() },
             onError = { onFailure() }

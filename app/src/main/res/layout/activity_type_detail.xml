@@ -8,7 +8,7 @@
         <import type="android.view.View"/>
         <variable
             name="vm"
-            type="kr.co.nexters.winepick.ui.home.HomeViewModel" />
+            type="kr.co.nexters.winepick.ui.type.TypeDetailModel" />
     </data>
 
 
@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:descendantFocusability="blocksDescendants"
-        tools:context=".ui.home.TypeDetailActivity">
+        tools:context=".ui.type.TypeDetailActivity">
 
 
         <LinearLayout
@@ -36,7 +36,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/iv_back"
+                    android:id="@+id/iv_type_back"
                     android:layout_marginLeft="24dp"
                     app:layout_constraintTop_toTopOf="@id/tv_home_type"
                     app:layout_constraintBottom_toBottomOf="@id/tv_home_type"
@@ -81,7 +81,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/tv_wine_type_name"
-                    tools:text="내이름은 무술이"
+                    android:text="@string/type_title"
                     android:layout_marginTop="40dp"
                     android:fontFamily="@font/notosans_cjk_kr_regular"
                     android:textSize="16dp"
@@ -99,6 +99,7 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     tools:text="모여모여 친목형,펭귄"
+                    android:text="@{vm.typeName}"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/notosans_cjk_kr_bold"
                     android:textSize="20dp"
@@ -114,6 +115,8 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     tools:text="설명~~"
+                    android:gravity="center"
+                    android:text="@{vm.typeDesc}"
                     android:layout_marginTop="24dp"
                     android:textColor="@color/black"
                     android:fontFamily="@font/notosans_cjk_kr_light"
@@ -135,6 +138,7 @@
                     android:layout_marginVertical="56dp"
                     android:textColor="@color/white"
                     android:paddingVertical="16dp"
+                    android:onClick="@{() -> vm.searchClick()}"
                     app:layout_constraintTop_toBottomOf="@id/tv_wine_type_detail"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
@@ -194,7 +198,7 @@
                 android:id="@+id/tv_wine_type_logout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_logout_btn"
+                android:background="@drawable/bg_round_gray_15"
                 android:text="@string/logout"
                 android:gravity="center"
                 android:textSize="15sp"
@@ -202,6 +206,27 @@
                 android:includeFontPadding="false"
                 android:fontFamily="@font/notosans_cjk_kr_regular"
                 android:textColor="@color/colorGray82"
+                android:paddingVertical="16dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="72dp"
+                android:onClick="@{() -> vm.userLogin()}"
+                android:visibility="@{vm.isUser() ? View.VISIBLE : View.GONE}"
+                />
+
+            <TextView
+                android:id="@+id/tv_wine_type_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_round_black_15"
+                android:text="@string/login"
+                android:gravity="center"
+                android:textSize="15sp"
+                android:visibility="@{vm.isUser() ? View.GONE : View.VISIBLE}"
+                android:onClick="@{() -> vm.userLogout()}"
+                android:layout_marginHorizontal="24dp"
+                android:includeFontPadding="false"
+                android:fontFamily="@font/notosans_cjk_kr_regular"
+                android:textColor="@color/colorWhite"
                 android:paddingVertical="16dp"
                 android:layout_marginTop="40dp"
                 android:layout_marginBottom="72dp"
