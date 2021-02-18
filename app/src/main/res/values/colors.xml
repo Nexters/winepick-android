@@ -10,19 +10,25 @@
     <color name="white">#FFFFFF</color>
 
     <!-- login  -->
-    <color name="colorBlack">#000000</color>
     <color name="colorBlack80">#80000000</color>
-    <color name="colorGray">#F5F5F5</color>
+    <color name="colorGray">#f7f7f7</color>
+    
+    <!-- home -->
 
     <!-- main -->
     <color name="colorLightRed">#f25942</color>
+    <color name="colorWhite4c">#4cffffff</color>
+    <color name="colorGrayeb">#ebebeb</color>
+    <color name="colorGray82">#828282</color>
+    <color name="colorGrayf9">#f9f9f9</color>
+
+
 
     <!-- survey -->
     <color name="colorWhite">#FFFFFF</color>
   
     <!--login_warning -->
     <color name="colorBlack19">#19000000</color>
-    <color name="colorGray82">#828282</color>
 
     <!-- search -->
     <color name="search_query_reset_text_color">#262626</color>

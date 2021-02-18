@@ -1,10 +1,13 @@
 package kr.co.nexters.winepick.ui.base
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 /**
  * BaseViewModel
@@ -13,7 +16,6 @@ import kotlinx.coroutines.launch
  */
 open class BaseViewModel : ViewModel() {
     private val compositeDisposable = CompositeDisposable()
-
     /** 생성자 개념으로 생각하면 편할듯 */
     init {
         /**

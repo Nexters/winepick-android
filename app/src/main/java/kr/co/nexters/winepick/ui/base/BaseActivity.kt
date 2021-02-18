@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import timber.log.Timber
 
@@ -22,6 +23,8 @@ import timber.log.Timber
  *
  * @since v1.0.0 / 2021.01.17
  */
+
+
 abstract class BaseActivity<B : ViewDataBinding>(
     @LayoutRes private val layoutResId: Int
 ) : AppCompatActivity() {

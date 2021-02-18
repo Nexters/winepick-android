@@ -3,9 +3,14 @@ package kr.co.nexters.winepick.di
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
+import kr.co.nexters.winepick.data.model.LikeWine
 import timber.log.Timber
 import java.util.*
+import kotlin.collections.ArrayList
 
+/**
+ *  Koin을 사용한 AuthModule
+ */
 class AuthManager(context: Context) {
 
     private val preferences = context.getSharedPreferences(
@@ -33,16 +38,6 @@ class AuthManager(context: Context) {
             }
         }
 
-    var first: Boolean
-        get() {
-            return preferences.getBoolean(FIRST_KEY, false)
-        }
-        set(value) {
-            preferences.edit {
-                putBoolean(FIRST_KEY, value)
-            }
-        }
-
     var expire: Long
         get(){
             return preferences.getLong(EXPIRE_KEY,0)
@@ -53,6 +48,45 @@ class AuthManager(context: Context) {
             }
         }
 
+    var test_type: String?
+        get(){
+            return preferences.getString(TEST,null).orEmpty()
+        }
+        set(value){
+            preferences.edit{
+                putString(TEST, value)
+            }
+        }
+    var id : Int
+        get(){
+            return preferences.getInt(ID,0)
+        }
+        set(value){
+            preferences.edit{
+                putInt(ID,value)
+            }
+        }
+    var recent_search1: String?
+        get(){
+            return preferences.getString(RECENT_SEARCH1,null).orEmpty()
+        }
+        set(value){
+            preferences.edit{
+                putString(RECENT_SEARCH1, value)
+            }
+        }
+
+    var recent_search2: String?
+        get(){
+            return preferences.getString(RECENT_SEARCH2,null).orEmpty()
+        }
+        set(value){
+            preferences.edit{
+                putString(RECENT_SEARCH2, value)
+            }
+        }
+
+
 
     private companion object {
         const val AUTH_PREFERENCES = "auth"
@@ -60,5 +94,9 @@ class AuthManager(context: Context) {
         const val AUTO_LOGIN_KEY = "auto"
         const val FIRST_KEY = "first"
         const val EXPIRE_KEY = "expire"
+        const val TEST = "test"
+        const val RECENT_SEARCH1 = "search1"
+        const val RECENT_SEARCH2 = "search2"
+        const val ID = "id"
     }
 }
