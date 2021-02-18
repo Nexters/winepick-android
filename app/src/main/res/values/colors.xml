@@ -45,7 +45,7 @@
     <color name="search_filter_confirm_bottom_background">#EBEBEB</color>
     <color name="search_filter_confirm_bottom_text_color">#80000000</color>
     <color name="search_filter_tastes_content_track_active">#f25942</color>
-    <color name="search_filter_tastes_content_track_inactive">#EAEAEA</color>
+    <color name="search_filter_tastes_content_track_inactive">#cbcbcb</color>
     <color name="search_filter_item_convenience_cu_selected">#782B91</color>
     <color name="search_filter_item_convenience_gs_25_selected">#2ABADA</color>
     <color name="search_filter_item_convenience_emart_24_selected">#FFCE51</color>

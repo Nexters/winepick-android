@@ -45,7 +45,7 @@ class WineApiTest : AndroidBaseTest() {
         val resultTemp = WineRepository.getWinesFilter(
             wineName = "쁘띠폴리",
             keywords = listOf("달콤한"),
-            size = 1
+            pageSize = 1
         )
 
         print("$resultTemp")

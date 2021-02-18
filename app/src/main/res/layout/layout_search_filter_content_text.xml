@@ -8,9 +8,10 @@
     android:background="@null"
     android:gravity="center"
     android:includeFontPadding="false"
+    android:paddingTop="6dp"
     android:text="4"
-    android:textColor="@color/search_filter_tastes_content_track_active"
+    android:textColor="@color/search_filter_tastes_content_track_inactive"
     android:textSize="10dp"
-    android:textStyle="normal"
+    android:textStyle="bold"
     tools:text="3" />
 
