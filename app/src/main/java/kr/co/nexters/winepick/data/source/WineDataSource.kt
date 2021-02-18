@@ -22,14 +22,14 @@ object WineDataSource {
 
     /** [WinePickService.getWines] 요청에 대한 비즈니스 로직 */
     suspend fun getWines(
-        size: Int,
-        page: Int = 0,
+        pageSize: Int,
+        pageNumber: Int = 0,
         sort: String = "",
     ): WinesResult? = withContext(Dispatchers.IO) {
         if (isMock) {
             return@withContext getWinesResponse().result
         } else {
-            val response = NetworkModules.retrofit.getWines(size, page, sort).send()
+            val response = NetworkModules.retrofit.getWines(pageSize, pageNumber, sort).send()
 
             /** statusCode 별 처리 */
             when (response.code()) {
@@ -70,8 +70,8 @@ object WineDataSource {
      * @param start 도수 시작점
      * @param end 도수 끝
      * @param keywords 키워드
-     * @param size 한번에 가져올 사이즈
-     * @param page 해당 페이지
+     * @param pageSize 한번에 가져올 사이즈
+     * @param pageNumber 해당 페이지
      * @param sort id 기준으로 내림차순/오름차순 정렬 가능 유무
      *
      * */
@@ -83,8 +83,8 @@ object WineDataSource {
         start: Int? = null,
         end: Int? = null,
         keywords: List<String> = listOf(""),
-        size: Int,
-        page: Int = 0,
+        pageSize: Int,
+        pageNumber: Int = 0,
         sort: String? = null,
     ): WinesResult? = withContext(Dispatchers.IO) {
         if (isMock) {
@@ -99,8 +99,8 @@ object WineDataSource {
             start?.let { queryBuilder.append("start=${start}&") }
             end?.let { queryBuilder.append("end=${end}&") }
             keywords.forEach { keyword -> queryBuilder.append("keyword=${keyword}&") }
-            queryBuilder.append("size=${size}&")
-            queryBuilder.append("page=${page}&")
+            queryBuilder.append("pageSize=${pageSize}&")
+            queryBuilder.append("pageNumber=${pageNumber}&")
             sort?.let { queryBuilder.append("sort=${sort}") }
 
             val response =

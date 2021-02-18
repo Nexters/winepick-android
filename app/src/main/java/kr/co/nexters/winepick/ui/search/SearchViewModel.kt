@@ -42,7 +42,7 @@ class SearchViewModel : BaseViewModel() {
     private val _searchFrontPage = MutableLiveData<SearchFront>(SearchFront.DEFAULT)
     val searchFrontPage: LiveData<SearchFront> = _searchFrontPage
 
-    private var page: Int = 0
+    private var pageNumber: Int = 0
 
     /**
      * 검색 화면에서 진행하는 비즈니스 로직
@@ -122,7 +122,7 @@ class SearchViewModel : BaseViewModel() {
      *
      * @param queryValue 검색할 키워드 (기본값은 query liveData 내의 value 이다.)
      */
-    fun querySearchClick(queryValue: String = query.value ?: "", page : Int) {
+    fun querySearchClick(queryValue: String = query.value ?: "", pageNumber : Int) {
         if (!query.value.equals(queryValue)) {
             query.value = queryValue
         }
@@ -130,7 +130,7 @@ class SearchViewModel : BaseViewModel() {
         viewModelScope.launch {
             SearchRepository.getWineInfosLikeQuery(queryValue)
 
-            this@SearchViewModel.page = page
+            this@SearchViewModel.pageNumber = pageNumber
 
             val contents = SearchRepository.getSearchFilters<Pair<String, String>>(SearchFilterGroup.CONTENT)
             val type = SearchRepository.getSearchFilters<String>(SearchFilterGroup.TYPE)
@@ -151,8 +151,8 @@ class SearchViewModel : BaseViewModel() {
                 start = contents?.first?.toInt(),
                 end = contents?.second?.toInt(),
                 keywords = keywords,
-                size = 10,
-                page = page
+                pageSize = 10,
+                pageNumber = pageNumber
             )?.wineResult ?: listOf()
         }
 
@@ -160,8 +160,8 @@ class SearchViewModel : BaseViewModel() {
     }
 
     fun paging(){
-        page++
-        querySearchClick(query.value ?: "", page)
+        pageNumber++
+        querySearchClick(query.value ?: "", pageNumber)
     }
 
     /** 필터 변경을 누를 경우 동작하는 로직 */
@@ -180,7 +180,7 @@ class SearchViewModel : BaseViewModel() {
 
     override fun onCleared() {
         super.onCleared()
-        page = 0
+        pageNumber = 0
         SearchRepository.filterItemsClear()
     }
 }

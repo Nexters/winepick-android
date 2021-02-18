@@ -17,8 +17,8 @@ import retrofit2.http.*
 interface WinePickService {
     @GET("v2/api/wine")
     fun getWines(
-        @Query("size") size: Int,               // 한번에 가져올 사이즈
-        @Query("page") page: Int?,              // 해당 페이지
+        @Query("pageSize") pageSize: Int,       // 한번에 가져올 사이즈
+        @Query("pageNumber") pageNumber: Int?,  // 해당 페이지
         @Query("sort") sort: String             // id 기준으로 내림차순/오름차순 정렬 가능 유무
     ): Call<WinePickResponse<WinesResult>>
 
