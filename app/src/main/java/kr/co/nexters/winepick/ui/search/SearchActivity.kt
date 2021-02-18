@@ -10,6 +10,7 @@ import kr.co.nexters.winepick.data.constant.Constant
 import kr.co.nexters.winepick.databinding.ActivitySearchBinding
 import kr.co.nexters.winepick.ui.base.ActivityResult
 import kr.co.nexters.winepick.ui.base.BaseActivity
+import kr.co.nexters.winepick.util.EndlessScrollListener
 import kr.co.nexters.winepick.util.hideKeyboard
 import kr.co.nexters.winepick.util.setOnSingleClickListener
 import kr.co.nexters.winepick.util.toast
@@ -33,8 +34,18 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
             btnSearchBack.setOnSingleClickListener { onBackPressed() }
 
             rvResults.adapter = SearchResultAdapter(viewModel)
+            rvResults.layoutManager?.let {
+                rvResults.addOnScrollListener(object : EndlessScrollListener(it, 3) {
+                    override fun onLoadMore(page: Int) {
+                        viewModel.paging()
+                    }
+                })
+            }
             rvCurrents.adapter = SearchRelativeAdapter(viewModel)
-            rvRecommends.adapter = SearchRecommendAdapter(viewModel, resources.getStringArray(R.array.search_recommends))
+            rvRecommends.adapter = SearchRecommendAdapter(
+                viewModel,
+                resources.getStringArray(R.array.search_recommends)
+            )
         }
 
         subscribeUI()
@@ -91,7 +102,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
 
                         if (needToUpdate) {
                             toast("검색 화면 목록 갱신 시작")
-                            viewModel.querySearchClick()
+                            viewModel.querySearchClick(page = 0)
                         }
                     }
                 }

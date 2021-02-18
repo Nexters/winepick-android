@@ -99,8 +99,8 @@ object WineDataSource {
             start?.let { queryBuilder.append("start=${start}&") }
             end?.let { queryBuilder.append("end=${end}&") }
             keywords.forEach { keyword -> queryBuilder.append("keyword=${keyword}&") }
-            queryBuilder.append("size=${size}")
-            queryBuilder.append("page=${page}")
+            queryBuilder.append("size=${size}&")
+            queryBuilder.append("page=${page}&")
             sort?.let { queryBuilder.append("sort=${sort}") }
 
             val response =

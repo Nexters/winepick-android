@@ -81,7 +81,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:onSingleClick="@{() -> vm.querySearchClick(vm.query)}" />
+                app:onSingleClick="@{() -> vm.querySearchClick(vm.query, 0)}" />
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/et_query"
