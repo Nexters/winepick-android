@@ -39,7 +39,7 @@ class LikeListActivity : BaseActivity<ActivityLikeListBinding>(
         //TODO 좋아요 리사이클러뷰 data
         viewModel.wineList.observe(this,{ data ->
             data?.let{
-               searchViewModel.likesWineResult(it)
+
             }
         })
     }

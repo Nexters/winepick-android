@@ -1,5 +1,6 @@
 package kr.co.nexters.winepick.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import kr.co.nexters.winepick.BR
 import kr.co.nexters.winepick.R
@@ -20,7 +21,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         binding.vm!!.getUserLikes()
 
         //TODO test를 위해 임의로 만들어놈
-        if (authManager.test_type != null) {
+        if (authManager.testType != null) {
             binding.vm!!.setUserPersonalType()
         }
     }

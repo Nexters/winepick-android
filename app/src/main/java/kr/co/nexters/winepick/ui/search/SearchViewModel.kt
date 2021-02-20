@@ -169,12 +169,6 @@ class SearchViewModel(
         querySearchClick(query.value ?: "", pageNumber)
     }
 
-    fun likesWineResult(data : List<WineResult> ){
-        viewModelScope.launch {
-            _results.value = WineRepository.getWines(10, 0)?.wineResult ?: listOf()
-        }
-    }
-
     /** 필터 변경을 누를 경우 동작하는 로직 */
     fun filterEditClick() {
         _searchAction.onNext(SearchAction.EDIT_FILTER)
