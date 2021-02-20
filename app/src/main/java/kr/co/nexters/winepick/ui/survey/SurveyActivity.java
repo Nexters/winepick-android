@@ -40,4 +40,11 @@ public class SurveyActivity extends FragmentActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.action_container, mainFragment).commit();
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        setResult(RESULT_OK);
+        finish();
+    }
 }

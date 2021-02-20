@@ -17,6 +17,8 @@ import kr.co.nexters.winepick.ui.like.LikeListActivity
 import kr.co.nexters.winepick.ui.search.SearchActivity
 import kr.co.nexters.winepick.ui.survey.SurveyActivity
 import kr.co.nexters.winepick.ui.type.TypeDetailActivity
+import kr.co.nexters.winepick.util.KakaoLoginHelper
+import timber.log.Timber
 
 /**
  * Kotlin 에서 사용하는 ViewModel 예
@@ -107,9 +109,15 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
     }
     fun likeClick() {
-        WinePickApplication.getGlobalApplicationContext().startActivity(Intent(WinePickApplication.appContext,
-            LikeListActivity::class.java)
-            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+        if(isUser.value!!) {
+            WinePickApplication.getGlobalApplicationContext().startActivity(
+                Intent(
+                    WinePickApplication.appContext,
+                    LikeListActivity::class.java
+                )
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            )
+        }
     }
     fun myTypeClick() {
         WinePickApplication.getGlobalApplicationContext().startActivity(Intent(WinePickApplication.appContext,
@@ -119,6 +127,13 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
     /** UI 의 onDestroy 개념으로 생각하면 편할듯 */
     override fun onCleared() {
         super.onCleared()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Timber.e("Resume!!")
+        getUserLikes()
+
     }
 
 }

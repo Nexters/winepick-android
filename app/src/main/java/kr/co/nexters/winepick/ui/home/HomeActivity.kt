@@ -1,5 +1,6 @@
 package kr.co.nexters.winepick.ui.home
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
@@ -14,9 +15,6 @@ import kr.co.nexters.winepick.WinePickApplication
 import kr.co.nexters.winepick.databinding.ActivityHomeBinding
 import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.BaseActivity
-import kr.co.nexters.winepick.ui.login.LoginViewModel
-import kr.co.nexters.winepick.ui.login.getKakaoHashKey
-import kr.co.nexters.winepick.util.initLoginWarningDialog
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
@@ -36,7 +34,17 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(
         if (authManager.test_type != null) {
             binding.vm!!.setUserPersonalType()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.onResume()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
 
     }
+
 
 }

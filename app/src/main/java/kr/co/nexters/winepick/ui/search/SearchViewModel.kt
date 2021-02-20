@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.data.model.remote.wine.WineResult
 import kr.co.nexters.winepick.data.repository.SearchRepository
+import kr.co.nexters.winepick.data.repository.WinePickRepository
 import kr.co.nexters.winepick.data.repository.WineRepository
 import kr.co.nexters.winepick.ui.base.BaseViewModel
 import timber.log.Timber
@@ -135,6 +136,12 @@ class SearchViewModel : BaseViewModel() {
         }
 
         _searchAction.onNext(SearchAction.QUERY_SEARCH)
+    }
+
+    fun likesWineResult(data : List<WineResult> ){
+        viewModelScope.launch {
+            _results.value = WineRepository.getWines(10, 0)?.wineResult ?: listOf()
+        }
     }
 
     /** 필터 변경을 누를 경우 동작하는 로직 */

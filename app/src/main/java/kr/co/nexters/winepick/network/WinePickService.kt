@@ -65,7 +65,7 @@ interface WinePickService {
     @GET("v2/api/like/{userId}")
     fun getLikesWineList(
         @Path("userId") userId : Int
-    ) : Call<WinePickResponse<List<WineList>>>
+    ) : Call<WinePickResponse<List<WineResult>>>
 
     @PUT("v2/api/like/{userId}/{wineId}")
     fun deleteLike(

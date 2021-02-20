@@ -7,6 +7,8 @@ import kr.co.nexters.winepick.ui.home.HomeViewModel
 import kr.co.nexters.winepick.ui.type.TypeDetailModel
 import kr.co.nexters.winepick.ui.like.LikeViewModel
 import kr.co.nexters.winepick.ui.login.LoginViewModel
+import kr.co.nexters.winepick.ui.search.SearchViewModel
+import kr.co.nexters.winepick.util.KakaoLoginHelper
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -57,6 +59,7 @@ val viewModelModule = module {
     viewModel { HomeViewModel(get(), get()) }
     viewModel { TypeDetailModel(get(), get()) }
     viewModel { LikeViewModel(get(), get()) }
+    viewModel { SearchViewModel() }
 
 }
 
@@ -68,10 +71,16 @@ val authModule = module {
     single { AuthManager(get())  }
 }
 
+val kakaoModule = module {
+    single { KakaoLoginHelper(get(),get()) }
+}
+
+
 val moduleList = listOf(
     netModule,
     viewModelModule,
     repositoryModule,
     apiModule,
-    authModule
+    authModule,
+    kakaoModule
 )
