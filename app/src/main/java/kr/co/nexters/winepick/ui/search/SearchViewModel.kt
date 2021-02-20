@@ -146,7 +146,6 @@ class SearchViewModel(private val auth: AuthManager) : BaseViewModel() {
             }
 
             _results.value = WineRepository.getWinesFilter(
-                accessToken = auth.token,
                 wineName = queryValue,
                 category = type,
                 food = food,
