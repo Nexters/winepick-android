@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="kr.co.nexters.winepick.ui.search.SearchFront" />
+
+        <variable
+            name="vm"
+            type="kr.co.nexters.winepick.ui.search.SearchViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:context=".ui.search.SearchActivity">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/tb_search"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:contentInsetStart="0dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/btn_search_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:paddingStart="24dp"
+                android:paddingTop="12dp"
+                android:paddingEnd="8dp"
+                android:paddingBottom="12dp"
+                android:src="@drawable/btn_back" />
+        </androidx.appcompat.widget.Toolbar>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_search_query"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:orientation="horizontal"
+            android:paddingHorizontal="24dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tb_search">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/btn_query_reset"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:layout_marginEnd="8dp"
+                android:background="@null"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:paddingVertical="8dp"
+                android:paddingStart="8dp"
+                android:singleLine="true"
+                android:text="@string/search_query_reset"
+                android:textColor="@color/search_query_reset_text_color"
+                android:textSize="14sp"
+                android:textStyle="normal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/btn_query_search"
+                app:layout_constraintTop_toTopOf="parent"
+                app:onSingleClick="@{vm::queryResetClick}" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/btn_query_search"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@color/transparent"
+                android:src="@drawable/btn_search"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:onSingleClick="@{() -> vm.querySearchClick(vm.query, 0)}" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/et_query"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="@string/search_query_hint"
+                android:paddingVertical="8dp"
+                android:singleLine="true"
+                android:text="@={vm.query}"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="normal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/btn_query_reset"
+                app:layout_constraintTop_toTopOf="parent"
+                app:onAfterTextChanged="@{vm::queryAfterTextChanged}"
+                app:onFocusChangeListener="@{vm.queryOneFocusChangeListener}" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_query" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_search_filter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:paddingHorizontal="24dp"
+            app:layout_constraintTop_toBottomOf="@+id/layout_search_query">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_filter_info"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_search_filter_title"
+                android:gravity="center_vertical"
+                android:paddingVertical="14dp"
+                android:paddingStart="20dp"
+                android:text="@{@string/search_filter_info(vm.filterNum)}"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="normal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/btn_filter_edit"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="필터 0개 적용 중" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_filter_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_search_filter_edit"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="14dp"
+                android:text="@string/search_filter_edit"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="normal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/tv_filter_info"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:onSingleClick="@{vm::filterEditClick}" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_search_result"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="13dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:paddingHorizontal="24dp"
+            app:isInvisible="@{!(vm.searchFrontPage == SearchFront.DEFAULT)}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_search_filter">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_results"
+                submitList="@{vm.results}"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:isInvisible="@{vm.results.size() == 0}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:listitem="@layout/item_search_result" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_result_empty"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:text="@string/search_result_empty"
+                app:isInvisible="@{!(vm.results.size() == 0)}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="결과가 없습니다.\n빠른 키워드로 검색해보세요." />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/view_shadows"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:background="@drawable/bottom_shadows"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/layout_search_result" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_search_recommend"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="13dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:paddingHorizontal="24dp"
+            app:isInvisible="@{!(vm.searchFrontPage == SearchFront.RECOMMEND)}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_search_filter">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_recommend_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="46dp"
+                android:lineSpacingExtra="0sp"
+                android:text="@string/search_recommend_title"
+                android:textColor="@color/search_recommend_title_text_color"
+                android:textSize="14sp"
+                android:textStyle="normal"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="빠른 키워드" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_recommends"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_recommend_title"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:listitem="@layout/item_search_recommend" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_search_current"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:paddingHorizontal="24dp"
+            app:isInvisible="@{vm.currents.size() == 0 || !(vm.searchFrontPage == SearchFront.CURRENT)}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_search_query">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_currents"
+                submitList="@{vm.currents}"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:listitem="@layout/item_search_relative"
+                tools:visibility="gone" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

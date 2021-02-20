@@ -4,17 +4,51 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
 
+    <!-- default -->
+    <color name="transparent">#00000000</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+
     <!-- login  -->
-    <color name="colorBlack">#000000</color>
     <color name="colorBlack80">#80000000</color>
-    <color name="colorBlack07">#07000000</color>
+    <color name="colorGray">#f7f7f7</color>
     
+    <!-- home -->
+
     <!-- main -->
     <color name="colorLightRed">#f25942</color>
-
-    <!--login_warning -->
-    <color name="colorWhite">#ffffff</color>
-    <color name="colorBlack19">#19000000</color>
+    <color name="colorWhite4c">#4cffffff</color>
+    <color name="colorGrayeb">#ebebeb</color>
     <color name="colorGray82">#828282</color>
+    <color name="colorGrayf9">#f9f9f9</color>
+
+
+
+    <!-- survey -->
+    <color name="colorWhite">#FFFFFF</color>
+  
+    <!--login_warning -->
+    <color name="colorBlack19">#19000000</color>
+
+    <!-- search -->
+    <color name="search_query_reset_text_color">#262626</color>
+    <color name="search_recommend_title_text_color">#AAAAAA</color>
+    <color name="search_recommend_item_background">#F2F2F2</color>
+    <color name="search_recommend_item_text_color">#000000</color>
+    <color name="search_relative_item_divider_color">#F3F3F3</color>
+    <color name="search_result_country_text_color">#ADADAD</color>
+
+    <!-- search filter -->
+    <color name="search_filter_layout_gray_background">#05000000</color>
+    <color name="search_filter_item_background">#0C000000</color>
+    <color name="search_filter_item_text_color">#4C000000</color>
+    <color name="search_filter_confirm_bottom_background">#EBEBEB</color>
+    <color name="search_filter_confirm_bottom_text_color">#80000000</color>
+    <color name="search_filter_tastes_content_track_active">#f25942</color>
+    <color name="search_filter_tastes_content_track_inactive">#cbcbcb</color>
+    <color name="search_filter_item_convenience_cu_selected">#782B91</color>
+    <color name="search_filter_item_convenience_gs_25_selected">#2ABADA</color>
+    <color name="search_filter_item_convenience_emart_24_selected">#FFCE51</color>
+    <color name="search_filter_item_convenience_seven_eleven_selected">#008061</color>
 
 </resources>
