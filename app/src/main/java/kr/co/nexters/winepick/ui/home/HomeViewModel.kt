@@ -4,12 +4,12 @@ import android.content.Intent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kr.co.nexters.winepick.WinePickApplication
-import kr.co.nexters.winepick.constant.testConstant.Companion.A
-import kr.co.nexters.winepick.constant.testConstant.Companion.B
-import kr.co.nexters.winepick.constant.testConstant.Companion.C
-import kr.co.nexters.winepick.constant.testConstant.Companion.D
-import kr.co.nexters.winepick.constant.testConstant.Companion.E
-import kr.co.nexters.winepick.constant.testConstant.Companion.F
+import kr.co.nexters.winepick.constant.TestConstant.A
+import kr.co.nexters.winepick.constant.TestConstant.B
+import kr.co.nexters.winepick.constant.TestConstant.C
+import kr.co.nexters.winepick.constant.TestConstant.D
+import kr.co.nexters.winepick.constant.TestConstant.E
+import kr.co.nexters.winepick.constant.TestConstant.F
 import kr.co.nexters.winepick.data.repository.WinePickRepository
 import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.BaseViewModel
@@ -47,7 +47,7 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
         _likecnt.value = 0
         _isTest.value = false
         _isUser.value = false
-        if (!auth.test_type.isNullOrEmpty()) {
+        if (!auth.testType.isNullOrEmpty()) {
             _isTest.value = true
         }
         if (auth.token != "guest") {
@@ -72,7 +72,7 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
 
 
     fun setUserPersonalType() {
-        return when(auth.test_type) {
+        return when(auth.testType) {
             "A" -> {getUserType(A)}
             "B" -> {getUserType(B)}
             "C" -> {getUserType(C)}

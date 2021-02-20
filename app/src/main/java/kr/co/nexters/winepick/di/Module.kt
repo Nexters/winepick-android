@@ -4,9 +4,11 @@ import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFact
 import kotlinx.serialization.json.Json
 import kr.co.nexters.winepick.BuildConfig
 import kr.co.nexters.winepick.WinePickApplication
+import kr.co.nexters.winepick.data.repository.SearchRepository
 import kr.co.nexters.winepick.data.repository.TestRepository
 import kr.co.nexters.winepick.data.repository.WinePickRepository
 import kr.co.nexters.winepick.data.repository.WineRepository
+import kr.co.nexters.winepick.data.source.SearchDataSource
 import kr.co.nexters.winepick.data.source.WineDataSource
 import kr.co.nexters.winepick.network.TestService
 import kr.co.nexters.winepick.network.WinePickService
@@ -14,8 +16,10 @@ import kr.co.nexters.winepick.ui.base.BaseViewModel
 import kr.co.nexters.winepick.ui.home.HomeViewModel
 import kr.co.nexters.winepick.ui.like.LikeViewModel
 import kr.co.nexters.winepick.ui.login.LoginViewModel
+import kr.co.nexters.winepick.ui.search.SearchFilterViewModel
 import kr.co.nexters.winepick.ui.search.SearchViewModel
 import kr.co.nexters.winepick.ui.type.TypeDetailModel
+import kr.co.nexters.winepick.util.SharedPrefs
 import okhttp3.Cache
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
@@ -118,6 +122,10 @@ suspend fun <T> Call<T>.send(): Response<T> = suspendCoroutine {
     })
 }
 
+val localModule = module {
+    single { SharedPrefs() }
+}
+
 val apiModule = module {
     /** UnitTest 에서 사용하는 Retrofit2 Service */
     fun provideTestService(okHttpClient: OkHttpClient): TestService {
@@ -144,18 +152,20 @@ val viewModelModule = module {
     viewModel { HomeViewModel(get(), get()) }
     viewModel { TypeDetailModel(get(), get()) }
     viewModel { LikeViewModel(get(), get()) }
-    viewModel { SearchViewModel(get()) }
-
+    viewModel { SearchViewModel(get(), get()) }
+    viewModel { SearchFilterViewModel(get()) }
 }
 
 val repositoryModule = module {
     single { WinePickRepository(get()) }
     single { TestRepository(get()) }
     single { WineRepository(get()) }
+    single { SearchRepository(get()) }
 }
 
 val dataSourceModule = module {
     single { WineDataSource(get()) }
+    single { SearchDataSource(get()) }
 }
 
 val authModule = module {
@@ -167,6 +177,7 @@ val moduleList = listOf(
     viewModelModule,
     repositoryModule,
     dataSourceModule,
+    localModule,
     apiModule,
     authModule
 )

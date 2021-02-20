@@ -24,8 +24,10 @@ import kr.co.nexters.winepick.data.model.local.SearchFilterGroup
 import kr.co.nexters.winepick.data.model.local.SearchFilterItem
 import kr.co.nexters.winepick.databinding.ActivitySearchFilterBinding
 import kr.co.nexters.winepick.ui.base.BaseActivity
+import kr.co.nexters.winepick.ui.home.HomeViewModel
 import kr.co.nexters.winepick.util.dpToPx
 import kr.co.nexters.winepick.util.setOnSingleClickListener
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
 
@@ -37,9 +39,7 @@ import timber.log.Timber
 class SearchFilterActivity : BaseActivity<ActivitySearchFilterBinding>(
     R.layout.activity_search_filter
 ) {
-    override val viewModel: SearchFilterViewModel by lazy {
-        ViewModelProvider(this, viewModelFactory).get(SearchFilterViewModel::class.java)
-    }
+    override val viewModel: SearchFilterViewModel by viewModel()
 
     // (터치하는 텍스트 버튼 -> 데이터) Map
     private val searchFilterItemMap = mutableMapOf<AppCompatTextView, SearchFilterItem>()
