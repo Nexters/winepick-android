@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kr.co.nexters.winepick.WinePickApplication
-import kr.co.nexters.winepick.constant.testConstant
+import kr.co.nexters.winepick.constant.TestConstant
 import kr.co.nexters.winepick.data.repository.WinePickRepository
 import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.BaseViewModel
@@ -12,7 +12,7 @@ import kr.co.nexters.winepick.ui.search.SearchActivity
 import timber.log.Timber
 
 /**
- * Kotlin 에서 사용하는 ViewModel 예
+ * TypeDetailModel
  *
  * @since v1.0.0 / 2021.01.28
  */
@@ -41,26 +41,25 @@ class TypeDetailModel(private val repo : WinePickRepository, private val auth : 
             _isUser.value = true
         }
         _isSearch.value = false
-        if (auth.recent_search1 != null && !auth.recent_search1.isNullOrBlank() ) {
+        if (auth.recentSearch1 != null && !auth.recentSearch1.isNullOrBlank() ) {
             _isSearch.value = true
         }
     }
+
     fun searchClick() {
         WinePickApplication.getGlobalApplicationContext().startActivity(
             Intent(WinePickApplication.appContext, SearchActivity::class.java)
             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
     }
 
-
-
     fun setUserPersonalType() {
-        return when(auth.test_type) {
-            "A" -> {getUserType(testConstant.A)}
-            "B" -> {getUserType(testConstant.B)}
-            "C" -> {getUserType(testConstant.C)}
-            "D" -> {getUserType(testConstant.D)}
-            "E" -> {getUserType(testConstant.E)}
-            "F" -> {getUserType(testConstant.F)}
+        return when(auth.testType) {
+            "A" -> {getUserType(TestConstant.A)}
+            "B" -> {getUserType(TestConstant.B)}
+            "C" -> {getUserType(TestConstant.C)}
+            "D" -> {getUserType(TestConstant.D)}
+            "E" -> {getUserType(TestConstant.E)}
+            "F" -> {getUserType(TestConstant.F)}
             else -> {}
 
         }

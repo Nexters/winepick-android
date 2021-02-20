@@ -1,24 +1,16 @@
 package kr.co.nexters.winepick
 
 import android.content.Context
-import android.content.SharedPreferences
 import androidx.core.content.edit
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
-import dagger.hilt.android.components.ApplicationComponent
-import kr.co.nexters.winepick.constant.authConstant.Companion.AUTH_PREFERENCES
-import kr.co.nexters.winepick.constant.authConstant.Companion.AUTO_LOGIN_KEY
-import kr.co.nexters.winepick.constant.authConstant.Companion.EXPIRE_KEY
-import kr.co.nexters.winepick.constant.authConstant.Companion.FIRST_KEY
-import kr.co.nexters.winepick.constant.authConstant.Companion.TOKEN_KEY
-import kr.co.nexters.winepick.ui.base.BaseActivity
-import timber.log.Timber
-import java.util.*
-import javax.inject.Inject
-import javax.inject.Singleton
+import kr.co.nexters.winepick.constant.AuthConstant.AUTH_PREFERENCES
+import kr.co.nexters.winepick.constant.AuthConstant.AUTO_LOGIN_KEY
+import kr.co.nexters.winepick.constant.AuthConstant.EXPIRE_KEY
+import kr.co.nexters.winepick.constant.AuthConstant.FIRST_KEY
+import kr.co.nexters.winepick.constant.AuthConstant.TOKEN_KEY
 
 
 // TODO Hilt 을 사용한 AuthModule

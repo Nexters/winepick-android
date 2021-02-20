@@ -2,6 +2,8 @@ package kr.co.nexters.winepick.ui.survey;
 
 import android.os.Bundle;
 
+import org.koin.java.KoinJavaComponent;
+
 import androidx.fragment.app.FragmentActivity;
 
 import kr.co.nexters.winepick.R;
@@ -13,7 +15,7 @@ public class SurveyActivity extends FragmentActivity {
 
     SurveyFragment mainFragment;
     ScreenSlidePageFragment subFragment;
-    AuthManager authManager;
+    private final AuthManager authManager = KoinJavaComponent.inject(AuthManager.class).getValue();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,11 +29,11 @@ public class SurveyActivity extends FragmentActivity {
     }
 
     public void testType() {
-        authManager = new AuthManager(getApplicationContext());
-        authManager.setTest_type("A");
-        authManager.setRecent_search1("최근검색어1");
-        authManager.setRecent_search2("최근검색어2");
+        authManager.setTestType("A");
+        authManager.setRecentSearch1("최근검색어1");
+        authManager.setRecentSearch2("최근검색어2");
     }
+
     public void onFragmentChange(int fragmentNum) {
         //프래그먼트의 번호에 따라 다르게 작동하는 조건문
         if(fragmentNum == 1) {
@@ -39,12 +41,5 @@ public class SurveyActivity extends FragmentActivity {
         } else if(fragmentNum == 2) {
             getSupportFragmentManager().beginTransaction().replace(R.id.action_container, mainFragment).commit();
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        setResult(RESULT_OK);
-        finish();
     }
 }

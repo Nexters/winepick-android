@@ -1,102 +1,69 @@
 package kr.co.nexters.winepick.di
 
-import android.content.Context
-import android.content.SharedPreferences
-import androidx.core.content.edit
-import kr.co.nexters.winepick.data.model.LikeWine
-import timber.log.Timber
-import java.util.*
-import kotlin.collections.ArrayList
+import kr.co.nexters.winepick.constant.AuthConstant.AUTO_LOGIN_KEY
+import kr.co.nexters.winepick.constant.AuthConstant.EXPIRE_KEY
+import kr.co.nexters.winepick.constant.AuthConstant.ID
+import kr.co.nexters.winepick.constant.AuthConstant.RECENT_SEARCH1
+import kr.co.nexters.winepick.constant.AuthConstant.RECENT_SEARCH2
+import kr.co.nexters.winepick.constant.AuthConstant.TEST
+import kr.co.nexters.winepick.constant.AuthConstant.TOKEN_KEY
+import kr.co.nexters.winepick.util.SharedPrefs
 
 /**
  *  Koin을 사용한 AuthModule
  */
-class AuthManager(context: Context) {
-
-    private val preferences = context.getSharedPreferences(
-        AUTH_PREFERENCES,
-        Context.MODE_PRIVATE
-    )
-
+class AuthManager(private val sharedPrefs: SharedPrefs) {
     var token: String
         get() {
-            return preferences.getString(TOKEN_KEY, null).orEmpty()
+            return sharedPrefs[TOKEN_KEY, ""] ?: ""
         }
         set(value) {
-            preferences.edit {
-                putString(TOKEN_KEY, value)
-            }
+            sharedPrefs[TOKEN_KEY] = value
         }
 
     var autoLogin: Boolean
         get() {
-            return preferences.getBoolean(AUTO_LOGIN_KEY, false)
+            return sharedPrefs[AUTO_LOGIN_KEY, false] ?: false
         }
         set(value) {
-            preferences.edit {
-                putBoolean(AUTO_LOGIN_KEY, value)
-            }
+            sharedPrefs[AUTO_LOGIN_KEY] = value
         }
 
     var expire: Long
-        get(){
-            return preferences.getLong(EXPIRE_KEY,0)
+        get() {
+            return sharedPrefs[EXPIRE_KEY, 0] ?: 0
         }
-        set(value){
-            preferences.edit{
-                putLong(EXPIRE_KEY, value)
-            }
+        set(value) {
+            sharedPrefs[EXPIRE_KEY] = value
         }
 
-    var test_type: String?
-        get(){
-            return preferences.getString(TEST,null).orEmpty()
+    var testType: String?
+        get() {
+            return sharedPrefs[TEST, null]
         }
-        set(value){
-            preferences.edit{
-                putString(TEST, value)
-            }
+        set(value) {
+            sharedPrefs[TEST] = value
         }
-    var id : Int
-        get(){
-            return preferences.getInt(ID,0)
+    var id: Int
+        get() {
+            return sharedPrefs[ID, 0] ?: 0
         }
-        set(value){
-            preferences.edit{
-                putInt(ID,value)
-            }
+        set(value) {
+            sharedPrefs[ID] = value
         }
-    var recent_search1: String?
-        get(){
-            return preferences.getString(RECENT_SEARCH1,null).orEmpty()
+    var recentSearch1: String?
+        get() {
+            return sharedPrefs[RECENT_SEARCH1, null]
         }
-        set(value){
-            preferences.edit{
-                putString(RECENT_SEARCH1, value)
-            }
+        set(value) {
+            sharedPrefs[RECENT_SEARCH1] = value
         }
 
-    var recent_search2: String?
-        get(){
-            return preferences.getString(RECENT_SEARCH2,null).orEmpty()
+    var recentSearch2: String?
+        get() {
+            return sharedPrefs[RECENT_SEARCH2, null]
         }
-        set(value){
-            preferences.edit{
-                putString(RECENT_SEARCH2, value)
-            }
+        set(value) {
+            sharedPrefs[RECENT_SEARCH2] = value
         }
-
-
-
-    private companion object {
-        const val AUTH_PREFERENCES = "auth"
-        const val TOKEN_KEY = "token"
-        const val AUTO_LOGIN_KEY = "auto"
-        const val FIRST_KEY = "first"
-        const val EXPIRE_KEY = "expire"
-        const val TEST = "test"
-        const val RECENT_SEARCH1 = "search1"
-        const val RECENT_SEARCH2 = "search2"
-        const val ID = "id"
-    }
 }

@@ -16,14 +16,14 @@ import java.util.*
  *
  * @since v1.0.0 / 2021.02.10
  */
-object SearchRepository {
+class SearchRepository(searchDataSource: SearchDataSource) {
     /** 원본 와인 목록 */
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    val wineInfos: List<String> = SearchDataSource.getWineInfos()
+    val wineInfos: List<String> = searchDataSource.getWineInfos()
 
     /** 초기 필터 목록 */
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    val searchFilterItems: List<SearchFilterItem> = SearchDataSource.getSearchFilterItems()
+    val searchFilterItems: List<SearchFilterItem> = searchDataSource.getSearchFilterItems()
 
     /**
      * 스타일링된 검색 목록
