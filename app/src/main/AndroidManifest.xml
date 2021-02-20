@@ -24,7 +24,7 @@
         <activity android:name=".ui.like.LikeListActivity"></activity>
         <activity android:name=".ui.type.TypeDetailActivity" />
         <activity android:name=".ui.home.HomeActivity"/>
-        <activity android:name=".ui.splash.SplashAcivity">
+        <activity android:name=".ui.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

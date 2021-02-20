@@ -103,8 +103,8 @@ dependencies {
     implementation("io.ktor:ktor-client-serialization-jvm:1.5.1")
     implementation("io.ktor:ktor-client-logging-jvm:1.5.1")
 
-//    //lottie
-//    implementation 'com.airbnb.android:lottie:3.4.1'
+    //lottie
+    implementation 'com.airbnb.android:lottie:3.4.1'
 
     //timber
     implementation 'com.jakewharton.timber:timber:4.7.1'
