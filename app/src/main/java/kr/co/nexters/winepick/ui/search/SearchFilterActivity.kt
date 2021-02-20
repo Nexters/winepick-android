@@ -5,9 +5,13 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
 import android.view.View.MeasureSpec
+import android.view.View.inflate
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.constraintlayout.widget.ConstraintSet
+import androidx.constraintlayout.widget.ConstraintSet.CHAIN_SPREAD_INSIDE
+import androidx.constraintlayout.widget.ConstraintSet.WRAP_CONTENT
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.slider.RangeSlider
@@ -50,7 +54,6 @@ class SearchFilterActivity : BaseActivity<ActivitySearchFilterBinding>(
 
         binding.apply {
             btnSearchFilterBack.setOnSingleClickListener { onBackPressedAtSearchFilter() }
-            btnSearchFilterConfirmBottom.setOnSingleClickListener { onBackPressedAtSearchFilter(true) }
             btnSearchFilterConfirm.setOnSingleClickListener { onBackPressedAtSearchFilter(true) }
         }
 
@@ -203,10 +206,52 @@ class SearchFilterActivity : BaseActivity<ActivitySearchFilterBinding>(
      */
     private fun AppCompatTextView.changeSearchFilterItemUI(searchFilterItem: SearchFilterItem) {
         this.isSelected = searchFilterItem.selected
-        if (searchFilterItem.selected) {
-            setTextColor(ContextCompat.getColor(context, R.color.white))
-        } else {
-            setTextColor(ContextCompat.getColor(context, R.color.search_filter_item_text_color))
+
+        when (searchFilterItem.id) {
+            31 -> { // "CU"
+                if(searchFilterItem.selected){
+                    setTextColor(ContextCompat.getColor(context, R.color.white))
+                    setBackgroundResource(R.drawable.bg_search_filter_item_c_cu_selected)
+                } else {
+                    setTextColor(ContextCompat.getColor(context, R.color.search_filter_item_text_color))
+                    setBackgroundResource(R.drawable.bg_search_filter_item_unselected)
+                }
+            }
+            32 -> { // "GS25"
+                if(searchFilterItem.selected){
+                    setTextColor(ContextCompat.getColor(context, R.color.white))
+                    setBackgroundResource(R.drawable.bg_search_filter_item_c_gs_25_selected)
+                } else {
+                    setTextColor(ContextCompat.getColor(context, R.color.search_filter_item_text_color))
+                    setBackgroundResource(R.drawable.bg_search_filter_item_unselected)
+                }
+            }
+            33 -> { // "이마트 24"
+                if(searchFilterItem.selected){
+                    setTextColor(ContextCompat.getColor(context, R.color.black))
+                    setBackgroundResource(R.drawable.bg_search_filter_item_c_emart_24_selected)
+                } else {
+                    setTextColor(ContextCompat.getColor(context, R.color.search_filter_item_text_color))
+                    setBackgroundResource(R.drawable.bg_search_filter_item_unselected)
+                }
+            }
+            34 -> { // "세븐일레븐"
+                if(searchFilterItem.selected){
+                    setTextColor(ContextCompat.getColor(context, R.color.white))
+                    setBackgroundResource(R.drawable.bg_search_filter_item_c_seven_eleven_selected)
+                } else {
+                    setTextColor(ContextCompat.getColor(context, R.color.search_filter_item_text_color))
+                    setBackgroundResource(R.drawable.bg_search_filter_item_unselected)
+                }
+            }
+
+            else -> { // "나머지"
+                if (searchFilterItem.selected) {
+                    setTextColor(ContextCompat.getColor(context, R.color.white))
+                } else {
+                    setTextColor(ContextCompat.getColor(context, R.color.search_filter_item_text_color))
+                }
+            }
         }
     }
 
@@ -225,88 +270,88 @@ class SearchFilterActivity : BaseActivity<ActivitySearchFilterBinding>(
         val lastValue = contents.last().value.toFloat()
         binding.sbSearchFilterTasteContent.values = listOf(firstValue, lastValue)
 
-//        // TODO Range Slider 마개조하면서 활성화시킬 예정
-//        val mConstraintSet = ConstraintSet()
-//        mConstraintSet.clone(binding.layoutSearchFilterTasteContentTexts)
-//
-//        // 각 value 마다 textView 만들기
-//        for (value in 4..13) {
-//            val contentTextView = inflate(
-//                this@SearchFilterActivity,
-//                R.layout.layout_search_filter_content_text,
-//                null
-//            ) as AppCompatTextView
-//            contentTextView.id = View.generateViewId()
-//            contentTextView.text = "$value"
-//            searchFilterContentTexts["$value"] = contentTextView
-//
-//            stylingContentText(firstValue, lastValue, value)
-//
-//            binding.layoutSearchFilterTasteContentTexts.addView(contentTextView)
-//        }
-//
-//        // 밑에 text 정렬하기 (constraint chain = spread_inside)
-//        for (value in 4..13) {
-//            val currentView = searchFilterContentTexts["$value"]!!
-//            when (value) {
-//                4 -> {
-//                    val nextView = searchFilterContentTexts["${value + 1}"]
-//                    // 먼저 왼쪽에 붙임
-//                    mConstraintSet.connect(
-//                        currentView.id,
-//                        ConstraintSet.LEFT,
-//                        ConstraintSet.PARENT_ID,
-//                        ConstraintSet.LEFT
-//                    )
-//                    mConstraintSet.connect(
-//                        currentView.id,
-//                        ConstraintSet.RIGHT,
-//                        nextView!!.id,
-//                        ConstraintSet.LEFT
-//                    )
-//                    mConstraintSet.connect(
-//                        currentView.id,
-//                        ConstraintSet.TOP,
-//                        ConstraintSet.PARENT_ID,
-//                        ConstraintSet.TOP
-//                    )
-//                    mConstraintSet.connect(
-//                        currentView.id,
-//                        ConstraintSet.BOTTOM,
-//                        ConstraintSet.PARENT_ID,
-//                        ConstraintSet.BOTTOM
-//                    )
-//                }
-//
-//                13 -> {
-//                    val prevView = searchFilterContentTexts["${value - 1}"]
-//                    // 먼저 왼쪽에 붙임
-//                    mConstraintSet.connect(
-//                        currentView.id,
-//                        ConstraintSet.RIGHT,
-//                        ConstraintSet.PARENT_ID,
-//                        ConstraintSet.RIGHT
-//                    )
-//                    mConstraintSet.connect(
-//                        currentView.id,
-//                        ConstraintSet.LEFT,
-//                        prevView!!.id,
-//                        ConstraintSet.RIGHT
-//                    )
-//                    mConstraintSet.connect(
-//                        currentView.id,
-//                        ConstraintSet.TOP,
-//                        ConstraintSet.PARENT_ID,
-//                        ConstraintSet.TOP
-//                    )
-//                    mConstraintSet.connect(
-//                        currentView.id,
-//                        ConstraintSet.BOTTOM,
-//                        ConstraintSet.PARENT_ID,
-//                        ConstraintSet.BOTTOM
-//                    )
-//                }
-//
+        // TODO Range Slider 마개조하면서 활성화시킬 예정
+        val mConstraintSet = ConstraintSet()
+        mConstraintSet.clone(binding.layoutSearchFilterTasteContentTexts)
+
+        // 각 value 마다 textView 만들기
+        for (value in arrayOf(5, 16)) {
+            val contentTextView = inflate(
+                this@SearchFilterActivity,
+                R.layout.layout_search_filter_content_text,
+                null
+            ) as AppCompatTextView
+            contentTextView.id = View.generateViewId()
+            contentTextView.text = "$value"
+            searchFilterContentTexts["$value"] = contentTextView
+
+            stylingContentText(firstValue, lastValue, value)
+
+            binding.layoutSearchFilterTasteContentTexts.addView(contentTextView)
+        }
+
+        // 밑에 text 정렬하기 (constraint chain = spread_inside)
+        for (value in arrayOf(5, 16)) {
+            val currentView = searchFilterContentTexts["$value"]!!
+            when (value) {
+                5 -> {
+                    val nextView = searchFilterContentTexts["${16}"]
+                    // 먼저 왼쪽에 붙임
+                    mConstraintSet.connect(
+                        currentView.id,
+                        ConstraintSet.LEFT,
+                        ConstraintSet.PARENT_ID,
+                        ConstraintSet.LEFT
+                    )
+                    mConstraintSet.connect(
+                        currentView.id,
+                        ConstraintSet.RIGHT,
+                        nextView!!.id,
+                        ConstraintSet.LEFT
+                    )
+                    mConstraintSet.connect(
+                        currentView.id,
+                        ConstraintSet.TOP,
+                        ConstraintSet.PARENT_ID,
+                        ConstraintSet.TOP
+                    )
+                    mConstraintSet.connect(
+                        currentView.id,
+                        ConstraintSet.BOTTOM,
+                        ConstraintSet.PARENT_ID,
+                        ConstraintSet.BOTTOM
+                    )
+                }
+
+                16 -> {
+                    val prevView = searchFilterContentTexts["${5}"]
+                    // 먼저 왼쪽에 붙임
+                    mConstraintSet.connect(
+                        currentView.id,
+                        ConstraintSet.RIGHT,
+                        ConstraintSet.PARENT_ID,
+                        ConstraintSet.RIGHT
+                    )
+                    mConstraintSet.connect(
+                        currentView.id,
+                        ConstraintSet.LEFT,
+                        prevView!!.id,
+                        ConstraintSet.RIGHT
+                    )
+                    mConstraintSet.connect(
+                        currentView.id,
+                        ConstraintSet.TOP,
+                        ConstraintSet.PARENT_ID,
+                        ConstraintSet.TOP
+                    )
+                    mConstraintSet.connect(
+                        currentView.id,
+                        ConstraintSet.BOTTOM,
+                        ConstraintSet.PARENT_ID,
+                        ConstraintSet.BOTTOM
+                    )
+                }
+
 //                else -> {
 //                    val leftView = searchFilterContentTexts["${value - 1}"]
 //                    val rightView = searchFilterContentTexts["${value + 1}"]
@@ -337,14 +382,14 @@ class SearchFilterActivity : BaseActivity<ActivitySearchFilterBinding>(
 //                        ConstraintSet.BOTTOM
 //                    )
 //                }
-//            }
-//
-//            mConstraintSet.constrainWidth(currentView.id, WRAP_CONTENT)
-//            mConstraintSet.setHorizontalChainStyle(currentView.id, CHAIN_SPREAD_INSIDE)
-//        }
-//
-//        // constraint layout 에 constraitset 반영
-//        mConstraintSet.applyTo(binding.layoutSearchFilterTasteContentTexts)
+            }
+
+            mConstraintSet.constrainWidth(currentView.id, WRAP_CONTENT)
+            mConstraintSet.setHorizontalChainStyle(currentView.id, CHAIN_SPREAD_INSIDE)
+        }
+
+        // constraint layout 에 constraitset 반영
+        mConstraintSet.applyTo(binding.layoutSearchFilterTasteContentTexts)
 
         // Range Slider 리스너 등록
         binding.sbSearchFilterTasteContent.addOnSliderTouchListener(object :
@@ -388,7 +433,8 @@ class SearchFilterActivity : BaseActivity<ActivitySearchFilterBinding>(
             contentTextView?.setTextColor(
                 ContextCompat.getColor(
                     this@SearchFilterActivity,
-                    R.color.search_filter_tastes_content_track_active
+                    // R.color.search_filter_tastes_content_track_active
+                    R.color.search_filter_tastes_content_track_inactive
                 )
             )
             contentTextView?.typeface = Typeface.DEFAULT_BOLD

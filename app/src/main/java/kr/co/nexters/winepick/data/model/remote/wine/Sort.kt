@@ -17,11 +17,11 @@ import kr.co.nexters.winepick.network.WinePickService
 @DependencyServer
 data class Sort(
     @SerialName("empty")
-    val empty: Boolean,
+    val empty: Boolean? = null,
 
     @SerialName("sorted")
-    val sorted: Boolean,
+    val sorted: Boolean? = null,
 
     @SerialName("unsorted")
-    val unsorted: Boolean
+    val unsorted: Boolean? = null
 )

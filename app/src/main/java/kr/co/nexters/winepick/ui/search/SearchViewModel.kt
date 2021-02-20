@@ -8,9 +8,11 @@ import androidx.lifecycle.viewModelScope
 import io.reactivex.rxjava3.subjects.PublishSubject
 import kotlinx.coroutines.launch
 import kr.co.nexters.winepick.R
+import kr.co.nexters.winepick.data.model.local.SearchFilterGroup
 import kr.co.nexters.winepick.data.model.remote.wine.WineResult
 import kr.co.nexters.winepick.data.repository.SearchRepository
 import kr.co.nexters.winepick.data.repository.WineRepository
+import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.BaseViewModel
 import timber.log.Timber
 
@@ -20,7 +22,7 @@ import timber.log.Timber
  * @author ricky
  * @since v1.0.0 / 2021.02.06
  */
-class SearchViewModel : BaseViewModel() {
+class SearchViewModel(private val auth: AuthManager) : BaseViewModel() {
     val tag = this::class.java.canonicalName
 
     /** 검색 창 입력 내용 */
@@ -37,14 +39,11 @@ class SearchViewModel : BaseViewModel() {
     /** 검색 목록 list */
     val currents: LiveData<List<String>> = SearchRepository.styledWineInfos
 
-    /** 검색 목록 list */
-    private val _recommends = MutableLiveData(listOf("혼자 집에서 쉴때", "집들이 선물", "20대에게 인기 많은"))
-    val recommends: LiveData<List<String>> = _recommends
-
-
     /** 가장 맨 앞에 보여야 할 화면. 보여야 할 내용은 [SearchFront] 참고 */
     private val _searchFrontPage = MutableLiveData<SearchFront>(SearchFront.DEFAULT)
     val searchFrontPage: LiveData<SearchFront> = _searchFrontPage
+
+    private var pageNumber: Int = 0
 
     /**
      * 검색 화면에서 진행하는 비즈니스 로직
@@ -124,17 +123,48 @@ class SearchViewModel : BaseViewModel() {
      *
      * @param queryValue 검색할 키워드 (기본값은 query liveData 내의 value 이다.)
      */
-    fun querySearchClick(queryValue: String = query.value ?: "") {
+    fun querySearchClick(queryValue: String = query.value ?: "", pageNumber: Int) {
         if (!query.value.equals(queryValue)) {
             query.value = queryValue
         }
 
         viewModelScope.launch {
             SearchRepository.getWineInfosLikeQuery(queryValue)
-            _results.value = WineRepository.getWines(10, 0)?.wineResult ?: listOf()
+
+            this@SearchViewModel.pageNumber = pageNumber
+
+            val contents =
+                SearchRepository.getSearchFilters<Pair<String, String>>(SearchFilterGroup.CONTENT)
+            val type = SearchRepository.getSearchFilters<String>(SearchFilterGroup.TYPE)
+            val food = SearchRepository.getSearchFilters<String>(SearchFilterGroup.FOOD)
+            val store = SearchRepository.getSearchFilters<String>(SearchFilterGroup.CONVENIENCE)
+            val tastes = SearchRepository.getSearchFilters<List<String>>(SearchFilterGroup.TASTE)
+            val events = SearchRepository.getSearchFilters<List<String>>(SearchFilterGroup.EVENT)
+            val keywords = mutableListOf("").apply {
+                tastes?.let { addAll(it) }
+                events?.let { addAll(it) }
+            }
+
+            _results.value = WineRepository.getWinesFilter(
+                accessToken = auth.token,
+                wineName = queryValue,
+                category = type,
+                food = food,
+                store = store,
+                start = contents?.first?.toInt(),
+                end = contents?.second?.toInt(),
+                keywords = keywords,
+                pageSize = 10,
+                pageNumber = pageNumber
+            )?.wineResult ?: listOf()
         }
 
         _searchAction.onNext(SearchAction.QUERY_SEARCH)
+    }
+
+    fun paging() {
+        pageNumber++
+        querySearchClick(query.value ?: "", pageNumber)
     }
 
     /** 필터 변경을 누를 경우 동작하는 로직 */
@@ -153,6 +183,7 @@ class SearchViewModel : BaseViewModel() {
 
     override fun onCleared() {
         super.onCleared()
+        pageNumber = 0
         SearchRepository.filterItemsClear()
     }
 }

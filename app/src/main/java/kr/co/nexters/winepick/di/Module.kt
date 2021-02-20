@@ -7,6 +7,7 @@ import kr.co.nexters.winepick.ui.home.HomeViewModel
 import kr.co.nexters.winepick.ui.type.TypeDetailModel
 import kr.co.nexters.winepick.ui.like.LikeViewModel
 import kr.co.nexters.winepick.ui.login.LoginViewModel
+import kr.co.nexters.winepick.ui.search.SearchViewModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -57,6 +58,7 @@ val viewModelModule = module {
     viewModel { HomeViewModel(get(), get()) }
     viewModel { TypeDetailModel(get(), get()) }
     viewModel { LikeViewModel(get(), get()) }
+    viewModel { SearchViewModel(get()) }
 
 }
 

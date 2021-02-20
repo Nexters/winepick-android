@@ -42,6 +42,11 @@
     <string name="search_result_price">%d원</string>
     <string name="search_recommend_title">빠른 키워드</string>
     <string name="search_result_taste_value">%d</string>
+    <array name="search_recommends">
+        <item>#혼자 집에서 쉴때</item>
+        <item>#집들이 선물</item>
+        <item>#20대에게 인기 많은</item>
+    </array>
 
     <!-- search filter -->
     <string name="search_filter_title">상세 필터</string>
@@ -57,8 +62,8 @@
     <string name="search_filter_where_convenience">편의점</string>
     <string name="search_filter_confirm_bottom">적용하기</string>
     <array name="search_filter_taste_initial_contents">
-        <item>4.0</item>
-        <item>13.0</item>
+        <item>5.0</item>
+        <item>16.0</item>
     </array>
 
     <string-array name="wine_info">

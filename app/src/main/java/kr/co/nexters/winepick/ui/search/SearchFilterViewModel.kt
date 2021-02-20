@@ -15,11 +15,21 @@ import timber.log.Timber
  * @since v1.0.0 / 2021.02.06
  */
 class SearchFilterViewModel : BaseViewModel() {
-    /** 맨 처음 View 만들기 작업을 위해, 마지막에서 필터 변동 여부를 체크하기위해 사용하는 LiveData */
+    /**
+     * 필터 화면을 실행 시 맨 처음에 보여지는 필터 아이템 데이터 목록 LiveData
+     *
+     * 맨 처음 View 만들기 작업을 위해
+     * 마지막에서 필터 변동 여부를 체크하기 위해서만 사용한다.
+     */
     private val _prevFilterItems = MutableLiveData<List<SearchFilterItem>>(listOf())
     val prevFilterItems: LiveData<List<SearchFilterItem>> = _prevFilterItems
 
-    /** 값이 바뀌었는지를 확인하기 위한 list 이며, 마지막에서 필터 변동 여부 체크에서만 활용하는 변수 */
+    /**
+     * 사용자의 인터렉션으로 변경된 필터 아이템 데이터 목록
+     *
+     * 사용자 활동에 따라 [logChangedFilterItems] 를 통해 이전 필터 아이템, 새로운 필터 아이템 변경 내용이 갱신되며
+     * 마지막에서 필터 변동 여부 체크에서 변경 여부를 확인하기 위해 사용한다.
+     */
     private val _changedFilterItems = mutableListOf<SearchFilterItem>()
     private val changedFilterItems: List<SearchFilterItem> = _changedFilterItems
 
@@ -43,7 +53,7 @@ class SearchFilterViewModel : BaseViewModel() {
             // 중복 불가능한 경우
             else -> {
                 // 비활성화 시켜주어야 하는 아이템 찾기 (등록한 게 없는 경우 null)
-                val tempItem = prevFilterItems.value?.firstOrNull {
+                val tempItem = changedFilterItems.firstOrNull {
                     (it.group == needToUpdateItem.group) && it.selected
                 }
                 tempItem?.copy(selected = !tempItem.selected)

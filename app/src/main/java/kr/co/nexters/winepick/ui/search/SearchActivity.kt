@@ -8,11 +8,16 @@ import kr.co.nexters.winepick.BR
 import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.data.constant.Constant
 import kr.co.nexters.winepick.databinding.ActivitySearchBinding
+import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.ActivityResult
 import kr.co.nexters.winepick.ui.base.BaseActivity
+import kr.co.nexters.winepick.ui.home.HomeViewModel
+import kr.co.nexters.winepick.util.EndlessScrollListener
 import kr.co.nexters.winepick.util.hideKeyboard
 import kr.co.nexters.winepick.util.setOnSingleClickListener
 import kr.co.nexters.winepick.util.toast
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
 /**
@@ -21,9 +26,8 @@ import timber.log.Timber
  * @since v1.0.0 / 2021.02.06
  */
 class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_search) {
-    override val viewModel: SearchViewModel by lazy {
-        ViewModelProvider(this, viewModelFactory).get(SearchViewModel::class.java)
-    }
+    override val viewModel : SearchViewModel by viewModel()
+    private val authManager : AuthManager by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,8 +37,18 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
             btnSearchBack.setOnSingleClickListener { onBackPressed() }
 
             rvResults.adapter = SearchResultAdapter(viewModel)
+            rvResults.layoutManager?.let {
+                rvResults.addOnScrollListener(object : EndlessScrollListener(it, 3) {
+                    override fun onLoadMore(page: Int) {
+                        viewModel.paging()
+                    }
+                })
+            }
             rvCurrents.adapter = SearchRelativeAdapter(viewModel)
-            rvRecommends.adapter = SearchRecommendAdapter(viewModel)
+            rvRecommends.adapter = SearchRecommendAdapter(
+                viewModel,
+                resources.getStringArray(R.array.search_recommends)
+            )
         }
 
         subscribeUI()
@@ -58,8 +72,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
 
     fun subscribeUI() {
         viewModel.results.observe(this, {
-            binding.tvResultTitle.text =
-                String.format(getString(R.string.search_result_title), it.size)
+
         })
 
         viewModel.searchFrontPage.observe(this, {
@@ -92,7 +105,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
 
                         if (needToUpdate) {
                             toast("검색 화면 목록 갱신 시작")
-                            viewModel.querySearchClick()
+                            viewModel.querySearchClick(pageNumber = 0)
                         }
                     }
                 }

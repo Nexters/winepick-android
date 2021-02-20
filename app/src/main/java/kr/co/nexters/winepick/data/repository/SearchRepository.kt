@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import kr.co.nexters.winepick.data.model.local.SearchFilterGroup
 import kr.co.nexters.winepick.data.model.local.SearchFilterItem
 import kr.co.nexters.winepick.data.source.SearchDataSource
 import kr.co.nexters.winepick.ui.search.SearchActivity
@@ -37,7 +38,6 @@ object SearchRepository {
     private val _userSearchFilterItems = searchFilterItems.toMutableList()
     val userSearchFilterItems: List<SearchFilterItem> = _userSearchFilterItems
 
-
     /**
      * 특정 query 에 일치하는 와인 목록을 찾는다.
      * 찾은 후 그 값들에서 query 와 일치하는 부분을 스타일링 한다.
@@ -56,6 +56,42 @@ object SearchRepository {
         if (!query.isNullOrEmpty()) stylingWineInfos(filteredWineInfos, query)
 
         return@withContext filteredWineInfos
+    }
+
+    /**
+     * 특정 query 에 일치하는 와인 목록을 찾는다.
+     * 찾은 후 그 값들에서 query 와 일치하는 부분을 스타일링 한다.
+     *
+     * @return 필터링된 와인 정보 list (테스트 내용을 확인하기 위한 리턴 값)
+     *
+     * @see styledWineInfos
+     */
+    fun <T> getSearchFilters(key: SearchFilterGroup): T? {
+        val firstResult = userSearchFilterItems.filter { it.group == key && it.selected }
+        when (key) {
+            SearchFilterGroup.CONTENT -> {      // 도수
+                return Pair(firstResult.first().value, firstResult.last().value) as? T?
+            }
+            SearchFilterGroup.TYPE -> {         // 종류
+                return firstResult.firstOrNull()?.value as? T?
+            }
+            SearchFilterGroup.TASTE -> {        // 맛
+                val result = mutableListOf<String>()
+                firstResult.forEach { result.add(it.value) }
+                return result as T?
+            }
+            SearchFilterGroup.EVENT -> {        // 이벤트
+                val result = mutableListOf<String>()
+                firstResult.forEach { result.add(it.value) }
+                return result.toList() as? T?
+            }
+            SearchFilterGroup.FOOD -> {         // 음식
+                return firstResult.firstOrNull()?.value as? T?
+            }
+            SearchFilterGroup.CONVENIENCE -> {  // 편의점
+                return firstResult.firstOrNull()?.value as? T?
+            }
+        }
     }
 
     /**

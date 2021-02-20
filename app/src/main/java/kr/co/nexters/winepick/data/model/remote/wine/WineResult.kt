@@ -33,63 +33,63 @@ import kr.co.nexters.winepick.network.WinePickService
 data class WineResult(
     @SerializedName("acidity")
     @SerialName("acidity")
-    val acidity: Int,
+    val acidity: Int? = null,
 
     @SerializedName("body")
     @SerialName("body")
-    val body: Int,
+    val body: Int? = null,
 
     @SerializedName("category")
     @SerialName("category")
-    val category: String,
+    val category: String? = null,
 
     @SerializedName("country")
     @SerialName("country")
-    val country: String,
+    val country: String? = null,
 
     @SerializedName("felling")
     @SerialName("feeling")
-    val feeling: String,
+    val feeling: String? = null,
 
     @SerializedName("id")
     @SerialName("id")
-    val id: Int,
+    val id: Int? = null,
 
     @SerializedName("likes")
     @SerialName("likes")
-    val likes: Int,
+    val likes: Int? = null,
 
     @SerializedName("nmEng")
     @SerialName("nmEng")
-    val nmEng: String,
+    val nmEng: String? = null,
 
     @SerializedName("nmKor")
     @SerialName("nmKor")
-    val nmKor: String,
+    val nmKor: String? = null,
 
     @SerializedName("price")
     @SerialName("price")
-    val price: Int,
+    val price: Int? = null,
 
     @SerializedName("suitEvent")
     @SerialName("suitEvent")
-    val suitEvent: String?,
+    val suitEvent: String? = null,
 
     @SerializedName("suitFood")
     @SerialName("suitFood")
-    val suitFood: String?,
+    val suitFood: String? = null,
 
     @SerializedName("suitWho")
     @SerialName("suitWho")
-    val suitWho: String?,
+    val suitWho: String? = null,
 
     @SerializedName("sweetness")
     @SerialName("sweetness")
-    val sweetness: Int,
+    val sweetness: Int? = null,
 
     @SerializedName("tannin")
     @SerialName("tannin")
-    val tannin: Int
+    val tannin: Int? = null
 )
 
 fun getWineResponse(): WinePickResponse<WineResult> = Json.decodeFromString(
