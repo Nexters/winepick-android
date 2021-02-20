@@ -22,7 +22,7 @@ import timber.log.Timber
  * @author ricky
  * @since v1.0.0 / 2021.02.06
  */
-class SearchViewModel(private val auth: AuthManager) : BaseViewModel() {
+class SearchViewModel(private val wineRepository: WineRepository) : BaseViewModel() {
     val tag = this::class.java.canonicalName
 
     /** 검색 창 입력 내용 */
@@ -145,7 +145,7 @@ class SearchViewModel(private val auth: AuthManager) : BaseViewModel() {
                 events?.let { addAll(it) }
             }
 
-            _results.value = WineRepository.getWinesFilter(
+            _results.value = wineRepository.getWinesFilter(
                 wineName = queryValue,
                 category = type,
                 food = food,
