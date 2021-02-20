@@ -17,6 +17,7 @@ import retrofit2.http.*
 interface WinePickService {
     @GET("v2/api/wine")
     fun getWines(
+        @Header("Authorization") authorization: String,
         @Query("pageSize") pageSize: Int,       // 한번에 가져올 사이즈
         @Query("pageNumber") pageNumber: Int?,  // 해당 페이지
         @Query("sort") sort: String             // id 기준으로 내림차순/오름차순 정렬 가능 유무
@@ -24,11 +25,13 @@ interface WinePickService {
 
     @GET("v2/api/wine/{wine_id}")
     fun getWine(
+        @Header("Authorization") authorization: String,
         @Path("wine_id") wineId: Int,           // wineId (1, 2, 3...)
     ): Call<WinePickResponse<WineResult>>
 
     @GET("v2/api/wine/filter{query}")
     fun getWinesFilter(
+        @Header("Authorization") authorization: String,
         @Path(value = "query", encoded = false) query: String,
         // wineName : 와인 이름 영문/한글 상관 없음
         // category : 화이트/레드/스파클링
@@ -49,48 +52,48 @@ interface WinePickService {
     @POST("v2/api/user/accessToken")
     fun postUserAccessToken(
         @Body data: TokenInfo
-    ) : Call<WinePickResponse<Unit>>
+    ): Call<WinePickResponse<Unit>>
 
     /**
      * addLike
      */
     @POST("v2/api/like")
     fun postLike(
-        @Body data : LikeWine
-    ) : Call<WinePickResponse<Unit>>
+        @Body data: LikeWine
+    ): Call<WinePickResponse<Unit>>
 
     /**
      * getLikesWineList
      */
     @GET("v2/api/like/{userId}")
     fun getLikesWineList(
-        @Path("userId") userId : Int
-    ) : Call<WinePickResponse<List<WineList>>>
+        @Path("userId") userId: Int
+    ): Call<WinePickResponse<List<WineList>>>
 
     @PUT("v2/api/like/{userId}/{wineId}")
     fun deleteLike(
-        @Path("userId") userId : Int,
+        @Path("userId") userId: Int,
         @Path("wineId") wineId: Int
-    ) : Call<WinePickResponse<Unit>>
+    ): Call<WinePickResponse<Unit>>
 
     /**
      * addUser
      */
     @POST("v2/api/user/")
     fun postUser(
-        @Body data : UserData
-    ) : Call<WinePickResponse<postUserData>>
+        @Body data: UserData
+    ): Call<WinePickResponse<postUserData>>
 
     @GET("v2/api/user/me/{accessToken}")
     fun getUser(
-        @Path("accessToken") accessToken : String
-     ) : Call<WinePickResponse<getUserData>>
+        @Path("accessToken") accessToken: String
+    ): Call<WinePickResponse<getUserData>>
 
     /**
      * getUserPersonality
      */
-    @GET ("v2/api/result/{resultId}")
+    @GET("v2/api/result/{resultId}")
     fun getResult(
-        @Path("resultId") resultId : Int
-    ) : Call<WinePickResponse<PersonalityType>>
+        @Path("resultId") resultId: Int
+    ): Call<WinePickResponse<PersonalityType>>
 }

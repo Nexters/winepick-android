@@ -8,12 +8,16 @@ import kr.co.nexters.winepick.BR
 import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.data.constant.Constant
 import kr.co.nexters.winepick.databinding.ActivitySearchBinding
+import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.ActivityResult
 import kr.co.nexters.winepick.ui.base.BaseActivity
+import kr.co.nexters.winepick.ui.home.HomeViewModel
 import kr.co.nexters.winepick.util.EndlessScrollListener
 import kr.co.nexters.winepick.util.hideKeyboard
 import kr.co.nexters.winepick.util.setOnSingleClickListener
 import kr.co.nexters.winepick.util.toast
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
 /**
@@ -22,9 +26,8 @@ import timber.log.Timber
  * @since v1.0.0 / 2021.02.06
  */
 class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_search) {
-    override val viewModel: SearchViewModel by lazy {
-        ViewModelProvider(this, viewModelFactory).get(SearchViewModel::class.java)
-    }
+    override val viewModel : SearchViewModel by viewModel()
+    private val authManager : AuthManager by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

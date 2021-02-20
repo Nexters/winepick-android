@@ -13,16 +13,18 @@ import org.junit.Test
  * @since v1.0.0 / 2021.02.09
  */
 class WineApiTest : AndroidBaseTest() {
+    val testToken = "EVO0DpWNUiHSnDFQzsW78NMrKacksSgSaZs1EQopb7gAAAF3s0NnqQ"
+
     /** [WineDataSource.getWines] 테스트 */
     @Test
     fun getWinesTest() = runBlocking {
-        val result = WineDataSource.getWines(10, 0)
+        val result = WineDataSource.getWines(testToken, 10, 0)
 
         println("$result")
 
         Assert.assertNotNull(result)
 
-        val resultEmptyList = WineDataSource.getWines(20, 4)
+        val resultEmptyList = WineDataSource.getWines(testToken, 20, 4)
 
         println("$resultEmptyList")
 
@@ -32,7 +34,7 @@ class WineApiTest : AndroidBaseTest() {
     /** [WineDataSource.getWine] 테스트 */
     @Test
     fun getWineTest() = runBlocking {
-        val result = WineDataSource.getWine(2)
+        val result = WineDataSource.getWine(testToken, 2)
 
         print("$result")
 
@@ -43,6 +45,7 @@ class WineApiTest : AndroidBaseTest() {
     @Test
     fun getWinesFilterTest() = runBlocking {
         val resultTemp = WineRepository.getWinesFilter(
+            testToken,
             wineName = "쁘띠폴리",
             keywords = listOf("달콤한"),
             pageSize = 1

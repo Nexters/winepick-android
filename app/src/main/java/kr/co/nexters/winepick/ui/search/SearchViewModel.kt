@@ -12,6 +12,7 @@ import kr.co.nexters.winepick.data.model.local.SearchFilterGroup
 import kr.co.nexters.winepick.data.model.remote.wine.WineResult
 import kr.co.nexters.winepick.data.repository.SearchRepository
 import kr.co.nexters.winepick.data.repository.WineRepository
+import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.BaseViewModel
 import timber.log.Timber
 
@@ -21,7 +22,7 @@ import timber.log.Timber
  * @author ricky
  * @since v1.0.0 / 2021.02.06
  */
-class SearchViewModel : BaseViewModel() {
+class SearchViewModel(private val auth: AuthManager) : BaseViewModel() {
     val tag = this::class.java.canonicalName
 
     /** 검색 창 입력 내용 */
@@ -122,7 +123,7 @@ class SearchViewModel : BaseViewModel() {
      *
      * @param queryValue 검색할 키워드 (기본값은 query liveData 내의 value 이다.)
      */
-    fun querySearchClick(queryValue: String = query.value ?: "", pageNumber : Int) {
+    fun querySearchClick(queryValue: String = query.value ?: "", pageNumber: Int) {
         if (!query.value.equals(queryValue)) {
             query.value = queryValue
         }
@@ -132,7 +133,8 @@ class SearchViewModel : BaseViewModel() {
 
             this@SearchViewModel.pageNumber = pageNumber
 
-            val contents = SearchRepository.getSearchFilters<Pair<String, String>>(SearchFilterGroup.CONTENT)
+            val contents =
+                SearchRepository.getSearchFilters<Pair<String, String>>(SearchFilterGroup.CONTENT)
             val type = SearchRepository.getSearchFilters<String>(SearchFilterGroup.TYPE)
             val food = SearchRepository.getSearchFilters<String>(SearchFilterGroup.FOOD)
             val store = SearchRepository.getSearchFilters<String>(SearchFilterGroup.CONVENIENCE)
@@ -144,6 +146,7 @@ class SearchViewModel : BaseViewModel() {
             }
 
             _results.value = WineRepository.getWinesFilter(
+                accessToken = auth.token,
                 wineName = queryValue,
                 category = type,
                 food = food,
@@ -159,7 +162,7 @@ class SearchViewModel : BaseViewModel() {
         _searchAction.onNext(SearchAction.QUERY_SEARCH)
     }
 
-    fun paging(){
+    fun paging() {
         pageNumber++
         querySearchClick(query.value ?: "", pageNumber)
     }

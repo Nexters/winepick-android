@@ -13,20 +13,22 @@ import kr.co.nexters.winepick.data.source.WineDataSource
 object WineRepository {
     /** [WineDataSource] 를 통해, 와인 목록 [List] 을 가져온다. */
     suspend fun getWines(
+        accessToken: String,
         pageSize: Int,
         pageNumber: Int = 0,
         sort: String = "",
     ) = withContext(Dispatchers.IO) {
-        return@withContext WineDataSource.getWines(pageSize, pageNumber, sort)
+        return@withContext WineDataSource.getWines(accessToken, pageSize, pageNumber, sort)
     }
 
     /** [WineDataSource] 를 통해, 특정 와인에 대한 정보 [WineResult] 를 가져온다. */
-    suspend fun getWine(wineId: Int) = withContext(Dispatchers.IO) {
-        return@withContext WineDataSource.getWine(wineId)
+    suspend fun getWine(accessToken: String, wineId: Int) = withContext(Dispatchers.IO) {
+        return@withContext WineDataSource.getWine(accessToken, wineId)
     }
 
     /** [WineDataSource] 를 통해, 필터링을 걸쳐 가져온 와인 목록 [List] 를 가져온다. */
     suspend fun getWinesFilter(
+        accessToken: String,
         wineName: String? = null,
         category: String? = null,
         food: String? = null,
@@ -39,7 +41,17 @@ object WineRepository {
         sort: String? = null,
     ) = withContext(Dispatchers.IO) {
         return@withContext WineDataSource.getWinesFilter(
-            wineName, category, food, store, start, end, keywords, pageSize, pageNumber, sort
+            accessToken,
+            wineName,
+            category,
+            food,
+            store,
+            start,
+            end,
+            keywords,
+            pageSize,
+            pageNumber,
+            sort
         )
     }
 }

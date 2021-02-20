@@ -22,6 +22,7 @@ object WineDataSource {
 
     /** [WinePickService.getWines] 요청에 대한 비즈니스 로직 */
     suspend fun getWines(
+        accessToken: String,
         pageSize: Int,
         pageNumber: Int = 0,
         sort: String = "",
@@ -29,7 +30,8 @@ object WineDataSource {
         if (isMock) {
             return@withContext getWinesResponse().result
         } else {
-            val response = NetworkModules.retrofit.getWines(pageSize, pageNumber, sort).send()
+            val response =
+                NetworkModules.retrofit.getWines(accessToken, pageSize, pageNumber, sort).send()
 
             /** statusCode 별 처리 */
             when (response.code()) {
@@ -43,11 +45,13 @@ object WineDataSource {
     }
 
     /** [WinePickService.getWine] 요청에 대한 비즈니스 로직 */
-    suspend fun getWine(wineId: Int): WineResult? = withContext(Dispatchers.IO) {
+    suspend fun getWine(
+        accessToken: String, wineId: Int
+    ): WineResult? = withContext(Dispatchers.IO) {
         if (isMock) {
             return@withContext getWineResponse().result
         } else {
-            val response = NetworkModules.retrofit.getWine(wineId).send()
+            val response = NetworkModules.retrofit.getWine(accessToken, wineId).send()
 
             /** statusCode 별 처리 */
             when (response.code()) {
@@ -76,6 +80,7 @@ object WineDataSource {
      *
      * */
     suspend fun getWinesFilter(
+        accessToken: String,
         wineName: String? = null,
         category: String? = null,
         food: String? = null,
@@ -106,6 +111,7 @@ object WineDataSource {
             val response =
                 if (android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.M) {
                     NetworkModules.retrofit.getWinesFilter(
+                        authorization = accessToken,
                         query = URLDecoder.decode(
                             queryBuilder.toString(),
                             java.nio.charset.StandardCharsets.UTF_8.toString()
@@ -113,7 +119,10 @@ object WineDataSource {
                     ).send()
 
                 } else {
-                    NetworkModules.retrofit.getWinesFilter(query = queryBuilder.toString()).send()
+                    NetworkModules.retrofit.getWinesFilter(
+                        authorization = accessToken,
+                        query = queryBuilder.toString()
+                    ).send()
                 }
 
             /** statusCode 별 처리 */
