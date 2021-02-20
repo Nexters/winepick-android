@@ -59,7 +59,7 @@ val viewModelModule = module {
     viewModel { HomeViewModel(get(), get()) }
     viewModel { TypeDetailModel(get(), get()) }
     viewModel { LikeViewModel(get(), get()) }
-    viewModel { SearchViewModel() }
+    viewModel { SearchViewModel(get()) }
 
 }
 

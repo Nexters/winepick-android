@@ -48,8 +48,8 @@ object SearchDataSource {
      *      (ROOM 은 마이그레이션 변수가 우려되어 사용하지 않음)
      */
     fun getSearchFilterItems(): List<SearchFilterItem> =listOf(
-        SearchFilterItem(0, 0, "4", SearchFilterCategory.TASTE, SearchFilterGroup.CONTENT, true),
-        SearchFilterItem(1, 1, "13", SearchFilterCategory.TASTE, SearchFilterGroup.CONTENT, true),
+        SearchFilterItem(0, 0, "5", SearchFilterCategory.TASTE, SearchFilterGroup.CONTENT, true),
+        SearchFilterItem(1, 1, "16", SearchFilterCategory.TASTE, SearchFilterGroup.CONTENT, true),
         SearchFilterItem(2, 2, "레드", SearchFilterCategory.TASTE, SearchFilterGroup.TYPE, false),
         SearchFilterItem(3, 3, "화이트", SearchFilterCategory.TASTE, SearchFilterGroup.TYPE, false),
         SearchFilterItem(4, 4, "스파클링", SearchFilterCategory.TASTE, SearchFilterGroup.TYPE, false),

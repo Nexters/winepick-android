@@ -31,37 +31,38 @@ data class WinesResult(
     val wineResult: List<WineResult>,
 
     @SerialName("empty")
-    val empty: Boolean,
+    val empty: Boolean? = null,
 
     @SerialName("first")
-    val first: Boolean,
+    val first: Boolean? = null,
 
     @SerialName("last")
-    val last: Boolean,
+    val last: Boolean? = null,
 
     @SerialName("number")
-    val number: Int,
+    val number: Int? = null,
 
     @SerialName("numberOfElements")
-    val numberOfElements: Int,
+    val numberOfElements: Int? = null,
 
     @SerialName("pageable")
-    val pageable: PageInfo,
+    val pageable: PageInfo? = null,
 
     @SerialName("size")
-    val size: Int,
+    val size: Int? = null,
 
     @SerialName("sort")
-    val sort: Sort,
+    val sort: Sort? = null,
 
     @SerialName("totalElements")
-    val totalElements: Int,
+    val totalElements: Int? = null,
 
     @SerialName("totalPages")
-    val totalPages: Int
+    val totalPages: Int? = null
 )
 
-fun getWinesResponse(): WinePickResponse<WinesResult> = Json.decodeFromString("""
+fun getWinesResponse(): WinePickResponse<WinesResult> = Json.decodeFromString(
+    """
     {
       "statusCode": 200,
       "message": "0",
@@ -146,4 +147,5 @@ fun getWinesResponse(): WinePickResponse<WinesResult> = Json.decodeFromString(""
         "empty": false
       }
     }
-""".trimIndent())
+""".trimIndent()
+)

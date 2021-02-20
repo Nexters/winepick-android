@@ -20,20 +20,20 @@ import kr.co.nexters.winepick.network.WinePickService
 @DependencyServer
 data class PageInfo(
     @SerialName("offset")
-    val offset: Int,
+    val offset: Int? = null,
 
     @SerialName("pageNumber")
-    val pageNumber: Int,
+    val pageNumber: Int? = null,
 
     @SerialName("pageSize")
-    val pageSize: Int,
+    val pageSize: Int? = null,
 
     @SerialName("paged")
-    val paged: Boolean?,
+    val paged: Boolean? = null,
 
     @SerialName("sort")
-    val sort: PageSort,
+    val sort: PageSort? = null,
 
     @SerialName("unpaged")
-    val unpaged: Boolean
+    val unpaged: Boolean? = null
 )

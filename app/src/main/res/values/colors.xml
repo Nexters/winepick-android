@@ -32,8 +32,9 @@
 
     <!-- search -->
     <color name="search_query_reset_text_color">#262626</color>
+    <color name="search_recommend_title_text_color">#AAAAAA</color>
     <color name="search_recommend_item_background">#F2F2F2</color>
-    <color name="search_recommend_item_text_color">#6F6F6F</color>
+    <color name="search_recommend_item_text_color">#000000</color>
     <color name="search_relative_item_divider_color">#F3F3F3</color>
     <color name="search_result_country_text_color">#ADADAD</color>
 
@@ -44,6 +45,10 @@
     <color name="search_filter_confirm_bottom_background">#EBEBEB</color>
     <color name="search_filter_confirm_bottom_text_color">#80000000</color>
     <color name="search_filter_tastes_content_track_active">#f25942</color>
-    <color name="search_filter_tastes_content_track_inactive">#EAEAEA</color>
+    <color name="search_filter_tastes_content_track_inactive">#cbcbcb</color>
+    <color name="search_filter_item_convenience_cu_selected">#782B91</color>
+    <color name="search_filter_item_convenience_gs_25_selected">#2ABADA</color>
+    <color name="search_filter_item_convenience_emart_24_selected">#FFCE51</color>
+    <color name="search_filter_item_convenience_seven_eleven_selected">#008061</color>
 
 </resources>
