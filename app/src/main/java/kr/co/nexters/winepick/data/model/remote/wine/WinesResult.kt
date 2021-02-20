@@ -1,5 +1,6 @@
 package kr.co.nexters.winepick.data.model.remote.wine
 
+import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
@@ -27,36 +28,47 @@ import kr.co.nexters.winepick.network.WinePickService
 @Serializable
 @DependencyServer
 data class WinesResult(
+    @SerializedName("content")
     @SerialName("content")
     val wineResult: List<WineResult>,
 
+    @SerializedName("empty")
     @SerialName("empty")
     val empty: Boolean? = null,
 
+    @SerializedName("first")
     @SerialName("first")
     val first: Boolean? = null,
 
+    @SerializedName("last")
     @SerialName("last")
     val last: Boolean? = null,
 
+    @SerializedName("number")
     @SerialName("number")
     val number: Int? = null,
 
+    @SerializedName("numberOfElements")
     @SerialName("numberOfElements")
     val numberOfElements: Int? = null,
 
+    @SerializedName("pageable")
     @SerialName("pageable")
     val pageable: PageInfo? = null,
 
+    @SerializedName("size")
     @SerialName("size")
     val size: Int? = null,
 
+    @SerializedName("sort")
     @SerialName("sort")
     val sort: Sort? = null,
 
+    @SerializedName("totalElements")
     @SerialName("totalElements")
     val totalElements: Int? = null,
 
+    @SerializedName("totalPages")
     @SerialName("totalPages")
     val totalPages: Int? = null
 )

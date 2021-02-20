@@ -38,9 +38,10 @@ const val CONNECT_TIMEOUT = 15.toLong()
 const val WRITE_TIMEOUT = 15.toLong()
 const val READ_TIMEOUT = 15.toLong()
 
-val netModule = module {
-    val baseUrl = "http://ec2-3-35-107-29.ap-northeast-2.compute.amazonaws.com:8080/"
+const val BASE_URL = "http://ec2-3-35-107-29.ap-northeast-2.compute.amazonaws.com:8080/"
+const val TEST_URL = "http://padakpadak.run.goorm.io/"
 
+val netModule = module {
     val httpLoggingInterceptor = HttpLoggingInterceptor().apply {
         level = if (BuildConfig.DEBUG) {
             HttpLoggingInterceptor.Level.BODY
@@ -74,6 +75,7 @@ val netModule = module {
         }
     }
 
+    /** HttpClient 객체를 생성하는 Provider 함수이다. */
     fun provideHttpClient(okHttpCache: Cache, winePickInterceptor: Interceptor): OkHttpClient {
         return OkHttpClient.Builder()
             .cache(okHttpCache)
@@ -85,14 +87,12 @@ val netModule = module {
             .build()
     }
 
-    /** 실제 서비스에서 사용하는 Retrofit2 Service */
+    /** Retrofit 객체를 생성하는 Provider 함수이다. */
     fun provideRetrofit(client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(baseUrl)
-            .addConverterFactory(Json.asConverterFactory("application/json; charset=utf-8".toMediaType()))
+            .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
-            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .build()
     }
 
@@ -122,14 +122,13 @@ val apiModule = module {
     /** UnitTest 에서 사용하는 Retrofit2 Service */
     fun provideTestService(okHttpClient: OkHttpClient): TestService {
         return Retrofit.Builder()
-            .baseUrl("http://padakpadak.run.goorm.io/")
+            .baseUrl(TEST_URL)
             .addConverterFactory(Json.asConverterFactory("application/json; charset=utf-8".toMediaType()))
             .client(okHttpClient)
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .build()
             .create(TestService::class.java)
     }
-
 
     fun provideApiService(retrofit: Retrofit): WinePickService {
         return retrofit.create(WinePickService::class.java)

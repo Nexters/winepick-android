@@ -42,7 +42,6 @@ interface WinePickService {
         // sort : id 기준으로 내림차순/오름차순 정렬 가능 유무
     ): Call<WinePickResponse<WinesResult>>
 
-
     /**
      * updateUser
      */
