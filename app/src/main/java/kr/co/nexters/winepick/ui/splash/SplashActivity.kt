@@ -1,25 +1,31 @@
 package kr.co.nexters.winepick.ui.splash
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import com.kakao.sdk.user.UserApiClient
-import com.kakao.usermgmt.api.UserApi
+import com.airbnb.lottie.LottieAnimationView
 import kr.co.nexters.winepick.R
-import kr.co.nexters.winepick.WinePickApplication
 import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.home.HomeActivity
 import kr.co.nexters.winepick.ui.login.LoginActivity
 import kr.co.nexters.winepick.util.startActivity
 import org.koin.android.ext.android.inject
-import timber.log.Timber
 
-class SplashAcivity : AppCompatActivity() {
+class SplashActivity : AppCompatActivity() {
     private val authManager : AuthManager by inject()
+    private lateinit var splashView : LottieAnimationView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_splash_acivity)
+        setContentView(R.layout.activity_splash)
+
+        splashView = findViewById(R.id.lottie_splash)
+        splashView.apply {
+            setAnimation("winepick.json")
+            playAnimation()
+            loop(true)
+        }
+
 
         Handler().postDelayed({
             checkToken()
