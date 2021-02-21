@@ -3,6 +3,7 @@ package kr.co.nexters.winepick.ui.type
 import android.content.Intent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.WinePickApplication
 import kr.co.nexters.winepick.constant.TestConstant
 import kr.co.nexters.winepick.data.repository.WinePickRepository
@@ -54,12 +55,30 @@ class TypeDetailModel(private val repo : WinePickRepository, private val auth : 
 
     fun setUserPersonalType() {
         return when(auth.testType) {
-            "A" -> {getUserType(TestConstant.A)}
-            "B" -> {getUserType(TestConstant.B)}
-            "C" -> {getUserType(TestConstant.C)}
-            "D" -> {getUserType(TestConstant.D)}
-            "E" -> {getUserType(TestConstant.E)}
-            "F" -> {getUserType(TestConstant.F)}
+            "A" -> {
+                auth.typeName = WinePickApplication.getGlobalApplicationContext().getString(R.string.type_a_name)
+                getUserType(TestConstant.A)
+            }
+            "B" -> {
+                auth.typeName = WinePickApplication.getGlobalApplicationContext().getString(R.string.type_b_name)
+                getUserType(TestConstant.B)
+            }
+            "C" -> {
+                auth.typeName = WinePickApplication.getGlobalApplicationContext().getString(R.string.type_c_name)
+                getUserType(TestConstant.C)
+            }
+            "D" -> {
+                auth.typeName = WinePickApplication.getGlobalApplicationContext().getString(R.string.type_d_name)
+                getUserType(TestConstant.D)
+            }
+            "E" -> {
+                auth.typeName = WinePickApplication.getGlobalApplicationContext().getString(R.string.type_e_name)
+                getUserType(TestConstant.E)
+            }
+            "F" -> {
+                auth.typeName = WinePickApplication.getGlobalApplicationContext().getString(R.string.type_f_name)
+                getUserType(TestConstant.F)
+            }
             else -> {}
 
         }
@@ -68,8 +87,7 @@ class TypeDetailModel(private val repo : WinePickRepository, private val auth : 
         repo.getResult(
             resultId = resultId,
             onSuccess = {
-                Timber.e("ddd")
-                _typeName.value = it.personDetail + ", " + it.personName
+                _typeName.value = it.personDetail + ", " + auth.typeName
                 _typeDesc.value = it.description
             },
             onFailure = {

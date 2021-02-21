@@ -6,15 +6,13 @@ import kotlinx.serialization.Serializable
 import java.util.*
 
 
-data class postUserData(
-    @SerializedName("createdAt")
-    val createdAt : String? = null,
-    @SerializedName("updatedAt")
-    val updatedAt : String? = null,
-    @SerializedName("id")
-    val id : Int? = null,
+data class UserData(
     @SerializedName("accessToken")
     val accessToken : String? = null,
-    @SerializedName("personalityType")
+    @SerializedName("id")
+    val id : Int? = null,
+    @SerializedName("likes")
+    val likes : Int? = null,
+    @SerializedName("personality")
     val personalityType : String? = null
 )

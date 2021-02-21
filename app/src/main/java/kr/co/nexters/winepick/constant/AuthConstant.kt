@@ -17,4 +17,5 @@ object AuthConstant {
     const val RECENT_SEARCH1 = "search1"
     const val RECENT_SEARCH2 = "search2"
     const val ID = "id"
+    const val TYPE_NAME = "name"
 }

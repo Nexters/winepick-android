@@ -22,6 +22,13 @@
 
     <!--typedetail-->
     <string name="type_title">당신의 성향은</string>
+    <string name="type_a_name">고양이</string>
+    <string name="type_b_name">곰</string>
+    <string name="type_c_name">토끼</string>
+    <string name="type_d_name">햄스터</string>
+    <string name="type_e_name">펭귄</string>
+    <string name="type_f_name">강아지</string>
+
 
     <!-- login warning -->
     <string name="login_warning_title">로그인 하시겠습니까?</string>

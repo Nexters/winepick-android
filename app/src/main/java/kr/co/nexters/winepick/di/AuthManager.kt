@@ -7,6 +7,7 @@ import kr.co.nexters.winepick.constant.AuthConstant.RECENT_SEARCH1
 import kr.co.nexters.winepick.constant.AuthConstant.RECENT_SEARCH2
 import kr.co.nexters.winepick.constant.AuthConstant.TEST
 import kr.co.nexters.winepick.constant.AuthConstant.TOKEN_KEY
+import kr.co.nexters.winepick.constant.AuthConstant.TYPE_NAME
 import kr.co.nexters.winepick.util.SharedPrefs
 
 /**
@@ -65,5 +66,13 @@ class AuthManager(private val sharedPrefs: SharedPrefs) {
         }
         set(value) {
             sharedPrefs[RECENT_SEARCH2] = value
+        }
+
+    var typeName: String?
+        get() {
+            return sharedPrefs[TYPE_NAME,null]
+        }
+        set(value) {
+            sharedPrefs[TYPE_NAME] = value
         }
 }
