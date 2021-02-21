@@ -8,9 +8,11 @@ import io.mockk.every
 import io.mockk.mockkStatic
 import io.mockk.unmockkStatic
 import kr.co.nexters.winepick.WinePickApplication
+import kr.co.nexters.winepick.data.repository.SearchRepository
 import kr.co.nexters.winepick.data.repository.TestRepository
 import kr.co.nexters.winepick.data.source.WineDataSource
 import kr.co.nexters.winepick.di.moduleList
+import kr.co.nexters.winepick.util.SharedPrefs
 import org.junit.After
 import org.junit.Before
 import org.junit.runner.RunWith
@@ -28,8 +30,12 @@ import org.robolectric.annotation.Config
 @RunWith(AndroidJUnit4::class)
 @Config(application = Application::class)
 abstract class AndroidBaseTest : KoinTest {
-    val windDataSource: WineDataSource by inject()
     val testRepository: TestRepository by inject()
+    val searchRepository: SearchRepository by inject()
+
+    val wineDataSource: WineDataSource by inject()
+
+    val sharedPrefs: SharedPrefs by inject()
 
     private val mockModule = moduleList
 
