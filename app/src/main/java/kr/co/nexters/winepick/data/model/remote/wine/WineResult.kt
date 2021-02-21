@@ -5,7 +5,6 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
-import kr.co.nexters.winepick.data.constant.DependencyServer
 import kr.co.nexters.winepick.data.model.WinePickResponse
 import kr.co.nexters.winepick.network.WinePickService
 

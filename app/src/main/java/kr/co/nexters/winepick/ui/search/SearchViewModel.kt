@@ -11,6 +11,7 @@ import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.data.model.local.SearchFilterGroup
 import kr.co.nexters.winepick.data.model.remote.wine.WineResult
 import kr.co.nexters.winepick.data.repository.SearchRepository
+import kr.co.nexters.winepick.data.repository.WinePickRepository
 import kr.co.nexters.winepick.data.repository.WineRepository
 import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.BaseViewModel
@@ -22,7 +23,9 @@ import timber.log.Timber
  * @author ricky
  * @since v1.0.0 / 2021.02.06
  */
-class SearchViewModel(private val auth: AuthManager) : BaseViewModel() {
+class SearchViewModel(
+    private val searchRepository: SearchRepository, private val wineRepository: WineRepository
+) : BaseViewModel() {
     val tag = this::class.java.canonicalName
 
     /** 검색 창 입력 내용 */
@@ -37,7 +40,7 @@ class SearchViewModel(private val auth: AuthManager) : BaseViewModel() {
     val results: LiveData<List<WineResult>> = _results
 
     /** 검색 목록 list */
-    val currents: LiveData<List<String>> = SearchRepository.styledWineInfos
+    val currents: LiveData<List<String>> = searchRepository.styledWineInfos
 
     /** 가장 맨 앞에 보여야 할 화면. 보여야 할 내용은 [SearchFront] 참고 */
     private val _searchFrontPage = MutableLiveData<SearchFront>(SearchFront.DEFAULT)
@@ -59,7 +62,7 @@ class SearchViewModel(private val auth: AuthManager) : BaseViewModel() {
     override fun onResume() {
         super.onResume()
         // 도수의 경우 2개로 인식되므로 -1 처리를 해준다.
-        _filterNum.value = SearchRepository.userSearchFilterItems.filter { it.selected }.size - 1
+        _filterNum.value = searchRepository.userSearchFilterItems.filter { it.selected }.size - 1
     }
 
     /**
@@ -104,7 +107,7 @@ class SearchViewModel(private val auth: AuthManager) : BaseViewModel() {
             Timber.i(tag, "${SearchFront.RECOMMEND}")
             _searchFrontPage.value = SearchFront.RECOMMEND
         } else {
-            viewModelScope.launch { SearchRepository.getWineInfosLikeQuery(s.toString()) }
+            viewModelScope.launch { searchRepository.getWineInfosLikeQuery(s.toString()) }
 
             Timber.i(tag, "${SearchFront.CURRENT}")
             _searchFrontPage.value = SearchFront.CURRENT
@@ -129,24 +132,23 @@ class SearchViewModel(private val auth: AuthManager) : BaseViewModel() {
         }
 
         viewModelScope.launch {
-            SearchRepository.getWineInfosLikeQuery(queryValue)
+            searchRepository.getWineInfosLikeQuery(queryValue)
 
             this@SearchViewModel.pageNumber = pageNumber
 
             val contents =
-                SearchRepository.getSearchFilters<Pair<String, String>>(SearchFilterGroup.CONTENT)
-            val type = SearchRepository.getSearchFilters<String>(SearchFilterGroup.TYPE)
-            val food = SearchRepository.getSearchFilters<String>(SearchFilterGroup.FOOD)
-            val store = SearchRepository.getSearchFilters<String>(SearchFilterGroup.CONVENIENCE)
-            val tastes = SearchRepository.getSearchFilters<List<String>>(SearchFilterGroup.TASTE)
-            val events = SearchRepository.getSearchFilters<List<String>>(SearchFilterGroup.EVENT)
+                searchRepository.getSearchFilters<Pair<String, String>>(SearchFilterGroup.CONTENT)
+            val type = searchRepository.getSearchFilters<String>(SearchFilterGroup.TYPE)
+            val food = searchRepository.getSearchFilters<String>(SearchFilterGroup.FOOD)
+            val store = searchRepository.getSearchFilters<String>(SearchFilterGroup.CONVENIENCE)
+            val tastes = searchRepository.getSearchFilters<List<String>>(SearchFilterGroup.TASTE)
+            val events = searchRepository.getSearchFilters<List<String>>(SearchFilterGroup.EVENT)
             val keywords = mutableListOf("").apply {
                 tastes?.let { addAll(it) }
                 events?.let { addAll(it) }
             }
 
-            _results.value = WineRepository.getWinesFilter(
-                accessToken = auth.token,
+            _results.value = wineRepository.getWinesFilter(
                 wineName = queryValue,
                 category = type,
                 food = food,
@@ -184,7 +186,7 @@ class SearchViewModel(private val auth: AuthManager) : BaseViewModel() {
     override fun onCleared() {
         super.onCleared()
         pageNumber = 0
-        SearchRepository.filterItemsClear()
+        searchRepository.filterItemsClear()
     }
 }
 

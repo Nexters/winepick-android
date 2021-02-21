@@ -6,6 +6,7 @@ import kr.co.nexters.winepick.data.model.LikeWine
 import kr.co.nexters.winepick.data.model.TokenInfo
 import kr.co.nexters.winepick.data.model.UserData
 import kr.co.nexters.winepick.data.model.WineList
+import kr.co.nexters.winepick.data.model.remote.wine.WineResult
 import kr.co.nexters.winepick.data.response.PersonalityType
 import kr.co.nexters.winepick.data.response.getUserData
 import kr.co.nexters.winepick.data.response.postUserData
@@ -40,7 +41,7 @@ class WinePickRepository(private val api: WinePickService) {
 
     fun getLikeWineList(
         userId : Int,
-        onSuccess: (List<WineList>) -> Unit,
+        onSuccess: (List<WineResult>) -> Unit,
         onFailure: () -> Unit
     ) {
         api.getLikesWineList(userId).safeEnqueue (

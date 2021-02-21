@@ -72,7 +72,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
 
     fun subscribeUI() {
         viewModel.results.observe(this, {
-
+            Timber.i("$it")
         })
 
         viewModel.searchFrontPage.observe(this, {

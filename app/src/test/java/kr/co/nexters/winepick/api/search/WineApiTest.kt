@@ -2,7 +2,6 @@ package kr.co.nexters.winepick.api.search
 
 import kotlinx.coroutines.runBlocking
 import kr.co.nexters.winepick.base.AndroidBaseTest
-import kr.co.nexters.winepick.data.repository.WineRepository
 import kr.co.nexters.winepick.data.source.WineDataSource
 import org.junit.Assert
 import org.junit.Test
@@ -18,13 +17,13 @@ class WineApiTest : AndroidBaseTest() {
     /** [WineDataSource.getWines] 테스트 */
     @Test
     fun getWinesTest() = runBlocking {
-        val result = WineDataSource.getWines(testToken, 10, 0)
+        val result = wineDataSource.getWines(10, 0)
 
         println("$result")
 
         Assert.assertNotNull(result)
 
-        val resultEmptyList = WineDataSource.getWines(testToken, 20, 4)
+        val resultEmptyList = wineDataSource.getWines(20, 4)
 
         println("$resultEmptyList")
 
@@ -34,7 +33,7 @@ class WineApiTest : AndroidBaseTest() {
     /** [WineDataSource.getWine] 테스트 */
     @Test
     fun getWineTest() = runBlocking {
-        val result = WineDataSource.getWine(testToken, 2)
+        val result = wineDataSource.getWine(2)
 
         print("$result")
 
@@ -44,8 +43,7 @@ class WineApiTest : AndroidBaseTest() {
     /** [WineDataSource.getWines] 테스트 */
     @Test
     fun getWinesFilterTest() = runBlocking {
-        val resultTemp = WineRepository.getWinesFilter(
-            testToken,
+        val resultTemp = wineDataSource.getWinesFilter(
             wineName = "쁘띠폴리",
             keywords = listOf("달콤한"),
             pageSize = 1

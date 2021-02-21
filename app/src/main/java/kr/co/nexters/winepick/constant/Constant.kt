@@ -6,10 +6,13 @@ package kr.co.nexters.winepick.data.constant
  * @since v1.0.0 / 2021.02.09
  */
 object Constant {
+    // Default
     const val PREF_KEY_WINE_INFOS = "PREF_KEY_WINE_INFOS"
 
+    // extra
     const val BOOL_EXTRA_SEARCH_NEED_UPDATE = "BOOL_EXTRA_SEARCH_NEED_UPDATE"
 
+    // RequestCode
     const val REQ_CODE_GO_TO_FILTER = 1
 }
 

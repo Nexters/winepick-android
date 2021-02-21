@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull
  *
  * @since v1.0.0 / 2021.02.03
  */
-object SharedPrefs {
+class SharedPrefs {
     private val sharedPreferences: SharedPreferences by lazy {
         WinePickApplication.appContext!!.getSharedPreferences(
             kr.co.nexters.winepick.BuildConfig.APPLICATION_ID,
@@ -59,24 +59,26 @@ object SharedPrefs {
     }
 
     /** 프리퍼런스의 [key]값에 대응하는 값을 반환하며, [defaultValue] 의 타입에 따라 그 값을 반환한다. */
-    operator fun <T> get(key: String, @NotNull defaultValue: T): T? {
+    operator fun <T> get(key: String, @NotNull defaultValue: T?): T? {
         when (defaultValue) {
             is String -> {
-                return sharedPreferences.getString(key, defaultValue) as T
+                return sharedPreferences.getString(key, defaultValue) as T?
             }
             is Int -> {
-                return sharedPreferences.getInt(key, defaultValue) as T
+                return sharedPreferences.getInt(key, defaultValue) as T?
             }
             is Long -> {
-                return sharedPreferences.getLong(key, defaultValue) as T
+                return sharedPreferences.getLong(key, defaultValue) as T?
             }
             is Float -> {
-                return sharedPreferences.getFloat(key, defaultValue) as T
+                return sharedPreferences.getFloat(key, defaultValue) as T?
             }
             is Boolean -> {
-                return sharedPreferences.getBoolean(key, defaultValue) as T
+                return sharedPreferences.getBoolean(key, defaultValue) as T?
             }
-            else -> return null
+            else -> {
+                return null
+            }
         }
     }
 

@@ -6,8 +6,7 @@ import kr.co.nexters.winepick.data.model.remote.wine.WineResult
 import kr.co.nexters.winepick.data.model.remote.wine.WinesResult
 import kr.co.nexters.winepick.data.model.remote.wine.getWineResponse
 import kr.co.nexters.winepick.data.model.remote.wine.getWinesResponse
-import kr.co.nexters.winepick.network.NetworkModules
-import kr.co.nexters.winepick.network.NetworkModules.send
+import kr.co.nexters.winepick.di.send
 import kr.co.nexters.winepick.network.WinePickService
 import java.net.URLDecoder
 
@@ -16,13 +15,12 @@ import java.net.URLDecoder
  *
  * @since v1.0.0 / 2021.02.08
  */
-object WineDataSource {
+class WineDataSource(private val winePickService: WinePickService) {
     /** 테스트 모드 flag 값. true 일 시 앱 내 mock 데이터 사용 */
     val isMock = false
 
     /** [WinePickService.getWines] 요청에 대한 비즈니스 로직 */
     suspend fun getWines(
-        accessToken: String,
         pageSize: Int,
         pageNumber: Int = 0,
         sort: String = "",
@@ -30,8 +28,7 @@ object WineDataSource {
         if (isMock) {
             return@withContext getWinesResponse().result
         } else {
-            val response =
-                NetworkModules.retrofit.getWines(accessToken, pageSize, pageNumber, sort).send()
+            val response = winePickService.getWines(pageSize, pageNumber, sort).send()
 
             /** statusCode 별 처리 */
             when (response.code()) {
@@ -45,13 +42,11 @@ object WineDataSource {
     }
 
     /** [WinePickService.getWine] 요청에 대한 비즈니스 로직 */
-    suspend fun getWine(
-        accessToken: String, wineId: Int
-    ): WineResult? = withContext(Dispatchers.IO) {
+    suspend fun getWine(wineId: Int): WineResult? = withContext(Dispatchers.IO) {
         if (isMock) {
             return@withContext getWineResponse().result
         } else {
-            val response = NetworkModules.retrofit.getWine(accessToken, wineId).send()
+            val response = winePickService.getWine(wineId).send()
 
             /** statusCode 별 처리 */
             when (response.code()) {
@@ -80,7 +75,6 @@ object WineDataSource {
      *
      * */
     suspend fun getWinesFilter(
-        accessToken: String,
         wineName: String? = null,
         category: String? = null,
         food: String? = null,
@@ -110,8 +104,7 @@ object WineDataSource {
 
             val response =
                 if (android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.M) {
-                    NetworkModules.retrofit.getWinesFilter(
-                        authorization = accessToken,
+                    winePickService.getWinesFilter(
                         query = URLDecoder.decode(
                             queryBuilder.toString(),
                             java.nio.charset.StandardCharsets.UTF_8.toString()
@@ -119,8 +112,7 @@ object WineDataSource {
                     ).send()
 
                 } else {
-                    NetworkModules.retrofit.getWinesFilter(
-                        authorization = accessToken,
+                    winePickService.getWinesFilter(
                         query = queryBuilder.toString()
                     ).send()
                 }

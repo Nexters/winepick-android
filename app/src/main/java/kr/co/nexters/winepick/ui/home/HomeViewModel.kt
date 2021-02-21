@@ -4,12 +4,12 @@ import android.content.Intent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kr.co.nexters.winepick.WinePickApplication
-import kr.co.nexters.winepick.constant.testConstant.Companion.A
-import kr.co.nexters.winepick.constant.testConstant.Companion.B
-import kr.co.nexters.winepick.constant.testConstant.Companion.C
-import kr.co.nexters.winepick.constant.testConstant.Companion.D
-import kr.co.nexters.winepick.constant.testConstant.Companion.E
-import kr.co.nexters.winepick.constant.testConstant.Companion.F
+import kr.co.nexters.winepick.constant.TestConstant.A
+import kr.co.nexters.winepick.constant.TestConstant.B
+import kr.co.nexters.winepick.constant.TestConstant.C
+import kr.co.nexters.winepick.constant.TestConstant.D
+import kr.co.nexters.winepick.constant.TestConstant.E
+import kr.co.nexters.winepick.constant.TestConstant.F
 import kr.co.nexters.winepick.data.repository.WinePickRepository
 import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.BaseViewModel
@@ -17,6 +17,8 @@ import kr.co.nexters.winepick.ui.like.LikeListActivity
 import kr.co.nexters.winepick.ui.search.SearchActivity
 import kr.co.nexters.winepick.ui.survey.SurveyActivity
 import kr.co.nexters.winepick.ui.type.TypeDetailActivity
+import kr.co.nexters.winepick.util.KakaoLoginHelper
+import timber.log.Timber
 
 /**
  * Kotlin 에서 사용하는 ViewModel 예
@@ -47,7 +49,7 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
         _likecnt.value = 0
         _isTest.value = false
         _isUser.value = false
-        if (!auth.test_type.isNullOrEmpty()) {
+        if (!auth.testType.isNullOrEmpty()) {
             _isTest.value = true
         }
         if (auth.token != "guest") {
@@ -72,7 +74,7 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
 
 
     fun setUserPersonalType() {
-        return when(auth.test_type) {
+        return when(auth.testType) {
             "A" -> {getUserType(A)}
             "B" -> {getUserType(B)}
             "C" -> {getUserType(C)}
@@ -107,9 +109,15 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
     }
     fun likeClick() {
-        WinePickApplication.getGlobalApplicationContext().startActivity(Intent(WinePickApplication.appContext,
-            LikeListActivity::class.java)
-            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+        if(isUser.value!!) {
+            WinePickApplication.getGlobalApplicationContext().startActivity(
+                Intent(
+                    WinePickApplication.appContext,
+                    LikeListActivity::class.java
+                )
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            )
+        }
     }
     fun myTypeClick() {
         WinePickApplication.getGlobalApplicationContext().startActivity(Intent(WinePickApplication.appContext,
@@ -119,6 +127,13 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
     /** UI 의 onDestroy 개념으로 생각하면 편할듯 */
     override fun onCleared() {
         super.onCleared()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Timber.e("Resume!!")
+        getUserLikes()
+
     }
 
 }
