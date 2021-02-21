@@ -1,5 +1,5 @@
 package kr.co.nexters.winepick.data.model
 
-data class UserData (
+data class AccessTokenData (
     val accessToken : String
 )

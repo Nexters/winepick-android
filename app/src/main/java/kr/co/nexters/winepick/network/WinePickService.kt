@@ -76,7 +76,7 @@ interface WinePickService {
      */
     @POST("v2/api/user/")
     fun postUser(
-        @Body data: UserData
+        @Body data: AccessTokenData
     ): Call<WinePickResponse<UserData>>
 
     @GET("v2/api/user/me/{accessToken}")
