@@ -30,7 +30,6 @@
         android:background="#00FFFFFF"
         android:padding="0dp"
         android:src="@drawable/share_20"
-        android:onClick="kakaolink"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
