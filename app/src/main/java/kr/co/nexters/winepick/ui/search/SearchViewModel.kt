@@ -16,10 +16,8 @@ import kr.co.nexters.winepick.data.model.LikeWine
 import kr.co.nexters.winepick.data.model.local.SearchFilterGroup
 import kr.co.nexters.winepick.data.model.remote.wine.WineResult
 import kr.co.nexters.winepick.data.repository.SearchRepository
-import kr.co.nexters.winepick.data.repository.WinePickRepository
 import kr.co.nexters.winepick.data.repository.WineRepository
-import kr.co.nexters.winepick.di.AuthManager
-import kr.co.nexters.winepick.ui.base.BaseViewModel
+import kr.co.nexters.winepick.ui.base.WineResultViewModel
 import timber.log.Timber
 
 /**
@@ -29,6 +27,8 @@ import timber.log.Timber
  * @since v1.0.0 / 2021.02.06
  */
 class SearchViewModel(
+    private val searchRepository: SearchRepository, private val wineRepository: WineRepository
+) : WineResultViewModel() {
     private val searchRepository: SearchRepository, private val wineRepository: WineRepository,
     private val winePickRepository: WinePickRepository, private val authManager: AuthManager
 ) : BaseViewModel() {
@@ -41,15 +41,11 @@ class SearchViewModel(
     private val _filterNum = MutableLiveData(1)
     val filterNum: LiveData<Int> = _filterNum
 
-    /** 검색 결과 list */
-    private val _results = MutableLiveData<List<WineResult>>(listOf())
-    val results: LiveData<List<WineResult>> = _results
-
     /** 검색 목록 list */
     val currents: LiveData<List<String>> = searchRepository.styledWineInfos
 
     /** 가장 맨 앞에 보여야 할 화면. 보여야 할 내용은 [SearchFront] 참고 */
-    private val _searchFrontPage = MutableLiveData<SearchFront>(SearchFront.DEFAULT)
+    private val _searchFrontPage = MutableLiveData(SearchFront.DEFAULT)
     val searchFrontPage: LiveData<SearchFront> = _searchFrontPage
 
     private var pageNumber: Int = 0
@@ -184,15 +180,15 @@ class SearchViewModel(
         _searchAction.onNext(SearchAction.EDIT_FILTER)
     }
 
-    /**
-     * [검색 결과 아이템 화면][R.layout.item_search_result] 에서 하트 버튼을 누를 경우 동작하는 로직
-     *
-     * @param wineResult 검색결과 아이템이 가지고 있는 [검색 결과 아이템 데이터][WineResult] 정보
-     */
-    fun searchResultHeartClick(wineResult: WineResult) {
-        // TODO 좋아요 추가/취소 구현하기
+    override fun wineItemViewClick(wineResult: WineResult) {
+        // TODO. 검색 화면에서 아이템 클릭 구현
+        Timber.i("wineItemViewClick search $wineResult")
     }
 
+    override fun wineHeartClick(wineResult: WineResult) {
+        // TODO. 검색 화면에서 좋아요 / 좋아요 취소 클릭 구현
+        Timber.i("wineHeartClick search $wineResult")
+    }
     /**
      * 좋아요 서버 통신 - addLike
      */

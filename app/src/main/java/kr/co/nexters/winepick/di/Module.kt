@@ -168,7 +168,7 @@ val viewModelModule = module {
 val repositoryModule = module {
     single { WinePickRepository(get()) }
     single { TestRepository(get()) }
-    single { WineRepository(get()) }
+    single { WineRepository(get(), get()) }
     single { SearchRepository(get()) }
 }
 
@@ -182,7 +182,7 @@ val authModule = module {
 }
 
 val kakaoModule = module {
-    single { KakaoLoginHelper(get(),get()) }
+    single { KakaoLoginHelper(get(), get()) }
 }
 
 

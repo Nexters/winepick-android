@@ -14,7 +14,6 @@ import kr.co.nexters.winepick.databinding.ActivitySearchBinding
 import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.ActivityResult
 import kr.co.nexters.winepick.ui.base.BaseActivity
-import kr.co.nexters.winepick.ui.home.HomeViewModel
 import kr.co.nexters.winepick.util.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -36,7 +35,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
         binding.apply {
             btnSearchBack.setOnSingleClickListener { onBackPressed() }
 
-            rvResults.adapter = SearchResultAdapter(viewModel)
+            rvResults.adapter = WineResultAdapter(viewModel)
             rvResults.layoutManager?.let {
                 rvResults.addOnScrollListener(object : EndlessScrollListener(it, 3) {
                     override fun onLoadMore(page: Int) {

@@ -10,6 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.WinePickApplication
 import kr.co.nexters.winepick.data.model.remote.wine.WineResult
+import kr.co.nexters.winepick.databinding.ItemWineResultBinding
+import kr.co.nexters.winepick.ui.base.WineResultViewModel
+import kr.co.nexters.winepick.util.setOnSingleClickListener
 import kr.co.nexters.winepick.databinding.ItemSearchResultBinding
 import kr.co.nexters.winepick.util.setOnSingleClickListener
 
@@ -18,32 +21,33 @@ import kr.co.nexters.winepick.util.setOnSingleClickListener
  *
  * @since v1.0.0 / 2021.02.08
  */
-class SearchResultAdapter(val vm: SearchViewModel) :
-    ListAdapter<WineResult, SearchResultViewHolder>(SearchResultDiffUtilCallBack) {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchResultViewHolder {
+class WineResultAdapter(val vm: WineResultViewModel) :
+    ListAdapter<WineResult, WineResultViewHolder>(SearchResultDiffUtilCallBack) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WineResultViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding: ItemSearchResultBinding =
-            DataBindingUtil.inflate(layoutInflater, R.layout.item_search_result, parent, false)
+        val binding: ItemWineResultBinding =
+            DataBindingUtil.inflate(layoutInflater, R.layout.item_wine_result, parent, false)
 
-        return SearchResultViewHolder(binding).apply {
+        return WineResultViewHolder(binding).apply {
+            binding.root.setOnSingleClickListener {
+                vm.wineItemViewClick(binding.wineResult!!)
+            }
             binding.btnSearchResultHeart.setOnSingleClickListener {
-                vm.addLike(binding.searchResult!!.id!!)
-                binding.btnSearchResultHeart.setBackgroundResource(R.drawable.like_success)
-
+                vm.wineHeartClick(binding.wineResult!!)
             }
         }
     }
 
-    override fun onBindViewHolder(holder: SearchResultViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: WineResultViewHolder, position: Int) {
         holder.bind(getItem(position), vm)
     }
 }
 
-class SearchResultViewHolder(private val binding: ItemSearchResultBinding) :
+class WineResultViewHolder(private val binding: ItemWineResultBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(searchResult: WineResult, vm: SearchViewModel) {
-        binding.searchResult = searchResult
+    fun bind(wineResult: WineResult, vm: WineResultViewModel) {
+        binding.wineResult = wineResult
         binding.vm = vm
     }
 }

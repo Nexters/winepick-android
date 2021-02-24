@@ -59,12 +59,11 @@
             android:id="@+id/rv_like_list"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="vertical"
-            tools:listitem="@layout/item_search_result"
+            submitList="@{vm.results}"
+            tools:listitem="@layout/item_wine_result"
             app:layout_constraintTop_toBottomOf="@id/cl_like_title"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"/>
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
