@@ -27,8 +27,8 @@ import timber.log.Timber
  * @since v1.0.0 / 2021.01.28
  */
 class HomeViewModel(private val repo: WinePickRepository, private val auth: AuthManager) : BaseViewModel() {
-    private var _likecnt = MutableLiveData<Int>()
-    var likeCnt : LiveData<Int> = _likecnt
+    private var _likecnt = MutableLiveData<String>()
+    var likeCnt : LiveData<String> = _likecnt
 
     private var _isTest : MutableLiveData<Boolean> = MutableLiveData()
     val isTest : LiveData<Boolean>
@@ -50,7 +50,7 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
 
     /** 생성자 */
     init {
-        _likecnt.value = 0
+        _likecnt.value = "0"
         _isTest.value = false
         _isUser.value = false
         _loginWarningDlg.value = false
@@ -66,7 +66,10 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
                     userId = auth.id,
                     accessToken = auth.token,
                     onSuccess = {
-                        _likecnt.value = it.likes
+                        if(it.likes!! > 99) {
+                            _likecnt.value = "99+"
+                        }
+                        _likecnt.value = it.likes.toString()
                         if(it.personalityType != null) {
                             setUserPersonalType()
                         }

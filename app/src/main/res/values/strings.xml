@@ -10,7 +10,7 @@
     <string name="home_search_title">오늘은 어떤 와인을\n도전해볼까요?</string>
     <string name="home_wine_type">내 와인타입</string>
     <string name="home_wine_retest">다시 테스트하기</string>
-    <string name="home_wine_research">최근에 검색한 와인</string>
+    <string name="home_wine_research">최근에 본 와인</string>
     <string name="home_wine_research_content">클릭하면 검색 결과로 이어져요.</string>
     <string name="home_wine_type_guest">로그인하고\n나에게 맞는 와인을 추천받아보세요!</string>
     <string name="home_guest_start">시작하기</string>

@@ -249,8 +249,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/tv_home_like"
             tools:text="0"
-            android:text="@{Integer.valueOf(vm.likeCnt) > 99 ? String.valueOf(99) : String.valueOf(vm.likeCnt)}"
-
+            android:text="@{vm.likeCnt}"
             android:includeFontPadding="false"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
