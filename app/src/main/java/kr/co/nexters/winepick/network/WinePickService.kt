@@ -1,6 +1,7 @@
 package kr.co.nexters.winepick.network
 
 import kr.co.nexters.winepick.data.model.Survey
+import kr.co.nexters.winepick.data.response.SurveyResponse
 import retrofit2.Call
 import retrofit2.http.GET
 

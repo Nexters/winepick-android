@@ -4,9 +4,11 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import kr.co.nexters.winepick.R;
 
@@ -41,21 +43,49 @@ public class SurveyFragment extends Fragment {
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
-    }
+    }*/
+
+    private static final String ARG_CURRENT_STAGE = "currentStage";
+
+    private int currentStage;
+
+    TextView questionText;
+    TextView questionNum;
+    TextView totalNum;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.println(getArguments().getInt("currentStage"), "int", "int");
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            currentStage = getArguments().getInt("currentStage");
+            Log.isLoggable("data: ", currentStage);
         }
-    }*/
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_survey, container, false);
+        View view = inflater.inflate(R.layout.fragment_survey, container, false);
+        questionText = view.findViewById(R.id.survey_question_text);
+        questionNum = view.findViewById(R.id.current_survey_number_text);
+        totalNum = view.findViewById(R.id.all_survey_number_text);
+        return view;
+    }
+
+    public String answerClick(View view) {
+        switch (view.getId()) {
+            case R.id.survey_answer_A:
+                return "A";
+            case R.id.survey_answer_B:
+                return "B";
+        }
+        return "";
+    }
+
+    public void setData(String text, String num) {
+        questionText.setText(text);
+        questionNum.setText("0" + num);
+        totalNum.setText("0" + num + " / 09");
     }
 }

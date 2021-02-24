@@ -17,26 +17,39 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class SurveyActivity : AppCompatActivity() {
 
-    var survey: Survey? = null
-    var winePickService: WinePickService? = null
-
+    // fragment 초기화
     private var fragmentManager: FragmentManager? = null
     private var transaction: FragmentTransaction? = null
 
-    private var surveyFragment: SurveyFragment? = null
+    lateinit var surveyFragment: SurveyFragment
     private var sampleFragment: SampleFragment? = null
+
+    // 통신
+    var winePickService: WinePickService? = null
+    var survey: Survey? = null
+
+
+    // 설문 데이터 변경 관련
+    var currentStage: Int = 1
+    var type: String? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_survey)
-        survey = loadSurvey()
-        Log.i("Load Survey Success", survey.toString())
+        loadSurvey()
 
         fragmentManager = supportFragmentManager
-        surveyFragment = SurveyFragment()
-
+        surveyFragment = SurveyFragment().apply {
+            arguments = Bundle().apply {
+                putInt("currentStage", currentStage)
+            }
+        }
+        Log.isLoggable("화긴", currentStage)
         transaction = fragmentManager!!.beginTransaction()
-        transaction!!.replace(R.id.frameLayout, surveyFragment!!).commitAllowingStateLoss()
+        transaction!!.replace(R.id.frameLayout, surveyFragment!!)
+            .commitAllowingStateLoss()
     }
 
     fun btnClick(view: View) {
@@ -51,7 +64,8 @@ class SurveyActivity : AppCompatActivity() {
             .commitAllowingStateLoss()
     }
 
-    fun loadSurvey(): Survey? {
+    fun loadSurvey(): String {
+        var questionText: String = ""
         var retrofit = Retrofit.Builder()
             .baseUrl("http://ec2-3-35-107-29.ap-northeast-2.compute.amazonaws.com:8080/")
             .addConverterFactory(GsonConverterFactory.create())
@@ -65,10 +79,15 @@ class SurveyActivity : AppCompatActivity() {
             }
             override fun onResponse(call: Call<Survey>, response: Response<Survey>) {
                 survey = response.body()
-                Log.i("Connet Survey Success", survey.toString())
+                Log.i("Connect Survey Success", survey.toString())
+                Log.i("Connect Survey Success", survey!!.data.get(0).content)
+
+                surveyFragment!!.setData(
+                    survey!!.data.get(0).content, currentStage.toString()
+                )
             }
         })
-        return survey
+        return questionText
     }
 
 }

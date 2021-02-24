@@ -29,6 +29,7 @@
         android:layout_marginEnd="24dp"
         android:background="#00FFFFFF"
         android:padding="0dp"
+        android:onClick="kakaoLink"
         android:src="@drawable/share_20"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -349,6 +350,7 @@
                     android:layout_marginBottom="75dp"
                     android:layout_marginStart="24dp"
                     android:layout_marginEnd="24dp"
+                    android:onClick="initReSurveyNotiDialog"
                     app:layout_constraintTop_toBottomOf="@+id/recommend_move_button_linear1"
                     app:layout_constraintBottom_toTopOf="parent"
                     app:layout_constraintStart_toEndOf="parent"

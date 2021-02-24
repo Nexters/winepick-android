@@ -11,7 +11,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:lineSpacingExtra="0sp"
-        android:text="01"
         android:textColor="#000000"
         android:textSize="18dp"
         android:textStyle="normal"
@@ -38,8 +37,6 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="51dp"
         android:lineSpacingExtra="11sp"
-        android:text="오늘은 와인이 마시고 싶은 날이에요.
-친구랑 만나기로 했을 때 내 역할은?"
         android:textColor="#000000"
         android:textSize="19dp"
         android:textStyle="normal"

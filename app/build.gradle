@@ -28,10 +28,9 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
-
-        kotlinOptions {
-            jvmTarget = JavaVersion.VERSION_1_8
-        }
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
 
     testOptions {
@@ -112,6 +111,7 @@ dependencies {
     kapt "android.arch.lifecycle:compiler:1.1.1"
 
     implementation group: 'com.kakao.sdk', name: 'usermgmt', version: '1.30.0'
+    implementation group: 'com.kakao.sdk', name: 'kakaolink', version: '1.30.5'
 
     implementation "com.kakao.sdk:v2-user:2.3.0" // 카카오 로그인
     implementation "com.kakao.sdk:v2-talk:2.3.0" // 친구, 메시지(카카오톡)
