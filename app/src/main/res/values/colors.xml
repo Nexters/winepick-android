@@ -53,4 +53,7 @@
     <color name="search_filter_item_convenience_emart_24_selected">#FFCE51</color>
     <color name="search_filter_item_convenience_seven_eleven_selected">#008061</color>
 
+    <!-- loading animation -->
+    <color name="loading_animation_progressbar_solid">#C4C4C4</color>
+
 </resources>
