@@ -180,10 +180,6 @@ val authModule = module {
     single { AuthManager(get()) }
 }
 
-val kakaoModule = module {
-    single { KakaoLoginHelper(get(), get()) }
-}
-
 
 val moduleList = listOf(
     netModule,
@@ -192,6 +188,5 @@ val moduleList = listOf(
     dataSourceModule,
     localModule,
     apiModule,
-    authModule,
-    kakaoModule
+    authModule
 )
