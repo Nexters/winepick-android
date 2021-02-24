@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="title"
+            type="String" />
+
+        <variable
+            name="content"
+            type="String" />
+
+        <variable
+            name="btnLeftText"
+            type="String" />
+
+        <variable
+            name="btnRightText"
+            type="String" />
+    </data>
+
+    <!-- 사이즈가 고정된 View -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_confirm_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:background="@drawable/bg_home_white_15"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:layout_height="202dp"
+        tools:layout_width="241dp">
+
+        <TextView
+            android:id="@+id/tv_confirm_dialog_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="35dp"
+            android:includeFontPadding="false"
+            android:text="@{title}"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="로그인 하시겠습니까?" />
+
+        <TextView
+            android:id="@+id/tv_confirm_dialog_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="@{content}"
+            android:textColor="@color/black"
+            android:textSize="14dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_confirm_dialog_title"
+            tools:text="@string/login_warning_like" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <TextView
+                android:id="@+id/btn_confirm_dialog_left"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_login_warning_gray_10"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:paddingVertical="13dp"
+                android:text="@{btnLeftText}"
+                android:textColor="@color/colorGray82"
+                android:textSize="15dp"
+                tools:text="아니오" />
+
+            <TextView
+                android:id="@+id/btn_confirm_dialog_right"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="11dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_login_warning_black_10"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:paddingVertical="13dp"
+                android:text="@{btnRightText}"
+                android:textColor="@color/colorWhite"
+                android:textSize="15dp"
+                tools:text="네" />
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
