@@ -3,6 +3,7 @@ package kr.co.nexters.winepick.ui.home
 import android.content.Intent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.kakao.sdk.auth.LoginClient
 import kr.co.nexters.winepick.WinePickApplication
 import kr.co.nexters.winepick.constant.TestConstant.A
 import kr.co.nexters.winepick.constant.TestConstant.B
@@ -37,6 +38,9 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
     val isUser : LiveData<Boolean>
         get() = _isUser
 
+    private var _loginWarningDlg : MutableLiveData<Boolean> = MutableLiveData()
+    val loginWarningDlg : LiveData<Boolean> = _loginWarningDlg
+
 
     private var _keyword1 = MutableLiveData<String>()
     var keyword1 : LiveData<String> = _keyword1
@@ -49,27 +53,31 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
         _likecnt.value = 0
         _isTest.value = false
         _isUser.value = false
+        _loginWarningDlg.value = false
+
+    }
+    fun getUserLikes(){
         if (!auth.testType.isNullOrEmpty()) {
             _isTest.value = true
         }
         if (auth.token != "guest") {
             _isUser.value = true
+            repo.getUser(
+                    userId = auth.id,
+                    accessToken = auth.token,
+                    onSuccess = {
+                        _likecnt.value = it.likes
+                        if(it.personalityType != null) {
+                            setUserPersonalType()
+                        }
+                    },
+                    onFailure = {
+                    }
+            )
+        } else {
+            setUserPersonalType()
         }
 
-    }
-    fun getUserLikes(){
-        repo.getUser(
-            userId = auth.id,
-            accessToken = auth.token,
-            onSuccess = {
-                _likecnt.value = it.likes
-                if(it.personalityType != null) {
-                    setUserPersonalType()
-                }
-            },
-            onFailure = {
-            }
-        )
     }
 
 
@@ -101,7 +109,6 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
     }
 
     fun testClick() {
-        Intent()
         WinePickApplication.getGlobalApplicationContext().startActivity(Intent(WinePickApplication.appContext,SurveyActivity::class.java)
             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
     }
@@ -119,6 +126,8 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
                 )
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             )
+        } else {
+            _loginWarningDlg.value = true
         }
     }
     fun myTypeClick() {

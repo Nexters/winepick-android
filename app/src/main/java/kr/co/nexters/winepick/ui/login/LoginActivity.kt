@@ -56,15 +56,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(
                 authManager.testType = null
                 startActivity(HomeActivity::class, true)
             }
-
-            // TODO 검색화면을 볼 수 있도록 하기 위해 임시 구현된 로직 (배포 시에는 삭제한다)
-            var count = 0
-            tvAppName.setOnClickListener {
-                if (count++ > 10) {
-                    startActivity(SearchActivity::class, false, null)
-                    count = 0
-                }
-            }
         }
 
     }
