@@ -14,14 +14,11 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class LikeListActivity : BaseActivity<ActivityLikeListBinding>(
     R.layout.activity_like_list
 ) {
-    private val likeViewModel: LikeViewModel by viewModel<LikeViewModel>()
-    private val wineLikeAdpater: WineResultAdapter by lazy { WineResultAdapter(likeViewModel) }
+    private val wineLikeAdpater: WineResultAdapter by lazy { WineResultAdapter(viewModel) }
     override val viewModel: LikeViewModel by viewModel<LikeViewModel>()
-    private val authManager: AuthManager by inject()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.setVariable(BR.vm, viewModel)
-
         initLikeRecycer()
 
     }
@@ -29,13 +26,6 @@ class LikeListActivity : BaseActivity<ActivityLikeListBinding>(
     fun initLikeRecycer() {
         binding.rvLikeList.apply {
             adapter = wineLikeAdpater
-            addItemDecoration(VerticalItemDecorator(16))
         }
-        //TODO 좋아요 리사이클러뷰 data
-        viewModel.results.observe(this, { data ->
-            data?.let {
-
-            }
-        })
     }
 }

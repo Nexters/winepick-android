@@ -188,6 +188,7 @@ class SearchViewModel(
     override fun wineHeartClick(wineResult: WineResult) {
         // TODO. 검색 화면에서 좋아요 / 좋아요 취소 클릭 구현
         Timber.i("wineHeartClick search $wineResult")
+        addLike(wineResult.id!!)
     }
     /**
      * 좋아요 서버 통신 - addLike
