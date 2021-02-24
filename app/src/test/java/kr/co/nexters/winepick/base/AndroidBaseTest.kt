@@ -10,6 +10,7 @@ import io.mockk.unmockkStatic
 import kr.co.nexters.winepick.WinePickApplication
 import kr.co.nexters.winepick.data.repository.SearchRepository
 import kr.co.nexters.winepick.data.repository.TestRepository
+import kr.co.nexters.winepick.data.repository.WineRepository
 import kr.co.nexters.winepick.data.source.WineDataSource
 import kr.co.nexters.winepick.di.moduleList
 import kr.co.nexters.winepick.util.SharedPrefs
@@ -32,6 +33,7 @@ import org.robolectric.annotation.Config
 abstract class AndroidBaseTest : KoinTest {
     val testRepository: TestRepository by inject()
     val searchRepository: SearchRepository by inject()
+    val wineRepository: WineRepository by inject()
 
     val wineDataSource: WineDataSource by inject()
 
