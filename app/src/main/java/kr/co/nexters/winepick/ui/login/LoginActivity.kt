@@ -53,7 +53,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(
             }
             tvGuest.setOnClickListener {
                 authManager.token = "guest"
-                authManager.testType = null
+                authManager.testType = ""
                 startActivity(HomeActivity::class, true)
             }
         }

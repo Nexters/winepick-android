@@ -45,12 +45,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.setVariable(BR.vm, viewModel)
-        binding.vm!!.getUserLikes()
-
-        //TODO test를 위해 임의로 만들어놈
-        if (authManager.testType != null) {
-            binding.vm!!.setUserPersonalType()
-        }
 
         viewModel.loginWarningDlg.observe(this, Observer {
             if(it) {
@@ -85,11 +79,4 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         super.onResume()
         viewModel.onResume()
     }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-    }
-
-
 }

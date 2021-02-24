@@ -5,6 +5,8 @@ import android.graphics.Outline
 import android.view.View
 import android.view.ViewOutlineProvider
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
+import androidx.annotation.IdRes
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.view.isInvisible
 import androidx.core.widget.addTextChangedListener
@@ -85,3 +87,4 @@ fun AppCompatEditText.setTextWatcher(
 fun View.setSelected(newIsSelected: Boolean) {
     this.isSelected = newIsSelected
 }
+

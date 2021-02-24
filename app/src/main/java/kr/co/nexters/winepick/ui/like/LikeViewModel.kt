@@ -21,9 +21,13 @@ class LikeViewModel(private val repo: WinePickRepository, private val auth: Auth
     private var _like_num = MutableLiveData<Int>()
     var likeNum: LiveData<Int> = _like_num
 
+    private var _backButton = MutableLiveData<Boolean>()
+    var backButton : LiveData<Boolean> = _backButton
+
     /** 생성자 */
     init {
         _like_num.value = 0
+        _backButton.value = false
         getLikeWine()
     }
 
@@ -53,6 +57,9 @@ class LikeViewModel(private val repo: WinePickRepository, private val auth: Auth
                 _results.value = null
             }
         )
+    }
+    fun backClick() {
+        _backButton.value = true
     }
 
     /** UI 의 onDestroy 개념으로 생각하면 편할듯 */

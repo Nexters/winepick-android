@@ -38,9 +38,9 @@ class AuthManager(private val sharedPrefs: SharedPrefs) {
             sharedPrefs[EXPIRE_KEY] = value
         }
 
-    var testType: String?
+    var testType: String
         get() {
-            return sharedPrefs[TEST, null]
+            return sharedPrefs[TEST, ""] ?: ""
         }
         set(value) {
             sharedPrefs[TEST] = value

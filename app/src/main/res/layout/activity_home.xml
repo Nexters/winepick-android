@@ -88,7 +88,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/cl_home_type"
                 android:layout_marginTop="6dp"
-                android:onClick="@{() -> vm.myTypeClick()}"
+                app:onSingleClick="@{vm::myTypeClick}"
                 app:layout_constraintTop_toBottomOf="@id/tv_home_title"
                 app:layout_constraintStart_toStartOf="parent">
 
@@ -126,6 +126,7 @@
                 android:id="@+id/iv_home_type"
                 app:layout_constraintDimensionRatio="1:1"
                 android:layout_marginTop="12dp"
+                app:testImage = "@{vm.testImg}"
                 app:layout_constraintTop_toBottomOf="@id/cl_home_type"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
@@ -193,7 +194,7 @@
             android:textColor="@color/white"
             android:textSize="16dp"
             android:gravity="center"
-            android:onClick="@{() -> vm.searchClick()}"
+            app:onSingleClick="@{vm::searchClick}"
             app:layout_constraintDimensionRatio="5:1"
             app:layout_constrainedWidth="true"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -208,7 +209,7 @@
             android:layout_height="0dp"
             android:clipToPadding="false"
             android:elevation="6dp"
-            android:onClick="@{() -> vm.likeClick()}"
+            app:onSingleClick="@{vm::likeClick}"
             android:background="@drawable/bg_home_white_15"
             app:layout_constraintBottom_toBottomOf="@id/tv_home_search"
             app:layout_constraintDimensionRatio="1:1"
@@ -220,7 +221,7 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="21dp"
-                android:src="@drawable/like_button"
+                android:src="@drawable/like_large"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

@@ -23,7 +23,6 @@ import kr.co.nexters.winepick.util.SharedPrefs
 import okhttp3.Cache
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
-import kr.co.nexters.winepick.util.KakaoLoginHelper
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.androidx.viewmodel.dsl.viewModel
