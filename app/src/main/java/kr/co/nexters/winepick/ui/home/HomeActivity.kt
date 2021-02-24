@@ -28,18 +28,18 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         }
 
         ConfirmDialog(
-            title = getString(R.string.login_warning_title),
-            content = getString(R.string.login_warning_like),
-            leftText = getString(R.string.login_warning_btn_left_text),
-            leftClickListener = {
-                Toast.makeText(this, "왼쪽 버튼을 클릭한다.", Toast.LENGTH_SHORT).show()
-            },
-            rightText = getString(R.string.login_warning_btn_right_text),
-            rightClickListener = {
-                Toast.makeText(this, "오른쪽 버튼을 클릭한다.", Toast.LENGTH_SHORT).show()
-                it.dismiss()
-            },
-            cancelable = false
+                title = getString(R.string.login_warning_title),
+                content = getString(R.string.login_warning_like),
+                leftText = getString(R.string.login_warning_btn_left_text),
+                leftClickListener = {
+                    Toast.makeText(this, "왼쪽 버튼을 클릭한다.", Toast.LENGTH_SHORT).show()
+                },
+                rightText = getString(R.string.login_warning_btn_right_text),
+                rightClickListener = {
+                    Toast.makeText(this, "오른쪽 버튼을 클릭한다.", Toast.LENGTH_SHORT).show()
+                    it.dismiss()
+                },
+                cancelable = false
         ).show(supportFragmentManager, "LoginWarningDialog")
     }
 

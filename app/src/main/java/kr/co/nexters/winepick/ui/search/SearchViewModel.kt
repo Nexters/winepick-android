@@ -16,7 +16,9 @@ import kr.co.nexters.winepick.data.model.LikeWine
 import kr.co.nexters.winepick.data.model.local.SearchFilterGroup
 import kr.co.nexters.winepick.data.model.remote.wine.WineResult
 import kr.co.nexters.winepick.data.repository.SearchRepository
+import kr.co.nexters.winepick.data.repository.WinePickRepository
 import kr.co.nexters.winepick.data.repository.WineRepository
+import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.WineResultViewModel
 import timber.log.Timber
 
@@ -27,11 +29,9 @@ import timber.log.Timber
  * @since v1.0.0 / 2021.02.06
  */
 class SearchViewModel(
-    private val searchRepository: SearchRepository, private val wineRepository: WineRepository
+        private val searchRepository: SearchRepository, private val wineRepository: WineRepository,
+        private val winePickRepository: WinePickRepository, private val authManager: AuthManager
 ) : WineResultViewModel() {
-    private val searchRepository: SearchRepository, private val wineRepository: WineRepository,
-    private val winePickRepository: WinePickRepository, private val authManager: AuthManager
-) : BaseViewModel() {
     val tag = this::class.java.canonicalName
 
     /** 검색 창 입력 내용 */

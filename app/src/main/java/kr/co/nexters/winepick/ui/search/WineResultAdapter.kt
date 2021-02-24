@@ -13,8 +13,6 @@ import kr.co.nexters.winepick.data.model.remote.wine.WineResult
 import kr.co.nexters.winepick.databinding.ItemWineResultBinding
 import kr.co.nexters.winepick.ui.base.WineResultViewModel
 import kr.co.nexters.winepick.util.setOnSingleClickListener
-import kr.co.nexters.winepick.databinding.ItemSearchResultBinding
-import kr.co.nexters.winepick.util.setOnSingleClickListener
 
 /**
  * 검색 결과 아이템 recyclerview adapter
