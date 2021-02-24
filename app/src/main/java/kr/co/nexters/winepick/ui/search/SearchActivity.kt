@@ -1,7 +1,10 @@
 package kr.co.nexters.winepick.ui.search
 
 import android.content.Intent
+import android.graphics.PorterDuff
 import android.os.Bundle
+import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.coroutines.launch
 import kr.co.nexters.winepick.BR
@@ -11,11 +14,7 @@ import kr.co.nexters.winepick.databinding.ActivitySearchBinding
 import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.ActivityResult
 import kr.co.nexters.winepick.ui.base.BaseActivity
-import kr.co.nexters.winepick.ui.home.HomeViewModel
-import kr.co.nexters.winepick.util.EndlessScrollListener
-import kr.co.nexters.winepick.util.hideKeyboard
-import kr.co.nexters.winepick.util.setOnSingleClickListener
-import kr.co.nexters.winepick.util.toast
+import kr.co.nexters.winepick.util.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
@@ -36,7 +35,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
         binding.apply {
             btnSearchBack.setOnSingleClickListener { onBackPressed() }
 
-            rvResults.adapter = SearchResultAdapter(viewModel)
+            rvResults.adapter = WineResultAdapter(viewModel)
             rvResults.layoutManager?.let {
                 rvResults.addOnScrollListener(object : EndlessScrollListener(it, 3) {
                     override fun onLoadMore(page: Int) {
@@ -72,7 +71,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
 
     fun subscribeUI() {
         viewModel.results.observe(this, {
-
+            Timber.i("$it")
         })
 
         viewModel.searchFrontPage.observe(this, {
@@ -112,5 +111,12 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
                 else -> Timber.i("SearchAction.NONE")
             }
         }
+        viewModel.toastMessage.observe(this, Observer {
+            if(it) {
+                val customToast: Toast = Toast(this)
+                customToast.drawLikeToast(this)
+            }
+        })
     }
+
 }

@@ -2,7 +2,7 @@ package kr.co.nexters.winepick.ui.login
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import kr.co.nexters.winepick.data.model.UserData
+import kr.co.nexters.winepick.data.model.AccessTokenData
 import kr.co.nexters.winepick.data.repository.WinePickRepository
 import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.BaseViewModel
@@ -24,7 +24,7 @@ class LoginViewModel(private val repo : WinePickRepository, private val authMana
     /** 카카오 로그인 서버 통신 */
     fun addUserInfo (token : String) {
         repo.postUser(
-            data = UserData(token),
+            data = AccessTokenData(token),
             onSuccess = {
                 authManager.token = it.accessToken.toString()
                 authManager.autoLogin = true

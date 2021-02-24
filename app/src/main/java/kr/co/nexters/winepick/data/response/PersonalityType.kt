@@ -2,15 +2,17 @@ package kr.co.nexters.winepick.data.response
 
 import com.google.gson.annotations.SerializedName
 
+/**
+ * 와인 테스트 결과 Data
+ */
 data class PersonalityType(
     /** A,B,C ... **/
-    @SerializedName("answerType")
+    @SerializedName("personalityType")
     val answerType : String,
-    /** 고양이,강아지, ... **/
-    @SerializedName("personality")
-    val personName : String,
+    /** 센치한 도도형 **/
     @SerializedName("subDesc")
     val personDetail : String,
+    /** 설명 **/
     @SerializedName("description")
     val description : String,
     @SerializedName("keyword1")

@@ -1,19 +1,25 @@
 package kr.co.nexters.winepick.ui.search
 
 import android.text.Editable
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import io.reactivex.rxjava3.subjects.PublishSubject
 import kotlinx.coroutines.launch
 import kr.co.nexters.winepick.R
+import kr.co.nexters.winepick.WinePickApplication
+import kr.co.nexters.winepick.data.model.LikeWine
 import kr.co.nexters.winepick.data.model.local.SearchFilterGroup
 import kr.co.nexters.winepick.data.model.remote.wine.WineResult
 import kr.co.nexters.winepick.data.repository.SearchRepository
+import kr.co.nexters.winepick.data.repository.WinePickRepository
 import kr.co.nexters.winepick.data.repository.WineRepository
 import kr.co.nexters.winepick.di.AuthManager
-import kr.co.nexters.winepick.ui.base.BaseViewModel
+import kr.co.nexters.winepick.ui.base.WineResultViewModel
 import timber.log.Timber
 
 /**
@@ -22,7 +28,10 @@ import timber.log.Timber
  * @author ricky
  * @since v1.0.0 / 2021.02.06
  */
-class SearchViewModel(private val auth: AuthManager) : BaseViewModel() {
+class SearchViewModel(
+        private val searchRepository: SearchRepository, private val wineRepository: WineRepository,
+        private val winePickRepository: WinePickRepository, private val authManager: AuthManager
+) : WineResultViewModel() {
     val tag = this::class.java.canonicalName
 
     /** 검색 창 입력 내용 */
@@ -32,18 +41,18 @@ class SearchViewModel(private val auth: AuthManager) : BaseViewModel() {
     private val _filterNum = MutableLiveData(1)
     val filterNum: LiveData<Int> = _filterNum
 
-    /** 검색 결과 list */
-    private val _results = MutableLiveData<List<WineResult>>(listOf())
-    val results: LiveData<List<WineResult>> = _results
-
     /** 검색 목록 list */
-    val currents: LiveData<List<String>> = SearchRepository.styledWineInfos
+    val currents: LiveData<List<String>> = searchRepository.styledWineInfos
 
     /** 가장 맨 앞에 보여야 할 화면. 보여야 할 내용은 [SearchFront] 참고 */
-    private val _searchFrontPage = MutableLiveData<SearchFront>(SearchFront.DEFAULT)
+    private val _searchFrontPage = MutableLiveData(SearchFront.DEFAULT)
     val searchFrontPage: LiveData<SearchFront> = _searchFrontPage
 
     private var pageNumber: Int = 0
+
+    /** 좋아요 토스트 **/
+    val _toastMessage = MutableLiveData<Boolean>()
+    var toastMessage : LiveData<Boolean> = _toastMessage
 
     /**
      * 검색 화면에서 진행하는 비즈니스 로직
@@ -59,7 +68,7 @@ class SearchViewModel(private val auth: AuthManager) : BaseViewModel() {
     override fun onResume() {
         super.onResume()
         // 도수의 경우 2개로 인식되므로 -1 처리를 해준다.
-        _filterNum.value = SearchRepository.userSearchFilterItems.filter { it.selected }.size - 1
+        _filterNum.value = searchRepository.userSearchFilterItems.filter { it.selected }.size - 1
     }
 
     /**
@@ -104,7 +113,7 @@ class SearchViewModel(private val auth: AuthManager) : BaseViewModel() {
             Timber.i(tag, "${SearchFront.RECOMMEND}")
             _searchFrontPage.value = SearchFront.RECOMMEND
         } else {
-            viewModelScope.launch { SearchRepository.getWineInfosLikeQuery(s.toString()) }
+            viewModelScope.launch { searchRepository.getWineInfosLikeQuery(s.toString()) }
 
             Timber.i(tag, "${SearchFront.CURRENT}")
             _searchFrontPage.value = SearchFront.CURRENT
@@ -129,24 +138,23 @@ class SearchViewModel(private val auth: AuthManager) : BaseViewModel() {
         }
 
         viewModelScope.launch {
-            SearchRepository.getWineInfosLikeQuery(queryValue)
+            searchRepository.getWineInfosLikeQuery(queryValue)
 
             this@SearchViewModel.pageNumber = pageNumber
 
             val contents =
-                SearchRepository.getSearchFilters<Pair<String, String>>(SearchFilterGroup.CONTENT)
-            val type = SearchRepository.getSearchFilters<String>(SearchFilterGroup.TYPE)
-            val food = SearchRepository.getSearchFilters<String>(SearchFilterGroup.FOOD)
-            val store = SearchRepository.getSearchFilters<String>(SearchFilterGroup.CONVENIENCE)
-            val tastes = SearchRepository.getSearchFilters<List<String>>(SearchFilterGroup.TASTE)
-            val events = SearchRepository.getSearchFilters<List<String>>(SearchFilterGroup.EVENT)
+                searchRepository.getSearchFilters<Pair<String, String>>(SearchFilterGroup.CONTENT)
+            val type = searchRepository.getSearchFilters<String>(SearchFilterGroup.TYPE)
+            val food = searchRepository.getSearchFilters<String>(SearchFilterGroup.FOOD)
+            val store = searchRepository.getSearchFilters<String>(SearchFilterGroup.CONVENIENCE)
+            val tastes = searchRepository.getSearchFilters<List<String>>(SearchFilterGroup.TASTE)
+            val events = searchRepository.getSearchFilters<List<String>>(SearchFilterGroup.EVENT)
             val keywords = mutableListOf("").apply {
                 tastes?.let { addAll(it) }
                 events?.let { addAll(it) }
             }
 
-            _results.value = WineRepository.getWinesFilter(
-                accessToken = auth.token,
+            _results.value = wineRepository.getWinesFilter(
                 wineName = queryValue,
                 category = type,
                 food = food,
@@ -172,19 +180,41 @@ class SearchViewModel(private val auth: AuthManager) : BaseViewModel() {
         _searchAction.onNext(SearchAction.EDIT_FILTER)
     }
 
+    override fun wineItemViewClick(wineResult: WineResult) {
+        // TODO. 검색 화면에서 아이템 클릭 구현
+        Timber.i("wineItemViewClick search $wineResult")
+    }
+
+    override fun wineHeartClick(wineResult: WineResult) {
+        // TODO. 검색 화면에서 좋아요 / 좋아요 취소 클릭 구현
+        Timber.i("wineHeartClick search $wineResult")
+        addLike(wineResult.id!!)
+    }
     /**
-     * [검색 결과 아이템 화면][R.layout.item_search_result] 에서 하트 버튼을 누를 경우 동작하는 로직
-     *
-     * @param wineResult 검색결과 아이템이 가지고 있는 [검색 결과 아이템 데이터][WineResult] 정보
+     * 좋아요 서버 통신 - addLike
      */
-    fun searchResultHeartClick(wineResult: WineResult) {
-        // TODO 좋아요 추가/취소 구현하기
+    fun addLike(wineId : Int) {
+        winePickRepository.postLike(
+                data = LikeWine(
+                        userId = authManager.id,
+                        wineId = wineId
+                ),
+                onSuccess = {
+                    Timber.d("와인 저장 성공")
+                    _toastMessage.value = true
+
+                },
+                onFailure = {
+
+                }
+        )
+
     }
 
     override fun onCleared() {
         super.onCleared()
         pageNumber = 0
-        SearchRepository.filterItemsClear()
+        searchRepository.filterItemsClear()
     }
 }
 

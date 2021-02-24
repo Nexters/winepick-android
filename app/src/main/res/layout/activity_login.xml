@@ -24,9 +24,9 @@
             android:fontFamily="@font/montserrat_extrabold"
             android:textSize="36dp"
             android:textColor="@color/black"
-            app:layout_constraintVertical_bias="0.33"
+
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tv_app_explain"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 

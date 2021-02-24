@@ -1,14 +1,12 @@
 package kr.co.nexters.winepick.data.repository
 
 
-import com.kakao.auth.authorization.accesstoken.AccessToken
+import kr.co.nexters.winepick.data.model.AccessTokenData
 import kr.co.nexters.winepick.data.model.LikeWine
 import kr.co.nexters.winepick.data.model.TokenInfo
-import kr.co.nexters.winepick.data.model.UserData
-import kr.co.nexters.winepick.data.model.WineList
+import kr.co.nexters.winepick.data.model.remote.wine.WineResult
 import kr.co.nexters.winepick.data.response.PersonalityType
-import kr.co.nexters.winepick.data.response.getUserData
-import kr.co.nexters.winepick.data.response.postUserData
+import kr.co.nexters.winepick.data.response.UserData
 import kr.co.nexters.winepick.network.WinePickService
 import kr.co.nexters.winepick.util.safeEnqueue
 
@@ -40,7 +38,7 @@ class WinePickRepository(private val api: WinePickService) {
 
     fun getLikeWineList(
         userId : Int,
-        onSuccess: (List<WineList>) -> Unit,
+        onSuccess: (List<WineResult>) -> Unit,
         onFailure: () -> Unit
     ) {
         api.getLikesWineList(userId).safeEnqueue (
@@ -64,9 +62,9 @@ class WinePickRepository(private val api: WinePickService) {
     }
 
     fun postUser(
-        data : UserData,
-        onSuccess: (postUserData) -> Unit,
-        onFailure: () -> Unit
+            data : AccessTokenData,
+            onSuccess: (UserData) -> Unit,
+            onFailure: () -> Unit
     ) {
         api.postUser(data).safeEnqueue(
             onSuccess = { onSuccess(it!!.result!!) },
@@ -76,11 +74,12 @@ class WinePickRepository(private val api: WinePickService) {
     }
 
     fun getUser(
-        accessToken: String,
-        onSuccess: (getUserData) -> Unit,
-        onFailure: () -> Unit
+            userId: Int,
+            accessToken: String,
+            onSuccess: (UserData) -> Unit,
+            onFailure: () -> Unit
     ) {
-        api.getUser(accessToken).safeEnqueue(
+        api.getUser(userId, accessToken).safeEnqueue(
             onSuccess = { onSuccess(it!!.result!!) },
             onFailure = { onFailure() },
             onError = { onFailure() }

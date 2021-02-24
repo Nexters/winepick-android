@@ -23,6 +23,8 @@
     <color name="colorGrayf9">#f9f9f9</color>
 
 
+    <!-- like -->
+    <color name="colorBlack66">#66000000</color>
 
     <!-- survey -->
     <color name="colorWhite">#FFFFFF</color>
@@ -50,5 +52,8 @@
     <color name="search_filter_item_convenience_gs_25_selected">#2ABADA</color>
     <color name="search_filter_item_convenience_emart_24_selected">#FFCE51</color>
     <color name="search_filter_item_convenience_seven_eleven_selected">#008061</color>
+
+    <!-- loading animation -->
+    <color name="loading_animation_progressbar_solid">#C4C4C4</color>
 
 </resources>

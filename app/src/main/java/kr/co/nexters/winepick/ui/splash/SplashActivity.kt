@@ -37,6 +37,9 @@ class SplashActivity : AppCompatActivity() {
          * 토큰 처리
          */
         if (authManager.autoLogin) {
+            authManager.apply {
+                this.testType = "A"
+            }
            startActivity(HomeActivity::class, isFinish = true)
         } else {
            startActivity(LoginActivity::class, isFinish = true)
@@ -57,6 +60,6 @@ class SplashActivity : AppCompatActivity() {
 //        }
     }
     companion object {
-        private const val DURATION : Long = 2000
+        private const val DURATION : Long = 1500
     }
 }

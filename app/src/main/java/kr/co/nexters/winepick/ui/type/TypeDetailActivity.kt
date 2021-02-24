@@ -36,8 +36,8 @@ class TypeDetailActivity : BaseActivity<ActivityTypeDetailBinding>(
             adapter = searchRecycler
             addItemDecoration(VerticalItemDecorator(16))
         }
-        if (authManager.recent_search1 != null && !authManager.recent_search1.isNullOrBlank() ) {
-            searchRecycler.initData(listOf<String>(authManager.recent_search1!!, authManager.recent_search2!!))
+        if (authManager.recentSearch1 != null && !authManager.recentSearch1.isNullOrBlank() ) {
+            searchRecycler.initData(listOf<String>(authManager.recentSearch1!!, authManager.recentSearch2!!))
         }
 
 

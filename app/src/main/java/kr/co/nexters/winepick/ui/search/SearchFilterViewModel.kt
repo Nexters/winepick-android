@@ -14,7 +14,7 @@ import timber.log.Timber
  * @author ricky
  * @since v1.0.0 / 2021.02.06
  */
-class SearchFilterViewModel : BaseViewModel() {
+class SearchFilterViewModel(private val searchRepository: SearchRepository) : BaseViewModel() {
     /**
      * 필터 화면을 실행 시 맨 처음에 보여지는 필터 아이템 데이터 목록 LiveData
      *
@@ -39,8 +39,8 @@ class SearchFilterViewModel : BaseViewModel() {
 
     init {
         _prevFilterItems.value = mutableListOf<SearchFilterItem>()
-            .apply { addAll(SearchRepository.userSearchFilterItems) }
-        _changedFilterItems.addAll(SearchRepository.userSearchFilterItems)
+            .apply { addAll(searchRepository.userSearchFilterItems) }
+        _changedFilterItems.addAll(searchRepository.userSearchFilterItems)
     }
 
     /** 클릭으로 인해 변경된, 필터 아이템 내용을 반영한다. */
@@ -62,7 +62,7 @@ class SearchFilterViewModel : BaseViewModel() {
 
         val newUpdatedItem = needToUpdateItem.copy(selected = !needToUpdateItem.selected)
 
-        if (SearchRepository.updateFilterItems(newUpdatedItem, prevUpdatedItem)) {
+        if (searchRepository.updateFilterItems(newUpdatedItem, prevUpdatedItem)) {
             logChangedFilterItems(newUpdatedItem)
             _changeSearchFilterItem.value = newUpdatedItem
             prevUpdatedItem?.let {
@@ -81,7 +81,7 @@ class SearchFilterViewModel : BaseViewModel() {
 
         val newUpdatedItem = needToReplaceItem.copy(value = newSliderValue)
 
-        if (SearchRepository.updateFilterItems(newUpdatedItem)) {
+        if (searchRepository.updateFilterItems(newUpdatedItem)) {
             logChangedFilterItems(newUpdatedItem)
             _changeSearchFilterItem.value = newUpdatedItem
         }
@@ -116,7 +116,7 @@ class SearchFilterViewModel : BaseViewModel() {
         // 여기까지 왔으면 변경된 내용이 없거나, 변경된 내역을 기억하면 안되는 것이므로
         // SearchRepository 에 저장되어 있는 내용도 롤백시킨다.
         // (prevFilterItems 은 null 일 수가 없다.)
-        SearchRepository.rollbackFilterItems(prevFilterItems.value!!)
+        searchRepository.rollbackFilterItems(prevFilterItems.value!!)
 
         return needToUpdate
     }

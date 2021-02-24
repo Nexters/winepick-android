@@ -186,7 +186,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:listitem="@layout/item_search_result" />
+                tools:listitem="@layout/item_wine_result" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_result_empty"
