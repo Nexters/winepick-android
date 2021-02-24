@@ -2,13 +2,16 @@ package kr.co.nexters.winepick.ui.search
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.nexters.winepick.R
+import kr.co.nexters.winepick.WinePickApplication
 import kr.co.nexters.winepick.data.model.remote.wine.WineResult
 import kr.co.nexters.winepick.databinding.ItemSearchResultBinding
+import kr.co.nexters.winepick.util.setOnSingleClickListener
 
 /**
  * 검색 결과 아이템 recyclerview adapter
@@ -22,7 +25,13 @@ class SearchResultAdapter(val vm: SearchViewModel) :
         val binding: ItemSearchResultBinding =
             DataBindingUtil.inflate(layoutInflater, R.layout.item_search_result, parent, false)
 
-        return SearchResultViewHolder(binding)
+        return SearchResultViewHolder(binding).apply {
+            binding.btnSearchResultHeart.setOnSingleClickListener {
+                vm.addLike(binding.searchResult!!.id!!)
+                binding.btnSearchResultHeart.setBackgroundResource(R.drawable.like_success)
+
+            }
+        }
     }
 
     override fun onBindViewHolder(holder: SearchResultViewHolder, position: Int) {

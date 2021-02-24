@@ -65,13 +65,21 @@ val netModule = module {
      * 커스텀 interceptor
      * Firebase Crashlytic 로깅 로직을 넣을 예정이며 카카오 token 체크가 필요할 시 아래 함수를 활용한다.
      */
-    fun provideWinePickInterceptor(): Interceptor {
+    fun provideWinePickInterceptor(authManager: AuthManager): Interceptor {
         return Interceptor { chain: Interceptor.Chain ->
             // wine/filter 인 경우, "?" 가 인코딩 되어있는지 확인 후 인코딩 풀어주기
             val request = chain.request()
             var newUrl = request.url.toString()
             if (newUrl.contains("v2/api/wine/filter"))
                 newUrl = newUrl.replace("%3F", "?")
+
+            //like 통신의 경우 accessToken header로 넣어주기
+            if(newUrl.contains("v2/api/like")) {
+                return@Interceptor chain.proceed(chain.request().newBuilder().apply {
+                    addHeader("Authorization",authManager.token)
+                    url(newUrl)
+                }.build())
+            }
 
             val builder = chain.request().newBuilder()
                 .url(newUrl)
@@ -102,7 +110,7 @@ val netModule = module {
     }
 
     single { provideOkHttpCache() }
-    single { provideWinePickInterceptor() }
+    single { provideWinePickInterceptor(get()) }
     single { provideHttpClient(get(), get()) }
     single { provideRetrofit(get()) }
 }
@@ -153,7 +161,7 @@ val viewModelModule = module {
     viewModel { HomeViewModel(get(), get()) }
     viewModel { TypeDetailModel(get(), get()) }
     viewModel { LikeViewModel(get(), get()) }
-    viewModel { SearchViewModel(get(), get()) }
+    viewModel { SearchViewModel(get(), get(),get(), get()) }
     viewModel { SearchFilterViewModel(get()) }
 }
 

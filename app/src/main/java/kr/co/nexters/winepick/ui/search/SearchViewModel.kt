@@ -1,13 +1,18 @@
 package kr.co.nexters.winepick.ui.search
 
 import android.text.Editable
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import io.reactivex.rxjava3.subjects.PublishSubject
 import kotlinx.coroutines.launch
 import kr.co.nexters.winepick.R
+import kr.co.nexters.winepick.WinePickApplication
+import kr.co.nexters.winepick.data.model.LikeWine
 import kr.co.nexters.winepick.data.model.local.SearchFilterGroup
 import kr.co.nexters.winepick.data.model.remote.wine.WineResult
 import kr.co.nexters.winepick.data.repository.SearchRepository
@@ -24,7 +29,8 @@ import timber.log.Timber
  * @since v1.0.0 / 2021.02.06
  */
 class SearchViewModel(
-    private val searchRepository: SearchRepository, private val wineRepository: WineRepository
+    private val searchRepository: SearchRepository, private val wineRepository: WineRepository,
+    private val winePickRepository: WinePickRepository, private val authManager: AuthManager
 ) : BaseViewModel() {
     val tag = this::class.java.canonicalName
 
@@ -47,6 +53,10 @@ class SearchViewModel(
     val searchFrontPage: LiveData<SearchFront> = _searchFrontPage
 
     private var pageNumber: Int = 0
+
+    /** 좋아요 토스트 **/
+    val _toastMessage = MutableLiveData<Boolean>()
+    var toastMessage : LiveData<Boolean> = _toastMessage
 
     /**
      * 검색 화면에서 진행하는 비즈니스 로직
@@ -181,6 +191,27 @@ class SearchViewModel(
      */
     fun searchResultHeartClick(wineResult: WineResult) {
         // TODO 좋아요 추가/취소 구현하기
+    }
+
+    /**
+     * 좋아요 서버 통신 - addLike
+     */
+    fun addLike(wineId : Int) {
+        winePickRepository.postLike(
+                data = LikeWine(
+                        userId = authManager.id,
+                        wineId = wineId
+                ),
+                onSuccess = {
+                    Timber.d("와인 저장 성공")
+                    _toastMessage.value = true
+
+                },
+                onFailure = {
+
+                }
+        )
+
     }
 
     override fun onCleared() {

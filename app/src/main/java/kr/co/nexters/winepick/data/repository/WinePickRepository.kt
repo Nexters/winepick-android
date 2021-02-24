@@ -74,11 +74,12 @@ class WinePickRepository(private val api: WinePickService) {
     }
 
     fun getUser(
+            userId: Int,
             accessToken: String,
             onSuccess: (UserData) -> Unit,
             onFailure: () -> Unit
     ) {
-        api.getUser(accessToken).safeEnqueue(
+        api.getUser(userId, accessToken).safeEnqueue(
             onSuccess = { onSuccess(it!!.result!!) },
             onFailure = { onFailure() },
             onError = { onFailure() }

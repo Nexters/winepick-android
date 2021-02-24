@@ -5,12 +5,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:padding="24dp"
+    android:id="@+id/cl_like"
     android:background="@drawable/bg_home_white_15">
 
     <ImageView
         android:id="@+id/iv_dialog_like"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:src="@drawable/img_like_toast"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,7 +22,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="좋아요한 와인에\n담겼어요!"
+        android:text="@string/like_add"
         android:textSize="14dp"
         android:gravity="center"
         android:layout_marginTop="16dp"

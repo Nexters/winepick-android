@@ -59,6 +59,7 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
     }
     fun getUserLikes(){
         repo.getUser(
+            userId = auth.id,
             accessToken = auth.token,
             onSuccess = {
                 _likecnt.value = it.likes
@@ -75,7 +76,7 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
 
     fun setUserPersonalType() {
         return when(auth.testType) {
-            "A" -> {getUserType(A)}
+            "A" -> {getUserType(A) }
             "B" -> {getUserType(B)}
             "C" -> {getUserType(C)}
             "D" -> {getUserType(D)}
@@ -86,6 +87,7 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
         }
     }
     fun getUserType(resultId : Int) {
+        Timber.e("${auth.testType}")
         repo.getResult(
             resultId = resultId,
             onSuccess = {
@@ -131,9 +133,7 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
 
     override fun onResume() {
         super.onResume()
-        Timber.e("Resume!!")
         getUserLikes()
-
     }
 
 }

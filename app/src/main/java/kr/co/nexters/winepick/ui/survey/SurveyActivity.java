@@ -10,12 +10,17 @@ import kr.co.nexters.winepick.R;
 import kr.co.nexters.winepick.data.repository.WinePickRepository;
 import kr.co.nexters.winepick.data.repository.WineRepository;
 import kr.co.nexters.winepick.di.AuthManager;
+import kr.co.nexters.winepick.util.SharedPrefs;
+import timber.log.Timber;
 
 public class SurveyActivity extends FragmentActivity {
 
     SurveyFragment mainFragment;
     ScreenSlidePageFragment subFragment;
-    private final AuthManager authManager = KoinJavaComponent.inject(AuthManager.class).getValue();
+//    private final AuthManager authManager = KoinJavaComponent.inject(AuthManager.class).getValue();
+
+    private final SharedPrefs sharedPrefs = new SharedPrefs();
+    private final AuthManager authManager = new AuthManager(sharedPrefs);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +37,7 @@ public class SurveyActivity extends FragmentActivity {
         authManager.setTestType("A");
         authManager.setRecentSearch1("최근검색어1");
         authManager.setRecentSearch2("최근검색어2");
+        Timber.e("Survey - authTestType "+authManager.getTestType());
     }
 
     public void onFragmentChange(int fragmentNum) {

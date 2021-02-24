@@ -5,6 +5,7 @@ import kr.co.nexters.winepick.data.model.remote.wine.WineResult
 import kr.co.nexters.winepick.data.model.remote.wine.WinesResult
 import kr.co.nexters.winepick.data.response.PersonalityType
 import kr.co.nexters.winepick.data.response.UserData
+import kr.co.nexters.winepick.di.authModule
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -79,8 +80,9 @@ interface WinePickService {
         @Body data: AccessTokenData
     ): Call<WinePickResponse<UserData>>
 
-    @GET("v2/api/user/me/{accessToken}")
+    @GET("v2/api/user/{userId}/{accessToken}")
     fun getUser(
+        @Path("userId") userId: Int,
         @Path("accessToken") accessToken: String
     ): Call<WinePickResponse<UserData>>
 
