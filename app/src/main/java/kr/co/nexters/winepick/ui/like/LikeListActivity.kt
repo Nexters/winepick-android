@@ -22,9 +22,7 @@ class LikeListActivity : BaseActivity<ActivityLikeListBinding>(
         super.onCreate(savedInstanceState)
         binding.setVariable(BR.vm, viewModel)
         viewModel.backButton.observe(this, {
-            if (it) {
-               finish()
-            }
+            if (it) finish()
         })
         initLikeRecycer()
 

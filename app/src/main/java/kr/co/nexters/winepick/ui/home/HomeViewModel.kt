@@ -42,7 +42,6 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
     private var _loginWarningDlg : MutableLiveData<Boolean> = MutableLiveData()
     val loginWarningDlg : LiveData<Boolean> = _loginWarningDlg
 
-
     private var _keyword1 = MutableLiveData<String>()
     var keyword1 : LiveData<String> = _keyword1
     private var _keyword2 = MutableLiveData<String>()
@@ -58,6 +57,7 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
         _isTest.value = false
         _isUser.value = false
         _loginWarningDlg.value = false
+        _testImg.value = 0
         if (auth.testType != "") {
             _isTest.value = true
             setUserPersonalType()
@@ -117,7 +117,6 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
         }
     }
     fun getUserType(resultId: Int) {
-        Timber.e("${auth.testType}")
         repo.getResult(
                 resultId = resultId,
                 onSuccess = {
@@ -129,7 +128,6 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
                 }
         )
     }
-
     fun testClick() {
         WinePickApplication.getGlobalApplicationContext().startActivity(Intent(WinePickApplication.appContext, SurveyActivity::class.java)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))

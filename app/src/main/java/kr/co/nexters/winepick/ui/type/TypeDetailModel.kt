@@ -24,20 +24,31 @@ class TypeDetailModel(private val repo : WinePickRepository, private val auth : 
     private var _typeDesc = MutableLiveData<String>()
     var typeDesc : LiveData<String> = _typeDesc
 
-
     private var _isUser : MutableLiveData<Boolean> = MutableLiveData()
     val isUser : LiveData<Boolean>
         get() = _isUser
-
 
     private var _isSearch : MutableLiveData<Boolean> = MutableLiveData()
     val isSearch : LiveData<Boolean>
         get() = _isSearch
 
+    private var _testImg : MutableLiveData<Int> = MutableLiveData()
+    val testImg : LiveData<Int> = _testImg
+
+    private var _backButton = MutableLiveData<Boolean>()
+    var backButton : LiveData<Boolean> = _backButton
+
+    private var _loginWarningDlg : MutableLiveData<Boolean> = MutableLiveData()
+    val loginWarningDlg : LiveData<Boolean> = _loginWarningDlg
+
 
     /** 생성자 */
     init {
         _isUser.value = false
+        _testImg.value = 0
+        _backButton.value = false
+        _loginWarningDlg.value = false
+
         if (auth.token != "guest") {
             _isUser.value = true
         }
@@ -53,31 +64,41 @@ class TypeDetailModel(private val repo : WinePickRepository, private val auth : 
             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
     }
 
+    fun backClick() {
+        _backButton.value = true
+    }
+
     fun setUserPersonalType() {
         return when(auth.testType) {
             "A" -> {
                 auth.typeName = WinePickApplication.getGlobalApplicationContext().getString(R.string.type_a_name)
                 getUserType(TestConstant.A)
+                _testImg.value = R.drawable.img_test_mid_a
             }
             "B" -> {
                 auth.typeName = WinePickApplication.getGlobalApplicationContext().getString(R.string.type_b_name)
                 getUserType(TestConstant.B)
+                _testImg.value = R.drawable.img_test_mid_b
             }
             "C" -> {
                 auth.typeName = WinePickApplication.getGlobalApplicationContext().getString(R.string.type_c_name)
                 getUserType(TestConstant.C)
+                _testImg.value = R.drawable.img_test_mid_c
             }
             "D" -> {
                 auth.typeName = WinePickApplication.getGlobalApplicationContext().getString(R.string.type_d_name)
                 getUserType(TestConstant.D)
+                _testImg.value = R.drawable.img_test_mid_d
             }
             "E" -> {
                 auth.typeName = WinePickApplication.getGlobalApplicationContext().getString(R.string.type_e_name)
                 getUserType(TestConstant.E)
+                _testImg.value = R.drawable.img_test_mid_e
             }
             "F" -> {
                 auth.typeName = WinePickApplication.getGlobalApplicationContext().getString(R.string.type_f_name)
                 getUserType(TestConstant.F)
+                _testImg.value = R.drawable.img_test_mid_f
             }
             else -> {}
 
@@ -88,7 +109,15 @@ class TypeDetailModel(private val repo : WinePickRepository, private val auth : 
             resultId = resultId,
             onSuccess = {
                 _typeName.value = it.personDetail + ", " + auth.typeName
-                _typeDesc.value = it.description
+                val temp = it.description.split(".")
+                val sb = StringBuffer()
+                for (i in temp.indices) {
+                    sb.append(temp[i])
+                    if(i <temp.size-1) {
+                        sb.append(".\n")
+                    }
+                }
+                _typeDesc.value = sb.toString()
             },
             onFailure = {
 
@@ -100,11 +129,17 @@ class TypeDetailModel(private val repo : WinePickRepository, private val auth : 
     }
 
     fun userLogin() {
-
+        _loginWarningDlg.value = true
     }
 
     /** UI 의 onDestroy 개념으로 생각하면 편할듯 */
     override fun onCleared() {
         super.onCleared()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setUserPersonalType()
+
     }
 }

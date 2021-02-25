@@ -52,25 +52,25 @@ class AuthManager(private val sharedPrefs: SharedPrefs) {
         set(value) {
             sharedPrefs[ID] = value
         }
-    var recentSearch1: String?
+    var recentSearch1: String
         get() {
-            return sharedPrefs[RECENT_SEARCH1, null]
+            return sharedPrefs[RECENT_SEARCH1, ""] ?: ""
         }
         set(value) {
             sharedPrefs[RECENT_SEARCH1] = value
         }
 
-    var recentSearch2: String?
+    var recentSearch2: String
         get() {
-            return sharedPrefs[RECENT_SEARCH2, null]
+            return sharedPrefs[RECENT_SEARCH2, ""] ?: ""
         }
         set(value) {
             sharedPrefs[RECENT_SEARCH2] = value
         }
 
-    var typeName: String?
+    var typeName: String
         get() {
-            return sharedPrefs[TYPE_NAME,null]
+            return sharedPrefs[TYPE_NAME,""] ?: ""
         }
         set(value) {
             sharedPrefs[TYPE_NAME] = value
