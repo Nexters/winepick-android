@@ -109,7 +109,15 @@ class TypeDetailModel(private val repo : WinePickRepository, private val auth : 
             resultId = resultId,
             onSuccess = {
                 _typeName.value = it.personDetail + ", " + auth.typeName
-                _typeDesc.value = it.description
+                val temp = it.description.split(".")
+                val sb = StringBuffer()
+                for (i in temp.indices) {
+                    sb.append(temp[i])
+                    if(i <temp.size-1) {
+                        sb.append(".\n")
+                    }
+                }
+                _typeDesc.value = sb.toString()
             },
             onFailure = {
 

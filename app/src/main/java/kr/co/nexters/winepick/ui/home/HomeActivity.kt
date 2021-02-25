@@ -36,7 +36,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
             authManager.apply {
                 this.token = token.accessToken
             }
-            Timber.e("로그인성공 - 토큰 ${authManager.token}")
+            Timber.d("로그인성공 - 토큰 ${authManager.token}")
             loginViewModel.addUserInfo(token.accessToken)
             onResume()
         }

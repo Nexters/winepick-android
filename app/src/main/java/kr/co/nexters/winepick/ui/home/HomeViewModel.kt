@@ -42,7 +42,6 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
     private var _loginWarningDlg : MutableLiveData<Boolean> = MutableLiveData()
     val loginWarningDlg : LiveData<Boolean> = _loginWarningDlg
 
-
     private var _keyword1 = MutableLiveData<String>()
     var keyword1 : LiveData<String> = _keyword1
     private var _keyword2 = MutableLiveData<String>()
@@ -118,7 +117,6 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
         }
     }
     fun getUserType(resultId: Int) {
-        Timber.e("${auth.testType}")
         repo.getResult(
                 resultId = resultId,
                 onSuccess = {
