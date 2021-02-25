@@ -38,12 +38,16 @@ class TypeDetailModel(private val repo : WinePickRepository, private val auth : 
     private var _backButton = MutableLiveData<Boolean>()
     var backButton : LiveData<Boolean> = _backButton
 
+    private var _loginWarningDlg : MutableLiveData<Boolean> = MutableLiveData()
+    val loginWarningDlg : LiveData<Boolean> = _loginWarningDlg
+
 
     /** 생성자 */
     init {
         _isUser.value = false
         _testImg.value = 0
         _backButton.value = false
+        _loginWarningDlg.value = false
 
         if (auth.token != "guest") {
             _isUser.value = true
@@ -117,11 +121,17 @@ class TypeDetailModel(private val repo : WinePickRepository, private val auth : 
     }
 
     fun userLogin() {
-
+        _loginWarningDlg.value = true
     }
 
     /** UI 의 onDestroy 개념으로 생각하면 편할듯 */
     override fun onCleared() {
         super.onCleared()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setUserPersonalType()
+
     }
 }
