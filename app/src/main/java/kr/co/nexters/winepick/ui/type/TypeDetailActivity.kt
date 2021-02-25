@@ -25,9 +25,9 @@ class TypeDetailActivity : BaseActivity<ActivityTypeDetailBinding>(
         super.onCreate(savedInstanceState)
         binding.setVariable(BR.vm, viewModel)
         binding.vm!!.setUserPersonalType()
-        binding.apply {
-            ivTypeBack.setOnClickListener { finish() }
-        }
+        viewModel.backButton.observe(this, {
+            if (it) finish()
+        })
 
         initRecycler()
     }
@@ -39,8 +39,6 @@ class TypeDetailActivity : BaseActivity<ActivityTypeDetailBinding>(
         if (authManager.recentSearch1 != null && !authManager.recentSearch1.isNullOrBlank() ) {
             searchRecycler.initData(listOf<String>(authManager.recentSearch1!!, authManager.recentSearch2!!))
         }
-
-
         searchRecycler.setOnItemClickListener(object : RecentSearchAdapter.OnItemClickListener {
             override fun onItemClick(v: View, data: String, pos: Int) {
                //TODO SearchActivity 검색 처리해야함  !

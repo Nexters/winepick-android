@@ -88,3 +88,8 @@ fun View.setSelected(newIsSelected: Boolean) {
     this.isSelected = newIsSelected
 }
 
+@BindingAdapter("imageResource")
+fun setImageResource(imageView: ImageView, resource: Int) {
+    imageView.setImageResource(resource)
+}
+
