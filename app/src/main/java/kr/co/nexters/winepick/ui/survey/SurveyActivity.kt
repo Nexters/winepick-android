@@ -21,13 +21,12 @@ class SurveyActivity : AppCompatActivity() {
     private var fragmentManager: FragmentManager? = null
     private var transaction: FragmentTransaction? = null
 
-    lateinit var surveyFragment: SurveyFragment
+    private var surveyFragment: SurveyFragment? = null
     private var sampleFragment: SampleFragment? = null
 
     // 통신
     var winePickService: WinePickService? = null
     var survey: Survey? = null
-
 
     // 설문 데이터 변경 관련
     var currentStage: Int = 1
@@ -41,15 +40,19 @@ class SurveyActivity : AppCompatActivity() {
         loadSurvey()
 
         fragmentManager = supportFragmentManager
-        surveyFragment = SurveyFragment().apply {
-            arguments = Bundle().apply {
-                putInt("currentStage", currentStage)
-            }
-        }
+        /*surveyFragment = SurveyFragment().apply {
+
+        }*/
         Log.isLoggable("화긴", currentStage)
-        transaction = fragmentManager!!.beginTransaction()
-        transaction!!.replace(R.id.frameLayout, surveyFragment!!)
+        fragmentManager!!.beginTransaction()
+            .replace(R.id.frameLayout, SurveyFragment().apply {
+                arguments = Bundle().apply {
+                    putInt("currentStage", currentStage)
+                }
+            })
             .commitAllowingStateLoss()
+
+        //transaction!!.replace(R.id.frameLayout, surveyFragment!!)
     }
 
     fun btnClick(view: View) {
@@ -79,12 +82,18 @@ class SurveyActivity : AppCompatActivity() {
             }
             override fun onResponse(call: Call<Survey>, response: Response<Survey>) {
                 survey = response.body()
-                Log.i("Connect Survey Success", survey.toString())
-                Log.i("Connect Survey Success", survey!!.data.get(0).content)
+                Log.i(survey.toString(), "서베이 데이터")
+                for (data in survey!!.data) {
+                    Log.i(data.toString(), "포문 데이터")
+                }
 
                 surveyFragment!!.setData(
-                    survey!!.data.get(0).content, currentStage.toString()
+                    survey!!.data.get(0).content,
+                    survey!!.data.get(0).answersA,
+                    survey!!.data.get(0).answersB,
+                    currentStage.toString()
                 )
+                Log.i(survey.toString(), "surveyData")
             }
         })
         return questionText
