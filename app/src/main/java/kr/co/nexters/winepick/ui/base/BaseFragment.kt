@@ -11,6 +11,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
+import kr.co.nexters.winepick.ui.component.LoadingAnimation
 
 /**
  * BaseFragment
@@ -45,6 +46,24 @@ abstract class BaseFragment<B : ViewDataBinding>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = this
+
+        // LoadingAnimation 통제
+        viewModel?.loadingVisible?.observe(requireActivity(), {
+            if (it)
+                LoadingAnimation.show(requireActivity() as BaseActivity<*>)
+            else
+                LoadingAnimation.dismiss()
+        })
+    }
+
+    /** [LoadingAnimation]을 가린다. */
+    fun hideLoading() {
+        viewModel?.hideLoading()
+    }
+
+    /** [LoadingAnimation]을 보여준다. */
+    fun showLoading() {
+        viewModel?.showLoading()
     }
 }
 

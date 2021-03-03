@@ -8,8 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
+import kr.co.nexters.winepick.ui.component.LoadingAnimation
 import timber.log.Timber
 
 /**
@@ -58,6 +58,14 @@ abstract class BaseActivity<B : ViewDataBinding>(
 
         /** [uiScope] 사용 예 */
         uiScope.launch { }
+
+        // LoadingAnimation 통제
+        viewModel?.loadingVisible?.observe(this, {
+            if (it)
+                LoadingAnimation.show(this)
+            else
+                LoadingAnimation.dismiss()
+        })
     }
 
     @CallSuper
@@ -69,6 +77,16 @@ abstract class BaseActivity<B : ViewDataBinding>(
     override fun onDestroy() {
         uiScope.cancel()
         super.onDestroy()
+    }
+
+    /** [LoadingAnimation]을 가린다. */
+    fun hideLoading() {
+        viewModel?.hideLoading()
+    }
+
+    /** [LoadingAnimation]을 보여준다. */
+    fun showLoading() {
+        viewModel?.showLoading()
     }
 
     /**
