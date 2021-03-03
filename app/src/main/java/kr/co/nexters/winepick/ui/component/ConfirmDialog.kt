@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import androidx.fragment.app.DialogFragment
+import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.databinding.DialogConfirmDialogBinding
 import kr.co.nexters.winepick.util.dpToPx
 import kr.co.nexters.winepick.util.setGone
@@ -57,6 +58,16 @@ class ConfirmDialog(
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        if (dialog == null) {
+            return
+        }
+
+        dialog?.window?.setWindowAnimations(R.style.DialogFadeAnimation)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
