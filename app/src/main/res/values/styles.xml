@@ -33,4 +33,9 @@
         <!--        <item name="android:fontFamily">@font/rubik</item>-->
     </style>
 
+    <style name="DialogFadeAnimation">
+        <item name="android:windowEnterAnimation">@anim/anim_fade_in</item>
+        <item name="android:windowExitAnimation">@anim/anim_fade_out</item>
+    </style>
+
 </resources>

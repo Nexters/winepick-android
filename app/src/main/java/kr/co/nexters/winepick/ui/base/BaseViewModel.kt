@@ -1,13 +1,13 @@
 package kr.co.nexters.winepick.ui.base
 
 import androidx.lifecycle.LiveData
+import kr.co.nexters.winepick.ui.component.LoadingAnimation
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 /**
  * BaseViewModel
@@ -16,6 +16,11 @@ import timber.log.Timber
  */
 open class BaseViewModel : ViewModel() {
     private val compositeDisposable = CompositeDisposable()
+
+    /** viewModel 에서 [LoadingAnimation] 를 control 하기 위한 LiveData */
+    private val _loadingVisible = MutableLiveData(false)
+    val loadingVisible: LiveData<Boolean> = _loadingVisible
+
     /** 생성자 개념으로 생각하면 편할듯 */
     init {
         /**
@@ -31,7 +36,18 @@ open class BaseViewModel : ViewModel() {
     /** UI 의 onDestroy 개념으로 생각하면 편할듯 */
     override fun onCleared() {
         compositeDisposable.clear()
+        hideLoading()
         super.onCleared()
+    }
+
+    /** [LoadingAnimation]을 가린다. */
+    internal fun hideLoading() {
+        _loadingVisible.postValue(false)
+    }
+
+    /** [LoadingAnimation]을 보여준다. */
+    internal fun showLoading() {
+        _loadingVisible.postValue(true)
     }
 
     /**
@@ -48,6 +64,6 @@ open class BaseViewModel : ViewModel() {
      * 필수가 아니므로 추상화는 하지 않는다.
      */
     open fun onResume() {
-
+        
     }
 }

@@ -32,4 +32,10 @@ class KotlinDefaultFragment : BaseFragment<FragmentKotlinDefaultBinding>(
             }
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+
+        showLoading()
+    }
 }

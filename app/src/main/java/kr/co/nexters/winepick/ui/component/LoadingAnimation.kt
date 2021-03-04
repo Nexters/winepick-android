@@ -79,7 +79,12 @@ object LoadingAnimation {
         dialog = null
     }
 
-    /** 로딩 애니메이션 보이기 */
+    /**
+     * 로딩 애니메이션 보이기
+     *
+     * viewModel 을 사용하는 화면에서 이 함수를 호출해야 할 시
+     * 이 함수를 직접 호출하지 않고 각 화면과 ViewModel 에 있는 [showLoading()] 메서드를 활용한다.
+     */
     fun show(activity: BaseActivity<*>): Job = loadingScope.launch {
         Timber.i("LoadingAnimation show")
         this@LoadingAnimation.activity = activity
@@ -87,7 +92,12 @@ object LoadingAnimation {
         showDialogJob()
     }
 
-    /** 로딩 애니메이션 끄기 */
+    /**
+     * 로딩 애니메이션 끄기
+     *
+     * viewModel 을 사용하는 화면에서 이 함수를 호출해야 할 시
+     * 이 함수를 직접 호출하지 않고 각 화면과 ViewModel 에 있는 [hideLoading()] 메서드를 활용한다.
+     */
     fun dismiss(): Job = loadingScope.launch {
         Timber.i("LoadingAnimation dismiss")
         loadingScope.launch {
