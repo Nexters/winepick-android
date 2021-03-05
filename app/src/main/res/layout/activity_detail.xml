@@ -20,6 +20,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/floating_eclipse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ellipse_18"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/heart"
+        app:layout_constraintBottom_toBottomOf="@+id/floating_eclipse"
+        app:layout_constraintEnd_toEndOf="@+id/floating_eclipse"
+        app:layout_constraintStart_toStartOf="@+id/floating_eclipse"
+        app:layout_constraintTop_toTopOf="@+id/floating_eclipse" />
+
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
@@ -226,7 +245,6 @@
                     android:id="@+id/wine_point_content"
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
-                    android:layout_marginStart="24dp"
                     android:layout_marginTop="40dp"
                     android:orientation="horizontal"
                     app:layout_constraintStart_toStartOf="parent"
@@ -235,6 +253,7 @@
                     <LinearLayout
                         android:layout_width="148dp"
                         android:layout_height="match_parent"
+                        android:layout_weight="1"
                         android:orientation="vertical">
 
                         <ImageView
@@ -259,6 +278,7 @@
                     <LinearLayout
                         android:layout_width="148dp"
                         android:layout_height="match_parent"
+                        android:layout_weight="1"
                         android:layout_marginLeft="16dp"
                         android:orientation="vertical">
 
@@ -285,7 +305,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
-                android:id="@+id/wine_characterist_text"
+                android:id="@+id/wine_characterist_text1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="64dp"
@@ -295,8 +315,20 @@
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/wine_point_constraint"
-                tools:text="신선한 과일향의
-몬탈치노" />
+                tools:text="신선한 과일향의" />
+
+            <TextView
+                android:id="@+id/wine_characterist_text2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:lineSpacingExtra="10sp"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/wine_characterist_text1"
+                tools:text="몬탈치노" />
 
             <TextView
                 android:id="@+id/wine_characterist_sub_text"
@@ -308,7 +340,7 @@
                 android:textSize="15sp"
                 android:textStyle="normal"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/wine_characterist_text"
+                app:layout_constraintTop_toBottomOf="@+id/wine_characterist_text2"
                 tools:text="몬탈치노의 당도와 바디감을 알려드릴게요." />
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -331,7 +363,7 @@
                     tools:text="당도" />
 
                 <ImageView
-                    android:id="@+id/question_icon"
+                    android:id="@+id/question_icon_sweet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="31dp"
@@ -340,28 +372,27 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:id="@+id/total_width"
+                    android:id="@+id/total_width_sweet"
                     android:layout_width="0dp"
                     android:layout_height="13dp"
                     android:layout_marginStart="32dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/question_icon"
+                    app:layout_constraintBottom_toBottomOf="@+id/question_icon_sweet"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/question_icon"
-                    app:layout_constraintTop_toTopOf="@+id/question_icon"
-                    app:srcCompat="@drawable/set_radius_gray_button" />
+                    app:layout_constraintStart_toEndOf="@+id/question_icon_sweet"
+                    app:layout_constraintTop_toTopOf="@+id/question_icon_sweet"
+                    app:srcCompat="@drawable/set_radius_gray_bar" />
 
                 <ImageView
-                    android:id="@+id/paint_width"
+                    android:id="@+id/paint_width_sweet"
                     android:layout_width="33dp"
                     android:layout_height="13dp"
                     android:layout_marginStart="32dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/question_icon"
-                    app:layout_constraintStart_toEndOf="@+id/question_icon"
-                    app:layout_constraintTop_toTopOf="@+id/question_icon"
-                    app:srcCompat="@drawable/set_radius_black_button" />
+                    app:layout_constraintBottom_toBottomOf="@+id/question_icon_sweet"
+                    app:layout_constraintStart_toEndOf="@+id/question_icon_sweet"
+                    app:layout_constraintTop_toTopOf="@+id/question_icon_sweet"
+                    app:srcCompat="@drawable/set_radius_pink_bar" />
 
                 <TextView
-                    android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:lineSpacingExtra="10sp"
@@ -369,8 +400,8 @@
                     android:textSize="10sp"
                     android:textStyle="normal"
                     android:layout_marginTop="3dp"
-                    app:layout_constraintStart_toStartOf="@+id/total_width"
-                    app:layout_constraintTop_toBottomOf="@+id/total_width"
+                    app:layout_constraintStart_toStartOf="@+id/total_width_sweet"
+                    app:layout_constraintTop_toBottomOf="@+id/total_width_sweet"
                     tools:text="낮음" />
 
                 <TextView
@@ -381,9 +412,234 @@
                     android:textSize="10sp"
                     android:textStyle="normal"
                     android:layout_marginTop="3dp"
-                    app:layout_constraintEnd_toEndOf="@+id/total_width"
-                    app:layout_constraintTop_toBottomOf="@+id/total_width"
+                    app:layout_constraintEnd_toEndOf="@+id/total_width_sweet"
+                    app:layout_constraintTop_toBottomOf="@+id/total_width_sweet"
                     tools:text="높음" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/characterist_linear_sparkling"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/characterist_linear_sweet">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="0sp"
+                    android:textColor="#000000"
+                    android:textSize="15sp"
+                    android:textStyle="normal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="산도" />
+
+                <ImageView
+                    android:id="@+id/question_icon_sparkling"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="31dp"
+                    android:src="@drawable/question"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/total_width_sparkling"
+                    android:layout_width="0dp"
+                    android:layout_height="13dp"
+                    android:layout_marginStart="32dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/question_icon_sparkling"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/question_icon_sparkling"
+                    app:layout_constraintTop_toTopOf="@+id/question_icon_sparkling"
+                    app:srcCompat="@drawable/set_radius_gray_bar" />
+
+                <ImageView
+                    android:id="@+id/paint_width_sparkling"
+                    android:layout_width="33dp"
+                    android:layout_height="13dp"
+                    android:layout_marginStart="32dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/question_icon_sparkling"
+                    app:layout_constraintStart_toEndOf="@+id/question_icon_sparkling"
+                    app:layout_constraintTop_toTopOf="@+id/question_icon_sparkling"
+                    app:srcCompat="@drawable/set_radius_pink_bar" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="10sp"
+                    android:textColor="#ababab"
+                    android:textSize="10sp"
+                    android:textStyle="normal"
+                    android:layout_marginTop="3dp"
+                    app:layout_constraintStart_toStartOf="@+id/total_width_sparkling"
+                    app:layout_constraintTop_toBottomOf="@+id/total_width_sparkling"
+                    tools:text="낮음" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="10sp"
+                    android:textColor="#ababab"
+                    android:textSize="10sp"
+                    android:textStyle="normal"
+                    android:layout_marginTop="3dp"
+                    app:layout_constraintEnd_toEndOf="@+id/total_width_sparkling"
+                    app:layout_constraintTop_toBottomOf="@+id/total_width_sparkling"
+                    tools:text="높음" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/characterist_linear_weight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/characterist_linear_sparkling">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="0sp"
+                    android:textColor="#000000"
+                    android:textSize="15sp"
+                    android:textStyle="normal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="바디" />
+
+                <ImageView
+                    android:id="@+id/question_icon_weight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="31dp"
+                    android:src="@drawable/question"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/total_width_weight"
+                    android:layout_width="0dp"
+                    android:layout_height="13dp"
+                    android:layout_marginStart="32dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/question_icon_weight"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/question_icon_weight"
+                    app:layout_constraintTop_toTopOf="@+id/question_icon_weight"
+                    app:srcCompat="@drawable/set_radius_gray_bar" />
+
+                <ImageView
+                    android:id="@+id/paint_width_weight"
+                    android:layout_width="33dp"
+                    android:layout_height="13dp"
+                    android:layout_marginStart="32dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/question_icon_weight"
+                    app:layout_constraintStart_toEndOf="@+id/question_icon_weight"
+                    app:layout_constraintTop_toTopOf="@+id/question_icon_weight"
+                    app:srcCompat="@drawable/set_radius_pink_bar" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="10sp"
+                    android:textColor="#ababab"
+                    android:textSize="10sp"
+                    android:textStyle="normal"
+                    android:layout_marginTop="3dp"
+                    app:layout_constraintStart_toStartOf="@+id/total_width_weight"
+                    app:layout_constraintTop_toBottomOf="@+id/total_width_weight"
+                    tools:text="가벼움" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="10sp"
+                    android:textColor="#ababab"
+                    android:textSize="10sp"
+                    android:textStyle="normal"
+                    android:layout_marginTop="3dp"
+                    app:layout_constraintEnd_toEndOf="@+id/total_width_weight"
+                    app:layout_constraintTop_toBottomOf="@+id/total_width_weight"
+                    tools:text="무거움" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/characterist_linear_astringent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/characterist_linear_weight">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="0sp"
+                    android:textColor="#000000"
+                    android:textSize="15sp"
+                    android:textStyle="normal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="타닌" />
+
+                <ImageView
+                    android:id="@+id/question_icon_astringent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="31dp"
+                    android:src="@drawable/question"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/total_width_astringent"
+                    android:layout_width="0dp"
+                    android:layout_height="13dp"
+                    android:layout_marginStart="32dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/question_icon_astringent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/question_icon_astringent"
+                    app:layout_constraintTop_toTopOf="@+id/question_icon_astringent"
+                    app:srcCompat="@drawable/set_radius_gray_bar" />
+
+                <ImageView
+                    android:id="@+id/paint_width_astringent"
+                    android:layout_width="33dp"
+                    android:layout_height="13dp"
+                    android:layout_marginStart="32dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/question_icon_astringent"
+                    app:layout_constraintStart_toEndOf="@+id/question_icon_astringent"
+                    app:layout_constraintTop_toTopOf="@+id/question_icon_astringent"
+                    app:srcCompat="@drawable/set_radius_pink_bar" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="10sp"
+                    android:textColor="#ababab"
+                    android:textSize="10sp"
+                    android:textStyle="normal"
+                    android:layout_marginTop="3dp"
+                    app:layout_constraintStart_toStartOf="@+id/total_width_astringent"
+                    app:layout_constraintTop_toBottomOf="@+id/total_width_astringent"
+                    tools:text="가벼움" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="10sp"
+                    android:textColor="#ababab"
+                    android:textSize="10sp"
+                    android:textStyle="normal"
+                    android:layout_marginTop="3dp"
+                    app:layout_constraintEnd_toEndOf="@+id/total_width_astringent"
+                    app:layout_constraintTop_toBottomOf="@+id/total_width_astringent"
+                    tools:text="무거움" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -399,7 +655,7 @@
 
 
             <TextView
-                android:id="@+id/wine_with_text"
+                android:id="@+id/wine_with_text1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
@@ -409,9 +665,21 @@
                 android:layout_marginTop="61dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/wine_with_constraint"
-                tools:text="함께하면
-더 맛있는 요리 6"
-                />
+                tools:text="함께하면" />
+
+
+            <TextView
+                android:id="@+id/wine_with_text2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="10sp"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginTop="5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/wine_with_text1"
+                tools:text="더 맛있는 요리 6" />
 
             <TextView
                 android:id="@+id/wine_with_sub_text"
@@ -423,7 +691,7 @@
                 android:textStyle="normal"
                 android:layout_marginTop="11dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/wine_with_text"
+                app:layout_constraintTop_toBottomOf="@+id/wine_with_text2"
                 tools:text="해산물, 향이 강한 요리와 잘 어울려요." />
 
             <!--<LinearLayout
