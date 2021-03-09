@@ -5,6 +5,7 @@ import android.view.View
 import androidx.lifecycle.Observer
 import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.auth.model.OAuthToken
+import com.kakao.sdk.user.UserApiClient
 import kr.co.nexters.winepick.BR
 import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.databinding.ActivityTypeDetailBinding
@@ -38,8 +39,11 @@ class TypeDetailActivity : BaseActivity<ActivityTypeDetailBinding>(
             authManager.apply {
                 this.token = token.accessToken
             }
-            Timber.e("로그인성공 - 토큰 ${authManager.token}")
-            loginViewModel.addUserInfo(token.accessToken)
+            UserApiClient.instance.me { user, error ->
+                val kakaoId = user!!.id
+                loginViewModel.addUserInfo(token.accessToken,authManager.testType, kakaoId)
+            }
+            Timber.d("로그인성공 - 토큰 ${authManager.token}")
             onResume()
         }
     }

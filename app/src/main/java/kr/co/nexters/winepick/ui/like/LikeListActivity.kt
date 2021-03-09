@@ -30,16 +30,6 @@ class LikeListActivity : BaseActivity<ActivityLikeListBinding>(
         })
         initLikeRecycer()
 
-        viewModel.toastMessage.observe(this, Observer {
-            if(it) {
-                val customToast: Toast = Toast(this)
-                customToast.drawLikeToast(this)
-                binding.apply {
-                    rvLikeList.adapter!!.notifyDataSetChanged()
-                }
-            }
-        })
-
         viewModel.cancelMessage.observe(this, Observer {
             if(it) {
                 val customToast = Toast(this)

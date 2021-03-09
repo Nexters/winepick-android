@@ -50,13 +50,18 @@ class LikeViewModel(private val winePickRepository: WinePickRepository, private 
         // TODO. 검색 화면에서 좋아요 / 좋아요 취소 클릭 구현
         Timber.i("wineHeartClick search $wineResult")
         Timber.e("${wineResult.likeYn}")
-        if(authManager.token != "guest") {
-            if (wineResult.likeYn!!) {
-                cancelLike(authManager.id!!, wineResult.id!!)
-            } else {
-                addLike(wineResult.id!!)
+        winePickRepository.deleteLike(
+            wineId = wineResult.id!!,
+            userId = authManager.id,
+            onSuccess = {
+                wineResult.likeYn = false
+                _cancelMessage.value = true
+            },
+            onFailure = {
+
             }
-        }
+        )
+
     }
 
     /** 제목을 변경한다. UI 에서 [_title] 에 직접 접근하는 것을 막기 위해 사용한다. */
@@ -81,40 +86,6 @@ class LikeViewModel(private val winePickRepository: WinePickRepository, private 
         _backButton.value = true
     }
 
-    /**
-     * 좋아요 서버 통신 - addLike
-     */
-    fun addLike(wineId : Int) {
-        winePickRepository.postLike(
-                data = LikeWine(
-                        userId = authManager.id,
-                        wineId = wineId
-                ),
-                onSuccess = {
-                    Timber.d("와인 좋아요 저장 성공")
-                    _toastMessage.value = true
-
-                },
-                onFailure = {
-
-                }
-        )
-
-    }
-
-    fun cancelLike(userId: Int, wineId: Int) {
-        winePickRepository.deleteLike(
-                wineId = wineId,
-                userId = userId,
-                onSuccess = {
-                    Timber.d("와인 좋아요 취소 성공")
-                    _cancelMessage.value = true
-                },
-                onFailure = {
-
-                }
-        )
-    }
 
     /** UI 의 onDestroy 개념으로 생각하면 편할듯 */
     override fun onCleared() {

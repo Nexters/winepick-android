@@ -194,8 +194,10 @@ class SearchViewModel(
         if(authManager.token != "guest") {
             if (wineResult.likeYn!!) {
                 cancelLike(authManager.id!!, wineResult.id!!)
+                wineResult.likeYn = false
             } else {
                 addLike(wineResult.id!!)
+                wineResult.likeYn = true
             }
         }
     }

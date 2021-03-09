@@ -58,7 +58,7 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
         _isUser.value = false
         _loginWarningDlg.value = false
         _testImg.value = 0
-        if (auth.testType != "") {
+        if (auth.testType != "N") {
             _isTest.value = true
             setUserPersonalType()
         }

@@ -13,8 +13,7 @@ import kr.co.nexters.winepick.ui.search.SearchViewModel
 fun Toast.drawCancelToast(activity: Activity){
     val inflater : LayoutInflater = activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     val layout = inflater.inflate(R.layout.dialog_like_cancel,activity.findViewById(R.id.cl_like_cancel))
-
-    setGravity(Gravity.BOTTOM ,0,0)
+    setGravity(Gravity.BOTTOM or Gravity.FILL_HORIZONTAL,0,140)
     duration = Toast.LENGTH_SHORT
     view = layout
     show()

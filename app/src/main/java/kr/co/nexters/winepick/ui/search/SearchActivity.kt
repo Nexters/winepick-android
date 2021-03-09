@@ -3,9 +3,11 @@ package kr.co.nexters.winepick.ui.search
 import android.content.Intent
 import android.graphics.PorterDuff
 import android.os.Bundle
+import android.os.Handler
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.kakao.sdk.auth.LoginClient
 import kotlinx.coroutines.launch
 import kr.co.nexters.winepick.BR
 import kr.co.nexters.winepick.R
@@ -14,6 +16,9 @@ import kr.co.nexters.winepick.databinding.ActivitySearchBinding
 import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.ActivityResult
 import kr.co.nexters.winepick.ui.base.BaseActivity
+import kr.co.nexters.winepick.ui.component.ConfirmDialog
+import kr.co.nexters.winepick.ui.component.LikeDialog
+import kr.co.nexters.winepick.ui.splash.SplashActivity
 import kr.co.nexters.winepick.util.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -113,8 +118,10 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
         }
         viewModel.toastMessage.observe(this, Observer {
             if(it) {
-                val customToast: Toast = Toast(this)
-                customToast.drawLikeToast(this)
+                LikeDialog(
+                    content = getString(R.string.like_add)
+                ).show(supportFragmentManager, "LikeDialog")
+
                 binding.apply {
                     rvResults.adapter!!.notifyDataSetChanged()
                 }
