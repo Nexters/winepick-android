@@ -66,7 +66,7 @@ interface WinePickService {
         @Path("userId") userId : Int
     ) : Call<WinePickResponse<List<WineResult>>>
 
-    @PUT("v2/api/like/{userId}/{wineId}")
+    @DELETE("v2/api/like/{userId}/{wineId}")
     fun deleteLike(
         @Path("userId") userId: Int,
         @Path("wineId") wineId: Int
@@ -75,7 +75,7 @@ interface WinePickService {
     /**
      * addUser
      */
-    @POST("v2/api/user/")
+    @POST("v2/api/user")
     fun postUser(
         @Body data: AccessTokenData
     ): Call<WinePickResponse<UserData>>

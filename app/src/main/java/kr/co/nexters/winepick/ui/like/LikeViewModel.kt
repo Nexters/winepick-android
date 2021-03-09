@@ -2,6 +2,7 @@ package kr.co.nexters.winepick.ui.like
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import kr.co.nexters.winepick.data.model.LikeWine
 import kr.co.nexters.winepick.data.model.remote.wine.WineResult
 import kr.co.nexters.winepick.data.model.remote.wine.getWinesResponse
 import kr.co.nexters.winepick.data.repository.WinePickRepository
@@ -16,13 +17,22 @@ import timber.log.Timber
  *
  * @since v1.0.0 / 2021.01.28
  */
-class LikeViewModel(private val repo: WinePickRepository, private val auth: AuthManager) :
+class LikeViewModel(private val winePickRepository: WinePickRepository, private val authManager: AuthManager) :
     WineResultViewModel() {
     private var _like_num = MutableLiveData<Int>()
     var likeNum: LiveData<Int> = _like_num
 
     private var _backButton = MutableLiveData<Boolean>()
     var backButton : LiveData<Boolean> = _backButton
+
+    /** 좋아요 토스트 **/
+    val _toastMessage = MutableLiveData<Boolean>()
+    var toastMessage : LiveData<Boolean> = _toastMessage
+
+    /** 취소 토스트 **/
+    val _cancelMessage = MutableLiveData<Boolean>()
+    var cancelMessage : LiveData<Boolean> = _cancelMessage
+
 
     /** 생성자 */
     init {
@@ -37,8 +47,21 @@ class LikeViewModel(private val repo: WinePickRepository, private val auth: Auth
     }
 
     override fun wineHeartClick(wineResult: WineResult) {
-        // TODO. 좋아요 목록 화면에서 좋아요 / 좋아요 취소 클릭 구현
-        Timber.i("wineHeartClick like $wineResult")
+        // TODO. 검색 화면에서 좋아요 / 좋아요 취소 클릭 구현
+        Timber.i("wineHeartClick search $wineResult")
+        Timber.e("${wineResult.likeYn}")
+        winePickRepository.deleteLike(
+            wineId = wineResult.id!!,
+            userId = authManager.id,
+            onSuccess = {
+                wineResult.likeYn = false
+                _cancelMessage.value = true
+            },
+            onFailure = {
+
+            }
+        )
+
     }
 
     /** 제목을 변경한다. UI 에서 [_title] 에 직접 접근하는 것을 막기 위해 사용한다. */
@@ -47,11 +70,12 @@ class LikeViewModel(private val repo: WinePickRepository, private val auth: Auth
     }
 
     fun getLikeWine() {
-        repo.getLikeWineList(
-            userId = auth.id,
+        winePickRepository.getLikeWineList(
+            userId = authManager.id,
             onSuccess = {
                 _results.value = it
                 _like_num.value = it.size
+
             },
             onFailure = {
                 _results.value = null
@@ -61,6 +85,7 @@ class LikeViewModel(private val repo: WinePickRepository, private val auth: Auth
     fun backClick() {
         _backButton.value = true
     }
+
 
     /** UI 의 onDestroy 개념으로 생각하면 편할듯 */
     override fun onCleared() {

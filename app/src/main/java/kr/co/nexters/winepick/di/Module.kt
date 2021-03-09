@@ -80,6 +80,15 @@ val netModule = module {
                 }.build())
             }
 
+            if(newUrl.contains("v2/api/wine")) {
+                if(authManager.token != "guest") {
+                    return@Interceptor chain.proceed(chain.request().newBuilder().apply {
+                        addHeader("Authorization",authManager.token)
+                        url(newUrl)
+                    }.build())
+                }
+            }
+
             val builder = chain.request().newBuilder()
                 .url(newUrl)
 

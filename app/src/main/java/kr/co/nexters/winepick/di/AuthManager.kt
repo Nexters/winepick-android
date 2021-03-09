@@ -40,7 +40,7 @@ class AuthManager(private val sharedPrefs: SharedPrefs) {
 
     var testType: String
         get() {
-            return sharedPrefs[TEST, ""] ?: ""
+            return sharedPrefs[TEST, "N"] ?: "N"
         }
         set(value) {
             sharedPrefs[TEST] = value
