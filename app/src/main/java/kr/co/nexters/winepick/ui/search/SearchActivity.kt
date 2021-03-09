@@ -115,6 +115,19 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
             if(it) {
                 val customToast: Toast = Toast(this)
                 customToast.drawLikeToast(this)
+                binding.apply {
+                    rvResults.adapter!!.notifyDataSetChanged()
+                }
+            }
+        })
+
+        viewModel.cancelMessage.observe(this, Observer {
+            if(it) {
+                val customToast = Toast(this)
+                customToast.drawCancelToast(this)
+                binding.apply {
+                    rvResults.adapter!!.notifyDataSetChanged()
+                }
             }
         })
     }

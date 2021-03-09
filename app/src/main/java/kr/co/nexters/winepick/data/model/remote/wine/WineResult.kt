@@ -27,6 +27,7 @@ import kr.co.nexters.winepick.network.WinePickService
  * @param suitWho
  * @param sweetness
  * @param tannin
+ * @param  likeYn
  */
 @Serializable
 data class WineResult(
@@ -88,7 +89,12 @@ data class WineResult(
 
     @SerializedName("tannin")
     @SerialName("tannin")
-    val tannin: Int? = null
+    val tannin: Int? = null,
+
+    @SerializedName("likeYn")
+    @SerialName("likeYn")
+    var likeYn : Boolean? = null
+
 )
 
 fun getWineResponse(): WinePickResponse<WineResult> = Json.decodeFromString(

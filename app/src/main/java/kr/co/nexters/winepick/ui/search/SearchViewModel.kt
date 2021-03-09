@@ -54,6 +54,10 @@ class SearchViewModel(
     val _toastMessage = MutableLiveData<Boolean>()
     var toastMessage : LiveData<Boolean> = _toastMessage
 
+    /** 취소 토스트 **/
+    val _cancelMessage = MutableLiveData<Boolean>()
+    var cancelMessage : LiveData<Boolean> = _cancelMessage
+
     /**
      * 검색 화면에서 진행하는 비즈니스 로직
      * LiveData 를 사용해도 되지만 Rx 감을 찾기위해 이걸 사용했으며, 생명주기상 문제가 있을 시 [LiveData] 로 수정
@@ -186,9 +190,14 @@ class SearchViewModel(
     }
 
     override fun wineHeartClick(wineResult: WineResult) {
-        // TODO. 검색 화면에서 좋아요 / 좋아요 취소 클릭 구현
         Timber.i("wineHeartClick search $wineResult")
-        addLike(wineResult.id!!)
+        if(authManager.token != "guest") {
+            if (wineResult.likeYn!!) {
+                cancelLike(authManager.id!!, wineResult.id!!)
+            } else {
+                addLike(wineResult.id!!)
+            }
+        }
     }
     /**
      * 좋아요 서버 통신 - addLike
@@ -200,7 +209,7 @@ class SearchViewModel(
                         wineId = wineId
                 ),
                 onSuccess = {
-                    Timber.d("와인 저장 성공")
+                    Timber.d("와인 좋아요 저장 성공")
                     _toastMessage.value = true
 
                 },
@@ -209,6 +218,21 @@ class SearchViewModel(
                 }
         )
 
+    }
+
+    fun cancelLike(userId: Int, wineId: Int) {
+        winePickRepository.deleteLike(
+                wineId = wineId,
+                userId = userId,
+                onSuccess = {
+                    Timber.d("와인 좋아요 취소 성공")
+                    _cancelMessage.value = true
+
+                },
+                onFailure = {
+
+                }
+        )
     }
 
     override fun onCleared() {
