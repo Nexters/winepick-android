@@ -35,8 +35,6 @@ public class SurveyActivity extends FragmentActivity {
 
     public void testType() {
         authManager.setTestType("A");
-        authManager.setRecentSearch1("최근검색어1");
-        authManager.setRecentSearch2("최근검색어2");
         Timber.e("Survey - authTestType "+authManager.getTestType());
     }
 

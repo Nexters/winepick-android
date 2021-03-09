@@ -40,7 +40,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(
                 val kakaoId = user!!.id
                 viewModel.addUserInfo(token.accessToken,authManager.testType,kakaoId)
             }
-            startActivity(HomeActivity::class, true)
         }
     }
 
@@ -59,7 +58,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(
             }
             tvGuest.setOnClickListener {
                 authManager.token = "guest"
-                authManager.testType = ""
                 startActivity(HomeActivity::class, true)
             }
         }

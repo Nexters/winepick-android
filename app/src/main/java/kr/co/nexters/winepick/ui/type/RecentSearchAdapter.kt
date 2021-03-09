@@ -5,19 +5,20 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.nexters.winepick.R
+import kr.co.nexters.winepick.data.model.remote.wine.WineResult
 import kr.co.nexters.winepick.util.inflate
 
 class RecentSearchAdapter() : RecyclerView.Adapter<RecentSearchAdapter.ViewHolder>() {
 
-    private var data : List<String> = emptyList()
+    private var data : List<WineResult> = emptyList()
 
-    fun initData(data: List<String>){
+    fun initData(data: List<WineResult>){
         this.data = data
         notifyDataSetChanged()
     }
 
     interface OnItemClickListener{
-        fun onItemClick(v:View, data: String, pos : Int)
+        fun onItemClick(v:View, data: WineResult, pos : Int)
     }
     private var listener : OnItemClickListener? = null
 
@@ -37,8 +38,8 @@ class RecentSearchAdapter() : RecyclerView.Adapter<RecentSearchAdapter.ViewHolde
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
         private val txt = view.findViewById<TextView>(R.id.tv_rv_recent_title)
-        fun bind(item: String, listener: OnItemClickListener?){
-            txt.text = item
+        fun bind(item: WineResult, listener: OnItemClickListener?){
+            txt.text = item.nmKor
             val pos = adapterPosition
             if(pos!= RecyclerView.NO_POSITION) {
                 itemView.setOnClickListener {

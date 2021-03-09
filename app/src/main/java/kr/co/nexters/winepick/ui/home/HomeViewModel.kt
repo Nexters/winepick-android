@@ -50,6 +50,9 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
     private var _testImg = MutableLiveData<Int>()
     var testImg : LiveData<Int> = _testImg
 
+    lateinit var keywordList1 : Array<String>
+    lateinit var keywordList2: Array<String>
+
 
     /** 생성자 */
     init {
@@ -76,6 +79,7 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
                             _likecnt.value = "99+"
                         }
                         _likecnt.value = it.likes.toString()
+                        Timber.e("${it.likes!!}")
                     },
                     onFailure = {
                     }
@@ -120,13 +124,35 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
         repo.getResult(
                 resultId = resultId,
                 onSuccess = {
-                    _keyword1.value = it.keyword1
-                    _keyword2.value = it.keyword2
+                    val tempKeyword1 = it.keyword1.split(",")
+                    val tempKeyword2 = it.keyword2.split(",")
+                    _keyword1.value = tempKeyword1[0]!!
+                    _keyword2.value = tempKeyword2[0]!!
+                    keywordList1 = tempKeyword1.subList(1,tempKeyword1.size).toTypedArray()
+                    keywordList2 = tempKeyword2.subList(1,tempKeyword2.size).toTypedArray()
+
+
                 },
                 onFailure = {
 
                 }
         )
+    }
+    fun keyword1Click() {
+        Intent(WinePickApplication.appContext, SearchActivity::class.java).apply {
+            putExtra("keyword",keywordList1)
+        }.run {
+            WinePickApplication.getGlobalApplicationContext().startActivity(this.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+        }
+
+    }
+    fun keyword2Click() {
+        Intent(WinePickApplication.appContext, SearchActivity::class.java).apply {
+            putExtra("keyword",keywordList2)
+        }.run {
+            WinePickApplication.getGlobalApplicationContext().startActivity(this.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+        }
+
     }
     fun testClick() {
         WinePickApplication.getGlobalApplicationContext().startActivity(Intent(WinePickApplication.appContext, SurveyActivity::class.java)

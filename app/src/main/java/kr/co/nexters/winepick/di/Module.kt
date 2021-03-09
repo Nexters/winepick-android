@@ -167,9 +167,9 @@ val viewModelModule = module {
     viewModel { BaseViewModel() }
     viewModel { LoginViewModel(get(), get()) }
     viewModel { HomeViewModel(get(), get()) }
-    viewModel { TypeDetailModel(get(), get()) }
+    viewModel { TypeDetailModel(get(), get(), get()) }
     viewModel { LikeViewModel(get(), get()) }
-    viewModel { SearchViewModel(get(), get(),get(), get()) }
+    viewModel { SearchViewModel(get(), get(), get(), get()) }
     viewModel { SearchFilterViewModel(get()) }
 }
 
