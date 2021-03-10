@@ -36,9 +36,11 @@ class LikeViewModel(private val winePickRepository: WinePickRepository, private 
 
     /** 생성자 */
     init {
+        showLoading()
         _like_num.value = 0
         _backButton.value = false
         getLikeWine()
+        hideLoading()
     }
 
     override fun wineItemViewClick(wineResult: WineResult) {
@@ -70,11 +72,13 @@ class LikeViewModel(private val winePickRepository: WinePickRepository, private 
     }
 
     fun getLikeWine() {
+        showLoading()
         winePickRepository.getLikeWineList(
             userId = authManager.id,
             onSuccess = {
                 _results.value = it
                 _like_num.value = it.size
+                hideLoading()
 
             },
             onFailure = {
