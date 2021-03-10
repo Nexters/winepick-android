@@ -1,17 +1,12 @@
 package kr.co.nexters.winepick.ui.search
 
 import android.text.Editable
-import android.view.Gravity
-import android.view.LayoutInflater
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import io.reactivex.rxjava3.subjects.PublishSubject
 import kotlinx.coroutines.launch
-import kr.co.nexters.winepick.R
-import kr.co.nexters.winepick.WinePickApplication
 import kr.co.nexters.winepick.data.model.LikeWine
 import kr.co.nexters.winepick.data.model.local.SearchFilterGroup
 import kr.co.nexters.winepick.data.model.remote.wine.WineResult
@@ -189,50 +184,50 @@ class SearchViewModel(
         Timber.i("wineItemViewClick search $wineResult")
     }
 
-    override fun wineHeartClick(wineResult: WineResult) {
-        Timber.i("wineHeartClick search $wineResult")
+    override fun wineHeartClick(newWineResult: WineResult) {
+        Timber.i("wineHeartClick search $newWineResult")
         if(authManager.token != "guest") {
-            if (wineResult.likeYn!!) {
-                cancelLike(authManager.id!!, wineResult.id!!)
-                wineResult.likeYn = false
+            showLoading()
+            if (newWineResult.clickedLikeYn) {
+                cancelLike(authManager.id, newWineResult)
             } else {
-                addLike(wineResult.id!!)
-                wineResult.likeYn = true
+                addLike(newWineResult)
             }
         }
     }
-    /**
-     * 좋아요 서버 통신 - addLike
-     */
-    fun addLike(wineId : Int) {
+    /** 좋아요 서버 통신 - addLike */
+    fun addLike(wineResult: WineResult) {
         winePickRepository.postLike(
                 data = LikeWine(
                         userId = authManager.id,
-                        wineId = wineId
+                        wineId = wineResult.id!!
                 ),
                 onSuccess = {
                     Timber.d("와인 좋아요 저장 성공")
                     _toastMessage.value = true
-
+                    hideLoading()
                 },
                 onFailure = {
-
+                    toggleWineResult(wineResult)
+                    hideLoading()
                 }
         )
 
     }
 
-    fun cancelLike(userId: Int, wineId: Int) {
+    /** 좋아요 취소 서버 통신 - deleteLike */
+    fun cancelLike(userId: Int, wineResult: WineResult) {
         winePickRepository.deleteLike(
-                wineId = wineId,
+                wineId = wineResult.id!!,
                 userId = userId,
                 onSuccess = {
                     Timber.d("와인 좋아요 취소 성공")
                     _cancelMessage.value = true
-
+                    hideLoading()
                 },
                 onFailure = {
-
+                    toggleWineResult(wineResult)
+                    hideLoading()
                 }
         )
     }

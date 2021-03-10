@@ -1,20 +1,11 @@
 package kr.co.nexters.winepick.ui.like
 
-import android.os.Handler
-import android.view.animation.AnimationUtils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import kr.co.nexters.winepick.R
-import kr.co.nexters.winepick.WinePickApplication
-import kr.co.nexters.winepick.data.model.LikeWine
 import kr.co.nexters.winepick.data.model.remote.wine.WineResult
-import kr.co.nexters.winepick.data.model.remote.wine.getWinesResponse
 import kr.co.nexters.winepick.data.repository.WinePickRepository
-import kr.co.nexters.winepick.data.repository.WineRepository
 import kr.co.nexters.winepick.di.AuthManager
-import kr.co.nexters.winepick.ui.base.BaseViewModel
 import kr.co.nexters.winepick.ui.base.WineResultViewModel
-import kr.co.nexters.winepick.ui.search.WineResultAdapter
 import timber.log.Timber
 
 /**
@@ -41,26 +32,28 @@ class LikeViewModel(private val winePickRepository: WinePickRepository, private 
         _like_num.value = 0
         _backButton.value = false
         getLikeWine()
-        hideLoading()
     }
 
     override fun wineItemViewClick(wineResult: WineResult) {
         Timber.i("wineItemViewClick like $wineResult")
     }
 
-    override fun wineHeartClick(wineResult: WineResult) {
-        Timber.i("wineHeartClick search $wineResult")
-        Timber.e("${wineResult.likeYn}")
+    override fun wineHeartClick(newWineResult: WineResult) {
+        showLoading()
+        Timber.i("wineHeartClick search $newWineResult")
+        Timber.e("${newWineResult.likeYn}")
         winePickRepository.deleteLike(
-            wineId = wineResult.id!!,
+            wineId = newWineResult.id!!,
             userId = authManager.id,
             onSuccess = {
-                deleteWineResult(wineResult)
+                deleteWineResult(newWineResult)
                 _cancelMessage.value = true
                 editLikeNum(num = _like_num.value!! -1)
+                hideLoading()
             },
             onFailure = {
-
+                toggleWineResult(newWineResult)
+                hideLoading()
             }
         )
 
@@ -78,10 +71,10 @@ class LikeViewModel(private val winePickRepository: WinePickRepository, private 
                 _results.value = it
                 _like_num.value = it.size
                 hideLoading()
-
             },
             onFailure = {
                 _results.value = null
+                hideLoading()
             }
         )
     }

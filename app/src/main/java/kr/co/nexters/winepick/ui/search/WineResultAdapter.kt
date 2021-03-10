@@ -32,7 +32,10 @@ class WineResultAdapter(val vm: WineResultViewModel) :
             binding.root.setOnSingleClickListener {
                 vm.wineItemViewClick(binding.wineResult!!)
             }
+
             binding.btnSearchResultHeart.setOnSingleClickListener {
+                // 미연의 클릭 방지를 위해 강제로 toggle 처리한다.
+                binding.wineResult = binding.wineResult!!.apply { likeYn = !this.likeYn!! }
                 vm.wineHeartClick(binding.wineResult!!)
             }
         }
