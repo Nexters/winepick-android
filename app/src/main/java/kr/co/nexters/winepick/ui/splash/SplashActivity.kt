@@ -37,9 +37,6 @@ class SplashActivity : AppCompatActivity() {
          * 토큰 처리
          */
         if (authManager.autoLogin) {
-            authManager.apply {
-                this.testType = "A"
-            }
            startActivity(HomeActivity::class, isFinish = true)
         } else {
            startActivity(LoginActivity::class, isFinish = true)

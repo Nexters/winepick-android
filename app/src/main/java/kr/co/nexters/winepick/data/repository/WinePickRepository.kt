@@ -98,16 +98,4 @@ class WinePickRepository(private val api: WinePickService) {
         )
     }
 
-//    fun getSchoolList(
-//        onSuccess: (List<SchoolSet>) -> Unit,
-//        onFailure: () -> Unitgit
-//    ) {
-//        api.getSchoolList().safeEnqueue(
-//            onSuccess = {
-//                onSuccess(it.data!!)
-//            },
-//            onFailure = { onFailure() },
-//            onError = { onFailure() }
-//        )
-//    }
 }
