@@ -88,6 +88,7 @@ object LoadingAnimation {
      */
     fun show(activity: BaseActivity<*>): Job = loadingScope.launch {
         Timber.i("$activity LoadingAnimation show")
+        loadingScope.coroutineContext.cancelChildren()
 
         showDialogJob(activity)
     }
@@ -100,8 +101,8 @@ object LoadingAnimation {
      */
     fun dismiss(): Job = loadingScope.launch {
         Timber.i("LoadingAnimation dismiss")
+        loadingScope.coroutineContext.cancelChildren()
         loadingScope.launch {
-            this.coroutineContext.cancelChildren()
             dismissDialogJob()
             this@LoadingAnimation.activity = null
         }
