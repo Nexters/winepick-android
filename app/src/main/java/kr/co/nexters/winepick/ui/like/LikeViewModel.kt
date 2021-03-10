@@ -45,19 +45,17 @@ class LikeViewModel(private val winePickRepository: WinePickRepository, private 
     }
 
     override fun wineItemViewClick(wineResult: WineResult) {
-        // TODO. 좋아요 목록 화면에서 아이템 클릭 구현
         Timber.i("wineItemViewClick like $wineResult")
     }
 
     override fun wineHeartClick(wineResult: WineResult) {
-        // TODO. 검색 화면에서 좋아요 / 좋아요 취소 클릭 구현
         Timber.i("wineHeartClick search $wineResult")
         Timber.e("${wineResult.likeYn}")
         winePickRepository.deleteLike(
             wineId = wineResult.id!!,
             userId = authManager.id,
             onSuccess = {
-                wineResult.likeYn = false
+                deleteWineResult(wineResult)
                 _cancelMessage.value = true
                 editLikeNum(num = _like_num.value!! -1)
             },
