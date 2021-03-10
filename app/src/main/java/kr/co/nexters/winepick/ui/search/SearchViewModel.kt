@@ -1,17 +1,12 @@
 package kr.co.nexters.winepick.ui.search
 
 import android.text.Editable
-import android.view.Gravity
-import android.view.LayoutInflater
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import io.reactivex.rxjava3.subjects.PublishSubject
 import kotlinx.coroutines.launch
-import kr.co.nexters.winepick.R
-import kr.co.nexters.winepick.WinePickApplication
 import kr.co.nexters.winepick.data.model.LikeWine
 import kr.co.nexters.winepick.data.model.local.SearchFilterGroup
 import kr.co.nexters.winepick.data.model.remote.wine.WineResult
@@ -29,8 +24,8 @@ import timber.log.Timber
  * @since v1.0.0 / 2021.02.06
  */
 class SearchViewModel(
-        private val searchRepository: SearchRepository, private val wineRepository: WineRepository,
-        private val winePickRepository: WinePickRepository, private val authManager: AuthManager
+    private val searchRepository: SearchRepository, private val wineRepository: WineRepository,
+    private val winePickRepository: WinePickRepository, private val authManager: AuthManager
 ) : WineResultViewModel() {
     val tag = this::class.java.canonicalName
 
@@ -52,7 +47,7 @@ class SearchViewModel(
 
     /** 좋아요 토스트 **/
     val _toastMessage = MutableLiveData<Boolean>()
-    var toastMessage : LiveData<Boolean> = _toastMessage
+    var toastMessage: LiveData<Boolean> = _toastMessage
 
     /**
      * 검색 화면에서 진행하는 비즈니스 로직
@@ -60,6 +55,12 @@ class SearchViewModel(
      */
     private val _searchAction = PublishSubject.create<SearchAction>()
     val searchAction = _searchAction
+
+    /**
+     * 현재 검색화면에서 보여주고 있는 리스트 내용의 타입
+     */
+    private val _searchResultType = MutableLiveData<SearchType>()
+    val searchResultType: LiveData<SearchType> = _searchResultType
 
     init {
         _searchAction.onNext(SearchAction.NONE)
@@ -130,9 +131,42 @@ class SearchViewModel(
     /**
      * 검색 버튼 누를 시 실행되는 로직
      *
+     * @param recommendValue 검색할 키워드 (기본값은 query liveData 내의 value 이다.)
+     */
+    fun queryRecommendClick(recommendValue: String = "", pageNumber: Int) {
+        _searchResultType.value = SearchType.RECOMMEND
+
+        if (!query.value.equals(recommendValue)) {
+            query.value = recommendValue
+        }
+
+        viewModelScope.launch {
+            searchRepository.getWineInfosLikeQuery(recommendValue)
+
+            this@SearchViewModel.pageNumber = pageNumber
+
+            _results.value = try {
+                wineRepository.getWinesKeyword(
+                    pageSize = 10,
+                    pageNumber = pageNumber,
+                    keyword = recommendValue
+                )?.wineResult ?: listOf()
+            } catch (throwable: Throwable) {
+                listOf()
+            }
+        }
+
+        _searchAction.onNext(SearchAction.QUERY_SEARCH)
+    }
+
+    /**
+     * 검색 버튼 누를 시 실행되는 로직
+     *
      * @param queryValue 검색할 키워드 (기본값은 query liveData 내의 value 이다.)
      */
     fun querySearchClick(queryValue: String = query.value ?: "", pageNumber: Int) {
+        _searchResultType.value = SearchType.DEFAULT
+
         if (!query.value.equals(queryValue)) {
             query.value = queryValue
         }
@@ -170,9 +204,23 @@ class SearchViewModel(
         _searchAction.onNext(SearchAction.QUERY_SEARCH)
     }
 
+    /**
+     * query 내용을 기반으로 페이징 처리를 진행한다.
+     * 현재 리스트의 타입 내용[SearchType]에 따라 호출하는 로직이 다르다.
+     */
     fun paging() {
         pageNumber++
-        querySearchClick(query.value ?: "", pageNumber)
+        when (searchResultType.value) {
+            SearchType.DEFAULT -> {
+                querySearchClick(query.value ?: "", pageNumber)
+            }
+            SearchType.RECOMMEND -> {
+                queryRecommendClick(query.value ?: "", pageNumber)
+            }
+            else -> {
+                querySearchClick(query.value ?: "", pageNumber)
+            }
+        }
     }
 
     /** 필터 변경을 누를 경우 동작하는 로직 */
@@ -190,23 +238,24 @@ class SearchViewModel(
         Timber.i("wineHeartClick search $wineResult")
         addLike(wineResult.id!!)
     }
+
     /**
      * 좋아요 서버 통신 - addLike
      */
-    fun addLike(wineId : Int) {
+    fun addLike(wineId: Int) {
         winePickRepository.postLike(
-                data = LikeWine(
-                        userId = authManager.id,
-                        wineId = wineId
-                ),
-                onSuccess = {
-                    Timber.d("와인 저장 성공")
-                    _toastMessage.value = true
+            data = LikeWine(
+                userId = authManager.id,
+                wineId = wineId
+            ),
+            onSuccess = {
+                Timber.d("와인 저장 성공")
+                _toastMessage.value = true
 
-                },
-                onFailure = {
+            },
+            onFailure = {
 
-                }
+            }
         )
 
     }
@@ -251,4 +300,13 @@ enum class SearchAction {
 
     // 검색창 문자열 기반으로 검색
     QUERY_SEARCH,
+}
+
+/** 현재 검색 화면에서 보여주고 있는 리스트의 타입 */
+enum class SearchType {
+    // 필터링 및 와인명 검색을 통해 보여주는 타입
+    DEFAULT,
+
+    // 빠른 키워드 검색을 통해 보여주는 타입
+    RECOMMEND
 }
