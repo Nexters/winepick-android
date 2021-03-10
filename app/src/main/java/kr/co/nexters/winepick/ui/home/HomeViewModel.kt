@@ -83,7 +83,6 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
                             _likecnt.value = "99+"
                         }
                         _likecnt.value = it.likes.toString()
-                        Timber.e("${it.likes!!}")
                         hideLoading()
                     },
                     onFailure = {

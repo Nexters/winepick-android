@@ -1,7 +1,11 @@
 package kr.co.nexters.winepick.ui.like
 
+import android.os.Handler
+import android.view.animation.AnimationUtils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import kr.co.nexters.winepick.R
+import kr.co.nexters.winepick.WinePickApplication
 import kr.co.nexters.winepick.data.model.LikeWine
 import kr.co.nexters.winepick.data.model.remote.wine.WineResult
 import kr.co.nexters.winepick.data.model.remote.wine.getWinesResponse
@@ -10,6 +14,7 @@ import kr.co.nexters.winepick.data.repository.WineRepository
 import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.BaseViewModel
 import kr.co.nexters.winepick.ui.base.WineResultViewModel
+import kr.co.nexters.winepick.ui.search.WineResultAdapter
 import timber.log.Timber
 
 /**
@@ -24,10 +29,6 @@ class LikeViewModel(private val winePickRepository: WinePickRepository, private 
 
     private var _backButton = MutableLiveData<Boolean>()
     var backButton : LiveData<Boolean> = _backButton
-
-    /** 좋아요 토스트 **/
-    val _toastMessage = MutableLiveData<Boolean>()
-    var toastMessage : LiveData<Boolean> = _toastMessage
 
     /** 취소 토스트 **/
     val _cancelMessage = MutableLiveData<Boolean>()
@@ -58,6 +59,7 @@ class LikeViewModel(private val winePickRepository: WinePickRepository, private 
             onSuccess = {
                 wineResult.likeYn = false
                 _cancelMessage.value = true
+                editLikeNum(num = _like_num.value!! -1)
             },
             onFailure = {
 
@@ -66,7 +68,6 @@ class LikeViewModel(private val winePickRepository: WinePickRepository, private 
 
     }
 
-    /** 제목을 변경한다. UI 에서 [_title] 에 직접 접근하는 것을 막기 위해 사용한다. */
     fun editLikeNum(num: Int) {
         _like_num.value = num
     }

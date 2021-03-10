@@ -1,7 +1,9 @@
 package kr.co.nexters.winepick.ui.search
 
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
@@ -47,6 +49,14 @@ class WineResultViewHolder(private val binding: ItemWineResultBinding) :
     fun bind(wineResult: WineResult, vm: WineResultViewModel) {
         binding.wineResult = wineResult
         binding.vm = vm
+
+//        if(wineResult.likeYn == false) {
+//            AnimationUtils.loadAnimation(WinePickApplication.appContext, R.anim.anim_push_left_in)
+//                    .run { itemView.startAnimation(this) }
+//            Handler().postDelayed({
+//                binding.notifyChange()
+//            }, 200)
+//        }
     }
 }
 

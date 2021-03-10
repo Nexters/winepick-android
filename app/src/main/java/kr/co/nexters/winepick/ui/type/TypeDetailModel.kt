@@ -123,7 +123,7 @@ class TypeDetailModel(private val repo : WinePickRepository, private val authMan
         )
     }
     fun userLogout() {
-        UserApiClient.instance.logout {
+        UserApiClient.instance.unlink {
             authManager.autoLogin = false
             Intent(WinePickApplication.appContext, LoginActivity::class.java).apply {
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
