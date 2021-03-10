@@ -42,12 +42,12 @@ open class BaseViewModel : ViewModel() {
 
     /** [LoadingAnimation]을 가린다. */
     internal fun hideLoading() {
-        _loadingVisible.postValue(false)
+        _loadingVisible.value = false
     }
 
     /** [LoadingAnimation]을 보여준다. */
     internal fun showLoading() {
-        _loadingVisible.postValue(true)
+        _loadingVisible.value = true
     }
 
     /**
