@@ -52,6 +52,7 @@ class TypeDetailModel(private val repo : WinePickRepository, private val authMan
 
     /** 생성자 */
     init {
+        showLoading()
         _isUser.value = false
         _testImg.value = 0
         _backButton.value = false
@@ -65,6 +66,7 @@ class TypeDetailModel(private val repo : WinePickRepository, private val authMan
         if (wineRepository.userViewWines.isNotEmpty()) {
             _isSearch.value = true
         }
+        hideLoading()
     }
     fun backClick() {
         _backButton.value = true
@@ -107,11 +109,13 @@ class TypeDetailModel(private val repo : WinePickRepository, private val authMan
         }
     }
     fun getUserType(resultId : Int) {
+        showLoading()
         repo.getResult(
             resultId = resultId,
             onSuccess = {
                 _typeName.value = it.personDetail + ", " + authManager.typeName
                 _typeDesc.value = it.description
+                hideLoading()
             },
             onFailure = {
 
@@ -119,7 +123,7 @@ class TypeDetailModel(private val repo : WinePickRepository, private val authMan
         )
     }
     fun userLogout() {
-        UserApiClient.instance.logout {
+        UserApiClient.instance.unlink {
             authManager.autoLogin = false
             Intent(WinePickApplication.appContext, LoginActivity::class.java).apply {
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)

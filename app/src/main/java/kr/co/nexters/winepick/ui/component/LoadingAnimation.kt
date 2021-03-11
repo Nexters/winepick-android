@@ -28,11 +28,12 @@ object LoadingAnimation {
     val loadingScope = CoroutineScope(SupervisorJob() + Dispatchers.Main + this.exceptionHandler)
 
     /** 로딩 애니메이션 켜기 Runnable */
-    private fun showDialogJob() = loadingScope.launch(exceptionHandler) {
+    private fun showDialogJob(activity: BaseActivity<*>) = loadingScope.launch(exceptionHandler) {
         Timber.i("show DialogJob")
+        this@LoadingAnimation.activity = activity
 
         // activity 가 정상이 아니거나, activity 가 이미 소멸된 상태라면 더 이상 진행하지 않음
-        if (activity!!.isFinishing || activity!!.isDestroyed) {
+        if (this@LoadingAnimation.activity!!.isFinishing || this@LoadingAnimation.activity!!.isDestroyed) {
             this.cancel()
             return@launch
         }
@@ -40,11 +41,11 @@ object LoadingAnimation {
         // dialog 가 null 이거나 보이고 있지 않을 경우에는 dialog 인스턴스를 새로 만들어서 보여준다.
         if (dialog == null || !dialog!!.isShowing) {
             // dialog 초기화
-            dialog = Dialog(activity!!)
+            dialog = Dialog(this@LoadingAnimation.activity!!)
                 .apply { window?.setBackgroundDrawableResource(R.color.transparent) }
 
             // progressbar 색상 설정
-            val progressBar = ProgressBar(activity).apply {
+            val progressBar = ProgressBar(this@LoadingAnimation.activity).apply {
                 isIndeterminate = true
                 PorterDuffColorFilter(
                     R.color.loading_animation_progressbar_solid.getColor(),
@@ -86,10 +87,10 @@ object LoadingAnimation {
      * 이 함수를 직접 호출하지 않고 각 화면과 ViewModel 에 있는 [showLoading()] 메서드를 활용한다.
      */
     fun show(activity: BaseActivity<*>): Job = loadingScope.launch {
-        Timber.i("LoadingAnimation show")
-        this@LoadingAnimation.activity = activity
+        Timber.i("$activity LoadingAnimation show")
+        loadingScope.coroutineContext.cancelChildren()
 
-        showDialogJob()
+        showDialogJob(activity)
     }
 
     /**
@@ -100,8 +101,8 @@ object LoadingAnimation {
      */
     fun dismiss(): Job = loadingScope.launch {
         Timber.i("LoadingAnimation dismiss")
+        loadingScope.coroutineContext.cancelChildren()
         loadingScope.launch {
-            this.coroutineContext.cancelChildren()
             dismissDialogJob()
             this@LoadingAnimation.activity = null
         }

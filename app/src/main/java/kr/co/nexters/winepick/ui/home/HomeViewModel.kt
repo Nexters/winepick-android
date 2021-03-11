@@ -20,6 +20,7 @@ import kr.co.nexters.winepick.ui.like.LikeListActivity
 import kr.co.nexters.winepick.ui.search.SearchActivity
 import kr.co.nexters.winepick.ui.survey.SurveyActivity
 import kr.co.nexters.winepick.ui.type.TypeDetailActivity
+import kr.co.nexters.winepick.util.getNetworkConnected
 import timber.log.Timber
 
 /**
@@ -56,6 +57,7 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
 
     /** 생성자 */
     init {
+        showLoading()
         _likecnt.value = "0"
         _isTest.value = false
         _isUser.value = false
@@ -66,9 +68,11 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
             setUserPersonalType()
         }
         getUserLikes()
+        hideLoading()
 
     }
     fun getUserLikes(){
+        showLoading()
         if (auth.token != "guest") {
             _isUser.value = true
             repo.getUser(
@@ -79,12 +83,13 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
                             _likecnt.value = "99+"
                         }
                         _likecnt.value = it.likes.toString()
-                        Timber.e("${it.likes!!}")
+                        hideLoading()
                     },
                     onFailure = {
                     }
             )
         }
+
 
     }
 
@@ -121,6 +126,8 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
         }
     }
     fun getUserType(resultId: Int) {
+        showLoading()
+
         repo.getResult(
                 resultId = resultId,
                 onSuccess = {
@@ -128,15 +135,16 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
                     val tempKeyword2 = it.keyword2.split(",")
                     _keyword1.value = tempKeyword1[0]!!
                     _keyword2.value = tempKeyword2[0]!!
-                    keywordList1 = tempKeyword1.subList(1,tempKeyword1.size).toTypedArray()
-                    keywordList2 = tempKeyword2.subList(1,tempKeyword2.size).toTypedArray()
+                    keywordList1 = tempKeyword1.subList(1, tempKeyword1.size).toTypedArray()
+                    keywordList2 = tempKeyword2.subList(1, tempKeyword2.size).toTypedArray()
 
-
+                    hideLoading()
                 },
                 onFailure = {
 
                 }
         )
+
     }
     fun keyword1Click() {
         Intent(WinePickApplication.appContext, SearchActivity::class.java).apply {

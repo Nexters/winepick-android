@@ -35,7 +35,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(
             authManager.apply {
                 this.token = token.accessToken
             }
-            Timber.e("로그인성공 - 토큰 ${authManager.token}")
             UserApiClient.instance.me { user, error ->
                 val kakaoId = user!!.id
                 viewModel.addUserInfo(token.accessToken,authManager.testType,kakaoId)

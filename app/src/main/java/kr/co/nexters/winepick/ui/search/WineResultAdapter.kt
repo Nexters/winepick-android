@@ -1,7 +1,9 @@
 package kr.co.nexters.winepick.ui.search
 
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
@@ -30,7 +32,10 @@ class WineResultAdapter(val vm: WineResultViewModel) :
             binding.root.setOnSingleClickListener {
                 vm.wineItemViewClick(binding.wineResult!!)
             }
+
             binding.btnSearchResultHeart.setOnSingleClickListener {
+                // 미연의 클릭 방지를 위해 강제로 toggle 처리한다.
+                binding.wineResult = binding.wineResult!!.apply { likeYn = !this.likeYn!! }
                 vm.wineHeartClick(binding.wineResult!!)
             }
         }
