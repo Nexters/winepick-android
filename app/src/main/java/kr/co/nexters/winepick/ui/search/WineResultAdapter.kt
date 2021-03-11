@@ -52,14 +52,6 @@ class WineResultViewHolder(private val binding: ItemWineResultBinding) :
     fun bind(wineResult: WineResult, vm: WineResultViewModel) {
         binding.wineResult = wineResult
         binding.vm = vm
-
-//        if(wineResult.likeYn == false) {
-//            AnimationUtils.loadAnimation(WinePickApplication.appContext, R.anim.anim_push_left_in)
-//                    .run { itemView.startAnimation(this) }
-//            Handler().postDelayed({
-//                binding.notifyChange()
-//            }, 200)
-//        }
     }
 }
 
