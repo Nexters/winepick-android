@@ -51,21 +51,31 @@
             android:id="@+id/survey_result_constraint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="parent">
+            app:layout_constraintTop_toTopOf="parent" >
+
+            <ImageView
+                android:id="@+id/tendency_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/type_penguin"
+                android:layout_marginTop="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/survey_result_constraint" />
 
             <TextView
                 android:id="@+id/tendency_text1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="356dp"
+                android:layout_marginTop="25dp"
                 android:lineSpacingExtra="0sp"
                 android:textColor="#000000"
                 android:textSize="16sp"
                 android:textStyle="normal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:text="당신의 성향은" />
+                app:layout_constraintTop_toBottomOf="@+id/tendency_image"
+                android:text="내 이름은 무술이" />
 
             <TextView
                 android:id="@+id/tendency_text2"
@@ -114,12 +124,10 @@
 
                 <LinearLayout
                     android:id="@+id/my_result_wine_linear"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical"
-                    tools:layout_editor_absoluteX="158dp"
-                    tools:layout_editor_absoluteY="420dp">
+                    android:orientation="vertical" >
 
                     <TextView
                         android:id="@+id/my_wine_text"
@@ -128,22 +136,34 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="56dp"
                         android:lineSpacingExtra="0sp"
-                        android:text="나와 어울리는 와인 "
+                        android:text="나와 어울리는 와인"
                         android:textColor="#000000"
                         android:textSize="15sp"
                         android:textStyle="normal"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tendency_content" />
 
-                    <ImageView
-                        android:id="@+id/my_wine_image"
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="114dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginStart="24dp"
                         android:layout_marginTop="24dp"
-                        android:layout_marginEnd="24dp"
-                        app:layout_constraintTop_toBottomOf="@+id/my_wine_text"
-                        app:srcCompat="@drawable/set_radius_gray_bar" />
+                        android:layout_marginEnd="24dp" >
+
+                        <ImageView
+                            android:id="@+id/my_wine_image1"
+                            android:layout_width="match_parent"
+                            android:layout_height="114dp"
+                            android:src="@drawable/set_radius_gray_bar" />
+
+                        <ImageView
+                            android:id="@+id/my_wine_image2"
+                            android:layout_width="match_parent"
+                            android:layout_height="114dp"
+                            android:src="@drawable/red_wine" />
+
+                    </FrameLayout>
 
                     <TextView
                         android:id="@+id/my_wine_result_text"
@@ -159,16 +179,15 @@
                         android:textStyle="normal"
                         app:layout_constraintBottom_toBottomOf="@+id/my_result_linear"
                         app:layout_constraintTop_toBottomOf="@+id/my_wine_image" />
+
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/my_result_type_linear"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
                     android:layout_weight="1"
-                    tools:layout_editor_absoluteX="158dp"
-                    tools:layout_editor_absoluteY="420dp">
+                    android:orientation="vertical" >
 
                     <TextView
                         android:id="@+id/my_type_text"
@@ -182,18 +201,29 @@
                         android:textStyle="normal"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tendency_content"
-                        android:text="나와 잘 맞는 타입 " />
+                        android:text="나와 잘 맞는 타입" />
 
-                    <ImageView
-                        android:id="@+id/my_type_image"
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="114dp"
-                        android:layout_marginTop="24dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginStart="24dp"
-                        android:layout_marginEnd="24dp"
-                        app:srcCompat="@drawable/set_radius_gray_bar"
-                        app:layout_constraintTop_toBottomOf="@+id/my_type_text"
-                        />
+                        android:layout_marginTop="24dp"
+                        android:layout_marginEnd="24dp" >
+
+                        <ImageView
+                            android:id="@+id/my_type_image1"
+                            android:layout_width="match_parent"
+                            android:layout_height="114dp"
+                            android:src="@drawable/set_radius_gray_bar" />
+
+                        <ImageView
+                            android:id="@+id/my_type_image2"
+                            android:layout_width="match_parent"
+                            android:layout_height="114dp"
+                            android:src="@drawable/type_hamster" />
+
+                    </FrameLayout>
 
                     <TextView
                         android:id="@+id/my_type_result_text"
@@ -299,37 +329,34 @@
                     android:id="@+id/recommend_move_button_linear2"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="24dp"
                     android:layout_marginStart="24dp"
                     android:layout_marginEnd="24dp"
-                    app:layout_constraintTop_toBottomOf="@+id/recommend_move_button_linear1"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal" >
 
                     <TextView
-                        android:id="@+id/recommend_wine_icon2"
+                        android:id="@+id/recommend_move_wine_icon2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginStart="20dp"
-                        android:textStyle="normal"
-                        android:textSize="25sp"
-                        android:textColor="#000000"
                         android:lineSpacingExtra="-2sp"
                         android:text="🍷"
-                        android:layout_gravity="center"
-                        />
+                        android:textColor="#000000"
+                        android:textSize="25sp"
+                        android:textStyle="normal" />
 
                     <TextView
                         android:id="@+id/recommend_move_text2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:textStyle="normal"
-                        android:textSize="14sp"
-                        android:textColor="#000000"
-                        android:lineSpacingExtra="0sp"
-                        android:text="달콤함이 매력적인 레드 와인"
                         android:layout_gravity="center"
-                        />
+                        android:layout_marginStart="16dp"
+                        android:lineSpacingExtra="0sp"
+                        android:text="상큼한 과일향을 품는 와인"
+                        android:textColor="#000000"
+                        android:textSize="14sp"
+                        android:textStyle="normal" />
 
                     <ImageView
                         android:id="@+id/recommend_move_arrow_image2"
@@ -337,13 +364,14 @@
                         android:layout_height="20dp"
                         android:layout_gravity="center|end"
                         android:layout_marginEnd="12dp"
+                        android:layout_weight="1"
                         android:background="#00FFFFFF"
                         android:padding="0dp"
                         app:srcCompat="@drawable/right_arrow_20" />
                 </LinearLayout>
 
                 <Button
-                    android:background="@drawable/set_radius_pink_bar"
+                    android:background="@drawable/set_radius_black_button"
                     android:textColor="#FFFFFF"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

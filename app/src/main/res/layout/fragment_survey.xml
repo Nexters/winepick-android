@@ -11,6 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:lineSpacingExtra="0sp"
+        android:text="01"
         android:textColor="#000000"
         android:textSize="18dp"
         android:textStyle="normal"
@@ -54,7 +55,6 @@
         android:textColor="@drawable/pressed_button_color"
         app:layout_constraintStart_toStartOf="@+id/survey_question_text"
         app:layout_constraintTop_toBottomOf="@+id/survey_question_text" />
-
 
     <Button
         android:id="@+id/survey_answer_B"

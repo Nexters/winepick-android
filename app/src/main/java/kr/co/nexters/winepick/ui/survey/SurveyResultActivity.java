@@ -2,6 +2,8 @@ package kr.co.nexters.winepick.ui.survey;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -36,17 +38,13 @@ public class SurveyResultActivity extends AppCompatActivity {
     }
 
     public void kakaoLink(View view) {
-        // Toast.makeText(this, "onClick shareButton", Toast.LENGTH_SHORT).show();
         FeedTemplate params = FeedTemplate
-                .newBuilder(ContentObject.newBuilder("디저트 사진",
-                        "http://mud-kage.kakao.co.kr/dn/NTmhS/btqfEUdFAUf/FjKzkZsnoeE4o19klTOVI1/openlink_640x640s.jpg",
+                .newBuilder(ContentObject.newBuilder("내 와인 타입은? 센치한 도도형",
+                        "https://i.imgur.com/wFJcffR.png#.YEumL3qWoqg.link",
                         LinkObject.newBuilder().setWebUrl("https://developers.kakao.com")
                                 .setMobileWebUrl("https://developers.kakao.com").build())
-                        .setDescrption("아메리카노, 빵, 케익")
+                        .setDescrption("#우아한 #쌉싸름한 #화이트와인")
                         .build())
-                .setSocial(SocialObject.newBuilder().setLikeCount(10).setCommentCount(20)
-                        .setSharedCount(30).setViewCount(40).build())
-                .addButton(new ButtonObject("웹에서 보기", LinkObject.newBuilder().setWebUrl("'https://developers.kakao.com").setMobileWebUrl("'https://developers.kakao.com").build()))
                 .addButton(new ButtonObject("앱에서 보기", LinkObject.newBuilder()
                         .setWebUrl("'https://developers.kakao.com")
                         .setMobileWebUrl("'https://developers.kakao.com")

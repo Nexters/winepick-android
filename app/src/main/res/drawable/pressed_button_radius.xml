@@ -2,7 +2,7 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:state_pressed="true"
-        android:drawable="@drawable/set_radius_pink_bar" />
+        android:drawable="@drawable/set_radius_black_button" />
 
-    <item android:drawable="@drawable/set_radius_gray_bar" />
+    <item android:drawable="@drawable/set_radius_gray_button" />
 </selector>

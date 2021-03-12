@@ -45,7 +45,7 @@ class SurveyActivity : AppCompatActivity() {
         }*/
         Log.isLoggable("화긴", currentStage)
         fragmentManager!!.beginTransaction()
-            .replace(R.id.frameLayout, SurveyFragment().apply {
+            .replace(R.id.survey_content, SurveyFragment().apply {
                 arguments = Bundle().apply {
                     putInt("currentStage", currentStage)
                 }
@@ -62,12 +62,12 @@ class SurveyActivity : AppCompatActivity() {
         transaction!!
             .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out,
                 R.anim.slide_left_in, R.anim.slide_right_out)
-            .replace(R.id.frameLayout, sampleFragment!!)
+            .replace(R.id.survey_content, sampleFragment!!)
             .addToBackStack(null)
             .commitAllowingStateLoss()
     }
 
-    fun loadSurvey(): String {
+    private fun loadSurvey() {
         var questionText: String = ""
         var retrofit = Retrofit.Builder()
             .baseUrl("http://ec2-3-35-107-29.ap-northeast-2.compute.amazonaws.com:8080/")
@@ -83,7 +83,7 @@ class SurveyActivity : AppCompatActivity() {
             override fun onResponse(call: Call<Survey>, response: Response<Survey>) {
                 survey = response.body()
                 Log.i(survey.toString(), "서베이 데이터")
-                for (data in survey!!.data) {
+/*                for (data in survey!!.data) {
                     Log.i(data.toString(), "포문 데이터")
                 }
 
@@ -93,10 +93,9 @@ class SurveyActivity : AppCompatActivity() {
                     survey!!.data.get(0).answersB,
                     currentStage.toString()
                 )
-                Log.i(survey.toString(), "surveyData")
+                Log.i(survey.toString(), "surveyData")*/
             }
         })
-        return questionText
     }
 
 }
