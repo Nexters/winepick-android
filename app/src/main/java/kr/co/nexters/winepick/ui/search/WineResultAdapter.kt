@@ -52,6 +52,17 @@ class WineResultViewHolder(private val binding: ItemWineResultBinding) :
     fun bind(wineResult: WineResult, vm: WineResultViewModel) {
         binding.wineResult = wineResult
         binding.vm = vm
+        when(wineResult.category) {
+            "레드" -> {
+                wineResult.wineImg = R.drawable.img_red
+            }
+            "화이트" -> {
+                wineResult.wineImg = R.drawable.img_white
+            }
+            "스파클링" -> {
+                wineResult.wineImg = R.drawable.img_sparkling
+            }
+        }
     }
 }
 

@@ -1,5 +1,6 @@
 package kr.co.nexters.winepick.ui.base
 
+import android.media.Image
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kr.co.nexters.winepick.data.model.remote.wine.WineResult
@@ -15,6 +16,9 @@ abstract class WineResultViewModel : BaseViewModel() {
     /** 검색 결과 list */
     protected val _results = MutableLiveData<List<WineResult>>(listOf())
     open val results: LiveData<List<WineResult>> = _results
+
+    private val _wineImg = MutableLiveData<Int>()
+    val wineImg : LiveData<Int> = _wineImg
 
     /** wineResult 아이템뷰를 클릭시 동작하는 로직 */
     abstract fun wineItemViewClick(wineResult: WineResult)
@@ -34,6 +38,11 @@ abstract class WineResultViewModel : BaseViewModel() {
 
         _results.value = results
     }
+
+    /** wineImage 처리 **/
+     fun wineImage() {
+
+     }
 
     /** [_results] 내 특정 아이템을 [wineResult] 변경한다. */
     fun replaceWineResult(wineResult: WineResult) {
