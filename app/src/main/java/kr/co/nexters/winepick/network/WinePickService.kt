@@ -5,7 +5,6 @@ import kr.co.nexters.winepick.data.model.remote.wine.WineResult
 import kr.co.nexters.winepick.data.model.remote.wine.WinesResult
 import kr.co.nexters.winepick.data.response.PersonalityType
 import kr.co.nexters.winepick.data.response.UserData
-import kr.co.nexters.winepick.di.authModule
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -15,6 +14,9 @@ import retrofit2.http.*
  * @since v1.0.0 / 2021.02.04
  */
 interface WinePickService {
+    @GET("v2/api/survey/")
+    fun getSurveys(): Call<Survey>
+
     @GET("v2/api/wine")
     fun getWines(
         @Query("pageSize") pageSize: Int,       // 한번에 가져올 사이즈

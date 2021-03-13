@@ -36,6 +36,17 @@
     <string name="login_warning_btn_left_text">아니요</string>
     <string name="login_warning_btn_right_text">네</string>
 
+    <!-- detail -->
+    <string name="title_activity_detail">DetailActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <!-- survey? -->
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
     <!-- test warning -->
     <string name="test_warning_title">재검사 하시겠습니까?</string>
@@ -477,5 +488,6 @@
         <item>Pallini Limoncello</item>
         <item>Carlo Rossi ICE Peach</item>
     </string-array>
+>>>>>>> develop
 
 </resources>

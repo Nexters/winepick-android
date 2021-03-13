@@ -13,8 +13,10 @@ import kr.co.nexters.winepick.databinding.ActivityHomeBinding
 import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.BaseActivity
 import kr.co.nexters.winepick.ui.component.ConfirmDialog
+import kr.co.nexters.winepick.ui.detail.DetailActivity
 import kr.co.nexters.winepick.ui.login.LoginActivity
 import kr.co.nexters.winepick.ui.login.LoginViewModel
+import kr.co.nexters.winepick.ui.survey.SurveyActivity
 import kr.co.nexters.winepick.util.drawLikeToast
 import kr.co.nexters.winepick.util.startActivity
 import org.koin.android.ext.android.inject
@@ -76,12 +78,12 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
                 ).show(supportFragmentManager, "LoginWarningDialog")
             }
         })
-
-
     }
 
     override fun onResume() {
         super.onResume()
         viewModel.onResume()
+
+        startActivity(Intent(this, DetailActivity::class.java))
     }
 }
