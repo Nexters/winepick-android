@@ -49,6 +49,15 @@ class WineRepository(private val wineDataSource: WineDataSource, val sharedPrefs
         return@withContext wineDataSource.getWines(pageSize, pageNumber, sort)
     }
 
+    /** [WineDataSource] 를 통해, 키워드와 매칭 되는 와인 목록 [List] 을 가져온다. */
+    suspend fun getWinesKeyword(
+        pageSize: Int,
+        pageNumber: Int = 0,
+        keyword: String = "",
+    ) = withContext(Dispatchers.IO) {
+        return@withContext wineDataSource.getWinesKeyword(pageSize, pageNumber, keyword)
+    }
+
     /** [WineDataSource] 를 통해, 특정 와인에 대한 정보 [WineResult] 를 가져온다. */
     suspend fun getWine(wineId: Int) = withContext(Dispatchers.IO) {
         return@withContext wineDataSource.getWine(wineId)

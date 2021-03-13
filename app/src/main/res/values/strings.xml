@@ -71,7 +71,7 @@
     <string name="search_recommend_title">빠른 키워드</string>
     <string name="search_result_taste_value">%d</string>
     <array name="search_recommends">
-        <item>#혼자 집에서 쉴때</item>
+        <item>#혼자 집에서 쉴 때</item>
         <item>#집들이 선물</item>
         <item>#20대에게 인기 많은</item>
     </array>

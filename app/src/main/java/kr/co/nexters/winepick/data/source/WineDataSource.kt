@@ -41,6 +41,28 @@ class WineDataSource(private val winePickService: WinePickService) {
         }
     }
 
+    /** [WinePickService.getWines] 요청에 대한 비즈니스 로직 */
+    suspend fun getWinesKeyword(
+        pageSize: Int,
+        pageNumber: Int = 0,
+        keyword: String
+    ): WinesResult? = withContext(Dispatchers.IO) {
+        if (isMock) {
+            return@withContext getWinesResponse().result
+        } else {
+            val response = winePickService.getWinesKeyword(pageSize, pageNumber, keyword).send()
+
+            /** statusCode 별 처리 */
+            when (response.code()) {
+
+            }
+
+            if (!response.isSuccessful) throw Throwable("${response.code()} API 오류")
+
+            return@withContext response.body()?.result
+        }
+    }
+
     /** [WinePickService.getWine] 요청에 대한 비즈니스 로직 */
     suspend fun getWine(wineId: Int): WineResult? = withContext(Dispatchers.IO) {
         if (isMock) {
