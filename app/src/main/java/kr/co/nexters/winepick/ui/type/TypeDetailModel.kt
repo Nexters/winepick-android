@@ -3,12 +3,16 @@ package kr.co.nexters.winepick.ui.type
 import android.content.Intent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.kakao.sdk.user.UserApiClient
 import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.WinePickApplication
 import kr.co.nexters.winepick.constant.TestConstant
 import kr.co.nexters.winepick.data.repository.WinePickRepository
+import kr.co.nexters.winepick.data.repository.WineRepository
 import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.BaseViewModel
+import kr.co.nexters.winepick.ui.home.HomeActivity
+import kr.co.nexters.winepick.ui.login.LoginActivity
 import kr.co.nexters.winepick.ui.search.SearchActivity
 import timber.log.Timber
 
@@ -17,7 +21,7 @@ import timber.log.Timber
  *
  * @since v1.0.0 / 2021.01.28
  */
-class TypeDetailModel(private val repo : WinePickRepository, private val auth : AuthManager) : BaseViewModel() {
+class TypeDetailModel(private val repo : WinePickRepository, private val authManager: AuthManager, private val wineRepository: WineRepository) : BaseViewModel() {
     private var _typeName = MutableLiveData<String>()
     var typeName : LiveData<String> = _typeName
 
@@ -41,62 +45,62 @@ class TypeDetailModel(private val repo : WinePickRepository, private val auth : 
     private var _loginWarningDlg : MutableLiveData<Boolean> = MutableLiveData()
     val loginWarningDlg : LiveData<Boolean> = _loginWarningDlg
 
+    private var _testWarningDlg : MutableLiveData<Boolean> = MutableLiveData()
+    val testWarningDlg : LiveData<Boolean> = _testWarningDlg
+
+
 
     /** 생성자 */
     init {
+        showLoading()
         _isUser.value = false
         _testImg.value = 0
         _backButton.value = false
         _loginWarningDlg.value = false
+        _testWarningDlg.value = false
 
-        if (auth.token != "guest") {
+        if (authManager.token != "guest") {
             _isUser.value = true
         }
         _isSearch.value = false
-        if (auth.recentSearch1 != null && !auth.recentSearch1.isNullOrBlank() ) {
+        if (wineRepository.userViewWines.isNotEmpty()) {
             _isSearch.value = true
         }
+        hideLoading()
     }
-
-    fun searchClick() {
-        WinePickApplication.getGlobalApplicationContext().startActivity(
-            Intent(WinePickApplication.appContext, SearchActivity::class.java)
-            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-    }
-
     fun backClick() {
         _backButton.value = true
     }
 
     fun setUserPersonalType() {
-        return when(auth.testType) {
+        return when(authManager.testType) {
             "A" -> {
-                auth.typeName = WinePickApplication.getGlobalApplicationContext().getString(R.string.type_a_name)
+                authManager.typeName = WinePickApplication.getGlobalApplicationContext().getString(R.string.type_a_name)
                 getUserType(TestConstant.A)
                 _testImg.value = R.drawable.img_test_mid_a
             }
             "B" -> {
-                auth.typeName = WinePickApplication.getGlobalApplicationContext().getString(R.string.type_b_name)
+                authManager.typeName = WinePickApplication.getGlobalApplicationContext().getString(R.string.type_b_name)
                 getUserType(TestConstant.B)
                 _testImg.value = R.drawable.img_test_mid_b
             }
             "C" -> {
-                auth.typeName = WinePickApplication.getGlobalApplicationContext().getString(R.string.type_c_name)
+                authManager.typeName = WinePickApplication.getGlobalApplicationContext().getString(R.string.type_c_name)
                 getUserType(TestConstant.C)
                 _testImg.value = R.drawable.img_test_mid_c
             }
             "D" -> {
-                auth.typeName = WinePickApplication.getGlobalApplicationContext().getString(R.string.type_d_name)
+                authManager.typeName = WinePickApplication.getGlobalApplicationContext().getString(R.string.type_d_name)
                 getUserType(TestConstant.D)
                 _testImg.value = R.drawable.img_test_mid_d
             }
             "E" -> {
-                auth.typeName = WinePickApplication.getGlobalApplicationContext().getString(R.string.type_e_name)
+                authManager.typeName = WinePickApplication.getGlobalApplicationContext().getString(R.string.type_e_name)
                 getUserType(TestConstant.E)
                 _testImg.value = R.drawable.img_test_mid_e
             }
             "F" -> {
-                auth.typeName = WinePickApplication.getGlobalApplicationContext().getString(R.string.type_f_name)
+                authManager.typeName = WinePickApplication.getGlobalApplicationContext().getString(R.string.type_f_name)
                 getUserType(TestConstant.F)
                 _testImg.value = R.drawable.img_test_mid_f
             }
@@ -105,19 +109,13 @@ class TypeDetailModel(private val repo : WinePickRepository, private val auth : 
         }
     }
     fun getUserType(resultId : Int) {
+        showLoading()
         repo.getResult(
             resultId = resultId,
             onSuccess = {
-                _typeName.value = it.personDetail + ", " + auth.typeName
-                val temp = it.description.split(".")
-                val sb = StringBuffer()
-                for (i in temp.indices) {
-                    sb.append(temp[i])
-                    if(i <temp.size-1) {
-                        sb.append(".\n")
-                    }
-                }
-                _typeDesc.value = sb.toString()
+                _typeName.value = it.personDetail + ", " + authManager.typeName
+                _typeDesc.value = it.description
+                hideLoading()
             },
             onFailure = {
 
@@ -125,11 +123,24 @@ class TypeDetailModel(private val repo : WinePickRepository, private val auth : 
         )
     }
     fun userLogout() {
-
+        UserApiClient.instance.unlink {
+            authManager.autoLogin = false
+            Intent(WinePickApplication.appContext, LoginActivity::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            }.run {
+                WinePickApplication.getGlobalApplicationContext().startActivity(this)
+            }
+        }
     }
 
     fun userLogin() {
         _loginWarningDlg.value = true
+    }
+
+    fun reTest() {
+        _testWarningDlg.value = true
     }
 
     /** UI 의 onDestroy 개념으로 생각하면 편할듯 */

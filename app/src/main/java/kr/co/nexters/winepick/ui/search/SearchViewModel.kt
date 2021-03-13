@@ -49,6 +49,10 @@ class SearchViewModel(
     val _toastMessage = MutableLiveData<Boolean>()
     var toastMessage: LiveData<Boolean> = _toastMessage
 
+    /** 취소 토스트 **/
+    val _cancelMessage = MutableLiveData<Boolean>()
+    var cancelMessage : LiveData<Boolean> = _cancelMessage
+
     /**
      * 검색 화면에서 진행하는 비즈니스 로직
      * LiveData 를 사용해도 되지만 Rx 감을 찾기위해 이걸 사용했으며, 생명주기상 문제가 있을 시 [LiveData] 로 수정
@@ -233,31 +237,52 @@ class SearchViewModel(
         Timber.i("wineItemViewClick search $wineResult")
     }
 
-    override fun wineHeartClick(wineResult: WineResult) {
-        // TODO. 검색 화면에서 좋아요 / 좋아요 취소 클릭 구현
-        Timber.i("wineHeartClick search $wineResult")
-        addLike(wineResult.id!!)
-    }
-
-    /**
-     * 좋아요 서버 통신 - addLike
-     */
-    fun addLike(wineId: Int) {
-        winePickRepository.postLike(
-            data = LikeWine(
-                userId = authManager.id,
-                wineId = wineId
-            ),
-            onSuccess = {
-                Timber.d("와인 저장 성공")
-                _toastMessage.value = true
-
-            },
-            onFailure = {
-
+    override fun wineHeartClick(newWineResult: WineResult) {
+        Timber.i("wineHeartClick search $newWineResult")
+        if(authManager.token != "guest") {
+            showLoading()
+            if (newWineResult.clickedLikeYn) {
+                cancelLike(authManager.id, newWineResult)
+            } else {
+                addLike(newWineResult)
             }
+        }
+    }
+    /** 좋아요 서버 통신 - addLike */
+    fun addLike(wineResult: WineResult) {
+        winePickRepository.postLike(
+                data = LikeWine(
+                        userId = authManager.id,
+                        wineId = wineResult.id!!
+                ),
+                onSuccess = {
+                    Timber.d("와인 좋아요 저장 성공")
+                    _toastMessage.value = true
+                    hideLoading()
+                },
+                onFailure = {
+                    toggleWineResult(wineResult)
+                    hideLoading()
+                }
         )
 
+    }
+
+    /** 좋아요 취소 서버 통신 - deleteLike */
+    fun cancelLike(userId: Int, wineResult: WineResult) {
+        winePickRepository.deleteLike(
+                wineId = wineResult.id!!,
+                userId = userId,
+                onSuccess = {
+                    Timber.d("와인 좋아요 취소 성공")
+                    _cancelMessage.value = true
+                    hideLoading()
+                },
+                onFailure = {
+                    toggleWineResult(wineResult)
+                    hideLoading()
+                }
+        )
     }
 
     override fun onCleared() {

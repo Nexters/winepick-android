@@ -144,7 +144,7 @@
                     android:layout_marginVertical="56dp"
                     android:textColor="@color/white"
                     android:paddingVertical="16dp"
-                    app:onSingleClick="@{vm::searchClick}"
+                    app:onSingleClick="@{vm::reTest}"
                     app:layout_constraintTop_toBottomOf="@id/tv_wine_type_detail"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
@@ -216,7 +216,7 @@
                 android:paddingVertical="16dp"
                 android:layout_marginTop="40dp"
                 android:layout_marginBottom="72dp"
-                app:onSingleClick="@{vm::userLogin}"
+                app:onSingleClick="@{vm::userLogout}"
                 android:visibility="@{vm.isUser() ? View.VISIBLE : View.GONE}"
                 />
 
@@ -229,7 +229,7 @@
                 android:gravity="center"
                 android:textSize="15sp"
                 android:visibility="@{vm.isUser() ? View.GONE : View.VISIBLE}"
-                app:onSingleClick="@{vm::userLogout}"
+                app:onSingleClick="@{vm::userLogin}"
                 android:layout_marginHorizontal="24dp"
                 android:includeFontPadding="false"
                 android:fontFamily="@font/notosans_cjk_kr_regular"

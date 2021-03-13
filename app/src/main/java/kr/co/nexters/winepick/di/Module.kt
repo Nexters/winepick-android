@@ -4,11 +4,9 @@ import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFact
 import kotlinx.serialization.json.Json
 import kr.co.nexters.winepick.BuildConfig
 import kr.co.nexters.winepick.WinePickApplication
-import kr.co.nexters.winepick.data.repository.SearchRepository
-import kr.co.nexters.winepick.data.repository.TestRepository
-import kr.co.nexters.winepick.data.repository.WinePickRepository
-import kr.co.nexters.winepick.data.repository.WineRepository
+import kr.co.nexters.winepick.data.repository.*
 import kr.co.nexters.winepick.data.source.SearchDataSource
+import kr.co.nexters.winepick.data.source.SurveyDataSource
 import kr.co.nexters.winepick.data.source.WineDataSource
 import kr.co.nexters.winepick.network.TestService
 import kr.co.nexters.winepick.network.WinePickService
@@ -78,6 +76,15 @@ val netModule = module {
                     addHeader("Authorization",authManager.token)
                     url(newUrl)
                 }.build())
+            }
+
+            if(newUrl.contains("v2/api/wine")) {
+                if(authManager.token != "guest") {
+                    return@Interceptor chain.proceed(chain.request().newBuilder().apply {
+                        addHeader("Authorization",authManager.token)
+                        url(newUrl)
+                    }.build())
+                }
             }
 
             val builder = chain.request().newBuilder()
@@ -158,9 +165,9 @@ val viewModelModule = module {
     viewModel { BaseViewModel() }
     viewModel { LoginViewModel(get(), get()) }
     viewModel { HomeViewModel(get(), get()) }
-    viewModel { TypeDetailModel(get(), get()) }
+    viewModel { TypeDetailModel(get(), get(), get()) }
     viewModel { LikeViewModel(get(), get()) }
-    viewModel { SearchViewModel(get(), get(),get(), get()) }
+    viewModel { SearchViewModel(get(), get(), get(), get()) }
     viewModel { SearchFilterViewModel(get()) }
 }
 
@@ -169,11 +176,13 @@ val repositoryModule = module {
     single { TestRepository(get()) }
     single { WineRepository(get(), get()) }
     single { SearchRepository(get()) }
+    single { SurveyRepository(get()) }
 }
 
 val dataSourceModule = module {
     single { WineDataSource(get()) }
     single { SearchDataSource(get()) }
+    single { SurveyDataSource(get()) }
 }
 
 val authModule = module {

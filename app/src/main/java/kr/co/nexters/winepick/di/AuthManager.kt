@@ -40,7 +40,7 @@ class AuthManager(private val sharedPrefs: SharedPrefs) {
 
     var testType: String
         get() {
-            return sharedPrefs[TEST, ""] ?: ""
+            return sharedPrefs[TEST, "N"] ?: "N"
         }
         set(value) {
             sharedPrefs[TEST] = value
@@ -51,21 +51,6 @@ class AuthManager(private val sharedPrefs: SharedPrefs) {
         }
         set(value) {
             sharedPrefs[ID] = value
-        }
-    var recentSearch1: String
-        get() {
-            return sharedPrefs[RECENT_SEARCH1, ""] ?: ""
-        }
-        set(value) {
-            sharedPrefs[RECENT_SEARCH1] = value
-        }
-
-    var recentSearch2: String
-        get() {
-            return sharedPrefs[RECENT_SEARCH2, ""] ?: ""
-        }
-        set(value) {
-            sharedPrefs[RECENT_SEARCH2] = value
         }
 
     var typeName: String

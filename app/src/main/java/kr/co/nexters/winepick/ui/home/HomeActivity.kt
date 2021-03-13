@@ -6,14 +6,17 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.auth.model.OAuthToken
+import com.kakao.sdk.user.UserApiClient
 import kr.co.nexters.winepick.BR
 import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.databinding.ActivityHomeBinding
 import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.BaseActivity
 import kr.co.nexters.winepick.ui.component.ConfirmDialog
+import kr.co.nexters.winepick.ui.detail.DetailActivity
 import kr.co.nexters.winepick.ui.login.LoginActivity
 import kr.co.nexters.winepick.ui.login.LoginViewModel
+import kr.co.nexters.winepick.ui.survey.SurveyActivity
 import kr.co.nexters.winepick.util.drawLikeToast
 import kr.co.nexters.winepick.util.startActivity
 import org.koin.android.ext.android.inject
@@ -36,8 +39,12 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
             authManager.apply {
                 this.token = token.accessToken
             }
+            UserApiClient.instance.me { user, error ->
+                val kakaoId = user!!.id
+                loginViewModel.addUserInfo(token.accessToken,authManager.testType, kakaoId)
+            }
             Timber.d("로그인성공 - 토큰 ${authManager.token}")
-            loginViewModel.addUserInfo(token.accessToken)
+
             onResume()
         }
     }
@@ -71,12 +78,12 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
                 ).show(supportFragmentManager, "LoginWarningDialog")
             }
         })
-
-
     }
 
     override fun onResume() {
         super.onResume()
         viewModel.onResume()
+
+        startActivity(Intent(this, DetailActivity::class.java))
     }
 }

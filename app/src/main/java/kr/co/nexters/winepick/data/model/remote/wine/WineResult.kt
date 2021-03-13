@@ -27,6 +27,7 @@ import kr.co.nexters.winepick.network.WinePickService
  * @param suitWho
  * @param sweetness
  * @param tannin
+ * @param  likeYn
  */
 @Serializable
 data class WineResult(
@@ -88,8 +89,16 @@ data class WineResult(
 
     @SerializedName("tannin")
     @SerialName("tannin")
-    val tannin: Int? = null
-)
+    val tannin: Int? = null,
+
+    @SerializedName("likeYn")
+    @SerialName("likeYn")
+    var likeYn : Boolean? = null
+) {
+    /** 만약 해당 [WineResult] 아이템에 좋아요 버튼 클릭 시 새로 설정될 [likeYn] */
+    val clickedLikeYn: Boolean
+        get() = !(likeYn ?: true)
+}
 
 fun getWineResponse(): WinePickResponse<WineResult> = Json.decodeFromString(
     """

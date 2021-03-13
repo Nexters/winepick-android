@@ -1,15 +1,18 @@
 package kr.co.nexters.winepick.ui.login
 
 import android.os.Bundle
+import android.os.Handler
 import androidx.databinding.library.baseAdapters.BR
 import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.auth.model.OAuthToken
+import com.kakao.sdk.user.UserApiClient
 import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.databinding.ActivityLoginBinding
 import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.BaseActivity
 import kr.co.nexters.winepick.ui.home.HomeActivity
 import kr.co.nexters.winepick.ui.search.SearchActivity
+import kr.co.nexters.winepick.ui.splash.SplashActivity
 import kr.co.nexters.winepick.util.startActivity
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -32,9 +35,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(
             authManager.apply {
                 this.token = token.accessToken
             }
-            Timber.e("로그인성공 - 토큰 ${authManager.token}")
-            viewModel.addUserInfo(token.accessToken)
-            startActivity(HomeActivity::class, true)
+            UserApiClient.instance.me { user, error ->
+                val kakaoId = user!!.id
+                viewModel.addUserInfo(token.accessToken,authManager.testType,kakaoId)
+            }
         }
     }
 
@@ -53,7 +57,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(
             }
             tvGuest.setOnClickListener {
                 authManager.token = "guest"
-                authManager.testType = ""
                 startActivity(HomeActivity::class, true)
             }
         }

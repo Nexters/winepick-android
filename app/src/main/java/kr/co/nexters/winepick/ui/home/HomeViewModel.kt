@@ -20,6 +20,7 @@ import kr.co.nexters.winepick.ui.like.LikeListActivity
 import kr.co.nexters.winepick.ui.search.SearchActivity
 import kr.co.nexters.winepick.ui.survey.SurveyActivity
 import kr.co.nexters.winepick.ui.type.TypeDetailActivity
+import kr.co.nexters.winepick.util.getNetworkConnected
 import timber.log.Timber
 
 /**
@@ -50,22 +51,28 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
     private var _testImg = MutableLiveData<Int>()
     var testImg : LiveData<Int> = _testImg
 
+    lateinit var keywordList1 : Array<String>
+    lateinit var keywordList2: Array<String>
+
 
     /** 생성자 */
     init {
+        showLoading()
         _likecnt.value = "0"
         _isTest.value = false
         _isUser.value = false
         _loginWarningDlg.value = false
         _testImg.value = 0
-        if (auth.testType != "") {
+        if (auth.testType != "N") {
             _isTest.value = true
             setUserPersonalType()
         }
         getUserLikes()
+        hideLoading()
 
     }
     fun getUserLikes(){
+        showLoading()
         if (auth.token != "guest") {
             _isUser.value = true
             repo.getUser(
@@ -76,11 +83,13 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
                             _likecnt.value = "99+"
                         }
                         _likecnt.value = it.likes.toString()
+                        hideLoading()
                     },
                     onFailure = {
                     }
             )
         }
+
 
     }
 
@@ -117,16 +126,41 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
         }
     }
     fun getUserType(resultId: Int) {
+        showLoading()
+
         repo.getResult(
                 resultId = resultId,
                 onSuccess = {
-                    _keyword1.value = it.keyword1
-                    _keyword2.value = it.keyword2
+                    val tempKeyword1 = it.keyword1.split(",")
+                    val tempKeyword2 = it.keyword2.split(",")
+                    _keyword1.value = tempKeyword1[0]!!
+                    _keyword2.value = tempKeyword2[0]!!
+                    keywordList1 = tempKeyword1.subList(1, tempKeyword1.size).toTypedArray()
+                    keywordList2 = tempKeyword2.subList(1, tempKeyword2.size).toTypedArray()
+
+                    hideLoading()
                 },
                 onFailure = {
 
                 }
         )
+
+    }
+    fun keyword1Click() {
+        Intent(WinePickApplication.appContext, SearchActivity::class.java).apply {
+            putExtra("keyword",keywordList1)
+        }.run {
+            WinePickApplication.getGlobalApplicationContext().startActivity(this.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+        }
+
+    }
+    fun keyword2Click() {
+        Intent(WinePickApplication.appContext, SearchActivity::class.java).apply {
+            putExtra("keyword",keywordList2)
+        }.run {
+            WinePickApplication.getGlobalApplicationContext().startActivity(this.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+        }
+
     }
     fun testClick() {
         WinePickApplication.getGlobalApplicationContext().startActivity(Intent(WinePickApplication.appContext, SurveyActivity::class.java)
