@@ -46,7 +46,8 @@ class SearchRecommendAdapter(
 
         return SearchRecommendViewHolder(binding).apply {
             itemView.setOnSingleClickListener {
-                vm.querySearchClick(binding.searchRecommend!!, pageNumber = 0)
+                val recommendValue = binding.searchRecommend!!.split("#").last()
+                vm.queryRecommendClick(recommendValue, pageNumber = 0)
             }
         }
     }

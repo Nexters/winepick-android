@@ -2,6 +2,7 @@ package kr.co.nexters.winepick.api.search
 
 import kotlinx.coroutines.runBlocking
 import kr.co.nexters.winepick.base.AndroidBaseTest
+import kr.co.nexters.winepick.data.model.remote.wine.WineResult
 import kr.co.nexters.winepick.data.source.WineDataSource
 import org.junit.Assert
 import org.junit.Test
@@ -28,6 +29,26 @@ class WineApiTest : AndroidBaseTest() {
         println("$resultEmptyList")
 
         Assert.assertNotNull(resultEmptyList)
+    }
+
+    /** [WineDataSource.getWines] 테스트 */
+    @Test
+    fun getWinesKeywordTest() = runBlocking {
+        val result = wineDataSource.getWinesKeyword(10, 0, "혼자 집에서 쉴 때")
+
+        println("$result")
+
+        Assert.assertNotNull(result)
+
+        // 이상한 값을 넣을 시 500 에러가 발생하여야 한다.
+        try {
+            val resultEmptyList = wineDataSource.getWinesKeyword(20, 0, "")
+            println("$resultEmptyList")
+            Assert.assertNotNull(resultEmptyList)
+        } catch (throwable: Throwable) {
+            Assert.assertTrue(throwable.message?.contains("500") == true)
+            println("$throwable")
+        }
     }
 
     /** [WineDataSource.getWine] 테스트 */
