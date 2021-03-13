@@ -3,14 +3,13 @@ package kr.co.nexters.winepick.data.source
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kr.co.nexters.winepick.data.model.Survey
-import kr.co.nexters.winepick.data.response.SurveyResponse
-import kr.co.nexters.winepick.network.NetworkModules
-import kr.co.nexters.winepick.network.NetworkModules.send
+import kr.co.nexters.winepick.di.send
+import kr.co.nexters.winepick.network.WinePickService
 
-object SurveyDataSource {
+class SurveyDataSource(private val winePickService: WinePickService) {
     /** [WinePickService.getSurvey] 요청에 대한 비즈니스 로직 */
     suspend fun getSurvey(): Survey? = withContext(Dispatchers.IO) {
-        val response = NetworkModules.retrofit.getSurveys().send()
+        val response = winePickService.getSurveys().send()
         return@withContext response.body()
     }
 

@@ -8,9 +8,19 @@ import io.mockk.every
 import io.mockk.mockkStatic
 import io.mockk.unmockkStatic
 import kr.co.nexters.winepick.WinePickApplication
+import kr.co.nexters.winepick.data.repository.SearchRepository
+import kr.co.nexters.winepick.data.repository.TestRepository
+import kr.co.nexters.winepick.data.repository.WineRepository
+import kr.co.nexters.winepick.data.source.WineDataSource
+import kr.co.nexters.winepick.di.moduleList
+import kr.co.nexters.winepick.util.SharedPrefs
 import org.junit.After
 import org.junit.Before
 import org.junit.runner.RunWith
+import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
+import org.koin.test.KoinTest
+import org.koin.test.inject
 import org.robolectric.annotation.Config
 
 /**
@@ -20,10 +30,21 @@ import org.robolectric.annotation.Config
  */
 @RunWith(AndroidJUnit4::class)
 @Config(application = Application::class)
-abstract class AndroidBaseTest {
+abstract class AndroidBaseTest : KoinTest {
+    val testRepository: TestRepository by inject()
+    val searchRepository: SearchRepository by inject()
+    val wineRepository: WineRepository by inject()
+
+    val wineDataSource: WineDataSource by inject()
+
+    val sharedPrefs: SharedPrefs by inject()
+
+    private val mockModule = moduleList
+
     @Before
     fun setupAndroidBase() {
         WinePickApplication.appContext = ApplicationProvider.getApplicationContext()
+        startKoin { modules(mockModule) }
 
         println("${this::class.java.canonicalName} mockking start")
         mockkStatic(KakaoSDK::class)
@@ -35,5 +56,6 @@ abstract class AndroidBaseTest {
     @After
     fun tearDownAndroidBase() {
         unmockkStatic(KakaoSDK::class)
+        stopKoin()
     }
 }

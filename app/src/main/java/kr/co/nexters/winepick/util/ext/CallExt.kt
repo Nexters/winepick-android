@@ -21,7 +21,7 @@ fun <T> Call<T>.safeEnqueue(
                 response: Response<T>
             ) {
                 if ( response.isSuccessful ) {
-                    response.body()?.let {
+                    response.body()!!.let {
                         onSuccess(it)
                     } ?: onFailure(response)
                 } else {
