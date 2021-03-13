@@ -68,8 +68,6 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
             setUserPersonalType()
         }
         getUserLikes()
-        hideLoading()
-
     }
     fun getUserLikes(){
         showLoading()
@@ -86,6 +84,7 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
                         hideLoading()
                     },
                     onFailure = {
+                        hideLoading()
                     }
             )
         }
@@ -127,7 +126,6 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
     }
     fun getUserType(resultId: Int) {
         showLoading()
-
         repo.getResult(
                 resultId = resultId,
                 onSuccess = {
@@ -141,7 +139,7 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
                     hideLoading()
                 },
                 onFailure = {
-
+                    hideLoading()
                 }
         )
 

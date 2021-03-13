@@ -66,7 +66,6 @@ class TypeDetailModel(private val repo : WinePickRepository, private val authMan
         if (wineRepository.userViewWines.isNotEmpty()) {
             _isSearch.value = true
         }
-        hideLoading()
     }
     fun backClick() {
         _backButton.value = true
@@ -118,7 +117,7 @@ class TypeDetailModel(private val repo : WinePickRepository, private val authMan
                 hideLoading()
             },
             onFailure = {
-
+                hideLoading()
             }
         )
     }
@@ -151,6 +150,5 @@ class TypeDetailModel(private val repo : WinePickRepository, private val authMan
     override fun onResume() {
         super.onResume()
         setUserPersonalType()
-
     }
 }

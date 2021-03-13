@@ -39,6 +39,7 @@
     <color name="search_recommend_item_text_color">#000000</color>
     <color name="search_relative_item_divider_color">#F3F3F3</color>
     <color name="search_result_country_text_color">#ADADAD</color>
+    <color name="search_result_wine_background">#F5F5F5</color>
 
     <!-- search filter -->
     <color name="search_filter_layout_gray_background">#05000000</color>
