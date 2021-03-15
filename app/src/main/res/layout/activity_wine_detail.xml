@@ -9,7 +9,6 @@
         <variable
             name="vm"
             type="kr.co.nexters.winepick.ui.detail.WineDetailViewModel" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -91,7 +90,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@{vm.wineKor}"
+                    android:text="@{vm.wineResult.nmKor}"
                     tools:text="라포데리아~"
                     android:textSize="18dp"
                     android:id="@+id/tv_wine_name_kor"
@@ -106,7 +105,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@{vm.wineEng}"
+                    android:text="@{vm.wineResult.nmEng}"
                     tools:text="라포데리아~"
                     android:textSize="14dp"
                     android:id="@+id/tv_wine_name_eng"
@@ -124,6 +123,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/img_wine_country"
                     android:layout_marginTop="8dp"
+                    app:imageResource="@{vm.countryImage}"
                     app:layout_constraintStart_toStartOf="@id/guideline_left"
                     app:layout_constraintTop_toBottomOf="@id/tv_wine_name_eng"/>
 
@@ -134,7 +134,7 @@
                     app:layout_constraintBottom_toBottomOf="@id/img_wine_country"
                     app:layout_constraintStart_toEndOf="@id/img_wine_country"
                     tools:text="호주"
-                    android:text="@{vm.wineCountry}"
+                    android:text="@{vm.wineResult.country}"
                     android:textColor="@color/colorGray82"
                     android:includeFontPadding="false"
                     android:textSize="10sp"
@@ -148,7 +148,7 @@
                     app:layout_constraintTop_toBottomOf="@id/img_wine_country"
                     app:layout_constraintStart_toStartOf="@id/guideline_left"
                     android:id="@+id/tv_wine_price"
-                    android:text="@{vm.winePrice}"
+                    android:text="@{@string/search_result_price(vm.wineResult.price)}"
                     android:includeFontPadding="false"
                     android:fontFamily="@font/notosans_cjk_kr_bold"
                     android:textSize="16dp"
@@ -159,7 +159,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/tv_wine_feeling"
-                    android:text="@{vm.wineFeeling}"
+                    android:text="@{vm.wineResult.feeling}"
                     android:textSize="14dp"
                     android:textColor="@color/black"
                     tools:text="클라우디 베이는 ~~~"

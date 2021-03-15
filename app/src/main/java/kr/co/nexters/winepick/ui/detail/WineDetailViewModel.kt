@@ -14,6 +14,7 @@ import kr.co.nexters.winepick.constant.TestConstant.D
 import kr.co.nexters.winepick.constant.TestConstant.E
 import kr.co.nexters.winepick.constant.TestConstant.F
 import kr.co.nexters.winepick.data.model.WineFood
+import kr.co.nexters.winepick.data.model.remote.wine.WineResult
 import kr.co.nexters.winepick.data.model.remote.wine.WineValue
 import kr.co.nexters.winepick.data.repository.WinePickRepository
 import kr.co.nexters.winepick.di.AuthManager
@@ -37,17 +38,8 @@ class WineDetailViewModel(private val winePickRepository: WinePickRepository) : 
     private var _wineId = MutableLiveData<Int>()
     var wineId : LiveData<Int> = _wineId
 
-    private val _wineKor = MutableLiveData<String>()
-    val wineKor : LiveData<String> = _wineKor
-
-    private val _wineEng = MutableLiveData<String>()
-    val wineEng : LiveData<String> = _wineEng
-
-    private val _wineCountry = MutableLiveData<String>()
-    val wineCountry : LiveData<String> = _wineCountry
-
-    private val _winePrice = MutableLiveData<String>()
-    val winePrice : LiveData<String> = _winePrice
+    private var _countryImage = MutableLiveData<Int>()
+    var countryImage : LiveData<Int> = _countryImage
 
     private val _wineName = MutableLiveData<String>()
     val wineName : LiveData<String> = _wineName
@@ -94,6 +86,9 @@ class WineDetailViewModel(private val winePickRepository: WinePickRepository) : 
     private var _wineLike : MutableLiveData<Boolean> = MutableLiveData()
     var wineLike : LiveData<Boolean> = _wineLike
 
+    private var _wineResult : MutableLiveData<WineResult> = MutableLiveData()
+    var wineResult : LiveData<WineResult> = _wineResult
+
 
     /** 생성자 */
     init {
@@ -109,21 +104,48 @@ class WineDetailViewModel(private val winePickRepository: WinePickRepository) : 
         winePickRepository.getWine(wineId= wineId.value!!,
             onSuccess = {
                 _wineFeeling.value = it.feeling
-                _winePrice.value = it.price.toString() + "원"
-                _wineCountry.value = it.country
-                _wineKor.value = it.nmKor
-                _wineEng.value = it.nmEng
                 _wineSweetness.value = it.sweetness
                 _wineAcidity.value = it.acidity
                 _wineBody.value = it.body
                 _wineTannin.value = it.tannin
                 _wineName.value = it.nmKor
+                _wineResult.value = it
+                wineCountryImage(_wineResult.value!!.country!!)
+                wineStore(_wineResult.value!!.store!!)
 
             },
             onFailure = {
 
             }
         )
+    }
+    fun wineStore(store : String) {
+        when(store) {
+            "이마트 24" -> { _isEmart.value = true}
+            "GS25" -> {_isGs.value = true }
+            "CU" -> {_isCu.value = true}
+            "세븐일레븐" -> {_isSeven.value = true}
+        }
+    }
+    fun wineCountryImage(country : String) {
+        when(country) {
+            "미국" -> {_countryImage.value = R.drawable.us_icon}
+            "이탈리아" -> {_countryImage.value = R.drawable.italy_icon}
+            "남아프리카공화국" -> {_countryImage.value = R.drawable.south_africa_icon}
+            "호주" -> { _countryImage.value = R.drawable.australia_icon }
+            "이탈리아" -> {_countryImage.value = R.drawable.italy_icon}
+            "칠레" -> {_countryImage.value = R.drawable.chile_icon}
+            "스페인" -> {_countryImage.value = R.drawable.spain_icon}
+            "뉴질랜드" -> {_countryImage.value = R.drawable.new_zealand_icon}
+            "캐나다" -> {_countryImage.value = R.drawable.canada_icon}
+            "프랑스" -> {_countryImage.value = R.drawable.france_icon}
+            "오스트리아" -> {_countryImage.value = R.drawable.australia_icon}
+            "독일" -> {_countryImage.value = R.drawable.germany_icon}
+            "포루투갈" -> {_countryImage.value = R.drawable.portugal_icon}
+            "아르헨티나" -> {_countryImage.value = R.drawable.argentina_icon}
+
+        }
+
     }
 
     fun wineImageCheck() {
