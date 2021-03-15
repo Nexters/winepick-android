@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="wineValue"
+            type="kr.co.nexters.winepick.data.model.WineFood" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cl_wine_sweetness">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_wine_sweetness"
+            android:text="@string/sweetness"
+            android:textSize="15dp"
+            android:fontFamily="@font/notosans_cjk_kr_medium"
+            android:textColor="@color/black"
+            android:includeFontPadding="false"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/img_wine_detail_icon"
+            android:src="@drawable/question"
+            android:layout_marginStart="2dp"
+            app:layout_constraintStart_toEndOf="@id/tv_wine_sweetness"
+            app:layout_constraintBottom_toBottomOf="@id/tv_wine_sweetness"
+            app:layout_constraintTop_toTopOf="@id/tv_wine_sweetness"/>
+
+
+        <ProgressBar
+            android:layout_width="0dp"
+            android:layout_height="14dp"
+            android:layout_marginLeft="32dp"
+            android:id="@+id/pb_wine_detail"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            app:layout_constraintTop_toTopOf="@id/tv_wine_sweetness"
+            app:layout_constraintBottom_toBottomOf="@id/tv_wine_sweetness"
+            app:layout_constraintStart_toEndOf="@id/img_wine_detail_icon"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="낮음"
+            android:textColor="@color/colorGrayab"
+            android:textSize="10dp"
+            android:includeFontPadding="false"
+            android:layout_marginTop="2dp"
+            android:fontFamily="@font/notosans_cjk_kr_regular"
+            app:layout_constraintTop_toBottomOf="@id/pb_wine_detail"
+            app:layout_constraintStart_toStartOf="@id/pb_wine_detail"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="높음"
+            android:textColor="@color/colorGrayab"
+            android:textSize="10dp"
+            android:includeFontPadding="false"
+            android:layout_marginTop="2dp"
+            android:fontFamily="@font/notosans_cjk_kr_regular"
+            app:layout_constraintTop_toBottomOf="@id/pb_wine_detail"
+            app:layout_constraintEnd_toEndOf="@id/pb_wine_detail"/>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bubble"
+            android:paddingVertical="8dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="8dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@id/img_wine_detail_icon"
+            app:layout_constraintTop_toTopOf="@id/img_wine_detail_icon"
+            app:layout_constraintBottom_toBottomOf="@id/img_wine_detail_icon">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sweetness_detail"
+                android:textColor="@color/colorBlack80"
+                android:fontFamily="@font/notosans_cjk_kr_light"
+                android:includeFontPadding="false"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>
+

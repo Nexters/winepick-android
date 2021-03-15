@@ -13,7 +13,10 @@
     <color name="colorBlack80">#80000000</color>
     <color name="colorGray">#f7f7f7</color>
     
-    <!-- home -->
+    <!-- winedetail -->
+    <color name="colorGrayad">#adadad</color>
+    <color name="colorBlack11">#11000000</color>
+    <color name="colorGrayab">#ababab</color>
 
     <!-- main -->
     <color name="colorLightRed">#f25942</color>
@@ -21,6 +24,8 @@
     <color name="colorGrayeb">#ebebeb</color>
     <color name="colorGray82">#828282</color>
     <color name="colorGrayf9">#f9f9f9</color>
+
+
 
 
     <!-- like -->

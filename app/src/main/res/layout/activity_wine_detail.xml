@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="vm"
+            type="kr.co.nexters.winepick.ui.detail.WineDetailViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite">
+
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:descendantFocusability="blocksDescendants"
+            tools:context=".ui.detail.WineDetailActivity">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="56dp">
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/guideline_left"
+                    app:layout_constraintGuide_begin="24dp"
+                    android:orientation="vertical"/>
+
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/guideline_right"
+                    app:layout_constraintGuide_end="24dp"
+                    android:orientation="vertical"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:id="@+id/ll_market"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/guideline_left">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/emart_24"
+                        android:layout_marginStart="10dp"
+                        android:visibility="@{vm.isEmart() ? View.GONE : View.VISIBLE}"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/gs_icon"
+                        android:layout_marginStart="10dp"
+                        android:visibility="@{vm.isGs() ? View.GONE : View.VISIBLE}"/>
+
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/seven_icon"
+                        android:layout_marginStart="10dp"
+                        android:visibility="@{vm.isSeven() ? View.GONE : View.VISIBLE}"/>
+
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/cu_icon"
+                        android:layout_marginStart="10dp"
+                        android:visibility="@{vm.isCu() ? View.GONE : View.VISIBLE}"/>
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@{vm.wineKor}"
+                    tools:text="라포데리아~"
+                    android:textSize="18dp"
+                    android:id="@+id/tv_wine_name_kor"
+                    android:fontFamily="@font/notosans_cjk_kr_medium"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintTop_toBottomOf="@id/ll_market"
+                    app:layout_constraintStart_toStartOf="@id/guideline_left"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_right"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@{vm.wineEng}"
+                    tools:text="라포데리아~"
+                    android:textSize="14dp"
+                    android:id="@+id/tv_wine_name_eng"
+                    android:fontFamily="@font/notosans_cjk_kr_regular"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/colorGrayad"
+                    android:layout_marginTop="4dp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_wine_name_kor"
+                    app:layout_constraintStart_toStartOf="@id/guideline_left"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_right"/>
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/img_wine_country"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="@id/guideline_left"
+                    app:layout_constraintTop_toBottomOf="@id/tv_wine_name_eng"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/img_wine_country"
+                    app:layout_constraintBottom_toBottomOf="@id/img_wine_country"
+                    app:layout_constraintStart_toEndOf="@id/img_wine_country"
+                    tools:text="호주"
+                    android:text="@{vm.wineCountry}"
+                    android:textColor="@color/colorGray82"
+                    android:includeFontPadding="false"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/notosans_cjk_kr_regular"/>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="28dp"
+                    app:layout_constraintTop_toBottomOf="@id/img_wine_country"
+                    app:layout_constraintStart_toStartOf="@id/guideline_left"
+                    android:id="@+id/tv_wine_price"
+                    android:text="@{vm.winePrice}"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/notosans_cjk_kr_bold"
+                    android:textSize="16dp"
+                    tools:text="31300원"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_wine_feeling"
+                    android:text="@{vm.wineFeeling}"
+                    android:textSize="14dp"
+                    android:textColor="@color/black"
+                    tools:text="클라우디 베이는 ~~~"
+                    android:fontFamily="@font/notosans_cjk_kr_light"
+                    android:includeFontPadding="false"
+                    android:layout_marginTop="30dp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_wine_price"
+                    app:layout_constraintStart_toStartOf="@id/guideline_left"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_right"/>
+                
+                
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/cl_wine_img"
+                    android:elevation="2dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/bg_home_white_15"
+                    app:layout_constraintTop_toBottomOf="@id/tv_wine_feeling"
+                    app:layout_constraintStart_toStartOf="@id/guideline_left"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_right">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/img_wine_icon"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"/>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="@id/img_wine_icon"
+                        app:layout_constraintBottom_toBottomOf="@id/img_wine_icon"
+                        app:layout_constraintStart_toEndOf="@id/img_wine_icon"
+                        android:textColor="@color/black"
+                        android:layout_marginVertical="16dp"
+                        android:text="@string/wine_img_check"
+                        android:fontFamily="@font/notosans_cjk_kr_regular"
+                        android:includeFontPadding="false"
+                        android:layout_marginStart="16dp"/>
+
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:src="@drawable/right_arrow_black"
+                        app:onSingleClick="@{vm::wineImageCheck}"
+                        android:padding="12dp"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="64dp"
+                    android:layout_marginTop="56dp"
+                    android:id="@+id/cl_wine_feature"
+                    app:layout_constraintStart_toStartOf="@id/guideline_left"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                    app:layout_constraintTop_toBottomOf="@id/cl_wine_img"
+                    android:background="@color/colorGrayf9">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_wine_feature"
+                        tools:text="와인 특징"
+                        android:text="@{@string/wine_feature(vm.wineName)}"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/notosans_cjk_kr_bold"
+                        android:includeFontPadding="false"
+                        android:textSize="20dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"/>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/tv_wine_feature"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:text="@{@string/wine_feature_detail(vm.wineName)}"
+                        tools:text="몬탈치노는 에피타이저,테이블에 어울려요."
+                        android:textColor="@color/black"
+                        android:textSize="15dp"
+                        android:id="@+id/tv_wine_feature_detail"
+                        android:fontFamily="@font/notosans_cjk_kr_light"
+                        android:includeFontPadding="false"
+                        android:layout_marginTop="10dp"/>
+
+
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rv_like_list"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        app:spanCount="3"
+                        submitList="@{vm.wineFeature}"
+                        tools:itemCount="3"
+                        android:layout_marginTop="40dp"
+                        tools:listitem="@layout/item_wine_food"
+                        app:layout_constraintTop_toBottomOf="@id/tv_wine_feature_detail"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="64dp"
+                    android:layout_marginTop="56dp"
+                    android:id="@+id/cl_wine_value"
+                    app:layout_constraintStart_toStartOf="@id/guideline_left"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                    app:layout_constraintTop_toBottomOf="@id/cl_wine_feature">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_wine_value"
+                        tools:text="신선한 과일향의 몬탈치노"
+                        android:text="@{@string/wine_value(vm.wineName,vm.wineName)}"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/notosans_cjk_kr_bold"
+                        android:includeFontPadding="false"
+                        android:textSize="20dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"/>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/tv_wine_value"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:text="몬탈치노의 당도와 바디감을 알려드릴게요."
+                        android:text="@{@string/wine_value_detail(vm.wineName)}"
+                        android:textColor="@color/black"
+                        android:textSize="15dp"
+                        android:id="@+id/tv_wine_value_detail"
+                        android:fontFamily="@font/notosans_cjk_kr_light"
+                        android:includeFontPadding="false"
+                        android:layout_marginTop="10dp"/>
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rv_wine_value"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        android:orientation="vertical"
+                        submitList="@{vm.wineValue}"
+                        tools:listitem="@layout/item_wine_value"
+                        tools:itemCount="4"
+                        android:layout_marginTop="22dp"
+                        app:layout_constraintTop_toBottomOf="@id/tv_wine_value_detail"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="62dp"
+                    android:paddingBottom="48dp"
+                    android:id="@+id/cl_wine_food"
+                    app:layout_constraintStart_toStartOf="@id/guideline_left"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                    app:layout_constraintTop_toBottomOf="@id/cl_wine_value">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_wine_food"
+                        tools:text="함께하면 더 맛있는 요리"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/notosans_cjk_kr_bold"
+                        android:includeFontPadding="false"
+                        android:textSize="20dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"/>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/tv_wine_food"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:text="몬탈치노는 에피타이저,테이블에 어울려요."
+                        android:textColor="@color/black"
+                        android:textSize="15dp"
+                        android:id="@+id/tv_wine_food_detail"
+                        android:fontFamily="@font/notosans_cjk_kr_light"
+                        android:includeFontPadding="false"
+                        android:layout_marginTop="10dp"/>
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rv_wine_food"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        app:spanCount="3"
+                        submitList="@{vm.wineFood}"
+                        tools:itemCount="8"
+                        tools:listitem="@layout/item_wine_food"
+                        app:layout_constraintTop_toBottomOf="@id/tv_wine_food_detail"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/iv_type_back"
+                android:layout_marginLeft="24dp"
+                app:onSingleClick="@{vm::backClick}"
+                android:padding="16dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:src="@drawable/back_arrow"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="58dp"
+            android:layout_height="58dp"
+            android:background="@drawable/bg_heart_circle"
+            android:layout_marginBottom="32dp"
+            android:layout_marginEnd="24dp"
+            android:elevation="2dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:src = "@drawable/like_large"
+                android:background="@{vm.wineLike? @drawable/like_large :@drawable/like_false}"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+</layout>

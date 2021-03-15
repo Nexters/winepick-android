@@ -11,6 +11,7 @@ import kr.co.nexters.winepick.data.source.WineDataSource
 import kr.co.nexters.winepick.network.TestService
 import kr.co.nexters.winepick.network.WinePickService
 import kr.co.nexters.winepick.ui.base.BaseViewModel
+import kr.co.nexters.winepick.ui.detail.WineDetailViewModel
 import kr.co.nexters.winepick.ui.home.HomeViewModel
 import kr.co.nexters.winepick.ui.type.TypeDetailModel
 import kr.co.nexters.winepick.ui.like.LikeViewModel
@@ -169,6 +170,7 @@ val viewModelModule = module {
     viewModel { LikeViewModel(get(), get()) }
     viewModel { SearchViewModel(get(), get(), get(), get()) }
     viewModel { SearchFilterViewModel(get()) }
+    viewModel { WineDetailViewModel(get()) }
 }
 
 val repositoryModule = module {
