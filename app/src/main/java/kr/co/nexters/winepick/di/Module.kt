@@ -176,7 +176,7 @@ val repositoryModule = module {
     single { TestRepository(get()) }
     single { WineRepository(get(), get()) }
     single { SearchRepository(get()) }
-    single { SurveyRepository(get()) }
+    single { SurveyRepository(get(), get()) }
 }
 
 val dataSourceModule = module {

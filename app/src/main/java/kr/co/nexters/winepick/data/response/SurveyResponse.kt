@@ -1,7 +1,6 @@
 package kr.co.nexters.winepick.data.response
 
 import com.google.gson.annotations.SerializedName
-import kr.co.nexters.winepick.data.model.Survey
 
 data class SurveyResponse (
     @SerializedName("id")

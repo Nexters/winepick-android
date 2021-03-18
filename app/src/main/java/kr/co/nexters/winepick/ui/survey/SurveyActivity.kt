@@ -1,18 +1,13 @@
 package kr.co.nexters.winepick.ui.survey
 
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import androidx.annotation.IdRes
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import kr.co.nexters.winepick.R
-import kr.co.nexters.winepick.data.model.Survey
 import kr.co.nexters.winepick.databinding.ActivitySurveyBinding
-import kr.co.nexters.winepick.example.java.normal.JavaDefaultFragment
 import kr.co.nexters.winepick.network.WinePickService
 import kr.co.nexters.winepick.ui.base.BaseActivity
-import kr.co.nexters.winepick.ui.base.BaseFragment
 import kr.co.nexters.winepick.ui.base.BaseViewModel
 import kr.co.nexters.winepick.ui.base.navigate
 import kr.co.nexters.winepick.util.setOnSingleClickListener
@@ -35,7 +30,6 @@ class SurveyActivity() : BaseActivity<ActivitySurveyBinding>(R.layout.activity_s
 
     // 통신
     var winePickService: WinePickService? = null
-    var survey: Survey? = null
 
     // 설문 데이터 변경 관련
     var currentStage: Int = 1
@@ -44,8 +38,6 @@ class SurveyActivity() : BaseActivity<ActivitySurveyBinding>(R.layout.activity_s
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        loadSurvey()
 
         Timber.i("화긴, $currentStage")
         SurveyFragment(R.layout.fragment_survey).apply {
@@ -62,38 +54,6 @@ class SurveyActivity() : BaseActivity<ActivitySurveyBinding>(R.layout.activity_s
                 binding.surveyContent.id
             )
         }
-    }
-
-    private fun loadSurvey() {
-        var questionText: String = ""
-        var retrofit = Retrofit.Builder()
-            .baseUrl("http://ec2-3-35-107-29.ap-northeast-2.compute.amazonaws.com:8080/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        winePickService = retrofit.create(WinePickService::class.java)
-
-        winePickService!!.getSurveys().enqueue(object : Callback<Survey> {
-            override fun onFailure(call: Call<Survey>, t: Throwable) {
-                Timber.e(t.message!!)
-
-            }
-
-            override fun onResponse(call: Call<Survey>, response: Response<Survey>) {
-                survey = response.body()
-                Timber.i("서베이 데이터")
-/*                for (data in survey!!.data) {
-                    Log.i(data.toString(), "포문 데이터")
-                }
-
-                surveyFragment!!.setData(
-                    survey!!.data.get(0).content,
-                    survey!!.data.get(0).answersA,
-                    survey!!.data.get(0).answersB,
-                    currentStage.toString()
-                )
-                Log.i(survey.toString(), "surveyData")*/
-            }
-        })
     }
 
     /**

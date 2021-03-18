@@ -15,7 +15,7 @@ import retrofit2.http.*
  */
 interface WinePickService {
     @GET("v2/api/survey/")
-    fun getSurveys(): Call<Survey>
+    fun getSurveys(): Call<WinePickResponse<List<Survey>>>
 
     @GET("v2/api/wine")
     fun getWines(

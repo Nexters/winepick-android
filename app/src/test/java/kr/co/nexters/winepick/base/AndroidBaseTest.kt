@@ -9,6 +9,7 @@ import io.mockk.mockkStatic
 import io.mockk.unmockkStatic
 import kr.co.nexters.winepick.WinePickApplication
 import kr.co.nexters.winepick.data.repository.SearchRepository
+import kr.co.nexters.winepick.data.repository.SurveyRepository
 import kr.co.nexters.winepick.data.repository.TestRepository
 import kr.co.nexters.winepick.data.repository.WineRepository
 import kr.co.nexters.winepick.data.source.WineDataSource
@@ -34,6 +35,7 @@ abstract class AndroidBaseTest : KoinTest {
     val testRepository: TestRepository by inject()
     val searchRepository: SearchRepository by inject()
     val wineRepository: WineRepository by inject()
+    val surveyRepository: SurveyRepository by inject()
 
     val wineDataSource: WineDataSource by inject()
 

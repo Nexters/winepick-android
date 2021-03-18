@@ -1,8 +1,6 @@
 package kr.co.nexters.winepick.ui.home
 
 import android.content.Intent
-import android.widget.ImageView
-import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kr.co.nexters.winepick.R
@@ -20,8 +18,6 @@ import kr.co.nexters.winepick.ui.like.LikeListActivity
 import kr.co.nexters.winepick.ui.search.SearchActivity
 import kr.co.nexters.winepick.ui.survey.SurveyActivity
 import kr.co.nexters.winepick.ui.type.TypeDetailActivity
-import kr.co.nexters.winepick.util.getNetworkConnected
-import timber.log.Timber
 
 /**
  * Kotlin 에서 사용하는 ViewModel 예

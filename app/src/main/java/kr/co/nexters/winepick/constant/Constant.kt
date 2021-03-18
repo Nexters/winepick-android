@@ -9,6 +9,7 @@ object Constant {
     // Default
     const val PREF_KEY_WINE_INFOS = "PREF_KEY_WINE_INFOS"
     const val PREF_KEY_USER_VIEW_WINES = "PREF_KEY_USER_VIEW_WINES"
+    const val PREF_KEY_USER_SURVEYS = "PREF_KEY_USER_SURVEYS"
 
     // extra
     const val BOOL_EXTRA_SEARCH_NEED_UPDATE = "BOOL_EXTRA_SEARCH_NEED_UPDATE"
