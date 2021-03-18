@@ -11,6 +11,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
+import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.ui.component.LoadingAnimation
 
 /**

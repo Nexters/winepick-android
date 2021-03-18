@@ -6,18 +6,30 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import androidx.fragment.app.Fragment;
 import kr.co.nexters.winepick.R;
+import kr.co.nexters.winepick.databinding.FragmentSurveyBinding;
+import kr.co.nexters.winepick.ui.base.BaseFragment;
+import kr.co.nexters.winepick.ui.base.BaseViewModel;
+import timber.log.Timber;
 
-public class SurveyFragment extends Fragment {
+public class SurveyFragment extends BaseFragment<FragmentSurveyBinding> {
+    public SurveyFragment(int layoutResId) {
+        super(layoutResId);
+    }
+
+    @Nullable
+    @Override
+    protected BaseViewModel getViewModel() {
+        return null;
+    }
+
     private int currentStage;
-
-    TextView questionText;
-    TextView questionNum;
-    TextView totalNum;
-    TextView answerA;
-    TextView answerB;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,17 +47,9 @@ public class SurveyFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_survey, container, false);
-        questionText = view.findViewById(R.id.survey_question_text);
-        questionNum = view.findViewById(R.id.current_survey_number_text);
-        totalNum = view.findViewById(R.id.all_survey_number_text);
-        answerA = view.findViewById(R.id.survey_answer_A);
-        answerB = view.findViewById(R.id.survey_answer_B);
-        return view;
+    public void onViewCreated(@NotNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
     }
-
     public String answerClick(View view) {
         switch (view.getId()) {
             case R.id.survey_answer_A:
@@ -57,12 +61,13 @@ public class SurveyFragment extends Fragment {
     }
 
     public void setData(String text, String ansA, String ansB, String num) {
-        Log.i(ansA,"tag");
-        Log.i(ansB, "tag" );
-        questionText.setText(text);
-        questionNum.setText("0" + num);
-        totalNum.setText("0" + num + " / 09");
-        answerA.setText(ansA);
-        answerB.setText(ansB);
+        Timber.i(ansA);
+        Timber.i(ansB);
+
+        binding.surveyQuestionText.setText(text);
+        binding.currentSurveyNumberText.setText("0" + num);
+        binding.allSurveyNumberText.setText("0" + num + " / 09");
+        binding.surveyAnswerA.setText(ansA);
+        binding.surveyAnswerB.setText(ansB);
     }
 }

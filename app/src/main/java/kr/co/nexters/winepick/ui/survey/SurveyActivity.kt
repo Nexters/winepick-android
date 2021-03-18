@@ -1,21 +1,30 @@
 package kr.co.nexters.winepick.ui.survey
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.annotation.IdRes
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.data.model.Survey
+import kr.co.nexters.winepick.databinding.ActivitySurveyBinding
+import kr.co.nexters.winepick.example.java.normal.JavaDefaultFragment
 import kr.co.nexters.winepick.network.WinePickService
+import kr.co.nexters.winepick.ui.base.BaseActivity
+import kr.co.nexters.winepick.ui.base.BaseFragment
+import kr.co.nexters.winepick.ui.base.BaseViewModel
+import kr.co.nexters.winepick.ui.base.navigate
+import kr.co.nexters.winepick.util.setOnSingleClickListener
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import timber.log.Timber
 
-class SurveyActivity : AppCompatActivity() {
+class SurveyActivity() : BaseActivity<ActivitySurveyBinding>(R.layout.activity_survey) {
+    override val viewModel: BaseViewModel? = null
 
     // fragment 초기화
     private var fragmentManager: FragmentManager? = null
@@ -36,35 +45,23 @@ class SurveyActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_survey)
         loadSurvey()
 
-        fragmentManager = supportFragmentManager
-        /*surveyFragment = SurveyFragment().apply {
+        Timber.i("화긴, $currentStage")
+        SurveyFragment(R.layout.fragment_survey).apply {
+            arguments = Bundle().apply { putInt("currentStage", currentStage) }
+        }.navigate(supportFragmentManager, binding.surveyContent.id)
 
-        }*/
-        Log.isLoggable("화긴", currentStage)
-        fragmentManager!!.beginTransaction()
-            .replace(R.id.survey_content, SurveyFragment().apply {
-                arguments = Bundle().apply {
-                    putInt("currentStage", currentStage)
-                }
-            })
-            .commitAllowingStateLoss()
+        binding.homeButton.setOnSingleClickListener {
+            sampleFragment = SampleFragment(R.layout.fragment_survey)
 
-        //transaction!!.replace(R.id.frameLayout, surveyFragment!!)
-    }
-
-    fun btnClick(view: View) {
-        sampleFragment = SampleFragment()
-
-        transaction = fragmentManager!!.beginTransaction()
-        transaction!!
-            .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out,
-                R.anim.slide_left_in, R.anim.slide_right_out)
-            .replace(R.id.survey_content, sampleFragment!!)
-            .addToBackStack(null)
-            .commitAllowingStateLoss()
+            SurveyFragment(R.layout.fragment_survey).apply {
+                arguments = Bundle().apply { putInt("currentStage", currentStage + 1) }
+            }.next(
+                supportFragmentManager,
+                binding.surveyContent.id
+            )
+        }
     }
 
     private fun loadSurvey() {
@@ -75,14 +72,15 @@ class SurveyActivity : AppCompatActivity() {
             .build()
         winePickService = retrofit.create(WinePickService::class.java)
 
-        winePickService!!.getSurveys().enqueue(object: Callback<Survey> {
+        winePickService!!.getSurveys().enqueue(object : Callback<Survey> {
             override fun onFailure(call: Call<Survey>, t: Throwable) {
-                Log.e("Connect Survey Fail", t.message!!)
+                Timber.e(t.message!!)
 
             }
+
             override fun onResponse(call: Call<Survey>, response: Response<Survey>) {
                 survey = response.body()
-                Log.i(survey.toString(), "서베이 데이터")
+                Timber.i("서베이 데이터")
 /*                for (data in survey!!.data) {
                     Log.i(data.toString(), "포문 데이터")
                 }
@@ -98,4 +96,21 @@ class SurveyActivity : AppCompatActivity() {
         })
     }
 
+    /**
+     * 특정 프레그먼트를 띄워준다.
+     *
+     * @param fm FragmentManager
+     * @param id 프레그먼트가 들어갈 레이아웃 id
+     */
+    fun SurveyFragment.next(fm: FragmentManager, @IdRes id: Int): Int {
+        return fm.run {
+            beginTransaction()
+                .setCustomAnimations(
+                    R.anim.slide_right_in, R.anim.slide_left_out,
+                    R.anim.slide_left_in, R.anim.slide_right_out
+                )
+                .replace(id, this@next, this@next::class.simpleName)
+                .commit()
+        }
+    }
 }
