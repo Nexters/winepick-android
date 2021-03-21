@@ -13,6 +13,7 @@ object Constant {
 
     // extra
     const val BOOL_EXTRA_SEARCH_NEED_UPDATE = "BOOL_EXTRA_SEARCH_NEED_UPDATE"
+    const val BOOL_EXTRA_SURVEY_RESET = "BOOL_EXTRA_SURVEY_RESET"
 
     // RequestCode
     const val REQ_CODE_GO_TO_FILTER = 1

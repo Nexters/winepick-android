@@ -11,6 +11,7 @@ import kr.co.nexters.winepick.constant.TestConstant.C
 import kr.co.nexters.winepick.constant.TestConstant.D
 import kr.co.nexters.winepick.constant.TestConstant.E
 import kr.co.nexters.winepick.constant.TestConstant.F
+import kr.co.nexters.winepick.data.constant.Constant
 import kr.co.nexters.winepick.data.repository.WinePickRepository
 import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.BaseViewModel
@@ -156,9 +157,13 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
         }
 
     }
+
     fun testClick() {
-        WinePickApplication.getGlobalApplicationContext().startActivity(Intent(WinePickApplication.appContext, SurveyActivity::class.java)
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+        WinePickApplication.getGlobalApplicationContext().startActivity(
+            Intent(WinePickApplication.appContext, SurveyActivity::class.java)
+                .apply { putExtra(Constant.BOOL_EXTRA_SURVEY_RESET, true) }
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        )
     }
 
     fun searchClick() {

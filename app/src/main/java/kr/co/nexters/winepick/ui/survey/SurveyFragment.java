@@ -1,21 +1,19 @@
 package kr.co.nexters.winepick.ui.survey;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import androidx.fragment.app.Fragment;
-import kr.co.nexters.winepick.R;
+import kotlin.Unit;
+import kr.co.nexters.winepick.data.model.SurveyAnswerType;
+import kr.co.nexters.winepick.data.model.SurveyInfo;
+import kr.co.nexters.winepick.data.repository.SurveyRepository;
 import kr.co.nexters.winepick.databinding.FragmentSurveyBinding;
 import kr.co.nexters.winepick.ui.base.BaseFragment;
 import kr.co.nexters.winepick.ui.base.BaseViewModel;
+import kr.co.nexters.winepick.util.ViewExtKt;
 import timber.log.Timber;
 
 public class SurveyFragment extends BaseFragment<FragmentSurveyBinding> {
@@ -29,35 +27,30 @@ public class SurveyFragment extends BaseFragment<FragmentSurveyBinding> {
         return null;
     }
 
-    private int currentStage;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Bundle bundle = new Bundle();
-        bundle.getBundle("currentStage");
-
-        int i = getArguments().getInt("currentStage");
-        Log.isLoggable("argument", i);
-
-        if (getArguments() != null) {
-            currentStage = getArguments().getInt("currentStage");
-            Log.isLoggable("data: ", currentStage);
-        }
-    }
+    int currentStage = 0;
+    SurveyRepository surveyRepository = org.koin.java.KoinJavaComponent.inject(SurveyRepository.class).getValue();
+    SurveyInfo surveyInfo;
 
     @Override
     public void onViewCreated(@NotNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-    }
-    public String answerClick(View view) {
-        switch (view.getId()) {
-            case R.id.survey_answer_A:
-                return "A";
-            case R.id.survey_answer_B:
-                return "B";
+
+        surveyInfo = surveyRepository.getCurrentSurvey();
+        if (surveyInfo != null) {
+            Timber.i("data: %s", surveyInfo);
+            currentStage = surveyInfo.getNumber();
+            setData(surveyInfo.getSurvey().getContent(), surveyInfo.getSurvey().getAnswersA(), surveyInfo.getSurvey().getAnswersB(), (currentStage + 1) + "");
         }
-        return "";
+
+        ViewExtKt.setOnSingleClickListener(binding.surveyAnswerA, () -> {
+            ((SurveyActivity)requireActivity()).nextSurvey(SurveyAnswerType.ANSWER_A);
+            return Unit.INSTANCE;
+        });
+
+        ViewExtKt.setOnSingleClickListener(binding.surveyAnswerB, () -> {
+            ((SurveyActivity)requireActivity()).nextSurvey(SurveyAnswerType.ANSWER_B);
+            return Unit.INSTANCE;
+        });
     }
 
     public void setData(String text, String ansA, String ansB, String num) {

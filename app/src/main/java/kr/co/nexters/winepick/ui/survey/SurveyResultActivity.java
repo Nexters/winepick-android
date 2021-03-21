@@ -1,5 +1,6 @@
 package kr.co.nexters.winepick.ui.survey;
 
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -17,18 +18,36 @@ import com.kakao.message.template.LinkObject;
 import com.kakao.network.ErrorResult;
 import com.kakao.network.callback.ResponseCallback;
 import com.kakao.util.helper.log.Logger;
-
+import org.jetbrains.annotations.Nullable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
-
-import androidx.appcompat.app.AppCompatActivity;
+import kotlin.Unit;
 import kr.co.nexters.winepick.R;
-import kr.co.nexters.winepick.util.ReSurveyNotiDialogKt;
+import kr.co.nexters.winepick.databinding.ActivitySurveyResultBinding;
+import kr.co.nexters.winepick.ui.base.BaseActivity;
+import kr.co.nexters.winepick.ui.base.BaseViewModel;
+import kr.co.nexters.winepick.ui.component.ConfirmDialog;
+import kr.co.nexters.winepick.util.DisplayExtKt;
 
 
-public class SurveyResultActivity extends AppCompatActivity {
+public class SurveyResultActivity extends BaseActivity<ActivitySurveyResultBinding> {
+    /**
+     * 빈 생성자를 통해 layout ID 를 주입
+     */
+    public SurveyResultActivity() {
+        super(R.layout.activity_survey_result);
+    }
+
+    /**
+     * ViewModel 을 사용하지 않으므로 null 리턴
+     */
+    @Nullable
+    @Override
+    public BaseViewModel getViewModel() {
+        return null;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +57,21 @@ public class SurveyResultActivity extends AppCompatActivity {
     }
 
     public void initReSurveyNotiDialog(View view) {
-        ReSurveyNotiDialogKt.initReSurveyNotiDialog(this);
+        new ConfirmDialog(
+                DisplayExtKt.dpToPx(241),
+                DisplayExtKt.dpToPx(202),
+                "재검사 하시겠습니까?",
+                "재검사시,\n이전 결과는 삭제됩니다.",
+                "아니요",
+                null,
+                "예",
+                ((dialogFragment) -> {
+                    Intent intent = new Intent(this, SurveyActivity.class);
+                    startActivity(intent);
+                    return Unit.INSTANCE;
+                }),
+                false
+        );
     }
 
     public void kakaoLink(View view) {
@@ -74,7 +107,7 @@ public class SurveyResultActivity extends AppCompatActivity {
         });
     }
 
-    private void getHashKey(){
+    private void getHashKey() {
         PackageInfo packageInfo = null;
         try {
             packageInfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);

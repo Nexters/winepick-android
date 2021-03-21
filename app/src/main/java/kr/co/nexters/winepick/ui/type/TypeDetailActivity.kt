@@ -10,6 +10,7 @@ import com.kakao.sdk.user.UserApiClient
 import kr.co.nexters.winepick.BR
 import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.WinePickApplication
+import kr.co.nexters.winepick.data.constant.Constant
 import kr.co.nexters.winepick.data.model.remote.wine.WineResult
 import kr.co.nexters.winepick.data.repository.WineRepository
 import kr.co.nexters.winepick.databinding.ActivityTypeDetailBinding
@@ -102,6 +103,7 @@ class TypeDetailActivity : BaseActivity<ActivityTypeDetailBinding>(
                     rightClickListener = {
                         authManager.testType = "N"
                         Intent(WinePickApplication.appContext, SurveyActivity::class.java).apply {
+                            putExtra(Constant.BOOL_EXTRA_SURVEY_RESET, true)
                         }.run {
                             WinePickApplication.getGlobalApplicationContext().startActivity(this.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
                             finish()
