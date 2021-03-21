@@ -1,7 +1,9 @@
 package kr.co.nexters.winepick.ui.survey
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.annotation.IdRes
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import kotlinx.coroutines.launch
 import kr.co.nexters.winepick.R
@@ -13,6 +15,8 @@ import kr.co.nexters.winepick.databinding.ActivitySurveyBinding
 import kr.co.nexters.winepick.ui.base.BaseActivity
 import kr.co.nexters.winepick.ui.base.BaseViewModel
 import kr.co.nexters.winepick.ui.base.navigate
+import kr.co.nexters.winepick.ui.component.ConfirmDialog
+import kr.co.nexters.winepick.util.dpToPx
 import kr.co.nexters.winepick.util.setOnSingleClickListener
 import org.koin.android.ext.android.inject
 
@@ -48,15 +52,20 @@ class SurveyActivity : BaseActivity<ActivitySurveyBinding>(R.layout.activity_sur
 
             // 홈버튼 클릭 시 실행되는 리스너
             binding.homeButton.setOnSingleClickListener {
-                onBackPressed()
-//                sampleFragment = SampleFragment(R.layout.fragment_survey)
-//
-//                SurveyFragment(R.layout.fragment_survey).apply {
-//                    arguments = Bundle().apply { putInt("currentStage", currentStage + 1) }
-//                }.next(
-//                    supportFragmentManager,
-//                    binding.surveyContent.id
-//                )
+                ConfirmDialog(
+                    241.dpToPx(),
+                    202.dpToPx(),
+                    "테스트를 그만하시겠습니까?",
+                    "현재까지 진행된 내역은 저장됩니다.",
+                    "아니요",
+                    null,
+                    "예",
+                    { dialogFragment: DialogFragment? ->
+                        onBackPressed()
+                        dialogFragment?.dismiss()
+                    },
+                    false
+                ).show(supportFragmentManager, "TestSurveyStop")
             }
         }
     }

@@ -1,6 +1,7 @@
 package kr.co.nexters.winepick.ui.home
 
 import android.content.Intent
+import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kr.co.nexters.winepick.R
@@ -12,20 +13,28 @@ import kr.co.nexters.winepick.constant.TestConstant.D
 import kr.co.nexters.winepick.constant.TestConstant.E
 import kr.co.nexters.winepick.constant.TestConstant.F
 import kr.co.nexters.winepick.data.constant.Constant
+import kr.co.nexters.winepick.data.model.SurveyInfo
+import kr.co.nexters.winepick.data.repository.SurveyRepository
 import kr.co.nexters.winepick.data.repository.WinePickRepository
 import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.BaseViewModel
+import kr.co.nexters.winepick.ui.component.ConfirmDialog
 import kr.co.nexters.winepick.ui.like.LikeListActivity
 import kr.co.nexters.winepick.ui.search.SearchActivity
 import kr.co.nexters.winepick.ui.survey.SurveyActivity
 import kr.co.nexters.winepick.ui.type.TypeDetailActivity
+import kr.co.nexters.winepick.util.dpToPx
 
 /**
  * Kotlin 에서 사용하는 ViewModel 예
  *
  * @since v1.0.0 / 2021.01.28
  */
-class HomeViewModel(private val repo: WinePickRepository, private val auth: AuthManager) : BaseViewModel() {
+class HomeViewModel(
+    private val repo: WinePickRepository,
+    private val surveyRepository: SurveyRepository,
+    private val auth: AuthManager
+) : BaseViewModel() {
     private var _likecnt = MutableLiveData<String>()
     var likeCnt : LiveData<String> = _likecnt
 
@@ -47,6 +56,9 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
 
     private var _testImg = MutableLiveData<Int>()
     var testImg : LiveData<Int> = _testImg
+
+    private var _currentSurvey = MutableLiveData<SurveyInfo>()
+    var currentSurvey : LiveData<SurveyInfo> = _currentSurvey
 
     lateinit var keywordList1 : Array<String>
     lateinit var keywordList2: Array<String>
@@ -159,11 +171,7 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
     }
 
     fun testClick() {
-        WinePickApplication.getGlobalApplicationContext().startActivity(
-            Intent(WinePickApplication.appContext, SurveyActivity::class.java)
-                .apply { putExtra(Constant.BOOL_EXTRA_SURVEY_RESET, true) }
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        )
+        _currentSurvey.value = surveyRepository.getCurrentSurvey()
     }
 
     fun searchClick() {
