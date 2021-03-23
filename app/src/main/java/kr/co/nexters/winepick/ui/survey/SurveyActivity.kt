@@ -23,7 +23,6 @@ import org.koin.android.ext.android.inject
 class SurveyActivity : BaseActivity<ActivitySurveyBinding>(R.layout.activity_survey) {
     override val viewModel: BaseViewModel? = null
 
-    private var sampleFragment: SampleFragment? = null
     private val surveyRepository: SurveyRepository by inject()
 
     /** 초기화 된 건지에 대한 유무 */
