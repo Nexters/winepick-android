@@ -83,7 +83,5 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     override fun onResume() {
         super.onResume()
         viewModel.onResume()
-
-        startActivity(Intent(this, DetailActivity::class.java))
     }
 }

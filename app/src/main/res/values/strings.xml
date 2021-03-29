@@ -22,7 +22,7 @@
     <string name="more">많음</string>
     <string name="less">적음</string>
     <string name="wine_feature">%s 특징</string>
-    <string name="wine_feature_detail">%1s는 %2s!,%3s!에 어울려요.</string>
+    <string name="wine_feature_detail">%1s는 %2s,%3s에 어울려요.</string>
     <string name="red_wine">Red Wine</string>
     <string name="white_wine">White Wine</string>
     <string name="sparkling_wine">Sparkling Wine</string>

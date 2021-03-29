@@ -29,7 +29,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="56dp">
+                android:layout_marginTop="72dp">
 
                 <androidx.constraintlayout.widget.Guideline
                     android:layout_width="wrap_content"
@@ -58,14 +58,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/emart_24"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
                         android:visibility="@{vm.isEmart() ? View.GONE : View.VISIBLE}"/>
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/gs_icon"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
                         android:visibility="@{vm.isGs() ? View.GONE : View.VISIBLE}"/>
 
 
@@ -73,7 +73,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/seven_icon"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
                         android:visibility="@{vm.isSeven() ? View.GONE : View.VISIBLE}"/>
 
 
@@ -81,7 +81,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/cu_icon"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
                         android:visibility="@{vm.isCu() ? View.GONE : View.VISIBLE}"/>
 
                 </LinearLayout>
@@ -183,21 +183,24 @@
                     app:layout_constraintEnd_toEndOf="@id/guideline_right">
 
                     <ImageView
-                        android:layout_width="wrap_content"
+                        android:layout_width="20dp"
                         android:layout_height="wrap_content"
                         android:id="@+id/img_wine_icon"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginStart="20dp"
+                        android:src="@drawable/wine_icon"
+                        app:layout_constraintTop_toTopOf="@id/tv_wine_img_check"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_wine_img_check"
                         app:layout_constraintStart_toStartOf="parent"/>
 
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="@id/img_wine_icon"
-                        app:layout_constraintBottom_toBottomOf="@id/img_wine_icon"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@id/img_wine_icon"
                         android:textColor="@color/black"
+                        android:id="@+id/tv_wine_img_check"
                         android:layout_marginVertical="16dp"
                         android:text="@string/wine_img_check"
                         android:fontFamily="@font/notosans_cjk_kr_regular"
@@ -249,7 +252,7 @@
                         android:layout_height="wrap_content"
                         app:layout_constraintTop_toBottomOf="@id/tv_wine_feature"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:text="@{@string/wine_feature_detail(vm.wineName)}"
+                        android:text="@{@string/wine_feature_detail(vm.wineName,vm.wineName, vm.wineName)}"
                         tools:text="몬탈치노는 에피타이저,테이블에 어울려요."
                         android:textColor="@color/black"
                         android:textSize="15dp"
@@ -297,7 +300,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/tv_wine_value"
                         tools:text="신선한 과일향의 몬탈치노"
-                        android:text="@{@string/wine_value(vm.wineName,vm.wineName)}"
+                        android:text="@{@string/wine_value_title(vm.wineName,vm.wineName)}"
                         android:textColor="@color/black"
                         android:fontFamily="@font/notosans_cjk_kr_bold"
                         android:includeFontPadding="false"
@@ -312,7 +315,7 @@
                         app:layout_constraintTop_toBottomOf="@id/tv_wine_value"
                         app:layout_constraintStart_toStartOf="parent"
                         tools:text="몬탈치노의 당도와 바디감을 알려드릴게요."
-                        android:text="@{@string/wine_value_detail(vm.wineName)}"
+                        android:text="@{@string/wine_value_sub_title(vm.wineName)}"
                         android:textColor="@color/black"
                         android:textSize="15dp"
                         android:id="@+id/tv_wine_value_detail"
@@ -399,6 +402,9 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingTop="18dp"
+            android:paddingEnd="15dp"
+            android:background="@color/colorWhite"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent">
@@ -408,9 +414,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/iv_type_back"
-                android:layout_marginLeft="24dp"
+                android:layout_marginLeft="16dp"
                 app:onSingleClick="@{vm::backClick}"
-                android:padding="16dp"
+                android:padding="8dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -426,6 +432,7 @@
             android:background="@drawable/bg_heart_circle"
             android:layout_marginBottom="32dp"
             android:layout_marginEnd="24dp"
+            app:onSingleClick="@{vm::likeClick}"
             android:elevation="2dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">
@@ -434,7 +441,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:src = "@drawable/like_large"
-                android:background="@{vm.wineLike? @drawable/like_large :@drawable/like_false}"
+                android:background="@{vm.wineLike? @drawable/like_large :@drawable/like_large_false}"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

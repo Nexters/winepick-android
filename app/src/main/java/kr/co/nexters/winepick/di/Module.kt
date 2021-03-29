@@ -170,7 +170,7 @@ val viewModelModule = module {
     viewModel { LikeViewModel(get(), get()) }
     viewModel { SearchViewModel(get(), get(), get(), get()) }
     viewModel { SearchFilterViewModel(get()) }
-    viewModel { WineDetailViewModel(get()) }
+    viewModel { WineDetailViewModel(get(), get()) }
 }
 
 val repositoryModule = module {
