@@ -1,5 +1,6 @@
 package kr.co.nexters.winepick.ui.search
 
+import android.content.Intent
 import android.text.Editable
 import android.view.View
 import androidx.lifecycle.LiveData
@@ -7,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import io.reactivex.rxjava3.subjects.PublishSubject
 import kotlinx.coroutines.launch
+import kr.co.nexters.winepick.WinePickApplication
 import kr.co.nexters.winepick.data.model.LikeWine
 import kr.co.nexters.winepick.data.model.local.SearchFilterGroup
 import kr.co.nexters.winepick.data.model.remote.wine.WineResult
@@ -15,6 +17,7 @@ import kr.co.nexters.winepick.data.repository.WinePickRepository
 import kr.co.nexters.winepick.data.repository.WineRepository
 import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.WineResultViewModel
+import kr.co.nexters.winepick.ui.detail.WineDetailActivity
 import timber.log.Timber
 
 /**
@@ -233,8 +236,12 @@ class SearchViewModel(
     }
 
     override fun wineItemViewClick(wineResult: WineResult) {
-        // TODO. 검색 화면에서 아이템 클릭 구현
         Timber.i("wineItemViewClick search $wineResult")
+        Intent(WinePickApplication.appContext, WineDetailActivity::class.java).apply {
+            putExtra("wineData",wineResult)
+        }.run {
+            WinePickApplication.getGlobalApplicationContext().startActivity(this.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+        }
     }
 
     override fun wineHeartClick(newWineResult: WineResult) {
@@ -290,6 +297,7 @@ class SearchViewModel(
         pageNumber = 0
         searchRepository.filterItemsClear()
     }
+
 }
 
 /**

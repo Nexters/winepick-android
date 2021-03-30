@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="wineFood"
+            type="kr.co.nexters.winepick.data.model.WineFood" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="94dp"
+        android:layout_height="120dp"
+        android:id="@+id/cl_wine_food"
+        android:background="@drawable/bg_wine_border_white_10">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:imageResource="@{wineFood.img}"
+            android:id="@+id/iv_wine_food"
+            tools:src="@drawable/bread_icon"
+            app:layout_constraintVertical_bias="0.38"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{wineFood.title}"
+            tools:text="빵"
+            android:textSize="12dp"
+            android:fontFamily="@font/notosans_cjk_kr_regular"
+            android:textColor="@color/black"
+            android:includeFontPadding="false"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

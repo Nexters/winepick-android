@@ -47,4 +47,9 @@ class LikeListActivity : BaseActivity<ActivityLikeListBinding>(
             adapter = wineLikeAdpater
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.onResume()
+    }
 }
