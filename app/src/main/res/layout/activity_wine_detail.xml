@@ -59,14 +59,14 @@
                         android:layout_height="wrap_content"
                         android:src="@drawable/emart_24"
                         android:layout_marginEnd="10dp"
-                        android:visibility="@{vm.isEmart() ? View.GONE : View.VISIBLE}"/>
+                        android:visibility="@{vm.isEmart() ? View.VISIBLE : View.GONE}"/>
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/gs_icon"
                         android:layout_marginEnd="10dp"
-                        android:visibility="@{vm.isGs() ? View.GONE : View.VISIBLE}"/>
+                        android:visibility="@{vm.isGs() ? View.VISIBLE : View.GONE}"/>
 
 
                     <ImageView
@@ -74,7 +74,7 @@
                         android:layout_height="wrap_content"
                         android:src="@drawable/seven_icon"
                         android:layout_marginEnd="10dp"
-                        android:visibility="@{vm.isSeven() ? View.GONE : View.VISIBLE}"/>
+                        android:visibility="@{vm.isSeven() ? View.VISIBLE : View.GONE}"/>
 
 
                     <ImageView
@@ -82,7 +82,7 @@
                         android:layout_height="wrap_content"
                         android:src="@drawable/cu_icon"
                         android:layout_marginEnd="10dp"
-                        android:visibility="@{vm.isCu() ? View.GONE : View.VISIBLE}"/>
+                        android:visibility="@{vm.isCu() ? View.VISIBLE : View.GONE}"/>
 
                 </LinearLayout>
 
@@ -163,6 +163,7 @@
                     android:textSize="14dp"
                     android:textColor="@color/black"
                     tools:text="클라우디 베이는 ~~~"
+                    android:visibility="@{vm.isFeeling() ? View.VISIBLE : View.GONE}"
                     android:fontFamily="@font/notosans_cjk_kr_light"
                     android:includeFontPadding="false"
                     android:layout_marginTop="30dp"
@@ -222,13 +223,13 @@
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingVertical="64dp"
                     android:layout_marginTop="56dp"
                     android:id="@+id/cl_wine_feature"
-                    app:layout_constraintStart_toStartOf="@id/guideline_left"
-                    app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/cl_wine_img"
                     android:background="@color/colorGrayf9">
 
@@ -238,6 +239,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/tv_wine_feature"
                         tools:text="와인 특징"
+                        android:layout_marginStart="24dp"
                         android:text="@{@string/wine_feature(vm.wineName)}"
                         android:textColor="@color/black"
                         android:fontFamily="@font/notosans_cjk_kr_bold"
@@ -250,9 +252,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
                         app:layout_constraintTop_toBottomOf="@id/tv_wine_feature"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:text="@{@string/wine_feature_detail(vm.wineName,vm.wineName, vm.wineName)}"
+                        android:text="@{@string/wine_feature_detail(vm.wineName,vm.winePurpose)}"
                         tools:text="몬탈치노는 에피타이저,테이블에 어울려요."
                         android:textColor="@color/black"
                         android:textSize="15dp"
@@ -267,12 +270,14 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/rv_like_list"
+                        android:id="@+id/rv_wine_feature"
                         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                         app:spanCount="3"
                         submitList="@{vm.wineFeature}"
                         tools:itemCount="3"
                         android:layout_marginTop="40dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
                         tools:listitem="@layout/item_wine_food"
                         app:layout_constraintTop_toBottomOf="@id/tv_wine_feature_detail"
                         app:layout_constraintLeft_toLeftOf="parent"
@@ -346,9 +351,10 @@
                     android:layout_height="wrap_content"
                     android:paddingTop="62dp"
                     android:paddingBottom="48dp"
+                    android:background="@color/colorGrayf9"
                     android:id="@+id/cl_wine_food"
-                    app:layout_constraintStart_toStartOf="@id/guideline_left"
-                    app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/cl_wine_value">
 
 
@@ -361,18 +367,23 @@
                         android:fontFamily="@font/notosans_cjk_kr_bold"
                         android:includeFontPadding="false"
                         android:textSize="20dp"
+                        android:layout_marginStart="24dp"
+                        android:text="@{@string/wine_food_title(vm.wineFoodSize)}"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"/>
 
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintTop_toBottomOf="@id/tv_wine_food"
                         app:layout_constraintStart_toStartOf="parent"
-                        tools:text="몬탈치노는 에피타이저,테이블에 어울려요."
+                        tools:text="~~~와 잘 어울려요."
                         android:textColor="@color/black"
                         android:textSize="15dp"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginEnd="24dp"
+                        android:text="@{@string/wine_food_detail(vm.wineFoodList)}"
                         android:id="@+id/tv_wine_food_detail"
                         android:fontFamily="@font/notosans_cjk_kr_light"
                         android:includeFontPadding="false"
@@ -387,6 +398,9 @@
                         app:spanCount="3"
                         submitList="@{vm.wineFood}"
                         tools:itemCount="8"
+                        android:layout_marginTop="32dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
                         tools:listitem="@layout/item_wine_food"
                         app:layout_constraintTop_toBottomOf="@id/tv_wine_food_detail"
                         app:layout_constraintLeft_toLeftOf="parent"

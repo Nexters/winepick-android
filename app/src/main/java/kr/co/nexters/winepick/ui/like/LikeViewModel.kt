@@ -95,4 +95,9 @@ class LikeViewModel(private val winePickRepository: WinePickRepository, private 
     override fun onCleared() {
         super.onCleared()
     }
+
+    override fun onResume() {
+        super.onResume()
+        getLikeWine()
+    }
 }

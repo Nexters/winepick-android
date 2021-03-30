@@ -60,7 +60,6 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
 
     override fun onResume() {
         super.onResume()
-
         viewModel.onResume()
     }
 

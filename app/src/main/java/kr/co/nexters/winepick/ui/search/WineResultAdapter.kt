@@ -63,6 +63,24 @@ class WineResultViewHolder(private val binding: ItemWineResultBinding) :
                 wineResult.wineImg = R.drawable.img_sparkling
             }
         }
+
+        when(wineResult.country) {
+            "미국" -> {wineResult.wineCountryImg = R.drawable.us_icon}
+            "이탈리아" -> {wineResult.wineCountryImg = R.drawable.italy_icon}
+            "남아프리카공화국" -> {wineResult.wineCountryImg = R.drawable.south_africa_icon}
+            "호주" -> { wineResult.wineCountryImg = R.drawable.australia_icon }
+            "이탈리아" -> {wineResult.wineCountryImg = R.drawable.italy_icon}
+            "칠레" -> {wineResult.wineCountryImg = R.drawable.chile_icon}
+            "스페인" -> {wineResult.wineCountryImg = R.drawable.spain_icon}
+            "뉴질랜드" -> {wineResult.wineCountryImg = R.drawable.new_zealand_icon}
+            "캐나다" -> {wineResult.wineCountryImg = R.drawable.canada_icon}
+            "프랑스" -> {wineResult.wineCountryImg = R.drawable.france_icon}
+            "오스트리아" -> {wineResult.wineCountryImg = R.drawable.australia_icon}
+            "독일" -> {wineResult.wineCountryImg = R.drawable.germany_icon}
+            "포루투갈" -> {wineResult.wineCountryImg = R.drawable.portugal_icon}
+            "아르헨티나" -> {wineResult.wineCountryImg= R.drawable.argentina_icon}
+
+        }
     }
 }
 

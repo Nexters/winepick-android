@@ -5,5 +5,6 @@ data class WineValue(
         val wineDetail : String,
         val wineNumber : Int,
         val wineHigh : String,
-        val wineLow : String
+        val wineLow : String,
+        var hintVisible : Boolean = false
 )

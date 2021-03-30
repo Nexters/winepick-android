@@ -44,8 +44,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
                 loginViewModel.addUserInfo(token.accessToken,authManager.testType, kakaoId)
             }
             Timber.d("로그인성공 - 토큰 ${authManager.token}")
-
-            onResume()
         }
     }
 

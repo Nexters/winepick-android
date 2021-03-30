@@ -19,6 +19,9 @@ import kr.co.nexters.winepick.ui.component.ConfirmDialog
 import kr.co.nexters.winepick.ui.component.LikeDialog
 import kr.co.nexters.winepick.ui.home.HomeViewModel
 import kr.co.nexters.winepick.ui.login.LoginViewModel
+import kr.co.nexters.winepick.ui.search.WineResultAdapter
+import kr.co.nexters.winepick.util.HorizontalItemDecorator
+import kr.co.nexters.winepick.util.VerticalItemDecorator
 import kr.co.nexters.winepick.util.drawCancelToast
 import org.koin.android.ext.android.bind
 import org.koin.android.ext.android.inject
@@ -27,6 +30,11 @@ import timber.log.Timber
 
 class WineDetailActivity : BaseActivity<ActivityWineDetailBinding>(R.layout.activity_wine_detail) {
     override val viewModel: WineDetailViewModel by viewModel()
+    private val wineFoodAdapter: WineFoodAdapter by lazy { WineFoodAdapter(viewModel) }
+    private val wineValueAdapter: WineValueAdapter by lazy { WineValueAdapter(viewModel) }
+    private val wineFeatureAdapter: WineFoodAdapter by lazy { WineFoodAdapter(viewModel) }
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +42,7 @@ class WineDetailActivity : BaseActivity<ActivityWineDetailBinding>(R.layout.acti
 
         viewModel.getWineResult(wineResult)
         binding.setVariable(BR.vm, viewModel)
-
+        initFoodRecycler()
         viewModel.toastMessage.observe(this, Observer {
             if(it) {
                 LikeDialog(
@@ -51,6 +59,32 @@ class WineDetailActivity : BaseActivity<ActivityWineDetailBinding>(R.layout.acti
             }
         })
 
+        viewModel.backButton.observe(this, Observer {
+            if(it) {
+                finish()
+            }
+        })
+
+    }
+    fun initFoodRecycler() {
+        binding.rvWineFood.apply {
+            adapter = wineFoodAdapter
+            addItemDecoration(HorizontalItemDecorator(8))
+            addItemDecoration(VerticalItemDecorator(20))
+
+        }
+
+        binding.rvWineFeature.apply {
+            adapter = wineFeatureAdapter
+            addItemDecoration(HorizontalItemDecorator(8))
+            addItemDecoration(VerticalItemDecorator(20))
+
+
+        }
+        binding.rvWineValue.apply {
+            adapter = wineValueAdapter
+            addItemDecoration(VerticalItemDecorator(10))
+        }
     }
 
     override fun onResume() {

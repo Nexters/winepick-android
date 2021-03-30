@@ -297,6 +297,7 @@ class SearchViewModel(
         pageNumber = 0
         searchRepository.filterItemsClear()
     }
+
 }
 
 /**

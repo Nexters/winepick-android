@@ -36,41 +36,23 @@ class WineDetailViewModel(private val winePickRepository: WinePickRepository, pr
     private var _backButton = MutableLiveData<Boolean>()
     var backButton : LiveData<Boolean> = _backButton
 
-    private var _wineId = MutableLiveData<Int>()
-    var wineId : LiveData<Int> = _wineId
-
     private var _countryImage = MutableLiveData<Int>()
     var countryImage : LiveData<Int> = _countryImage
 
     private val _wineName = MutableLiveData<String>()
     val wineName : LiveData<String> = _wineName
 
-    private val _wineSweetness = MutableLiveData<Int>()
-    val wineSweetness : LiveData<Int> = _wineSweetness
-
-    private val _wineAcidity = MutableLiveData<Int>()
-    val wineAcidity : LiveData<Int> = _wineAcidity
-
-    private val _wineBody = MutableLiveData<Int>()
-    val wineBody : LiveData<Int> = _wineBody
-
-    private val _wineTannin = MutableLiveData<Int>()
-    val wineTannin : LiveData<Int> = _wineTannin
-
-    private val _wineFeeling = MutableLiveData<String>()
-    val wineFeeling : LiveData<String> = _wineFeeling
+    private var _isFeeling : MutableLiveData<Boolean> = MutableLiveData()
+    val isFeeling : LiveData<Boolean> = _isFeeling
 
     private var _isCu : MutableLiveData<Boolean> = MutableLiveData()
     val isCu : LiveData<Boolean> = _isCu
 
-
     private var _isEmart : MutableLiveData<Boolean> = MutableLiveData()
     val isEmart : LiveData<Boolean> = _isEmart
 
-
     private var _isSeven : MutableLiveData<Boolean> = MutableLiveData()
     val isSeven : LiveData<Boolean> = _isSeven
-
 
     private var _isGs : MutableLiveData<Boolean> = MutableLiveData()
     val isGs : LiveData<Boolean> = _isGs
@@ -90,6 +72,15 @@ class WineDetailViewModel(private val winePickRepository: WinePickRepository, pr
     private var _wineResult : MutableLiveData<WineResult> = MutableLiveData()
     var wineResult : LiveData<WineResult> = _wineResult
 
+    private var _winePurpose : MutableLiveData<String> = MutableLiveData()
+    var winePurpose : LiveData<String> = _winePurpose
+
+    private var _wineFoodSize : MutableLiveData<Int> = MutableLiveData()
+    var wineFoodSize : LiveData<Int> = _wineFoodSize
+
+    private var _wineFoodList : MutableLiveData<String> = MutableLiveData()
+    var wineFoodList : LiveData<String> = _wineFoodList
+
     /** 좋아요 토스트 **/
     val _toastMessage = MutableLiveData<Boolean>()
     var toastMessage: LiveData<Boolean> = _toastMessage
@@ -108,19 +99,62 @@ class WineDetailViewModel(private val winePickRepository: WinePickRepository, pr
         _isGs.value = false
         _isEmart.value = false
         _isSeven.value = false
+        _isFeeling.value = false
+        _wineFoodSize.value = 0
 
     }
     fun getWineResult(wineResult: WineResult) {
+        var tmpWineFood : ArrayList<WineFood> = ArrayList<WineFood>()
+        var tmpWineFeature : ArrayList<WineFood> = ArrayList<WineFood>()
+
         _wineResult.value = wineResult
         _wineLike.value = wineResult.likeYn!!
-        _wineFeeling.value = _wineResult.value!!.feeling
-        _wineSweetness.value = _wineResult.value!!.sweetness
-        _wineAcidity.value = _wineResult.value!!.acidity
-        _wineBody.value = _wineResult.value!!.body
-        _wineTannin.value = _wineResult.value!!.tannin
         _wineName.value = _wineResult.value!!.nmKor
+        if(_wineResult.value!!.feeling != null) {
+            _isFeeling.value = true
+        }
         wineCountryImage(_wineResult.value!!.country!!)
         wineStore(_wineResult.value!!.store!!)
+
+        val winePurposeData = _wineResult.value!!.purpose!!.split(",")
+
+        tmpWineFeature.add(WineFood(title = _wineResult.value!!.category!!, img = null))
+        for (str in winePurposeData) {
+            tmpWineFeature.add(WineFood(title = str, img = null))
+        }
+        _wineFeature.value = tmpWineFeature
+        var purposeStr = ""
+        for (i in winePurposeData.indices) {
+            if (winePurposeData[i] == "디저트 와인") {
+                purposeStr += "디저트"
+            }
+            else if (winePurposeData[i] == "테이블 와인") {
+                purposeStr += "테이블"
+            }
+            else {
+                purposeStr += "에피타이저"
+            }
+            if (i != winePurposeData.size-1) {
+                purposeStr += (", ")
+            }
+        }
+        _winePurpose.value = purposeStr
+        val wineFoodData  = _wineResult.value!!.suitFood!!.split(",")
+        for (str in wineFoodData) {
+            tmpWineFood.add(WineFood(title = str, img = null))
+        }
+        _wineFood.value = tmpWineFood
+        _wineFoodSize.value = tmpWineFood.size
+        _wineFoodList.value = wineFoodData[0] + ", " + wineFoodData[1]
+
+
+        _wineValue.value = listOf(
+            WineValue("당도",WinePickApplication.appContext!!.getString(R.string.sweetness_detail),_wineResult.value!!.sweetness!!,"높음","낮음",false),
+            WineValue("산도",WinePickApplication.appContext!!.getString(R.string.acidity_detail),_wineResult.value!!.acidity!!,"높음","낮음",false),
+            WineValue("바디",WinePickApplication.appContext!!.getString(R.string.body_detail),_wineResult.value!!.body!!,"무거움","가벼움",false),
+            WineValue("타닌",WinePickApplication.appContext!!.getString(R.string.tannin_detail),_wineResult.value!!.tannin!!,"많음","적음",false)
+            )
+
     }
     fun wineStore(store : String) {
         when(store) {

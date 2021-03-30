@@ -6,29 +6,19 @@
 
     <!--winedetail-->
     <string name="wine_img_check">와인 이미지 확인하기</string>
-    <string name="wine_food">함께하면\n더 맛있는 요리 %d</string>
-    <string name="sweetness">당도</string>
     <string name="sweetness_detail">말 그대로 단맛의 정도예요.\n스위트,드라이 등으로 표현하기도 해요.</string>
-    <string name="acidity">산도</string>
     <string name="acidity_detail">신맛의 정도를 뜻해요.\n너무 높으면 날카롭다는 느낌을 받아요.</string>
-    <string name="body">바디</string>
     <string name="body_detail">높을수록 묵직한 느낌이 들어요.\n와인 점도에는 알코올이 영향을 줍니다.</string>
-    <string name="tannin">타닌</string>
     <string name="tannin_detail">탄닌은 포도의 껍질에서 나오는\n성분이예요. 높을수록 떫은맛이 강하죠.</string>
-    <string name="hight">높음</string>
-    <string name="low">낮음</string>
-    <string name="weight">무거움</string>
-    <string name="light">가벼움</string>
-    <string name="more">많음</string>
-    <string name="less">적음</string>
     <string name="wine_feature">%s 특징</string>
-    <string name="wine_feature_detail">%1s는 %2s,%3s에 어울려요.</string>
+    <string name="wine_feature_detail">%1s는 %2s에 어울려요.</string>
     <string name="red_wine">Red Wine</string>
     <string name="white_wine">White Wine</string>
     <string name="sparkling_wine">Sparkling Wine</string>
     <string name="wine_value_title">%1s의\n%2s</string>
     <string name="wine_value_sub_title">%1s의 당도와 바디감을 알려드릴게요.</string>
-    <string name="wine_food_detail">%1s,%2s와 잘 어울려요.</string>
+    <string name="wine_food_detail">%s와 잘 어울려요.</string>
+    <string name="wine_food_title">함께하면\n더 맛있는 요리 %d</string>
 
 
     <!--home-->

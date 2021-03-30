@@ -17,6 +17,9 @@
     <color name="colorGrayad">#adadad</color>
     <color name="colorBlack11">#11000000</color>
     <color name="colorGrayab">#ababab</color>
+    <color name="colorGrayea">#eaeaea</color>
+    <color name="colorPink">#ff3985</color>
+
 
     <!-- main -->
     <color name="colorLightRed">#f25942</color>
