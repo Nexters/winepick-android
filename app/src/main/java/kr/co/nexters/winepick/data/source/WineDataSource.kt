@@ -2,6 +2,7 @@ package kr.co.nexters.winepick.data.source
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import kr.co.nexters.winepick.data.model.local.LastPageException
 import kr.co.nexters.winepick.data.model.remote.wine.WineResult
 import kr.co.nexters.winepick.data.model.remote.wine.WinesResult
 import kr.co.nexters.winepick.data.model.remote.wine.getWineResponse
@@ -21,14 +22,14 @@ class WineDataSource(private val winePickService: WinePickService) {
 
     /** [WinePickService.getWines] 요청에 대한 비즈니스 로직 */
     suspend fun getWines(
-        pageSize: Int,
-        pageNumber: Int = 0,
+        size: Int,
+        page: Int = 0,
         sort: String = "",
     ): WinesResult? = withContext(Dispatchers.IO) {
         if (isMock) {
             return@withContext getWinesResponse().result
         } else {
-            val response = winePickService.getWines(pageSize, pageNumber, sort).send()
+            val response = winePickService.getWines(size, page, sort).send()
 
             /** statusCode 별 처리 */
             when (response.code()) {
@@ -43,18 +44,18 @@ class WineDataSource(private val winePickService: WinePickService) {
 
     /** [WinePickService.getWines] 요청에 대한 비즈니스 로직 */
     suspend fun getWinesKeyword(
-        pageSize: Int,
-        pageNumber: Int = 0,
+        size: Int,
+        page: Int = 0,
         keyword: String
     ): WinesResult? = withContext(Dispatchers.IO) {
         if (isMock) {
             return@withContext getWinesResponse().result
         } else {
-            val response = winePickService.getWinesKeyword(pageSize, pageNumber, keyword).send()
+            val response = winePickService.getWinesKeyword(size, page, keyword).send()
 
             /** statusCode 별 처리 */
             when (response.code()) {
-
+                500 -> throw LastPageException("${response.code()} API 오류")
             }
 
             if (!response.isSuccessful) throw Throwable("${response.code()} API 오류")
@@ -91,8 +92,8 @@ class WineDataSource(private val winePickService: WinePickService) {
      * @param start 도수 시작점
      * @param end 도수 끝
      * @param keywords 키워드
-     * @param pageSize 한번에 가져올 사이즈
-     * @param pageNumber 해당 페이지
+     * @param size 한번에 가져올 사이즈
+     * @param page 해당 페이지
      * @param sort id 기준으로 내림차순/오름차순 정렬 가능 유무
      *
      * */
@@ -104,8 +105,8 @@ class WineDataSource(private val winePickService: WinePickService) {
         start: Int? = null,
         end: Int? = null,
         keywords: List<String> = listOf(""),
-        pageSize: Int,
-        pageNumber: Int = 0,
+        size: Int,
+        page: Int = 0,
         sort: String? = null,
     ): WinesResult? = withContext(Dispatchers.IO) {
         if (isMock) {
@@ -120,8 +121,8 @@ class WineDataSource(private val winePickService: WinePickService) {
             start?.let { queryBuilder.append("start=${start}&") }
             end?.let { queryBuilder.append("end=${end}&") }
             keywords.forEach { keyword -> queryBuilder.append("keyword=${keyword}&") }
-            queryBuilder.append("pageSize=${pageSize}&")
-            queryBuilder.append("pageNumber=${pageNumber}&")
+            queryBuilder.append("size=${size}&")
+            queryBuilder.append("page=${page}&")
             sort?.let { queryBuilder.append("sort=${sort}") }
 
             val response =

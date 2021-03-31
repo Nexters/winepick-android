@@ -11,8 +11,8 @@ import kr.co.nexters.winepick.network.WinePickService
  * [WinePickService.getWines] 의 data.pageable 의 구조
  *
  * @param offset
- * @param pageNumber
- * @param pageSize
+ * @param page
+ * @param size
  * @param paged
  * @param sort
  * @param unpaged
@@ -24,13 +24,13 @@ data class PageInfo(
     @SerializedName("offset")
     val offset: Int? = null,
 
-    @SerialName("pageNumber")
-    @SerializedName("pageNumber")
-    val pageNumber: Int? = null,
+    @SerialName("page")
+    @SerializedName("page")
+    val page: Int? = null,
 
-    @SerialName("pageSize")
-    @SerializedName("pageSize")
-    val pageSize: Int? = null,
+    @SerialName("size")
+    @SerializedName("size")
+    val size: Int? = null,
 
     @SerialName("paged")
     @SerializedName("paged")

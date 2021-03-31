@@ -1,6 +1,5 @@
 package kr.co.nexters.winepick.ui.search
 
-import android.content.Intent
 import android.text.Editable
 import android.view.View
 import androidx.lifecycle.LiveData
@@ -8,8 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import io.reactivex.rxjava3.subjects.PublishSubject
 import kotlinx.coroutines.launch
-import kr.co.nexters.winepick.WinePickApplication
 import kr.co.nexters.winepick.data.model.LikeWine
+import kr.co.nexters.winepick.data.model.local.LastPageException
 import kr.co.nexters.winepick.data.model.local.SearchFilterGroup
 import kr.co.nexters.winepick.data.model.remote.wine.WineResult
 import kr.co.nexters.winepick.data.repository.SearchRepository
@@ -17,7 +16,6 @@ import kr.co.nexters.winepick.data.repository.WinePickRepository
 import kr.co.nexters.winepick.data.repository.WineRepository
 import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.WineResultViewModel
-import kr.co.nexters.winepick.ui.detail.WineDetailActivity
 import timber.log.Timber
 
 /**
@@ -42,11 +40,18 @@ class SearchViewModel(
     /** 검색 목록 list */
     val currents: LiveData<List<String>> = searchRepository.styledWineInfos
 
+    /** 현재 클릭한 와인 검색결과 위치 */
+    val _clickedWineResult: MutableLiveData<WineResult> = MutableLiveData()
+    val clickedWineResult: LiveData<WineResult> = _clickedWineResult
+
     /** 가장 맨 앞에 보여야 할 화면. 보여야 할 내용은 [SearchFront] 참고 */
     private val _searchFrontPage = MutableLiveData(SearchFront.DEFAULT)
     val searchFrontPage: LiveData<SearchFront> = _searchFrontPage
 
-    private var pageNumber: Int = 0
+    private val _initAction = PublishSubject.create<SearchType>()
+    val initAction = _initAction
+
+    private var page: Int = 0
 
     /** 좋아요 토스트 **/
     val _toastMessage = MutableLiveData<Boolean>()
@@ -54,7 +59,7 @@ class SearchViewModel(
 
     /** 취소 토스트 **/
     val _cancelMessage = MutableLiveData<Boolean>()
-    var cancelMessage : LiveData<Boolean> = _cancelMessage
+    var cancelMessage: LiveData<Boolean> = _cancelMessage
 
     /**
      * 검색 화면에서 진행하는 비즈니스 로직
@@ -77,6 +82,10 @@ class SearchViewModel(
         super.onResume()
         // 도수의 경우 2개로 인식되므로 -1 처리를 해준다.
         _filterNum.value = searchRepository.userSearchFilterItems.filter { it.selected }.size - 1
+    }
+
+    fun prevDataClear() {
+        _results.value = listOf()
     }
 
     /**
@@ -140,8 +149,11 @@ class SearchViewModel(
      *
      * @param recommendValue 검색할 키워드 (기본값은 query liveData 내의 value 이다.)
      */
-    fun queryRecommendClick(recommendValue: String = "", pageNumber: Int) {
+    fun queryRecommendClick(recommendValue: String = "", page: Int) {
         _searchResultType.value = SearchType.RECOMMEND
+
+        if(page == 0)
+            _initAction.onNext(SearchType.RECOMMEND)
 
         if (!query.value.equals(recommendValue)) {
             query.value = recommendValue
@@ -150,12 +162,12 @@ class SearchViewModel(
         viewModelScope.launch {
             searchRepository.getWineInfosLikeQuery(recommendValue)
 
-            this@SearchViewModel.pageNumber = pageNumber
+            this@SearchViewModel.page = page
 
             _results.value = try {
                 wineRepository.getWinesKeyword(
-                    pageSize = 10,
-                    pageNumber = pageNumber,
+                    size = 10,
+                    page = page,
                     keyword = recommendValue
                 )?.wineResult ?: listOf()
             } catch (throwable: Throwable) {
@@ -171,8 +183,11 @@ class SearchViewModel(
      *
      * @param queryValue 검색할 키워드 (기본값은 query liveData 내의 value 이다.)
      */
-    fun querySearchClick(queryValue: String = query.value ?: "", pageNumber: Int) {
+    fun querySearchClick(queryValue: String = query.value ?: "", page: Int) {
         _searchResultType.value = SearchType.DEFAULT
+
+        if(page == 0)
+            _initAction.onNext(SearchType.DEFAULT)
 
         if (!query.value.equals(queryValue)) {
             query.value = queryValue
@@ -181,7 +196,7 @@ class SearchViewModel(
         viewModelScope.launch {
             searchRepository.getWineInfosLikeQuery(queryValue)
 
-            this@SearchViewModel.pageNumber = pageNumber
+            this@SearchViewModel.page = page
 
             val contents =
                 searchRepository.getSearchFilters<Pair<String, String>>(SearchFilterGroup.CONTENT)
@@ -195,17 +210,28 @@ class SearchViewModel(
                 events?.let { addAll(it) }
             }
 
-            _results.value = wineRepository.getWinesFilter(
-                wineName = queryValue,
-                category = type,
-                food = food,
-                store = store,
-                start = contents?.first?.toInt(),
-                end = contents?.second?.toInt(),
-                keywords = keywords,
-                pageSize = 10,
-                pageNumber = pageNumber
-            )?.wineResult ?: listOf()
+            val newResults = try {
+                wineRepository.getWinesFilter(
+                    wineName = queryValue,
+                    category = type,
+                    food = food,
+                    store = store,
+                    start = contents?.first?.toInt(),
+                    end = contents?.second?.toInt(),
+                    keywords = keywords,
+                    size = 10,
+                    page = page
+                )?.wineResult ?: listOf()
+            } catch (throwable: Throwable) {
+                when (throwable) {
+                    is LastPageException -> Timber.i("마지막 페이지입니다.")
+                }
+
+                listOf()
+            }
+
+            _results.value = results.value?.toMutableList()
+                ?.apply { addAll(newResults) } ?: listOf()
         }
 
         _searchAction.onNext(SearchAction.QUERY_SEARCH)
@@ -216,16 +242,16 @@ class SearchViewModel(
      * 현재 리스트의 타입 내용[SearchType]에 따라 호출하는 로직이 다르다.
      */
     fun paging() {
-        pageNumber++
+        page++
         when (searchResultType.value) {
             SearchType.DEFAULT -> {
-                querySearchClick(query.value ?: "", pageNumber)
+                querySearchClick(query.value ?: "", page)
             }
             SearchType.RECOMMEND -> {
-                queryRecommendClick(query.value ?: "", pageNumber)
+                queryRecommendClick(query.value ?: "", page)
             }
             else -> {
-                querySearchClick(query.value ?: "", pageNumber)
+                querySearchClick(query.value ?: "", page)
             }
         }
     }
@@ -235,18 +261,28 @@ class SearchViewModel(
         _searchAction.onNext(SearchAction.EDIT_FILTER)
     }
 
+    /** 해당 position 을 업데이트한다. 값 변경이 있을 시 해당 내용을 반영한다. */
+    fun updateClickPosition(wineResult: WineResult) = viewModelScope.launch(vmExceptionHandler) {
+        val index = results.value?.indexOf(wineResult) ?: return@launch
+
+        val updatedWineResult = wineRepository.getWine(wineResult.id ?: return@launch)
+
+        val prevWineResult = _results.value?.toMutableList()?.apply {
+            removeAt(index)
+            add(index, updatedWineResult!!)
+        }
+
+        _results.value = prevWineResult
+    }
+
     override fun wineItemViewClick(wineResult: WineResult) {
         Timber.i("wineItemViewClick search $wineResult")
-        Intent(WinePickApplication.appContext, WineDetailActivity::class.java).apply {
-            putExtra("wineData",wineResult)
-        }.run {
-            WinePickApplication.getGlobalApplicationContext().startActivity(this.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-        }
+        _clickedWineResult.value = wineResult
     }
 
     override fun wineHeartClick(newWineResult: WineResult) {
         Timber.i("wineHeartClick search $newWineResult")
-        if(authManager.token != "guest") {
+        if (authManager.token != "guest") {
             showLoading()
             if (newWineResult.clickedLikeYn) {
                 cancelLike(authManager.id, newWineResult)
@@ -255,22 +291,23 @@ class SearchViewModel(
             }
         }
     }
+
     /** 좋아요 서버 통신 - addLike */
     fun addLike(wineResult: WineResult) {
         winePickRepository.postLike(
-                data = LikeWine(
-                        userId = authManager.id,
-                        wineId = wineResult.id!!
-                ),
-                onSuccess = {
-                    Timber.d("와인 좋아요 저장 성공")
-                    _toastMessage.value = true
-                    hideLoading()
-                },
-                onFailure = {
-                    toggleWineResult(wineResult)
-                    hideLoading()
-                }
+            data = LikeWine(
+                userId = authManager.id,
+                wineId = wineResult.id!!
+            ),
+            onSuccess = {
+                Timber.d("와인 좋아요 저장 성공")
+                _toastMessage.value = true
+                hideLoading()
+            },
+            onFailure = {
+                toggleWineResult(wineResult)
+                hideLoading()
+            }
         )
 
     }
@@ -278,23 +315,23 @@ class SearchViewModel(
     /** 좋아요 취소 서버 통신 - deleteLike */
     fun cancelLike(userId: Int, wineResult: WineResult) {
         winePickRepository.deleteLike(
-                wineId = wineResult.id!!,
-                userId = userId,
-                onSuccess = {
-                    Timber.d("와인 좋아요 취소 성공")
-                    _cancelMessage.value = true
-                    hideLoading()
-                },
-                onFailure = {
-                    toggleWineResult(wineResult)
-                    hideLoading()
-                }
+            wineId = wineResult.id!!,
+            userId = userId,
+            onSuccess = {
+                Timber.d("와인 좋아요 취소 성공")
+                _cancelMessage.value = true
+                hideLoading()
+            },
+            onFailure = {
+                toggleWineResult(wineResult)
+                hideLoading()
+            }
         )
     }
 
     override fun onCleared() {
         super.onCleared()
-        pageNumber = 0
+        page = 0
         searchRepository.filterItemsClear()
     }
 

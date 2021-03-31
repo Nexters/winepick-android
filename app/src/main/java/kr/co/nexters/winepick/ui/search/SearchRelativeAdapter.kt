@@ -25,7 +25,7 @@ class SearchRelativeAdapter(val vm: SearchViewModel) :
 
         return SearchRelativeViewHolder(binding).apply {
             itemView.setOnSingleClickListener {
-                vm.querySearchClick(binding.searchRelative!!.htmlUnStyling(), pageNumber = 0)
+                vm.querySearchClick(binding.searchRelative!!.htmlUnStyling(), page = 0)
             }
         }
     }

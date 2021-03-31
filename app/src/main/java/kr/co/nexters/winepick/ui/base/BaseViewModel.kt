@@ -7,7 +7,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 /**
  * BaseViewModel
@@ -20,6 +22,11 @@ open class BaseViewModel : ViewModel() {
     /** viewModel 에서 [LoadingAnimation] 를 control 하기 위한 LiveData */
     private val _loadingVisible = MutableLiveData(false)
     val loadingVisible: LiveData<Boolean> = _loadingVisible
+
+    /** viewModelScope 에서 Exception 이 발생할 시 처리하는 핸들러 */
+    val vmExceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
+        Timber.i("$coroutineContext $throwable")
+    }
 
     /** 생성자 개념으로 생각하면 편할듯 */
     init {
@@ -64,6 +71,6 @@ open class BaseViewModel : ViewModel() {
      * 필수가 아니므로 추상화는 하지 않는다.
      */
     open fun onResume() {
-        
+
     }
 }
