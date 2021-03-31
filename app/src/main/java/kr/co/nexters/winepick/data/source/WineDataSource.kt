@@ -2,6 +2,7 @@ package kr.co.nexters.winepick.data.source
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import kr.co.nexters.winepick.data.model.local.LastPageException
 import kr.co.nexters.winepick.data.model.remote.wine.WineResult
 import kr.co.nexters.winepick.data.model.remote.wine.WinesResult
 import kr.co.nexters.winepick.data.model.remote.wine.getWineResponse
@@ -54,7 +55,7 @@ class WineDataSource(private val winePickService: WinePickService) {
 
             /** statusCode 별 처리 */
             when (response.code()) {
-
+                500 -> throw LastPageException("${response.code()} API 오류")
             }
 
             if (!response.isSuccessful) throw Throwable("${response.code()} API 오류")

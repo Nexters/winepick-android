@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import io.reactivex.rxjava3.subjects.PublishSubject
 import kotlinx.coroutines.launch
 import kr.co.nexters.winepick.data.model.LikeWine
+import kr.co.nexters.winepick.data.model.local.LastPageException
 import kr.co.nexters.winepick.data.model.local.SearchFilterGroup
 import kr.co.nexters.winepick.data.model.remote.wine.WineResult
 import kr.co.nexters.winepick.data.repository.SearchRepository
@@ -47,6 +48,9 @@ class SearchViewModel(
     private val _searchFrontPage = MutableLiveData(SearchFront.DEFAULT)
     val searchFrontPage: LiveData<SearchFront> = _searchFrontPage
 
+    private val _initAction = PublishSubject.create<SearchType>()
+    val initAction = _initAction
+
     private var page: Int = 0
 
     /** 좋아요 토스트 **/
@@ -78,6 +82,10 @@ class SearchViewModel(
         super.onResume()
         // 도수의 경우 2개로 인식되므로 -1 처리를 해준다.
         _filterNum.value = searchRepository.userSearchFilterItems.filter { it.selected }.size - 1
+    }
+
+    fun prevDataClear() {
+        _results.value = listOf()
     }
 
     /**
@@ -144,6 +152,9 @@ class SearchViewModel(
     fun queryRecommendClick(recommendValue: String = "", page: Int) {
         _searchResultType.value = SearchType.RECOMMEND
 
+        if(page == 0)
+            _initAction.onNext(SearchType.RECOMMEND)
+
         if (!query.value.equals(recommendValue)) {
             query.value = recommendValue
         }
@@ -175,6 +186,9 @@ class SearchViewModel(
     fun querySearchClick(queryValue: String = query.value ?: "", page: Int) {
         _searchResultType.value = SearchType.DEFAULT
 
+        if(page == 0)
+            _initAction.onNext(SearchType.DEFAULT)
+
         if (!query.value.equals(queryValue)) {
             query.value = queryValue
         }
@@ -196,17 +210,25 @@ class SearchViewModel(
                 events?.let { addAll(it) }
             }
 
-            val newResults = wineRepository.getWinesFilter(
-                wineName = queryValue,
-                category = type,
-                food = food,
-                store = store,
-                start = contents?.first?.toInt(),
-                end = contents?.second?.toInt(),
-                keywords = keywords,
-                size = 10,
-                page = page
-            )?.wineResult ?: listOf()
+            val newResults = try {
+                wineRepository.getWinesFilter(
+                    wineName = queryValue,
+                    category = type,
+                    food = food,
+                    store = store,
+                    start = contents?.first?.toInt(),
+                    end = contents?.second?.toInt(),
+                    keywords = keywords,
+                    size = 10,
+                    page = page
+                )?.wineResult ?: listOf()
+            } catch (throwable: Throwable) {
+                when (throwable) {
+                    is LastPageException -> Timber.i("마지막 페이지입니다.")
+                }
+
+                listOf()
+            }
 
             _results.value = results.value?.toMutableList()
                 ?.apply { addAll(newResults) } ?: listOf()
@@ -240,7 +262,7 @@ class SearchViewModel(
     }
 
     /** 해당 position 을 업데이트한다. 값 변경이 있을 시 해당 내용을 반영한다. */
-    fun updateClickPosition(wineResult: WineResult) = viewModelScope.launch {
+    fun updateClickPosition(wineResult: WineResult) = viewModelScope.launch(vmExceptionHandler) {
         val index = results.value?.indexOf(wineResult) ?: return@launch
 
         val updatedWineResult = wineRepository.getWine(wineResult.id ?: return@launch)
