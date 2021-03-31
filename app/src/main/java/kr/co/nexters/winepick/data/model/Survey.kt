@@ -42,6 +42,20 @@ enum class SurveyAnswerType {
     ANSWER_B,
 }
 
+/** 사람의 성향을 구분하는 enum class */
+enum class PersonVersion {
+    UNKNOWN,
+    INTROVERSION,
+    EXTROVERSION,
+}
+
+/** 응답 결과를 문자열로 파싱한다. */
+fun SurveyAnswerType.parse() = when (this) {
+    SurveyAnswerType.UNKNOWN -> ""
+    SurveyAnswerType.ANSWER_A -> "A"
+    SurveyAnswerType.ANSWER_B -> "B"
+}
+
 data class SurveyInfo(
     val number: Int,
     val survey: Survey

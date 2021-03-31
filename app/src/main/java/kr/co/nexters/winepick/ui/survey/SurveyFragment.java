@@ -36,10 +36,14 @@ public class SurveyFragment extends BaseFragment<FragmentSurveyBinding> {
         super.onViewCreated(view, savedInstanceState);
 
         surveyInfo = surveyRepository.getCurrentSurvey();
+
         if (surveyInfo != null) {
             Timber.i("data: %s", surveyInfo);
             currentStage = surveyInfo.getNumber();
-            setData(surveyInfo.getSurvey().getContent(), surveyInfo.getSurvey().getAnswersA(), surveyInfo.getSurvey().getAnswersB(), (currentStage + 1) + "");
+            setData(surveyInfo.getSurvey().getContent(),
+                    surveyInfo.getSurvey().getAnswersA(),
+                    surveyInfo.getSurvey().getAnswersB(),
+                    (currentStage + 1) + "");
         }
 
         ViewExtKt.setOnSingleClickListener(binding.surveyAnswerA, () -> {
@@ -59,7 +63,7 @@ public class SurveyFragment extends BaseFragment<FragmentSurveyBinding> {
 
         binding.surveyQuestionText.setText(text);
         binding.currentSurveyNumberText.setText("0" + num);
-        binding.allSurveyNumberText.setText("0" + num + " / 09");
+        binding.allSurveyNumberText.setText("0" + num + " / 06");
         binding.surveyAnswerA.setText(ansA);
         binding.surveyAnswerB.setText(ansB);
     }

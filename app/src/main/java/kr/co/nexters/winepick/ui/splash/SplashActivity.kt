@@ -28,9 +28,7 @@ class SplashActivity(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        uiScope.launch {
-            surveyRepository.load()
-        }
+        uiScope.launch { surveyRepository.load() }
 
         splashView = findViewById(R.id.lottie_splash)
         splashView.apply {

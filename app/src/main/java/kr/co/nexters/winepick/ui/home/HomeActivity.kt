@@ -89,6 +89,27 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
                         .apply { putExtra(Constant.BOOL_EXTRA_SURVEY_RESET, true) }
                         .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 )
+            } else if (it.number == -1) {
+                ConfirmDialog(
+                    241.dpToPx(),
+                    202.dpToPx(),
+                    "이전에 검사를 완료했습니다.",
+                    "다시 나와 어울리는 와인을\n찾아보려면 확인을 눌러주세요",
+                    "취소",
+                    { dialogFragment: DialogFragment? ->
+                        dialogFragment?.dismiss()
+                    },
+                    "확인",
+                    { dialogFragment: DialogFragment? ->
+                        WinePickApplication.getGlobalApplicationContext().startActivity(
+                            Intent(WinePickApplication.appContext, SurveyActivity::class.java)
+                                .apply { putExtra(Constant.BOOL_EXTRA_SURVEY_RESET, true) }
+                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        )
+                        dialogFragment?.dismiss()
+                    },
+                    false
+                ).show(supportFragmentManager, "SurveyReset")
             } else {
                 ConfirmDialog(
                     241.dpToPx(),
