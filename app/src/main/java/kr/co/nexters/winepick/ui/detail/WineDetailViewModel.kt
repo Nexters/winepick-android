@@ -155,6 +155,7 @@ class WineDetailViewModel(private val winePickRepository: WinePickRepository, pr
             WineValue("타닌",WinePickApplication.appContext!!.getString(R.string.tannin_detail),_wineResult.value!!.tannin!!,"많음","적음",false)
             )
 
+        hideLoading()
     }
     fun wineStore(store : String) {
         when(store) {

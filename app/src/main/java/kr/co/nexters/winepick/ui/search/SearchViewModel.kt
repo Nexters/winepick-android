@@ -47,7 +47,7 @@ class SearchViewModel(
     private val _searchFrontPage = MutableLiveData(SearchFront.DEFAULT)
     val searchFrontPage: LiveData<SearchFront> = _searchFrontPage
 
-    private var pageNumber: Int = 0
+    private var page: Int = 0
 
     /** 좋아요 토스트 **/
     val _toastMessage = MutableLiveData<Boolean>()
@@ -141,7 +141,7 @@ class SearchViewModel(
      *
      * @param recommendValue 검색할 키워드 (기본값은 query liveData 내의 value 이다.)
      */
-    fun queryRecommendClick(recommendValue: String = "", pageNumber: Int) {
+    fun queryRecommendClick(recommendValue: String = "", page: Int) {
         _searchResultType.value = SearchType.RECOMMEND
 
         if (!query.value.equals(recommendValue)) {
@@ -151,12 +151,12 @@ class SearchViewModel(
         viewModelScope.launch {
             searchRepository.getWineInfosLikeQuery(recommendValue)
 
-            this@SearchViewModel.pageNumber = pageNumber
+            this@SearchViewModel.page = page
 
             _results.value = try {
                 wineRepository.getWinesKeyword(
-                    pageSize = 10,
-                    pageNumber = pageNumber,
+                    size = 10,
+                    page = page,
                     keyword = recommendValue
                 )?.wineResult ?: listOf()
             } catch (throwable: Throwable) {
@@ -172,7 +172,7 @@ class SearchViewModel(
      *
      * @param queryValue 검색할 키워드 (기본값은 query liveData 내의 value 이다.)
      */
-    fun querySearchClick(queryValue: String = query.value ?: "", pageNumber: Int) {
+    fun querySearchClick(queryValue: String = query.value ?: "", page: Int) {
         _searchResultType.value = SearchType.DEFAULT
 
         if (!query.value.equals(queryValue)) {
@@ -182,7 +182,7 @@ class SearchViewModel(
         viewModelScope.launch {
             searchRepository.getWineInfosLikeQuery(queryValue)
 
-            this@SearchViewModel.pageNumber = pageNumber
+            this@SearchViewModel.page = page
 
             val contents =
                 searchRepository.getSearchFilters<Pair<String, String>>(SearchFilterGroup.CONTENT)
@@ -196,7 +196,7 @@ class SearchViewModel(
                 events?.let { addAll(it) }
             }
 
-            _results.value = wineRepository.getWinesFilter(
+            val newResults = wineRepository.getWinesFilter(
                 wineName = queryValue,
                 category = type,
                 food = food,
@@ -204,9 +204,12 @@ class SearchViewModel(
                 start = contents?.first?.toInt(),
                 end = contents?.second?.toInt(),
                 keywords = keywords,
-                pageSize = 10,
-                pageNumber = pageNumber
+                size = 10,
+                page = page
             )?.wineResult ?: listOf()
+
+            _results.value = results.value?.toMutableList()
+                ?.apply { addAll(newResults) } ?: listOf()
         }
 
         _searchAction.onNext(SearchAction.QUERY_SEARCH)
@@ -217,16 +220,16 @@ class SearchViewModel(
      * 현재 리스트의 타입 내용[SearchType]에 따라 호출하는 로직이 다르다.
      */
     fun paging() {
-        pageNumber++
+        page++
         when (searchResultType.value) {
             SearchType.DEFAULT -> {
-                querySearchClick(query.value ?: "", pageNumber)
+                querySearchClick(query.value ?: "", page)
             }
             SearchType.RECOMMEND -> {
-                queryRecommendClick(query.value ?: "", pageNumber)
+                queryRecommendClick(query.value ?: "", page)
             }
             else -> {
-                querySearchClick(query.value ?: "", pageNumber)
+                querySearchClick(query.value ?: "", page)
             }
         }
     }
@@ -306,7 +309,7 @@ class SearchViewModel(
 
     override fun onCleared() {
         super.onCleared()
-        pageNumber = 0
+        page = 0
         searchRepository.filterItemsClear()
     }
 

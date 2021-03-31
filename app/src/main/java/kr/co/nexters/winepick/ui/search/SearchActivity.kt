@@ -94,7 +94,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
 
                         if (needToUpdate) {
                             toast("검색 화면 목록 갱신 시작")
-                            viewModel.querySearchClick(pageNumber = 0)
+                            viewModel.querySearchClick(page = 0)
                         }
                     }
                 }
