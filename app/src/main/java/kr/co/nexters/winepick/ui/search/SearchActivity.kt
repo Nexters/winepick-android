@@ -1,24 +1,20 @@
 package kr.co.nexters.winepick.ui.search
 
 import android.content.Intent
-import android.graphics.PorterDuff
 import android.os.Bundle
-import android.os.Handler
 import android.widget.Toast
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import com.kakao.sdk.auth.LoginClient
 import kotlinx.coroutines.launch
 import kr.co.nexters.winepick.BR
 import kr.co.nexters.winepick.R
+import kr.co.nexters.winepick.WinePickApplication
 import kr.co.nexters.winepick.data.constant.Constant
 import kr.co.nexters.winepick.databinding.ActivitySearchBinding
 import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.ActivityResult
 import kr.co.nexters.winepick.ui.base.BaseActivity
-import kr.co.nexters.winepick.ui.component.ConfirmDialog
 import kr.co.nexters.winepick.ui.component.LikeDialog
-import kr.co.nexters.winepick.ui.splash.SplashActivity
+import kr.co.nexters.winepick.ui.detail.WineDetailActivity
 import kr.co.nexters.winepick.util.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -30,8 +26,8 @@ import timber.log.Timber
  * @since v1.0.0 / 2021.02.06
  */
 class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_search) {
-    override val viewModel : SearchViewModel by viewModel()
-    private val authManager : AuthManager by inject()
+    override val viewModel: SearchViewModel by viewModel()
+    private val authManager: AuthManager by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,16 +57,6 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
     override fun onResume() {
         super.onResume()
         viewModel.onResume()
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == Constant.REQ_CODE_GO_TO_FILTER) {
-            deferred.complete(ActivityResult(resultCode, data))
-        } else {
-            super.onActivityResult(requestCode, resultCode, data)
-        }
     }
 
     fun subscribeUI() {
@@ -116,7 +102,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
             }
         }
         viewModel.toastMessage.observe(this, Observer {
-            if(it) {
+            if (it) {
                 LikeDialog(
                     content = getString(R.string.like_add)
                 ).show(supportFragmentManager, "LikeDialog")
@@ -128,12 +114,23 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
         })
 
         viewModel.cancelMessage.observe(this, Observer {
-            if(it) {
+            if (it) {
                 val customToast = Toast(this)
                 customToast.drawCancelToast(this)
                 binding.apply {
                     rvResults.adapter!!.notifyDataSetChanged()
                 }
+            }
+        })
+
+        viewModel.clickedWineResult.observe(this, {
+            uiScope.launch {
+                val intent = Intent(this@SearchActivity, WineDetailActivity::class.java)
+                    .apply { putExtra("wineData", it) }
+
+                startActivity(intent, Constant.REQ_CODE_GO_TO_DETAIL)
+
+                viewModel.updateClickPosition(it)
             }
         })
     }

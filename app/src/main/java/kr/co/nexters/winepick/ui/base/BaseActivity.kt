@@ -72,6 +72,7 @@ abstract class BaseActivity<B : ViewDataBinding>(
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         Timber.i("requestCode : $requestCode, resultCode : $resultCode, intent : $intent")
+        deferred.complete(ActivityResult(resultCode, data))
     }
 
     override fun onDestroy() {

@@ -1,6 +1,5 @@
 package kr.co.nexters.winepick.ui.search
 
-import android.content.Intent
 import android.text.Editable
 import android.view.View
 import androidx.lifecycle.LiveData
@@ -8,7 +7,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import io.reactivex.rxjava3.subjects.PublishSubject
 import kotlinx.coroutines.launch
-import kr.co.nexters.winepick.WinePickApplication
 import kr.co.nexters.winepick.data.model.LikeWine
 import kr.co.nexters.winepick.data.model.local.SearchFilterGroup
 import kr.co.nexters.winepick.data.model.remote.wine.WineResult
@@ -17,7 +15,6 @@ import kr.co.nexters.winepick.data.repository.WinePickRepository
 import kr.co.nexters.winepick.data.repository.WineRepository
 import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.WineResultViewModel
-import kr.co.nexters.winepick.ui.detail.WineDetailActivity
 import timber.log.Timber
 
 /**
@@ -42,6 +39,10 @@ class SearchViewModel(
     /** 검색 목록 list */
     val currents: LiveData<List<String>> = searchRepository.styledWineInfos
 
+    /** 현재 클릭한 와인 검색결과 위치 */
+    val _clickedWineResult: MutableLiveData<WineResult> = MutableLiveData()
+    val clickedWineResult: LiveData<WineResult> = _clickedWineResult
+
     /** 가장 맨 앞에 보여야 할 화면. 보여야 할 내용은 [SearchFront] 참고 */
     private val _searchFrontPage = MutableLiveData(SearchFront.DEFAULT)
     val searchFrontPage: LiveData<SearchFront> = _searchFrontPage
@@ -54,7 +55,7 @@ class SearchViewModel(
 
     /** 취소 토스트 **/
     val _cancelMessage = MutableLiveData<Boolean>()
-    var cancelMessage : LiveData<Boolean> = _cancelMessage
+    var cancelMessage: LiveData<Boolean> = _cancelMessage
 
     /**
      * 검색 화면에서 진행하는 비즈니스 로직
@@ -235,18 +236,28 @@ class SearchViewModel(
         _searchAction.onNext(SearchAction.EDIT_FILTER)
     }
 
+    /** 해당 position 을 업데이트한다. 값 변경이 있을 시 해당 내용을 반영한다. */
+    fun updateClickPosition(wineResult: WineResult) = viewModelScope.launch {
+        val index = results.value?.indexOf(wineResult) ?: return@launch
+
+        val updatedWineResult = wineRepository.getWine(wineResult.id ?: return@launch)
+
+        val prevWineResult = _results.value?.toMutableList()?.apply {
+            removeAt(index)
+            add(index, updatedWineResult!!)
+        }
+
+        _results.value = prevWineResult
+    }
+
     override fun wineItemViewClick(wineResult: WineResult) {
         Timber.i("wineItemViewClick search $wineResult")
-        Intent(WinePickApplication.appContext, WineDetailActivity::class.java).apply {
-            putExtra("wineData",wineResult)
-        }.run {
-            WinePickApplication.getGlobalApplicationContext().startActivity(this.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-        }
+        _clickedWineResult.value = wineResult
     }
 
     override fun wineHeartClick(newWineResult: WineResult) {
         Timber.i("wineHeartClick search $newWineResult")
-        if(authManager.token != "guest") {
+        if (authManager.token != "guest") {
             showLoading()
             if (newWineResult.clickedLikeYn) {
                 cancelLike(authManager.id, newWineResult)
@@ -255,22 +266,23 @@ class SearchViewModel(
             }
         }
     }
+
     /** 좋아요 서버 통신 - addLike */
     fun addLike(wineResult: WineResult) {
         winePickRepository.postLike(
-                data = LikeWine(
-                        userId = authManager.id,
-                        wineId = wineResult.id!!
-                ),
-                onSuccess = {
-                    Timber.d("와인 좋아요 저장 성공")
-                    _toastMessage.value = true
-                    hideLoading()
-                },
-                onFailure = {
-                    toggleWineResult(wineResult)
-                    hideLoading()
-                }
+            data = LikeWine(
+                userId = authManager.id,
+                wineId = wineResult.id!!
+            ),
+            onSuccess = {
+                Timber.d("와인 좋아요 저장 성공")
+                _toastMessage.value = true
+                hideLoading()
+            },
+            onFailure = {
+                toggleWineResult(wineResult)
+                hideLoading()
+            }
         )
 
     }
@@ -278,17 +290,17 @@ class SearchViewModel(
     /** 좋아요 취소 서버 통신 - deleteLike */
     fun cancelLike(userId: Int, wineResult: WineResult) {
         winePickRepository.deleteLike(
-                wineId = wineResult.id!!,
-                userId = userId,
-                onSuccess = {
-                    Timber.d("와인 좋아요 취소 성공")
-                    _cancelMessage.value = true
-                    hideLoading()
-                },
-                onFailure = {
-                    toggleWineResult(wineResult)
-                    hideLoading()
-                }
+            wineId = wineResult.id!!,
+            userId = userId,
+            onSuccess = {
+                Timber.d("와인 좋아요 취소 성공")
+                _cancelMessage.value = true
+                hideLoading()
+            },
+            onFailure = {
+                toggleWineResult(wineResult)
+                hideLoading()
+            }
         )
     }
 
