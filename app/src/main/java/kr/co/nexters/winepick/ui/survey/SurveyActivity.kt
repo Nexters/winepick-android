@@ -100,7 +100,7 @@ class SurveyActivity : BaseActivity<ActivitySurveyBinding>(R.layout.activity_sur
                         startActivity(
                             Intent(
                                 WinePickApplication.appContext,
-                                TypeDetailActivity::class.java
+                                SurveyResultActivity::class.java
                             ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         )
                         finish()

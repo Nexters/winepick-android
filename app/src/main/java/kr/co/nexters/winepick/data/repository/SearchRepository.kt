@@ -152,9 +152,27 @@ class SearchRepository(searchDataSource: SearchDataSource) {
         _userSearchFilterItems.addAll(searchFilterItems)
     }
 
+    /** 새롭게 입력받은 필터를 추가한다. */
+    fun addFilterItems(newSearchFilterItemNames: List<String>) {
+        val parsedSearchFilterItems = newSearchFilterItemNames
+            .mapNotNull { it.parseSearchFilterItem()?.copy(selected = true) }
+
+        parsedSearchFilterItems.forEach { updateFilterItems(it) }
+    }
+
+    /** 입력받은 문자열을 기반으로 필터 내용을 찾는다. */
+    fun String.parseSearchFilterItem(): SearchFilterItem? {
+        return searchFilterItems.firstOrNull { it.value.contains(this) }
+    }
+
     /** 특정 데이터로 필터 설정 내용을 롤백시켜야 하는 경우라면 이 로직을 사용한다. */
     fun rollbackFilterItems(prevSearchFilterItems: List<SearchFilterItem>) {
         _userSearchFilterItems.clear()
         _userSearchFilterItems.addAll(prevSearchFilterItems)
     }
+}
+
+/** 서버 내의 키워드 내용을 파싱하여 필터에서 쓰일 수 있는 값으로 파싱한다. */
+fun String.parseKeyword(): List<String> {
+    return this.split(",").toMutableList().apply { removeFirstOrNull() }
 }

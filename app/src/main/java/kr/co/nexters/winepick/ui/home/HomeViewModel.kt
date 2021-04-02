@@ -71,13 +71,22 @@ class HomeViewModel(
         _isTest.value = false
         _isUser.value = false
         _loginWarningDlg.value = false
-        _testImg.value = 0
+
+        getUserTestInfo()
+        getUserLikes()
+    }
+
+    /** 유저 테스트 내역을 확인하여 그에 따른 데이터 설정을 해준다. */
+    fun getUserTestInfo() {
         if (auth.testType != "N") {
             _isTest.value = true
             setUserPersonalType()
+        } else {
+            _isTest.value = false
+            _testImg.value = 0
         }
-        getUserLikes()
     }
+
     fun getUserLikes(){
         showLoading()
         if (auth.token != "guest") {
@@ -203,7 +212,7 @@ class HomeViewModel(
 
     override fun onResume() {
         super.onResume()
+        getUserTestInfo()
         getUserLikes()
     }
-
 }

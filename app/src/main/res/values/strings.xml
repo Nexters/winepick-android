@@ -28,6 +28,12 @@
     <string name="type_d_name">햄스터</string>
     <string name="type_e_name">펭귄</string>
     <string name="type_f_name">강아지</string>
+    <string name="type_a_detail">센치한 도도형</string>
+    <string name="type_b_detail">고독한 배려쟁이형</string>
+    <string name="type_c_detail">멀뚱멀뚱 무적형</string>
+    <string name="type_d_detail">도전적 다다익선형</string>
+    <string name="type_e_detail">모여모여 친목형</string>
+    <string name="type_f_detail">수다쟁이 댕댕이형</string>
 
 
     <!-- login warning -->
