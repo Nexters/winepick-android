@@ -18,12 +18,10 @@ import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.type.RecentSearchAdapter
 import kr.co.nexters.winepick.ui.base.BaseActivity
 import kr.co.nexters.winepick.ui.component.ConfirmDialog
-import kr.co.nexters.winepick.ui.home.HomeActivity
+import kr.co.nexters.winepick.ui.detail.WineDetailActivity
 import kr.co.nexters.winepick.ui.login.LoginViewModel
-import kr.co.nexters.winepick.ui.search.SearchActivity
 import kr.co.nexters.winepick.ui.survey.SurveyActivity
 import kr.co.nexters.winepick.util.VerticalItemDecorator
-import kr.co.nexters.winepick.util.startActivity
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
@@ -127,7 +125,9 @@ class TypeDetailActivity : BaseActivity<ActivityTypeDetailBinding>(
         searchRecycler.initData(userViewWines)
         searchRecycler.setOnItemClickListener(object : RecentSearchAdapter.OnItemClickListener {
             override fun onItemClick(v: View, data: WineResult, pos: Int) {
-              //TODO 와인 상세페이지로 넘겨야함
+                val intent = Intent(this@TypeDetailActivity, WineDetailActivity::class.java)
+                intent.putExtra("wineData", data)
+                startActivity(intent)
             }
         })
     }

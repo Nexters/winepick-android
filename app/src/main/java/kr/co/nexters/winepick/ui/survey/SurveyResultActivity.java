@@ -6,7 +6,6 @@ import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.os.Bundle;
 import android.util.Base64;
-import android.view.View;
 
 import com.kakao.kakaolink.v2.KakaoLinkResponse;
 import com.kakao.kakaolink.v2.KakaoLinkService;
@@ -29,7 +28,6 @@ import java.util.Map;
 import kotlin.Unit;
 import kr.co.nexters.winepick.R;
 import kr.co.nexters.winepick.data.constant.Constant;
-import kr.co.nexters.winepick.data.repository.SearchRepository;
 import kr.co.nexters.winepick.data.repository.SearchRepositoryKt;
 import kr.co.nexters.winepick.data.repository.WinePickRepository;
 import kr.co.nexters.winepick.data.response.PersonalityType;
@@ -38,7 +36,6 @@ import kr.co.nexters.winepick.di.AuthManager;
 import kr.co.nexters.winepick.ui.base.BaseActivity;
 import kr.co.nexters.winepick.ui.base.BaseViewModel;
 import kr.co.nexters.winepick.ui.component.ConfirmDialog;
-import kr.co.nexters.winepick.ui.detail.DetailActivity;
 import kr.co.nexters.winepick.ui.search.SearchActivity;
 import kr.co.nexters.winepick.util.DisplayExtKt;
 import kr.co.nexters.winepick.util.ViewExtKt;
@@ -151,8 +148,10 @@ public class SurveyResultActivity extends BaseActivity<ActivitySurveyResultBindi
         binding.myWineResultText.setText(personalityType.getMatchWine());
         ViewExtKt.setOnSingleClickListener(binding.myWineResultText, () -> {
             // TODO 추후 아래 내용 추가 구현 필요
-            new Intent(this, DetailActivity.class);
-            return Unit.INSTANCE;
+            // Intent intent = new Intent(this, WineDetailActivity.class);
+            // intent.putExtra("wineData", wineResult);
+            // startActivity(intent);
+             return Unit.INSTANCE;
         });
 
         // 나와 잘 맞는 타입 설정
