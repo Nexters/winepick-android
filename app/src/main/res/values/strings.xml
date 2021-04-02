@@ -94,6 +94,16 @@
         <item>16.0</item>
     </array>
 
+    <string-array name="personality_alphabet">
+        <item>N</item>
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+        <item>D</item>
+        <item>E</item>
+        <item>F</item>
+    </string-array>
+
     <string-array name="wine_info">
         <item>라포데리나 브루넬로 디 몬탈치노 DOCG</item>
         <item>몬떼 레온 리미티드 에디션</item>

@@ -1,20 +1,24 @@
 package kr.co.nexters.winepick.ui.survey
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.annotation.IdRes
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import kotlinx.coroutines.launch
 import kr.co.nexters.winepick.R
+import kr.co.nexters.winepick.WinePickApplication
 import kr.co.nexters.winepick.data.constant.Constant
 import kr.co.nexters.winepick.data.model.SurveyAnswerType
 import kr.co.nexters.winepick.data.model.SurveyInfo
 import kr.co.nexters.winepick.data.repository.SurveyRepository
 import kr.co.nexters.winepick.databinding.ActivitySurveyBinding
+import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.BaseActivity
 import kr.co.nexters.winepick.ui.base.BaseViewModel
 import kr.co.nexters.winepick.ui.base.navigate
 import kr.co.nexters.winepick.ui.component.ConfirmDialog
+import kr.co.nexters.winepick.ui.type.TypeDetailActivity
 import kr.co.nexters.winepick.util.SharedPrefs
 import kr.co.nexters.winepick.util.dpToPx
 import kr.co.nexters.winepick.util.setOnSingleClickListener
@@ -25,6 +29,7 @@ class SurveyActivity : BaseActivity<ActivitySurveyBinding>(R.layout.activity_sur
     override val viewModel: BaseViewModel? = null
 
     private val surveyRepository: SurveyRepository by inject()
+    private val authManager: AuthManager by inject()
     private val sharedPrefs: SharedPrefs by inject()
 
     /** 초기화 된 건지에 대한 유무 */
@@ -78,7 +83,17 @@ class SurveyActivity : BaseActivity<ActivitySurveyBinding>(R.layout.activity_sur
             if (currentSurvey == null || currentSurvey!!.number == -1) {
                 // currentSurvey 가 null 이면 오류이므로 강제로 설문을 종료한다.
                 // 만약 설문을 다 완료한 경우, 분석 화면으로 넘겨준다.
-                toast("${sharedPrefs[Constant.PREF_KEY_INT_USER_SURVEY_RESULT, -1] ?: -1}")
+                val result = sharedPrefs[Constant.PREF_KEY_INT_USER_SURVEY_RESULT, -1] ?: 0
+                toast("$result")
+
+                authManager.testType =
+                    resources.getStringArray(R.array.personality_alphabet)[result]
+                startActivity(
+                    Intent(
+                        WinePickApplication.appContext,
+                        TypeDetailActivity::class.java
+                    ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                )
                 finish()
             } else {
                 SurveyFragment(R.layout.fragment_survey).apply {
