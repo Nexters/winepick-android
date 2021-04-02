@@ -45,7 +45,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
             val filters = searchFilters.parseKeyword()
             searchRepository.addFilterItems(filters)
 
-            viewModel.querySearchClick(pageNumber = 0)
+            viewModel.querySearchClick(page = 0)
         }
 
         binding.apply {
