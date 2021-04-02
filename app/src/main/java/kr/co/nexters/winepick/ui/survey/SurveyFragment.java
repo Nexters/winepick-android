@@ -1,68 +1,70 @@
 package kr.co.nexters.winepick.ui.survey;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
-import androidx.fragment.app.Fragment;
-import kr.co.nexters.winepick.R;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-public class SurveyFragment extends Fragment {
-    private int currentStage;
+import kotlin.Unit;
+import kr.co.nexters.winepick.data.model.SurveyAnswerType;
+import kr.co.nexters.winepick.data.model.SurveyInfo;
+import kr.co.nexters.winepick.data.repository.SurveyRepository;
+import kr.co.nexters.winepick.databinding.FragmentSurveyBinding;
+import kr.co.nexters.winepick.ui.base.BaseFragment;
+import kr.co.nexters.winepick.ui.base.BaseViewModel;
+import kr.co.nexters.winepick.util.ViewExtKt;
+import timber.log.Timber;
 
-    TextView questionText;
-    TextView questionNum;
-    TextView totalNum;
-    TextView answerA;
-    TextView answerB;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Bundle bundle = new Bundle();
-        bundle.getBundle("currentStage");
-
-        int i = getArguments().getInt("currentStage");
-        Log.isLoggable("argument", i);
-
-        if (getArguments() != null) {
-            currentStage = getArguments().getInt("currentStage");
-            Log.isLoggable("data: ", currentStage);
-        }
+public class SurveyFragment extends BaseFragment<FragmentSurveyBinding> {
+    public SurveyFragment(int layoutResId) {
+        super(layoutResId);
     }
 
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_survey, container, false);
-        questionText = view.findViewById(R.id.survey_question_text);
-        questionNum = view.findViewById(R.id.current_survey_number_text);
-        totalNum = view.findViewById(R.id.all_survey_number_text);
-        answerA = view.findViewById(R.id.survey_answer_A);
-        answerB = view.findViewById(R.id.survey_answer_B);
-        return view;
+    protected BaseViewModel getViewModel() {
+        return null;
     }
 
-    public String answerClick(View view) {
-        switch (view.getId()) {
-            case R.id.survey_answer_A:
-                return "A";
-            case R.id.survey_answer_B:
-                return "B";
+    int currentStage = 0;
+    SurveyRepository surveyRepository = org.koin.java.KoinJavaComponent.inject(SurveyRepository.class).getValue();
+    SurveyInfo surveyInfo;
+
+    @Override
+    public void onViewCreated(@NotNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        surveyInfo = surveyRepository.getCurrentSurvey();
+
+        if (surveyInfo != null) {
+            Timber.i("data: %s", surveyInfo);
+            currentStage = surveyInfo.getNumber();
+            setData(surveyInfo.getSurvey().getContent(),
+                    surveyInfo.getSurvey().getAnswersA(),
+                    surveyInfo.getSurvey().getAnswersB(),
+                    (currentStage + 1) + "");
         }
-        return "";
+
+        ViewExtKt.setOnSingleClickListener(binding.surveyAnswerA, () -> {
+            ((SurveyActivity)requireActivity()).nextSurvey(SurveyAnswerType.ANSWER_A);
+            return Unit.INSTANCE;
+        });
+
+        ViewExtKt.setOnSingleClickListener(binding.surveyAnswerB, () -> {
+            ((SurveyActivity)requireActivity()).nextSurvey(SurveyAnswerType.ANSWER_B);
+            return Unit.INSTANCE;
+        });
     }
 
     public void setData(String text, String ansA, String ansB, String num) {
-        Log.i(ansA,"tag");
-        Log.i(ansB, "tag" );
-        questionText.setText(text);
-        questionNum.setText("0" + num);
-        totalNum.setText("0" + num + " / 09");
-        answerA.setText(ansA);
-        answerB.setText(ansB);
+        Timber.i(ansA);
+        Timber.i(ansB);
+
+        binding.surveyQuestionText.setText(text);
+        binding.currentSurveyNumberText.setText("0" + num);
+        binding.allSurveyNumberText.setText("0" + num + " / 06");
+        binding.surveyAnswerA.setText(ansA);
+        binding.surveyAnswerB.setText(ansB);
     }
 }

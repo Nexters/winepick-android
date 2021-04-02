@@ -1,57 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.survey.SurveyActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-        <ImageButton
-            android:id="@+id/home_button"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="23dp"
-            android:layout_marginTop="42dp"
-            android:src="@drawable/btn_home"
-            android:onClick="btnClick"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <data>
 
-        <TextView
-            android:id="@+id/home_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
-            android:lineSpacingExtra="0sp"
-            android:text="홈으로"
-            android:textColor="#000000"
-            android:textSize="14sp"
-            android:textStyle="normal"
-            app:layout_constraintBottom_toBottomOf="@+id/home_button"
-            app:layout_constraintStart_toEndOf="@+id/home_button"
-            app:layout_constraintTop_toTopOf="@+id/home_button" />
-
+        </data>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/survey_content"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="38dp"
-            android:layout_marginEnd="24dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/home_text" >
+            android:layout_height="match_parent"
+            tools:context=".ui.survey.SurveyActivity">
 
+                <ImageButton
+                    android:id="@+id/home_button"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="23dp"
+                    android:layout_marginTop="42dp"
+                    android:src="@drawable/btn_home"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/home_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:lineSpacingExtra="0sp"
+                    android:text="홈으로"
+                    android:textColor="#000000"
+                    android:textSize="14sp"
+                    android:textStyle="normal"
+                    app:layout_constraintBottom_toBottomOf="@+id/home_button"
+                    app:layout_constraintStart_toEndOf="@+id/home_button"
+                    app:layout_constraintTop_toTopOf="@+id/home_button" />
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/survey_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="38dp"
+                    android:layout_marginEnd="24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/home_text">
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="25dp"
+                    android:src="@drawable/question_illust"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/survey_content"
+                    app:layout_constraintStart_toStartOf="@+id/survey_content"
+                    app:layout_constraintTop_toBottomOf="@+id/survey_content" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="25dp"
-            android:src="@drawable/question_illust"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/survey_content"
-            app:layout_constraintStart_toStartOf="@+id/survey_content"
-            app:layout_constraintTop_toBottomOf="@+id/survey_content" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

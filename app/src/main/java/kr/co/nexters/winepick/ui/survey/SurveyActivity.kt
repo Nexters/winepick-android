@@ -1,101 +1,137 @@
 package kr.co.nexters.winepick.ui.survey
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.View
+import androidx.annotation.IdRes
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
+import kotlinx.coroutines.launch
 import kr.co.nexters.winepick.R
-import kr.co.nexters.winepick.data.model.Survey
-import kr.co.nexters.winepick.network.WinePickService
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import kr.co.nexters.winepick.WinePickApplication
+import kr.co.nexters.winepick.data.constant.Constant
+import kr.co.nexters.winepick.data.model.PutUserRequest
+import kr.co.nexters.winepick.data.model.SurveyAnswerType
+import kr.co.nexters.winepick.data.model.SurveyInfo
+import kr.co.nexters.winepick.data.repository.SurveyRepository
+import kr.co.nexters.winepick.data.repository.WinePickRepository
+import kr.co.nexters.winepick.databinding.ActivitySurveyBinding
+import kr.co.nexters.winepick.di.AuthManager
+import kr.co.nexters.winepick.ui.base.BaseActivity
+import kr.co.nexters.winepick.ui.base.BaseViewModel
+import kr.co.nexters.winepick.ui.base.navigate
+import kr.co.nexters.winepick.ui.component.ConfirmDialog
+import kr.co.nexters.winepick.ui.type.TypeDetailActivity
+import kr.co.nexters.winepick.util.SharedPrefs
+import kr.co.nexters.winepick.util.dpToPx
+import kr.co.nexters.winepick.util.setOnSingleClickListener
+import kr.co.nexters.winepick.util.toast
+import org.koin.android.ext.android.inject
 
-class SurveyActivity : AppCompatActivity() {
+class SurveyActivity : BaseActivity<ActivitySurveyBinding>(R.layout.activity_survey) {
+    override val viewModel: BaseViewModel? = null
 
-    // fragment 초기화
-    private var fragmentManager: FragmentManager? = null
-    private var transaction: FragmentTransaction? = null
+    private val surveyRepository: SurveyRepository by inject()
+    private val winePickRepository: WinePickRepository by inject()
+    private val authManager: AuthManager by inject()
+    private val sharedPrefs: SharedPrefs by inject()
 
-    private var surveyFragment: SurveyFragment? = null
-    private var sampleFragment: SampleFragment? = null
+    /** 초기화 된 건지에 대한 유무 */
+    val surveyReset: Boolean
+        get() = intent.getBooleanExtra(Constant.BOOL_EXTRA_SURVEY_RESET, false)
 
-    // 통신
-    var winePickService: WinePickService? = null
-    var survey: Survey? = null
-
-    // 설문 데이터 변경 관련
-    var currentStage: Int = 1
-    var type: String? = null
-
+    var startSurvey: SurveyInfo? = null
+    var currentSurvey: SurveyInfo? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_survey)
-        loadSurvey()
-
-        fragmentManager = supportFragmentManager
-        /*surveyFragment = SurveyFragment().apply {
-
-        }*/
-        Log.isLoggable("화긴", currentStage)
-        fragmentManager!!.beginTransaction()
-            .replace(R.id.survey_content, SurveyFragment().apply {
-                arguments = Bundle().apply {
-                    putInt("currentStage", currentStage)
-                }
-            })
-            .commitAllowingStateLoss()
-
-        //transaction!!.replace(R.id.frameLayout, surveyFragment!!)
-    }
-
-    fun btnClick(view: View) {
-        sampleFragment = SampleFragment()
-
-        transaction = fragmentManager!!.beginTransaction()
-        transaction!!
-            .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out,
-                R.anim.slide_left_in, R.anim.slide_right_out)
-            .replace(R.id.survey_content, sampleFragment!!)
-            .addToBackStack(null)
-            .commitAllowingStateLoss()
-    }
-
-    private fun loadSurvey() {
-        var questionText: String = ""
-        var retrofit = Retrofit.Builder()
-            .baseUrl("http://ec2-3-35-107-29.ap-northeast-2.compute.amazonaws.com:8080/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        winePickService = retrofit.create(WinePickService::class.java)
-
-        winePickService!!.getSurveys().enqueue(object: Callback<Survey> {
-            override fun onFailure(call: Call<Survey>, t: Throwable) {
-                Log.e("Connect Survey Fail", t.message!!)
-
+        // 만약 설문 내역을 초기화하는 경우 처음부터 다시 시작한다.
+        uiScope.launch {
+            if (surveyReset) {
+                surveyRepository.resetSurvey()
             }
-            override fun onResponse(call: Call<Survey>, response: Response<Survey>) {
-                survey = response.body()
-                Log.i(survey.toString(), "서베이 데이터")
-/*                for (data in survey!!.data) {
-                    Log.i(data.toString(), "포문 데이터")
-                }
+            startSurvey = surveyRepository.getCurrentSurvey()
+            currentSurvey = startSurvey
 
-                surveyFragment!!.setData(
-                    survey!!.data.get(0).content,
-                    survey!!.data.get(0).answersA,
-                    survey!!.data.get(0).answersB,
-                    currentStage.toString()
+            if (startSurvey == null) onBackPressed()
+
+            SurveyFragment(R.layout.fragment_survey).apply {
+                arguments = Bundle().apply { putInt("currentStage", startSurvey!!.number) }
+            }.navigate(supportFragmentManager, binding.surveyContent.id)
+
+            // 홈버튼 클릭 시 실행되는 리스너
+            binding.homeButton.setOnSingleClickListener {
+                ConfirmDialog(
+                    241.dpToPx(),
+                    202.dpToPx(),
+                    "잠깐 나갈까요?",
+                    "검사로 돌아오면\n지금 질문부터 다시 시작해요.",
+                    "아니요",
+                    null,
+                    "예",
+                    { dialogFragment: DialogFragment? ->
+                        onBackPressed()
+                        dialogFragment?.dismiss()
+                    },
+                    false
+                ).show(supportFragmentManager, "TestSurveyStop")
+            }
+        }
+    }
+
+    fun nextSurvey(answerType: SurveyAnswerType) {
+        uiScope.launch {
+            currentSurvey = surveyRepository.markingSurvey(answerType)
+
+            if (currentSurvey == null || currentSurvey!!.number == -1) {
+                // currentSurvey 가 null 이면 오류이므로 강제로 설문을 종료한다.
+                // 만약 설문을 다 완료한 경우, 분석 화면으로 넘겨준다.
+                val result = sharedPrefs[Constant.PREF_KEY_INT_USER_SURVEY_RESULT, -1] ?: 0
+                val resultType = resources.getStringArray(R.array.personality_alphabet)[result]
+
+                winePickRepository.putUser(
+                    authManager.token,
+                    PutUserRequest(
+                        personalityType = resultType,
+                        accessToken = authManager.token,
+                    ),
+                    {
+                        authManager.testType = it.personality ?: resultType
+                        startActivity(
+                            Intent(
+                                WinePickApplication.appContext,
+                                SurveyResultActivity::class.java
+                            ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        )
+                        finish()
+                    },
+                    {
+                        toast("통신이 원활하지 않습니다. 잠시 후 다시 시도해주세요.")
+                    })
+            } else {
+                SurveyFragment(R.layout.fragment_survey).apply {
+                    arguments = Bundle().apply { putInt("currentStage", currentSurvey!!.number) }
+                }.next(supportFragmentManager, binding.surveyContent.id)
+            }
+        }
+    }
+
+    /**
+     * 특정 프레그먼트로 이동한다.
+     * 설문 진행 도중, 다음 설문으로 넘어갈 시 활용된다.
+     *
+     * @param fm FragmentManager
+     * @param id 프레그먼트가 들어갈 레이아웃 id
+     */
+    fun SurveyFragment.next(fm: FragmentManager, @IdRes id: Int): Int {
+        return fm.run {
+            beginTransaction()
+                .setCustomAnimations(
+                    R.anim.slide_right_in, R.anim.slide_left_out,
+                    R.anim.slide_left_in, R.anim.slide_right_out
                 )
-                Log.i(survey.toString(), "surveyData")*/
-            }
-        })
+                .replace(id, this@next, this@next::class.simpleName)
+                .commit()
+        }
     }
-
 }

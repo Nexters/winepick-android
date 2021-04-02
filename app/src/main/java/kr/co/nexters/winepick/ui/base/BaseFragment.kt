@@ -11,6 +11,11 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
+import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.ui.component.LoadingAnimation
 
 /**
@@ -28,6 +33,14 @@ abstract class BaseFragment<B : ViewDataBinding>(
     @LayoutRes val layoutResId: Int
 ) : Fragment() {
     lateinit var binding: B
+
+    /**
+     * [Dispatchers.Main]을 기본으로 사용하고
+     * [onDestroy]에서 [cancel][CoroutineScope.cancel] 되는 코루틴 스코프
+     *
+     * @see [Coroutine 공식문서 Coroutine scope](https://kotlinlang.org/docs/reference/coroutines/coroutine-context-and-dispatchers.html#coroutine-scope)
+     */
+    val uiScope: CoroutineScope = MainScope()
 
     protected abstract val viewModel: BaseViewModel?
     val viewModelFactory: ViewModelProvider.AndroidViewModelFactory by lazy {

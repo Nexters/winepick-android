@@ -165,7 +165,7 @@ val apiModule = module {
 val viewModelModule = module {
     viewModel { BaseViewModel() }
     viewModel { LoginViewModel(get(), get()) }
-    viewModel { HomeViewModel(get(), get()) }
+    viewModel { HomeViewModel(get(), get(), get()) }
     viewModel { TypeDetailModel(get(), get(), get()) }
     viewModel { LikeViewModel(get(), get()) }
     viewModel { SearchViewModel(get(), get(), get(), get()) }
@@ -178,7 +178,7 @@ val repositoryModule = module {
     single { TestRepository(get()) }
     single { WineRepository(get(), get()) }
     single { SearchRepository(get()) }
-    single { SurveyRepository(get()) }
+    single { SurveyRepository(get(), get()) }
 }
 
 val dataSourceModule = module {

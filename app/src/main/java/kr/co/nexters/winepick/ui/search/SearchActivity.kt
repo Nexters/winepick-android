@@ -8,8 +8,11 @@ import kotlinx.coroutines.launch
 import kr.co.nexters.winepick.BR
 import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.data.constant.Constant
+import kr.co.nexters.winepick.data.repository.SearchRepository
+import kr.co.nexters.winepick.data.repository.parseKeyword
 import kr.co.nexters.winepick.databinding.ActivitySearchBinding
 import kr.co.nexters.winepick.di.AuthManager
+import kr.co.nexters.winepick.ui.base.ActivityResult
 import kr.co.nexters.winepick.ui.base.BaseActivity
 import kr.co.nexters.winepick.ui.component.LikeDialog
 import kr.co.nexters.winepick.ui.detail.WineDetailActivity
@@ -26,11 +29,32 @@ import timber.log.Timber
 class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_search) {
     override val viewModel: SearchViewModel by viewModel()
     private val authManager: AuthManager by inject()
+    private val searchRepository: SearchRepository by inject()
+
     private var scrollListener: EndlessScrollListener? = null
+
+    private val searchFilters: String
+        get() = intent.getStringExtra(Constant.STRING_EXTRA_SEARCH_FILTERS) ?: ""
+
+    private val searchFiltersFromHome: Array<String>
+        get() = intent.getStringArrayExtra(Constant.STRING_EXTRA_SEARCH_FILTERS_FROM_HOME)
+            ?: arrayOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.setVariable(BR.vm, viewModel)
+
+        // 입력받은 내용이 있다면 해당 내용을 필터화 하여 등록한 후 검색을 진행한다.
+        if (searchFilters.isNotEmpty()) {
+            val filters = searchFilters.parseKeyword()
+            searchRepository.addFilterItems(filters)
+
+            viewModel.querySearchClick(page = 0)
+        } else if (searchFiltersFromHome.isNotEmpty()){
+            searchRepository.addFilterItems(searchFiltersFromHome.toList())
+
+            viewModel.querySearchClick(page = 0)
+        }
 
         binding.apply {
             btnSearchBack.setOnSingleClickListener { onBackPressed() }

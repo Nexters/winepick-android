@@ -3,7 +3,9 @@ package kr.co.nexters.winepick.data.repository
 
 import kr.co.nexters.winepick.data.model.AccessTokenData
 import kr.co.nexters.winepick.data.model.LikeWine
+import kr.co.nexters.winepick.data.model.PutUserRequest
 import kr.co.nexters.winepick.data.model.TokenInfo
+import kr.co.nexters.winepick.data.model.remote.user.UserResult
 import kr.co.nexters.winepick.data.model.remote.wine.WineResult
 import kr.co.nexters.winepick.data.response.PersonalityType
 import kr.co.nexters.winepick.data.response.UserData
@@ -91,6 +93,19 @@ class WinePickRepository(private val api: WinePickService) {
     ) {
         api.getResult(resultId).safeEnqueue(
             onSuccess = { onSuccess(it!!.result!!) },
+            onFailure = { onFailure() },
+            onError = { onFailure() }
+        )
+    }
+
+    fun putUser(
+        accessToken: String,
+        jsonRequest: PutUserRequest,
+        onSuccess: (UserResult) -> Unit,
+        onFailure: () -> Unit
+    ) {
+        api.putUser(accessToken, jsonRequest).safeEnqueue(
+            onSuccess = { onSuccess(it.result) },
             onFailure = { onFailure() },
             onError = { onFailure() }
         )

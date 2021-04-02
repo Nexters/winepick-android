@@ -1,8 +1,7 @@
 package kr.co.nexters.winepick.ui.home
 
 import android.content.Intent
-import android.widget.ImageView
-import androidx.databinding.BindingAdapter
+import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kr.co.nexters.winepick.R
@@ -13,22 +12,29 @@ import kr.co.nexters.winepick.constant.TestConstant.C
 import kr.co.nexters.winepick.constant.TestConstant.D
 import kr.co.nexters.winepick.constant.TestConstant.E
 import kr.co.nexters.winepick.constant.TestConstant.F
+import kr.co.nexters.winepick.data.constant.Constant
+import kr.co.nexters.winepick.data.model.SurveyInfo
+import kr.co.nexters.winepick.data.repository.SurveyRepository
 import kr.co.nexters.winepick.data.repository.WinePickRepository
 import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.BaseViewModel
+import kr.co.nexters.winepick.ui.component.ConfirmDialog
 import kr.co.nexters.winepick.ui.like.LikeListActivity
 import kr.co.nexters.winepick.ui.search.SearchActivity
 import kr.co.nexters.winepick.ui.survey.SurveyActivity
 import kr.co.nexters.winepick.ui.type.TypeDetailActivity
-import kr.co.nexters.winepick.util.getNetworkConnected
-import timber.log.Timber
+import kr.co.nexters.winepick.util.dpToPx
 
 /**
  * Kotlin 에서 사용하는 ViewModel 예
  *
  * @since v1.0.0 / 2021.01.28
  */
-class HomeViewModel(private val repo: WinePickRepository, private val auth: AuthManager) : BaseViewModel() {
+class HomeViewModel(
+    private val repo: WinePickRepository,
+    private val surveyRepository: SurveyRepository,
+    private val auth: AuthManager
+) : BaseViewModel() {
     private var _likecnt = MutableLiveData<String>()
     var likeCnt : LiveData<String> = _likecnt
 
@@ -51,6 +57,9 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
     private var _testImg = MutableLiveData<Int>()
     var testImg : LiveData<Int> = _testImg
 
+    private var _currentSurvey = MutableLiveData<SurveyInfo>()
+    var currentSurvey : LiveData<SurveyInfo> = _currentSurvey
+
     lateinit var keywordList1 : Array<String>
     lateinit var keywordList2: Array<String>
 
@@ -62,13 +71,22 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
         _isTest.value = false
         _isUser.value = false
         _loginWarningDlg.value = false
-        _testImg.value = 0
+
+        getUserTestInfo()
+        getUserLikes()
+    }
+
+    /** 유저 테스트 내역을 확인하여 그에 따른 데이터 설정을 해준다. */
+    fun getUserTestInfo() {
         if (auth.testType != "N") {
             _isTest.value = true
             setUserPersonalType()
+        } else {
+            _isTest.value = false
+            _testImg.value = 0
         }
-        getUserLikes()
     }
+
     fun getUserLikes(){
         showLoading()
         if (auth.token != "guest") {
@@ -146,7 +164,7 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
     }
     fun keyword1Click() {
         Intent(WinePickApplication.appContext, SearchActivity::class.java).apply {
-            putExtra("keyword",keywordList1)
+            putExtra(Constant.STRING_EXTRA_SEARCH_FILTERS_FROM_HOME,keywordList1)
         }.run {
             WinePickApplication.getGlobalApplicationContext().startActivity(this.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
         }
@@ -154,15 +172,15 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
     }
     fun keyword2Click() {
         Intent(WinePickApplication.appContext, SearchActivity::class.java).apply {
-            putExtra("keyword",keywordList2)
+            putExtra(Constant.STRING_EXTRA_SEARCH_FILTERS_FROM_HOME,keywordList2)
         }.run {
             WinePickApplication.getGlobalApplicationContext().startActivity(this.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
         }
 
     }
+
     fun testClick() {
-        WinePickApplication.getGlobalApplicationContext().startActivity(Intent(WinePickApplication.appContext, SurveyActivity::class.java)
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+        _currentSurvey.value = surveyRepository.getCurrentSurvey()
     }
 
     fun searchClick() {
@@ -194,7 +212,7 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
 
     override fun onResume() {
         super.onResume()
+        getUserTestInfo()
         getUserLikes()
     }
-
 }
