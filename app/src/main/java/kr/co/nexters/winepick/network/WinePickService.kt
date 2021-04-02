@@ -1,6 +1,7 @@
 package kr.co.nexters.winepick.network
 
 import kr.co.nexters.winepick.data.model.*
+import kr.co.nexters.winepick.data.model.remote.user.UserResult
 import kr.co.nexters.winepick.data.model.remote.wine.WineResult
 import kr.co.nexters.winepick.data.model.remote.wine.WinesResult
 import kr.co.nexters.winepick.data.response.PersonalityType
@@ -60,6 +61,15 @@ interface WinePickService {
     ): Call<WinePickResponse<Unit>>
 
     /**
+     * updateUser
+     */
+    @PUT("v2/api/user/me/{accessToken}")
+    fun putUser(
+        @Path("accessToken") accessToken: String,
+        @Body data: PutUserRequest
+    ): Call<WinePickResponse<UserResult>>
+
+    /**
      * addLike
      */
     @POST("v2/api/like")
@@ -72,8 +82,8 @@ interface WinePickService {
      */
     @GET("v2/api/like/{userId}")
     fun getLikesWineList(
-        @Path("userId") userId : Int
-    ) : Call<WinePickResponse<List<WineResult>>>
+        @Path("userId") userId: Int
+    ): Call<WinePickResponse<List<WineResult>>>
 
     @DELETE("v2/api/like/{userId}/{wineId}")
     fun deleteLike(

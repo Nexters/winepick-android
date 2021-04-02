@@ -9,9 +9,11 @@ import kotlinx.coroutines.launch
 import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.WinePickApplication
 import kr.co.nexters.winepick.data.constant.Constant
+import kr.co.nexters.winepick.data.model.PutUserRequest
 import kr.co.nexters.winepick.data.model.SurveyAnswerType
 import kr.co.nexters.winepick.data.model.SurveyInfo
 import kr.co.nexters.winepick.data.repository.SurveyRepository
+import kr.co.nexters.winepick.data.repository.WinePickRepository
 import kr.co.nexters.winepick.databinding.ActivitySurveyBinding
 import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.BaseActivity
@@ -29,6 +31,7 @@ class SurveyActivity : BaseActivity<ActivitySurveyBinding>(R.layout.activity_sur
     override val viewModel: BaseViewModel? = null
 
     private val surveyRepository: SurveyRepository by inject()
+    private val winePickRepository: WinePickRepository by inject()
     private val authManager: AuthManager by inject()
     private val sharedPrefs: SharedPrefs by inject()
 
@@ -84,17 +87,27 @@ class SurveyActivity : BaseActivity<ActivitySurveyBinding>(R.layout.activity_sur
                 // currentSurvey 가 null 이면 오류이므로 강제로 설문을 종료한다.
                 // 만약 설문을 다 완료한 경우, 분석 화면으로 넘겨준다.
                 val result = sharedPrefs[Constant.PREF_KEY_INT_USER_SURVEY_RESULT, -1] ?: 0
-                toast("$result")
+                val resultType = resources.getStringArray(R.array.personality_alphabet)[result]
 
-                authManager.testType =
-                    resources.getStringArray(R.array.personality_alphabet)[result]
-                startActivity(
-                    Intent(
-                        WinePickApplication.appContext,
-                        TypeDetailActivity::class.java
-                    ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                )
-                finish()
+                winePickRepository.putUser(
+                    authManager.token,
+                    PutUserRequest(
+                        personalityType = resultType,
+                        accessToken = authManager.token,
+                    ),
+                    {
+                        authManager.testType = it.personality ?: resultType
+                        startActivity(
+                            Intent(
+                                WinePickApplication.appContext,
+                                TypeDetailActivity::class.java
+                            ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        )
+                        finish()
+                    },
+                    {
+                        toast("통신이 원활하지 않습니다. 잠시 후 다시 시도해주세요.")
+                    })
             } else {
                 SurveyFragment(R.layout.fragment_survey).apply {
                     arguments = Bundle().apply { putInt("currentStage", currentSurvey!!.number) }
