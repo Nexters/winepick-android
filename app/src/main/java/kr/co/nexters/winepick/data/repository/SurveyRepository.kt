@@ -29,7 +29,7 @@ class SurveyRepository(
     /** 처음 앱 실행 시, 앱 내에 저장되어 있는 설문 목록울 가져온다. */
     suspend fun load() = withContext(Dispatchers.IO) {
         val inMemorySurveys = Json.decodeFromString<List<Survey>>(
-            sharedPrefs[Constant.PREF_KEY_USER_SURVEYS, ""] ?: ""
+            sharedPrefs[Constant.PREF_KEY_USER_SURVEYS, "[]"] ?: "[]"
         )
 
         surveys = inMemorySurveys
@@ -75,7 +75,7 @@ class SurveyRepository(
     suspend fun clearSurveys() = withContext(Dispatchers.IO) {
         surveys = listOf()
 
-        sharedPrefs[Constant.PREF_KEY_USER_SURVEYS] = ""
+        sharedPrefs[Constant.PREF_KEY_USER_SURVEYS] = "[]"
 
         return@withContext
     }
