@@ -13,19 +13,17 @@ import kr.co.nexters.winepick.network.WinePickService
 import kr.co.nexters.winepick.util.safeEnqueue
 
 class WinePickRepository(private val api: WinePickService) {
-
-    fun postUserAccessToken(
-        data:TokenInfo,
-        onSuccess: () -> Unit,
+    fun getWine(
+        wineId: Int,
+        onSuccess: (WineResult) -> Unit,
         onFailure: () -> Unit
     ) {
-        api.postUserAccessToken(data).safeEnqueue(
-            onSuccess = { onSuccess() },
+        api.getWine(wineId).safeEnqueue (
+            onSuccess = { onSuccess(it.result!!) },
             onFailure = { onFailure() },
             onError = { onFailure() }
         )
     }
-
     fun postLike(
         data: LikeWine,
         onSuccess: () -> Unit,

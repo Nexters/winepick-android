@@ -42,20 +42,20 @@ class WineRepository(private val wineDataSource: WineDataSource, val sharedPrefs
 
     /** [WineDataSource] 를 통해, 와인 목록 [List] 을 가져온다. */
     suspend fun getWines(
-        pageSize: Int,
-        pageNumber: Int = 0,
+        size: Int,
+        page: Int = 0,
         sort: String = "",
     ) = withContext(Dispatchers.IO) {
-        return@withContext wineDataSource.getWines(pageSize, pageNumber, sort)
+        return@withContext wineDataSource.getWines(page, page, sort)
     }
 
     /** [WineDataSource] 를 통해, 키워드와 매칭 되는 와인 목록 [List] 을 가져온다. */
     suspend fun getWinesKeyword(
-        pageSize: Int,
-        pageNumber: Int = 0,
+        size: Int,
+        page: Int = 0,
         keyword: String = "",
     ) = withContext(Dispatchers.IO) {
-        return@withContext wineDataSource.getWinesKeyword(pageSize, pageNumber, keyword)
+        return@withContext wineDataSource.getWinesKeyword(size, page, keyword)
     }
 
     /** [WineDataSource] 를 통해, 특정 와인에 대한 정보 [WineResult] 를 가져온다. */
@@ -72,8 +72,8 @@ class WineRepository(private val wineDataSource: WineDataSource, val sharedPrefs
         start: Int? = null,
         end: Int? = null,
         keywords: List<String> = listOf(""),
-        pageSize: Int,
-        pageNumber: Int = 0,
+        size: Int,
+        page: Int = 0,
         sort: String? = null,
     ) = withContext(Dispatchers.IO) {
         return@withContext wineDataSource.getWinesFilter(
@@ -84,8 +84,8 @@ class WineRepository(private val wineDataSource: WineDataSource, val sharedPrefs
             start,
             end,
             keywords,
-            pageSize,
-            pageNumber,
+            size,
+            page,
             sort
         )
     }

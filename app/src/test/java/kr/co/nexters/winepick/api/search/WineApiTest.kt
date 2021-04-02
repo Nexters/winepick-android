@@ -2,7 +2,6 @@ package kr.co.nexters.winepick.api.search
 
 import kotlinx.coroutines.runBlocking
 import kr.co.nexters.winepick.base.AndroidBaseTest
-import kr.co.nexters.winepick.data.model.remote.wine.WineResult
 import kr.co.nexters.winepick.data.source.WineDataSource
 import org.junit.Assert
 import org.junit.Test
@@ -67,7 +66,7 @@ class WineApiTest : AndroidBaseTest() {
         val resultTemp = wineDataSource.getWinesFilter(
             wineName = "쁘띠폴리",
             keywords = listOf("달콤한"),
-            pageSize = 1
+            size = 1
         )
 
         print("$resultTemp")

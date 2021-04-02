@@ -95,8 +95,18 @@ data class WineResult(
     @SerialName("likeYn")
     var likeYn : Boolean? = null,
 
-    var wineImg : Int? = null
-) {
+    @SerializedName("purpose")
+    @SerialName("purpose")
+    val purpose : String? = null,
+
+    @SerializedName("store")
+    @SerialName("store")
+    val store : String? = null,
+
+    var wineImg : Int? = null,
+
+    var wineCountryImg : Int? = null
+) : java.io.Serializable {
     /** 만약 해당 [WineResult] 아이템에 좋아요 버튼 클릭 시 새로 설정될 [likeYn] */
     val clickedLikeYn: Boolean
         get() = !(likeYn ?: true)

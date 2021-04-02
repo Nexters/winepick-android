@@ -11,9 +11,11 @@ import kr.co.nexters.winepick.data.constant.Constant
 import kr.co.nexters.winepick.data.repository.SearchRepository
 import kr.co.nexters.winepick.data.repository.parseKeyword
 import kr.co.nexters.winepick.databinding.ActivitySearchBinding
+import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.ActivityResult
 import kr.co.nexters.winepick.ui.base.BaseActivity
 import kr.co.nexters.winepick.ui.component.LikeDialog
+import kr.co.nexters.winepick.ui.detail.WineDetailActivity
 import kr.co.nexters.winepick.util.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -26,7 +28,10 @@ import timber.log.Timber
  */
 class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_search) {
     override val viewModel: SearchViewModel by viewModel()
+    private val authManager: AuthManager by inject()
     private val searchRepository: SearchRepository by inject()
+
+    private var scrollListener: EndlessScrollListener? = null
 
     private val searchFilters: String
         get() = intent.getStringExtra(Constant.STRING_EXTRA_SEARCH_FILTERS) ?: ""
@@ -48,11 +53,13 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
 
             rvResults.adapter = WineResultAdapter(viewModel)
             rvResults.layoutManager?.let {
-                rvResults.addOnScrollListener(object : EndlessScrollListener(it, 3) {
+                scrollListener = object : EndlessScrollListener(it, 3) {
                     override fun onLoadMore(page: Int) {
+                        Timber.i("onLoadMore $page")
                         viewModel.paging()
                     }
-                })
+                }
+                rvResults.addOnScrollListener(scrollListener!!)
             }
             rvCurrents.adapter = SearchRelativeAdapter(viewModel)
             rvRecommends.adapter = SearchRecommendAdapter(
@@ -66,18 +73,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
 
     override fun onResume() {
         super.onResume()
-
         viewModel.onResume()
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == Constant.REQ_CODE_GO_TO_FILTER) {
-            deferred.complete(ActivityResult(resultCode, data))
-        } else {
-            super.onActivityResult(requestCode, resultCode, data)
-        }
     }
 
     fun subscribeUI() {
@@ -114,8 +110,9 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
                         Timber.i("$needToUpdate")
 
                         if (needToUpdate) {
+                            recyclerViewClear()
                             toast("검색 화면 목록 갱신 시작")
-                            viewModel.querySearchClick(pageNumber = 0)
+                            viewModel.querySearchClick(page = 0)
                         }
                     }
                 }
@@ -143,6 +140,25 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
                 }
             }
         })
+
+        viewModel.clickedWineResult.observe(this, {
+            uiScope.launch {
+                val intent = Intent(this@SearchActivity, WineDetailActivity::class.java)
+                    .apply { putExtra("wineData", it) }
+
+                startActivity(intent, Constant.REQ_CODE_GO_TO_DETAIL)
+
+                viewModel.updateClickPosition(it)
+            }
+        })
+
+        viewModel.initAction.subscribe {
+            recyclerViewClear()
+        }
     }
 
+    private fun recyclerViewClear() {
+        scrollListener?.reset()
+        viewModel.prevDataClear()
+    }
 }

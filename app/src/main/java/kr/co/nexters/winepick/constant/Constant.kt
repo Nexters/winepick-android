@@ -21,6 +21,7 @@ object Constant {
 
     // RequestCode
     const val REQ_CODE_GO_TO_FILTER = 1
+    const val REQ_CODE_GO_TO_DETAIL = 2
 }
 
 /**

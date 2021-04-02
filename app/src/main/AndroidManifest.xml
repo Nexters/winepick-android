@@ -6,9 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" /> <!-- queries에 카카오톡 패키지 추가 -->
     <queries>
         <package android:name="com.kakao.talk" />
-    </queries>
-
-    <!--queries에 카카오톡 패키지 추가-->
+    </queries> <!-- queries에 카카오톡 패키지 추가 -->
     <queries>
         <package android:name="com.kakao.talk" />
     </queries>
@@ -24,9 +22,10 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".ui.like.LikeListActivity"></activity>
+        <activity android:name=".ui.detail.WineDetailActivity"></activity>
+        <activity android:name=".ui.like.LikeListActivity" />
         <activity android:name=".ui.type.TypeDetailActivity" />
-        <activity android:name=".ui.home.HomeActivity"/>
+        <activity android:name=".ui.home.HomeActivity" />
         <activity android:name=".ui.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,6 +33,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_app_key" />
@@ -41,20 +41,22 @@
         <activity android:name=".ui.login.LoginActivity" />
         <activity android:name=".ui.detail.DetailActivity" />
         <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
-        <intent-filter>
-            <action android:name="android.intent.action.VIEW" />
-            <category android:name="android.intent.category.DEFAULT" />
-            <category android:name="android.intent.category.BROWSABLE" />
-            <!-- Redirect URI: "kakao{NATIVE_APP_KEY}://oauth“ -->
-            <data android:host="oauth"
-                android:scheme="@string/kakao_scheme" />
-        </intent-filter>
-        </activity>
-        <!-- survey -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Redirect URI: "kakao{NATIVE_APP_KEY}://oauth“ -->
+                <data
+                    android:host="oauth"
+                    android:scheme="@string/kakao_scheme" />
+            </intent-filter>
+        </activity> <!-- survey -->
         <activity android:name=".ui.survey.SurveyActivity" />
         <activity android:name=".ui.survey.SurveyResultActivity">
             <intent-filter>
                 <action android:name="android:intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <!-- "kakao{YOUR_NATIVE_APP_KEY}://kakaolink" 형식의 앱 실행 스킴을 설정하는데 사용 -->
@@ -68,15 +70,15 @@
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_app_key" />
 
-        <activity android:name=".ui.survey.ScreenSlidePagerActivity"/>
+        <activity android:name=".ui.survey.ScreenSlidePagerActivity" />
         <activity android:name=".example.java.normal.JavaDefaultActivity" />
         <activity android:name=".example.kotlin.normal.KotlinDefaultActivity" />
         <activity android:name=".example.java.viewmodel.JavaViewModelActivity" />
         <activity android:name=".example.kotlin.viewmodel.KotlinViewModelActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".ui.search.SearchActivity"
-            android:theme="@style/AppNoActionBar">
-        </activity>
+        <activity
+            android:name=".ui.search.SearchActivity"
+            android:theme="@style/AppNoActionBar" />
         <activity
             android:name=".ui.search.SearchFilterActivity"
             android:theme="@style/SearchFilterNoActionBar" />

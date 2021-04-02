@@ -1,11 +1,14 @@
 package kr.co.nexters.winepick.ui.like
 
+import android.content.Intent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import kr.co.nexters.winepick.WinePickApplication
 import kr.co.nexters.winepick.data.model.remote.wine.WineResult
 import kr.co.nexters.winepick.data.repository.WinePickRepository
 import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.WineResultViewModel
+import kr.co.nexters.winepick.ui.detail.WineDetailActivity
 import timber.log.Timber
 
 /**
@@ -36,6 +39,11 @@ class LikeViewModel(private val winePickRepository: WinePickRepository, private 
 
     override fun wineItemViewClick(wineResult: WineResult) {
         Timber.i("wineItemViewClick like $wineResult")
+        Intent(WinePickApplication.appContext, WineDetailActivity::class.java).apply {
+            putExtra("wineData",wineResult)
+        }.run {
+            WinePickApplication.getGlobalApplicationContext().startActivity(this.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+        }
     }
 
     override fun wineHeartClick(newWineResult: WineResult) {
@@ -86,5 +94,10 @@ class LikeViewModel(private val winePickRepository: WinePickRepository, private 
     /** UI 의 onDestroy 개념으로 생각하면 편할듯 */
     override fun onCleared() {
         super.onCleared()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getLikeWine()
     }
 }

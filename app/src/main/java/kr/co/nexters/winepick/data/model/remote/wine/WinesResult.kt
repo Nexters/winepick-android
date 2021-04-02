@@ -139,8 +139,8 @@ fun getWinesResponse(): WinePickResponse<WinesResult> = Json.decodeFromString(
             "empty": true
           },
           "offset": 0,
-          "pageNumber": 0,
-          "pageSize": 20,
+          "page": 0,
+          "size": 20,
           "paged": true,
           "unpaged": false
         },

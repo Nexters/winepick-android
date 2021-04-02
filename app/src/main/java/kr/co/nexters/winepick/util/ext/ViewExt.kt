@@ -64,6 +64,7 @@ fun RecyclerView.submitList(items: List<Any>?) {
     (adapter as? ListAdapter<Any, *>)?.submitList(items)
 }
 
+
 /** 일반 뷰에서 키보드 숨기기 */
 fun View.hideKeyboard() {
     val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
