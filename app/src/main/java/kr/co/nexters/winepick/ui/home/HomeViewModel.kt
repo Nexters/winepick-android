@@ -164,7 +164,7 @@ class HomeViewModel(
     }
     fun keyword1Click() {
         Intent(WinePickApplication.appContext, SearchActivity::class.java).apply {
-            putExtra("keyword",keywordList1)
+            putExtra(Constant.STRING_EXTRA_SEARCH_FILTERS_FROM_HOME,keywordList1)
         }.run {
             WinePickApplication.getGlobalApplicationContext().startActivity(this.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
         }
@@ -172,7 +172,7 @@ class HomeViewModel(
     }
     fun keyword2Click() {
         Intent(WinePickApplication.appContext, SearchActivity::class.java).apply {
-            putExtra("keyword",keywordList2)
+            putExtra(Constant.STRING_EXTRA_SEARCH_FILTERS_FROM_HOME,keywordList2)
         }.run {
             WinePickApplication.getGlobalApplicationContext().startActivity(this.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
         }

@@ -36,6 +36,10 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
     private val searchFilters: String
         get() = intent.getStringExtra(Constant.STRING_EXTRA_SEARCH_FILTERS) ?: ""
 
+    private val searchFiltersFromHome: Array<String>
+        get() = intent.getStringArrayExtra(Constant.STRING_EXTRA_SEARCH_FILTERS_FROM_HOME)
+            ?: arrayOf()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.setVariable(BR.vm, viewModel)
@@ -44,6 +48,10 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
         if (searchFilters.isNotEmpty()) {
             val filters = searchFilters.parseKeyword()
             searchRepository.addFilterItems(filters)
+
+            viewModel.querySearchClick(page = 0)
+        } else if (searchFiltersFromHome.isNotEmpty()){
+            searchRepository.addFilterItems(searchFiltersFromHome.toList())
 
             viewModel.querySearchClick(page = 0)
         }
