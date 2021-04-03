@@ -22,11 +22,21 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".ui.detail.WineDetailActivity"></activity>
-        <activity android:name=".ui.like.LikeListActivity" />
-        <activity android:name=".ui.type.TypeDetailActivity" />
-        <activity android:name=".ui.home.HomeActivity" />
-        <activity android:name=".ui.splash.SplashActivity">
+        <activity
+            android:name=".ui.detail.WineDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.like.LikeListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.type.TypeDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.HomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.splash.SplashActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -38,9 +48,15 @@
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_app_key" />
 
-        <activity android:name=".ui.login.LoginActivity" />
-        <activity android:name=".ui.detail.DetailActivity" />
-        <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.detail.DetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -52,8 +68,12 @@
                     android:scheme="@string/kakao_scheme" />
             </intent-filter>
         </activity> <!-- survey -->
-        <activity android:name=".ui.survey.SurveyActivity" />
-        <activity android:name=".ui.survey.SurveyResultActivity">
+        <activity
+            android:name=".ui.survey.SurveyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.survey.SurveyResultActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android:intent.action.VIEW" />
 
@@ -70,16 +90,28 @@
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_app_key" />
 
-        <activity android:name=".example.java.normal.JavaDefaultActivity" />
-        <activity android:name=".example.kotlin.normal.KotlinDefaultActivity" />
-        <activity android:name=".example.java.viewmodel.JavaViewModelActivity" />
-        <activity android:name=".example.kotlin.viewmodel.KotlinViewModelActivity" />
-        <activity android:name=".MainActivity" />
+        <activity
+            android:name=".example.java.normal.JavaDefaultActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".example.kotlin.normal.KotlinDefaultActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".example.java.viewmodel.JavaViewModelActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".example.kotlin.viewmodel.KotlinViewModelActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.search.SearchActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppNoActionBar" />
         <activity
             android:name=".ui.search.SearchFilterActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/SearchFilterNoActionBar" />
     </application>
 

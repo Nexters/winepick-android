@@ -19,15 +19,14 @@ import timber.log.Timber
 class LoginActivity : BaseActivity<ActivityLoginBinding>(
     R.layout.activity_login
 ) {
-    override val viewModel : LoginViewModel by viewModel<LoginViewModel>()
-    private val authManager : AuthManager by inject()
+    override val viewModel: LoginViewModel by viewModel<LoginViewModel>()
+    private val authManager: AuthManager by inject()
 
     val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
         if (error != null) {
             Timber.e("로그인 실패 ${error}")
             //Login Fail
-        }
-        else if (token != null) {
+        } else if (token != null) {
             //Login Success
             Timber.d("로그인 성공")
             authManager.apply {
@@ -35,7 +34,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(
             }
             UserApiClient.instance.me { user, error ->
                 val kakaoId = user!!.id
-                viewModel.addUserInfo(token.accessToken,authManager.testType,kakaoId)
+                viewModel.addUserInfo(token.accessToken, authManager.testType, kakaoId)
             }
         }
     }
@@ -59,6 +58,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(
             }
         }
 
-        viewModel.toastMessageText.observe(this, { toast(it) })
+        viewModel.toastMessageText.observe(this, { if (it.isNotEmpty()) toast(it) })
     }
 }
