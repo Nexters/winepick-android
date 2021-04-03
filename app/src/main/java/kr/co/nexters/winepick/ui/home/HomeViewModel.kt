@@ -66,7 +66,6 @@ class HomeViewModel(
 
     /** 생성자 */
     init {
-        showLoading()
         _likecnt.value = "0"
         _isTest.value = false
         _isUser.value = false
@@ -92,25 +91,22 @@ class HomeViewModel(
         if (auth.token != "guest") {
             _isUser.value = true
             repo.getUser(
-                    userId = auth.id,
-                    accessToken = auth.token,
-                    onSuccess = {
-                        if (it.likes!! > 99) {
-                            _likecnt.value = "99+"
-                        }
-                        _likecnt.value = it.likes.toString()
-                        hideLoading()
-                    },
-                    onFailure = {
-                        hideLoading()
+                userId = auth.id,
+                accessToken = auth.token,
+                onSuccess = {
+                    if (it.likes!! > 99) {
+                        _likecnt.value = "99+"
                     }
+                    _likecnt.value = it.likes.toString()
+                    hideLoading()
+                },
+                onFailure = {
+                    hideLoading()
+                }
             )
-        }
-
-
+        } else
+            hideLoading()
     }
-
-
 
     fun setUserPersonalType() {
         return when(auth.testType) {

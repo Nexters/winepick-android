@@ -12,6 +12,7 @@ import kr.co.nexters.winepick.data.constant.Constant
 import kr.co.nexters.winepick.data.model.PutUserRequest
 import kr.co.nexters.winepick.data.model.SurveyAnswerType
 import kr.co.nexters.winepick.data.model.SurveyInfo
+import kr.co.nexters.winepick.data.model.remote.user.UserResult
 import kr.co.nexters.winepick.data.repository.SurveyRepository
 import kr.co.nexters.winepick.data.repository.WinePickRepository
 import kr.co.nexters.winepick.databinding.ActivitySurveyBinding
@@ -20,7 +21,6 @@ import kr.co.nexters.winepick.ui.base.BaseActivity
 import kr.co.nexters.winepick.ui.base.BaseViewModel
 import kr.co.nexters.winepick.ui.base.navigate
 import kr.co.nexters.winepick.ui.component.ConfirmDialog
-import kr.co.nexters.winepick.ui.type.TypeDetailActivity
 import kr.co.nexters.winepick.util.SharedPrefs
 import kr.co.nexters.winepick.util.dpToPx
 import kr.co.nexters.winepick.util.setOnSingleClickListener
@@ -89,31 +89,39 @@ class SurveyActivity : BaseActivity<ActivitySurveyBinding>(R.layout.activity_sur
                 val result = sharedPrefs[Constant.PREF_KEY_INT_USER_SURVEY_RESULT, -1] ?: 0
                 val resultType = resources.getStringArray(R.array.personality_alphabet)[result]
 
-                winePickRepository.putUser(
-                    authManager.token,
-                    PutUserRequest(
-                        personalityType = resultType,
-                        accessToken = authManager.token,
-                    ),
-                    {
-                        authManager.testType = it.personality ?: resultType
-                        startActivity(
-                            Intent(
-                                WinePickApplication.appContext,
-                                SurveyResultActivity::class.java
-                            ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                        )
-                        finish()
-                    },
-                    {
-                        toast("통신이 원활하지 않습니다. 잠시 후 다시 시도해주세요.")
-                    })
+                if (authManager.token != "guest") {
+                    winePickRepository.putUser(
+                        authManager.token,
+                        PutUserRequest(
+                            personalityType = resultType,
+                            accessToken = authManager.token,
+                        ),
+                        {
+                            gotoSurveyResult(it.personality ?: "N")
+                        },
+                        {
+                            toast("통신이 원활하지 않습니다. 잠시 후 다시 시도해주세요.")
+                        })
+                } else {
+                    gotoSurveyResult(resultType ?: "N")
+                }
             } else {
                 SurveyFragment(R.layout.fragment_survey).apply {
                     arguments = Bundle().apply { putInt("currentStage", currentSurvey!!.number) }
                 }.next(supportFragmentManager, binding.surveyContent.id)
             }
         }
+    }
+
+    fun gotoSurveyResult(personality: String) {
+        authManager.testType = personality
+        startActivity(
+            Intent(
+                WinePickApplication.appContext,
+                SurveyResultActivity::class.java
+            ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        )
+        finish()
     }
 
     /**
