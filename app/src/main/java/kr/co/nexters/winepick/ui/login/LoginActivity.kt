@@ -1,7 +1,6 @@
 package kr.co.nexters.winepick.ui.login
 
 import android.os.Bundle
-import android.os.Handler
 import androidx.databinding.library.baseAdapters.BR
 import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.auth.model.OAuthToken
@@ -11,9 +10,8 @@ import kr.co.nexters.winepick.databinding.ActivityLoginBinding
 import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.BaseActivity
 import kr.co.nexters.winepick.ui.home.HomeActivity
-import kr.co.nexters.winepick.ui.search.SearchActivity
-import kr.co.nexters.winepick.ui.splash.SplashActivity
 import kr.co.nexters.winepick.util.startActivity
+import kr.co.nexters.winepick.util.toast
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
@@ -61,5 +59,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(
             }
         }
 
+        viewModel.toastMessageText.observe(this, { toast(it) })
     }
 }

@@ -23,6 +23,10 @@ open class BaseViewModel : ViewModel() {
     private val _loadingVisible = MutableLiveData(false)
     val loadingVisible: LiveData<Boolean> = _loadingVisible
 
+    /** 토스트 메시지 */
+    internal val _toastMeesageText = MutableLiveData("")
+    val toastMessageText: LiveData<String> = _toastMeesageText
+
     /** viewModelScope 에서 Exception 이 발생할 시 처리하는 핸들러 */
     val vmExceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
         Timber.i("$coroutineContext $throwable")

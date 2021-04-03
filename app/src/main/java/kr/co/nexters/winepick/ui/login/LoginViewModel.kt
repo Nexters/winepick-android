@@ -1,19 +1,15 @@
 package kr.co.nexters.winepick.ui.login
 
 import android.content.Intent
-import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.WinePickApplication
 import kr.co.nexters.winepick.data.model.AccessTokenData
 import kr.co.nexters.winepick.data.repository.WinePickRepository
-import kr.co.nexters.winepick.data.response.PersonalityType
 import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.BaseViewModel
 import kr.co.nexters.winepick.ui.home.HomeActivity
-import kr.co.nexters.winepick.ui.type.TypeDetailActivity
-import kr.co.nexters.winepick.util.startActivity
-import timber.log.Timber
 
 /**
  * Kotlin 에서 사용하는 ViewModel 예
@@ -26,7 +22,6 @@ class LoginViewModel(private val repo : WinePickRepository, private val authMana
     /** 생성자 */
     init {
         _login.value = MutableLiveData<String>().value
-
     }
 
     /** 카카오 로그인 서버 통신 */
@@ -46,6 +41,9 @@ class LoginViewModel(private val repo : WinePickRepository, private val authMana
                 }
             },
             onFailure = {
+                authManager.testType = "N"
+                _toastMeesageText.value = WinePickApplication.getGlobalApplicationContext()
+                    .resources.getString(R.string.api_error)
             }
         )
     }

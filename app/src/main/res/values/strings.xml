@@ -2,6 +2,7 @@
     <string name="app_name">WinePick</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="app_name_lower">winepick</string>
+    <string name="api_error">통신이 원활하지 않습니다. 잠시 후 다시 시도해주세요.</string>
 
 
     <!--winedetail-->
