@@ -59,7 +59,7 @@ class SharedPrefs {
     }
 
     /** 프리퍼런스의 [key]값에 대응하는 값을 반환하며, [defaultValue] 의 타입에 따라 그 값을 반환한다. */
-    operator fun <T> get(key: String, @NotNull defaultValue: T?): T? {
+    operator fun <T> get(key: String, @NotNull defaultValue: T): T? {
         when (defaultValue) {
             is String -> {
                 return sharedPreferences.getString(key, defaultValue) as T?

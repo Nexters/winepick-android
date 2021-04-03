@@ -237,7 +237,7 @@ public class SurveyResultActivity extends BaseActivity<ActivitySurveyResultBindi
                         "https://raw.githubusercontent.com/riflockle7/ref/master/1.%20ImageRef/winepick/kakao_share_img_" + personalityType.getAnswerType() + ".png",
                         LinkObject.newBuilder().setWebUrl("https://developers.kakao.com")
                                 .setMobileWebUrl("https://developers.kakao.com").build())
-                        .setDescrption(description.toString())
+                        .setDescrption(personalityType.getDescription())
                         .build())
                 .addButton(new ButtonObject("앱에서 보기", LinkObject.newBuilder()
                         .setWebUrl("'https://developers.kakao.com")
