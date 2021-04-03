@@ -123,7 +123,7 @@ class SearchRecommendAdapter(
         /* Get the ItemView and minimize it's height as small as possible
             to fit as many cells as it's possible in the screen. */
 
-        val itemView = holder.itemView.apply { layoutParams.height = 42.dpToPx() }
+        val itemView = holder.itemView
 
         val globalLayoutListener = object : OnGlobalLayoutListener {
             override fun onGlobalLayout() {
@@ -132,7 +132,7 @@ class SearchRecommendAdapter(
 
                 // RecyclerView 내에서 아이템뷰가 차지하는 % 를 구한다 (소수점 값)
                 val title = itemView.findViewById<TextView>(R.id.tv_search_recommend_title)
-                val span = (title.width.pxToDp()) / measureHelper.baseCell
+                val span = (title.width.pxToDp() + 10.dpToPx()) / measureHelper.baseCell
 
                 // 새로운 View 가 들어갈 것임을 알린다.
                 measureHelper.addMeasuredCount()
