@@ -89,6 +89,9 @@ class WineDetailViewModel(private val winePickRepository: WinePickRepository, pr
     val _cancelMessage = MutableLiveData<Boolean>()
     var cancelMessage : LiveData<Boolean> = _cancelMessage
 
+    private var _loginWarningDlg : MutableLiveData<Boolean> = MutableLiveData()
+    val loginWarningDlg : LiveData<Boolean> = _loginWarningDlg
+
     /** 생성자 */
     init {
         showLoading()
@@ -101,6 +104,8 @@ class WineDetailViewModel(private val winePickRepository: WinePickRepository, pr
         _isSeven.value = false
         _isFeeling.value = false
         _wineFoodSize.value = 0
+        _loginWarningDlg.value = false
+
 
     }
     fun getWineResult(wineResult: WineResult) {
@@ -199,39 +204,47 @@ class WineDetailViewModel(private val winePickRepository: WinePickRepository, pr
     }
 
     fun addLike(wineResult: WineResult) {
-        winePickRepository.postLike(
-                data = LikeWine(
-                        userId = authManager.id,
-                        wineId = wineResult.id!!
-                ),
-                onSuccess = {
-                    Timber.d("와인 좋아요 저장 성공")
-                    _toastMessage.value = true
-                    _wineLike.value = true
-                    hideLoading()
-                },
-                onFailure = {
-                    hideLoading()
-                }
-        )
+        if(authManager.token == "guest") {
+            _loginWarningDlg.value = true
+        } else {
+            winePickRepository.postLike(
+                    data = LikeWine(
+                            userId = authManager.id,
+                            wineId = wineResult.id!!
+                    ),
+                    onSuccess = {
+                        Timber.d("와인 좋아요 저장 성공")
+                        _toastMessage.value = true
+                        _wineLike.value = true
+                        hideLoading()
+                    },
+                    onFailure = {
+                        hideLoading()
+                    }
+            )
+        }
 
     }
 
     /** 좋아요 취소 서버 통신 - deleteLike */
     fun cancelLike(wineResult: WineResult) {
-        winePickRepository.deleteLike(
-                wineId = wineResult.id!!,
-                userId = authManager.id,
-                onSuccess = {
-                    Timber.d("와인 좋아요 취소 성공")
-                    _cancelMessage.value = true
-                    _wineLike.value = false
-                    hideLoading()
-                },
-                onFailure = {
-                    hideLoading()
-                }
-        )
+        if (authManager.token == "guest") {
+            _loginWarningDlg.value = true
+        } else {
+            winePickRepository.deleteLike(
+                    wineId = wineResult.id!!,
+                    userId = authManager.id,
+                    onSuccess = {
+                        Timber.d("와인 좋아요 취소 성공")
+                        _cancelMessage.value = true
+                        _wineLike.value = false
+                        hideLoading()
+                    },
+                    onFailure = {
+                        hideLoading()
+                    }
+            )
+        }
     }
 
     fun backClick() {

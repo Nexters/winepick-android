@@ -16,7 +16,7 @@
     <string name="red_wine">Red Wine</string>
     <string name="white_wine">White Wine</string>
     <string name="sparkling_wine">Sparkling Wine</string>
-    <string name="wine_value_title">%1s의\n%2s</string>
+    <string name="wine_value_title">와인의 4가지 기준으로\n원하는 맛을 찾아보세요.</string>
     <string name="wine_value_sub_title">%1s의 당도와 바디감을 알려드릴게요.</string>
     <string name="wine_food_detail">%s와 잘 어울려요.</string>
     <string name="wine_food_title">함께하면\n더 맛있는 요리 %d</string>

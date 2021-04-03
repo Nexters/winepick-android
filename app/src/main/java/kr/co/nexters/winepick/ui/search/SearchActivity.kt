@@ -4,6 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import com.kakao.sdk.auth.LoginClient
+import com.kakao.sdk.auth.model.OAuthToken
+import com.kakao.sdk.user.UserApiClient
 import kotlinx.coroutines.launch
 import kr.co.nexters.winepick.BR
 import kr.co.nexters.winepick.R
@@ -14,8 +17,10 @@ import kr.co.nexters.winepick.databinding.ActivitySearchBinding
 import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.ActivityResult
 import kr.co.nexters.winepick.ui.base.BaseActivity
+import kr.co.nexters.winepick.ui.component.ConfirmDialog
 import kr.co.nexters.winepick.ui.component.LikeDialog
 import kr.co.nexters.winepick.ui.detail.WineDetailActivity
+import kr.co.nexters.winepick.ui.login.LoginViewModel
 import kr.co.nexters.winepick.util.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -30,6 +35,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
     override val viewModel: SearchViewModel by viewModel()
     private val authManager: AuthManager by inject()
     private val searchRepository: SearchRepository by inject()
+    private val loginViewModel: LoginViewModel by viewModel()
 
     private var scrollListener: EndlessScrollListener? = null
 
@@ -39,6 +45,23 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
     private val searchFiltersFromHome: Array<String>
         get() = intent.getStringArrayExtra(Constant.STRING_EXTRA_SEARCH_FILTERS_FROM_HOME)
             ?: arrayOf()
+
+    private val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
+        if (error != null) {
+            Timber.e("로그인 실패 ${error}")
+        } else if (token != null) {
+            //Login Success
+            Timber.d("로그인 성공")
+            authManager.apply {
+                this.token = token.accessToken
+            }
+            UserApiClient.instance.me { user, error ->
+                val kakaoId = user!!.id
+                loginViewModel.addUserInfo(token.accessToken, authManager.testType, kakaoId)
+            }
+            Timber.d("로그인성공 - 토큰 ${authManager.token}")
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,7 +82,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
         binding.apply {
             btnSearchBack.setOnSingleClickListener { onBackPressed() }
 
-            rvResults.adapter = WineResultAdapter(viewModel)
+            rvResults.adapter = WineResultAdapter(viewModel, authManager)
             rvResults.layoutManager?.let {
                 scrollListener = object : EndlessScrollListener(it, 3) {
                     override fun onLoadMore(page: Int) {
@@ -163,6 +186,33 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
         viewModel.initAction.subscribe {
             recyclerViewClear()
         }
+
+        viewModel.loginWarningDlg.observe(this, Observer {
+            if (it) {
+                ConfirmDialog(
+                        title = getString(R.string.login_warning_title),
+                        content = getString(R.string.login_warning_like),
+                        leftText = getString(R.string.login_warning_btn_left_text),
+                        leftClickListener = {
+                            it.dismiss()
+                        },
+                        rightText = getString(R.string.login_warning_btn_right_text),
+                        rightClickListener = {
+                            LoginClient.instance.run {
+                                if (isKakaoTalkLoginAvailable(this@SearchActivity)) {
+                                    loginWithKakaoTalk(this@SearchActivity, callback = callback)
+                                } else {
+                                    loginWithKakaoAccount(this@SearchActivity, callback = callback)
+                                }
+                            }
+                            it.dismiss()
+
+                        },
+                        cancelable = false
+                ).show(supportFragmentManager, "LoginWarningDialog")
+            }
+        })
+
     }
 
     private fun recyclerViewClear() {

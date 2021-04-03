@@ -13,6 +13,7 @@ import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.WinePickApplication
 import kr.co.nexters.winepick.data.model.remote.wine.WineResult
 import kr.co.nexters.winepick.databinding.ItemWineResultBinding
+import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.WineResultViewModel
 import kr.co.nexters.winepick.util.setOnSingleClickListener
 
@@ -21,7 +22,7 @@ import kr.co.nexters.winepick.util.setOnSingleClickListener
  *
  * @since v1.0.0 / 2021.02.08
  */
-class WineResultAdapter(val vm: WineResultViewModel) :
+class WineResultAdapter(val vm: WineResultViewModel, val authManager: AuthManager) :
     ListAdapter<WineResult, WineResultViewHolder>(SearchResultDiffUtilCallBack) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WineResultViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -35,7 +36,9 @@ class WineResultAdapter(val vm: WineResultViewModel) :
 
             binding.btnSearchResultHeart.setOnSingleClickListener {
                 // 미연의 클릭 방지를 위해 강제로 toggle 처리한다.
-                binding.wineResult = binding.wineResult!!.apply { likeYn = !this.likeYn!! }
+                if(authManager.token != "guest") {
+                    binding.wineResult = binding.wineResult!!.apply { likeYn = !this.likeYn!! }
+                }
                 vm.wineHeartClick(binding.wineResult!!)
             }
         }

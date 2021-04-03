@@ -52,9 +52,6 @@
             android:name=".ui.login.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.detail.DetailActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
             android:screenOrientation="portrait">
             <intent-filter>

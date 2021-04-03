@@ -74,6 +74,9 @@ class SearchViewModel(
     private val _searchResultType = MutableLiveData<SearchType>()
     val searchResultType: LiveData<SearchType> = _searchResultType
 
+    private var _loginWarningDlg : MutableLiveData<Boolean> = MutableLiveData()
+    val loginWarningDlg : LiveData<Boolean> = _loginWarningDlg
+
     init {
         _searchAction.onNext(SearchAction.NONE)
     }
@@ -289,6 +292,8 @@ class SearchViewModel(
             } else {
                 addLike(newWineResult)
             }
+        } else {
+            _loginWarningDlg.value = true
         }
     }
 

@@ -30,7 +30,6 @@ class WineValueAdapter(val vm: WineDetailViewModel) :
 
         return WineValueViewHolder(binding).apply {
 
-
         }
     }
 

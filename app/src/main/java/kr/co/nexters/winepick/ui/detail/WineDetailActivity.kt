@@ -33,8 +33,25 @@ class WineDetailActivity : BaseActivity<ActivityWineDetailBinding>(R.layout.acti
     private val wineFoodAdapter: WineFoodAdapter by lazy { WineFoodAdapter(viewModel) }
     private val wineValueAdapter: WineValueAdapter by lazy { WineValueAdapter(viewModel) }
     private val wineFeatureAdapter: WineFoodAdapter by lazy { WineFoodAdapter(viewModel) }
+    private val authManager : AuthManager by inject()
+    private val loginViewModel: LoginViewModel by viewModel()
 
-
+    private val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
+        if (error != null) {
+            Timber.e("로그인 실패 ${error}")
+        } else if (token != null) {
+            //Login Success
+            Timber.d("로그인 성공")
+            authManager.apply {
+                this.token = token.accessToken
+            }
+            UserApiClient.instance.me { user, error ->
+                val kakaoId = user!!.id
+                loginViewModel.addUserInfo(token.accessToken, authManager.testType, kakaoId)
+            }
+            Timber.d("로그인성공 - 토큰 ${authManager.token}")
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,6 +79,32 @@ class WineDetailActivity : BaseActivity<ActivityWineDetailBinding>(R.layout.acti
         viewModel.backButton.observe(this, Observer {
             if(it) {
                 finish()
+            }
+        })
+
+        viewModel.loginWarningDlg.observe(this, Observer {
+            if (it) {
+                ConfirmDialog(
+                        title = getString(R.string.login_warning_title),
+                        content = getString(R.string.login_warning_like),
+                        leftText = getString(R.string.login_warning_btn_left_text),
+                        leftClickListener = {
+                            it.dismiss()
+                        },
+                        rightText = getString(R.string.login_warning_btn_right_text),
+                        rightClickListener = {
+                            LoginClient.instance.run {
+                                if (isKakaoTalkLoginAvailable(this@WineDetailActivity)) {
+                                    loginWithKakaoTalk(this@WineDetailActivity, callback = callback)
+                                } else {
+                                    loginWithKakaoAccount(this@WineDetailActivity, callback = callback)
+                                }
+                            }
+                            it.dismiss()
+
+                        },
+                        cancelable = false
+                ).show(supportFragmentManager, "LoginWarningDialog")
             }
         })
 

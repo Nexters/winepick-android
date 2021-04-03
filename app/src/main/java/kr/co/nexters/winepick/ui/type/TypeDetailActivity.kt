@@ -35,7 +35,7 @@ class TypeDetailActivity : BaseActivity<ActivityTypeDetailBinding>(
     private val loginViewModel : LoginViewModel by viewModel()
     private val wineRepository : WineRepository by inject()
 
-    val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
+    private val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
         if (error != null) {
             Timber.e("로그인 실패 ${error}")
         }

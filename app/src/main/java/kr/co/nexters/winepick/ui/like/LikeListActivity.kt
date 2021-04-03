@@ -20,7 +20,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class LikeListActivity : BaseActivity<ActivityLikeListBinding>(
     R.layout.activity_like_list
 ) {
-    private val wineLikeAdpater: WineResultAdapter by lazy { WineResultAdapter(viewModel) }
+    private val authManager : AuthManager by inject()
+    private val wineLikeAdpater: WineResultAdapter by lazy { WineResultAdapter(viewModel,authManager) }
     override val viewModel: LikeViewModel by viewModel<LikeViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

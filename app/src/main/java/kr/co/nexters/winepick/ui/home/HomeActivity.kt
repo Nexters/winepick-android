@@ -2,7 +2,6 @@ package kr.co.nexters.winepick.ui.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import com.kakao.sdk.auth.LoginClient
@@ -16,13 +15,9 @@ import kr.co.nexters.winepick.databinding.ActivityHomeBinding
 import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.BaseActivity
 import kr.co.nexters.winepick.ui.component.ConfirmDialog
-import kr.co.nexters.winepick.ui.detail.DetailActivity
-import kr.co.nexters.winepick.ui.login.LoginActivity
 import kr.co.nexters.winepick.ui.login.LoginViewModel
 import kr.co.nexters.winepick.ui.survey.SurveyActivity
 import kr.co.nexters.winepick.util.dpToPx
-import kr.co.nexters.winepick.util.drawLikeToast
-import kr.co.nexters.winepick.util.startActivity
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
@@ -31,9 +26,9 @@ import timber.log.Timber
 class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     override val viewModel: HomeViewModel by viewModel<HomeViewModel>()
     private val authManager: AuthManager by inject()
-    val loginViewModel: LoginViewModel by viewModel()
+    private val loginViewModel: LoginViewModel by viewModel()
 
-    val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
+    private val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
         if (error != null) {
             Timber.e("로그인 실패 ${error}")
         } else if (token != null) {

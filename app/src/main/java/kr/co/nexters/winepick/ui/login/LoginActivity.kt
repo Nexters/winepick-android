@@ -22,7 +22,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(
     override val viewModel: LoginViewModel by viewModel<LoginViewModel>()
     private val authManager: AuthManager by inject()
 
-    val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
+    private val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
         if (error != null) {
             Timber.e("로그인 실패 ${error}")
             //Login Fail
