@@ -49,7 +49,7 @@ class SearchFilterViewModel(private val searchRepository: SearchRepository) : Ba
 
         val prevUpdatedItem = when (needToUpdateItem.group) {
             // 중복 가능한 경우 (맛, 이벤트)
-            SearchFilterGroup.TASTE, SearchFilterGroup.EVENT -> null
+            SearchFilterGroup.TASTE, SearchFilterGroup.EVENT, SearchFilterGroup.CONVENIENCE -> null
             // 중복 불가능한 경우
             else -> {
                 // 비활성화 시켜주어야 하는 아이템 찾기 (등록한 게 없는 경우 null)
