@@ -151,7 +151,7 @@ public class SurveyResultActivity extends BaseActivity<ActivitySurveyResultBindi
             // Intent intent = new Intent(this, WineDetailActivity.class);
             // intent.putExtra("wineData", wineResult);
             // startActivity(intent);
-             return Unit.INSTANCE;
+            return Unit.INSTANCE;
         });
 
         // 나와 잘 맞는 타입 설정
@@ -188,7 +188,23 @@ public class SurveyResultActivity extends BaseActivity<ActivitySurveyResultBindi
 
         // 공유버튼 클릭 리스너
         ViewExtKt.setOnSingleClickListener(binding.shareButton, () -> {
-            shareBtnClick(personalityType);
+            ConfirmDialog dialog = new ConfirmDialog(
+                    DisplayExtKt.dpToPx(241),
+                    DisplayExtKt.dpToPx(202),
+                    "카카오톡 공유로 이동합니다",
+                    "결과를 카카오톡에서\n친구에게 공유해보세요!",
+                    "취소",
+                    null,
+                    "이동하기",
+                    ((dialogFragment) -> {
+                        shareBtnClick(personalityType);
+                        dialogFragment.dismiss();
+                        return Unit.INSTANCE;
+                    }),
+                    false
+            );
+            dialog.show(this.getSupportFragmentManager(), "KakaoShare");
+
             return Unit.INSTANCE;
         });
     }
