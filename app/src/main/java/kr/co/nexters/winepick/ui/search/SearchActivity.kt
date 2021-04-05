@@ -15,7 +15,6 @@ import kr.co.nexters.winepick.data.repository.SearchRepository
 import kr.co.nexters.winepick.data.repository.parseKeyword
 import kr.co.nexters.winepick.databinding.ActivitySearchBinding
 import kr.co.nexters.winepick.di.AuthManager
-import kr.co.nexters.winepick.ui.base.ActivityResult
 import kr.co.nexters.winepick.ui.base.BaseActivity
 import kr.co.nexters.winepick.ui.component.ConfirmDialog
 import kr.co.nexters.winepick.ui.component.LikeDialog
@@ -73,10 +72,14 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
             searchRepository.addFilterItems(filters)
 
             viewModel.querySearchClick(page = 0)
-        } else if (searchFiltersFromHome.isNotEmpty()){
+        } else if (searchFiltersFromHome.isNotEmpty()) {
             searchRepository.addFilterItems(searchFiltersFromHome.toList())
 
             viewModel.querySearchClick(page = 0)
+        } else {
+            binding.etQuery.requestFocus()
+            binding.etQuery.showKeyboard()
+            viewModel.initEmptyAction()
         }
 
         binding.apply {
@@ -190,25 +193,25 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
         viewModel.loginWarningDlg.observe(this, Observer {
             if (it) {
                 ConfirmDialog(
-                        title = getString(R.string.login_warning_title),
-                        content = getString(R.string.login_warning_like),
-                        leftText = getString(R.string.login_warning_btn_left_text),
-                        leftClickListener = {
-                            it.dismiss()
-                        },
-                        rightText = getString(R.string.login_warning_btn_right_text),
-                        rightClickListener = {
-                            LoginClient.instance.run {
-                                if (isKakaoTalkLoginAvailable(this@SearchActivity)) {
-                                    loginWithKakaoTalk(this@SearchActivity, callback = callback)
-                                } else {
-                                    loginWithKakaoAccount(this@SearchActivity, callback = callback)
-                                }
+                    title = getString(R.string.login_warning_title),
+                    content = getString(R.string.login_warning_like),
+                    leftText = getString(R.string.login_warning_btn_left_text),
+                    leftClickListener = {
+                        it.dismiss()
+                    },
+                    rightText = getString(R.string.login_warning_btn_right_text),
+                    rightClickListener = {
+                        LoginClient.instance.run {
+                            if (isKakaoTalkLoginAvailable(this@SearchActivity)) {
+                                loginWithKakaoTalk(this@SearchActivity, callback = callback)
+                            } else {
+                                loginWithKakaoAccount(this@SearchActivity, callback = callback)
                             }
-                            it.dismiss()
+                        }
+                        it.dismiss()
 
-                        },
-                        cancelable = false
+                    },
+                    cancelable = false
                 ).show(supportFragmentManager, "LoginWarningDialog")
             }
         })

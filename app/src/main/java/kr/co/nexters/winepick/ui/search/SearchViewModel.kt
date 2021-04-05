@@ -87,6 +87,10 @@ class SearchViewModel(
         _filterNum.value = searchRepository.userSearchFilterItems.filter { it.selected }.size - 1
     }
 
+    fun initEmptyAction(){
+        _searchFrontPage.value = SearchFront.RECOMMEND
+    }
+
     fun prevDataClear() {
         _results.value = listOf()
     }
