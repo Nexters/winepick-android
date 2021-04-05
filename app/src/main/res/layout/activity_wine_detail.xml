@@ -257,6 +257,8 @@
                         app:layout_constraintStart_toStartOf="parent"
                         android:text="@{@string/wine_feature_detail(vm.wineName,vm.winePurpose)}"
                         tools:text="몬탈치노는 에피타이저,테이블에 어울려요."
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:layout_marginRight="24dp"
                         android:textColor="@color/black"
                         android:textSize="15dp"
                         android:id="@+id/tv_wine_feature_detail"
