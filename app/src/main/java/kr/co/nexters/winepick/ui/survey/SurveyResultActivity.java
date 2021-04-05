@@ -215,9 +215,9 @@ public class SurveyResultActivity extends BaseActivity<ActivitySurveyResultBindi
                 DisplayExtKt.dpToPx(202),
                 "재검사 하시겠습니까?",
                 "재검사시,\n이전 결과는 삭제됩니다.",
-                "아니요",
+                "취소",
                 null,
-                "예",
+                "검사하기",
                 ((dialogFragment) -> {
                     authManager.setTestType("N");
                     Intent intent = new Intent(this, SurveyActivity.class);
