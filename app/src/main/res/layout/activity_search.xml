@@ -60,6 +60,7 @@
                 android:background="@null"
                 android:gravity="center"
                 android:includeFontPadding="false"
+                app:isInvisible="@{vm.query.length() == 0}"
                 android:paddingVertical="6dp"
                 android:paddingStart="8dp"
                 android:singleLine="true"
