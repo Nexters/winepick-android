@@ -164,7 +164,8 @@ public class SurveyResultActivity extends BaseActivity<ActivitySurveyResultBindi
         });
 
         // 와인 추천 키워드1 설정
-        binding.recommendMoveText1.setText(personalityType.getKeyword1());
+        String[] keyword1s = personalityType.getKeyword1().split(",");
+        if (keyword1s.length != 0) binding.recommendMoveText1.setText(keyword1s[0]);
         ViewExtKt.setOnSingleClickListener(binding.recommendMoveButtonLinear1, () -> {
             Intent intent = new Intent(this, SearchActivity.class);
             intent.putExtra(Constant.STRING_EXTRA_SEARCH_FILTERS, personalityType.getKeyword1());
@@ -172,7 +173,8 @@ public class SurveyResultActivity extends BaseActivity<ActivitySurveyResultBindi
             return Unit.INSTANCE;
         });
         // 와인 추천 키워드2 설정
-        binding.recommendMoveText2.setText(personalityType.getKeyword2());
+        String[] keyword2s = personalityType.getKeyword2().split(",");
+        if (keyword2s.length != 0) binding.recommendMoveText2.setText(keyword2s[0]);
         ViewExtKt.setOnSingleClickListener(binding.recommendMoveButtonLinear2, () -> {
             Intent intent = new Intent(this, SearchActivity.class);
             intent.putExtra(Constant.STRING_EXTRA_SEARCH_FILTERS, personalityType.getKeyword2());
