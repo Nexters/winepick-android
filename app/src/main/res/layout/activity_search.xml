@@ -94,6 +94,7 @@
                 android:paddingVertical="8dp"
                 android:singleLine="true"
                 android:text="@={vm.query}"
+                android:textFontWeight="400"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="normal"
