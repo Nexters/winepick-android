@@ -23,6 +23,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
         <activity
+            android:name=".ui.webview.WebViewActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.detail.WineDetailActivity"
             android:screenOrientation="portrait" />
         <activity

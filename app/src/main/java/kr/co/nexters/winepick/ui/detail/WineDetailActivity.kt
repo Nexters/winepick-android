@@ -1,7 +1,6 @@
 package kr.co.nexters.winepick.ui.detail
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.Observer
@@ -10,20 +9,19 @@ import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
 import kr.co.nexters.winepick.BR
 import kr.co.nexters.winepick.R
+import kr.co.nexters.winepick.data.constant.Constant
 import kr.co.nexters.winepick.data.model.remote.wine.WineResult
-import kr.co.nexters.winepick.databinding.ActivityHomeBinding
 import kr.co.nexters.winepick.databinding.ActivityWineDetailBinding
 import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.BaseActivity
 import kr.co.nexters.winepick.ui.component.ConfirmDialog
 import kr.co.nexters.winepick.ui.component.LikeDialog
-import kr.co.nexters.winepick.ui.home.HomeViewModel
 import kr.co.nexters.winepick.ui.login.LoginViewModel
-import kr.co.nexters.winepick.ui.search.WineResultAdapter
+import kr.co.nexters.winepick.ui.webview.WebViewActivity
 import kr.co.nexters.winepick.util.HorizontalItemDecorator
 import kr.co.nexters.winepick.util.VerticalItemDecorator
 import kr.co.nexters.winepick.util.drawCancelToast
-import org.koin.android.ext.android.bind
+import kr.co.nexters.winepick.util.setOnSingleClickListener
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
@@ -33,7 +31,7 @@ class WineDetailActivity : BaseActivity<ActivityWineDetailBinding>(R.layout.acti
     private val wineFoodAdapter: WineFoodAdapter by lazy { WineFoodAdapter(viewModel) }
     private val wineValueAdapter: WineValueAdapter by lazy { WineValueAdapter(viewModel) }
     private val wineFeatureAdapter: WineFoodAdapter by lazy { WineFoodAdapter(viewModel) }
-    private val authManager : AuthManager by inject()
+    private val authManager: AuthManager by inject()
     private val loginViewModel: LoginViewModel by viewModel()
 
     private val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
@@ -53,31 +51,35 @@ class WineDetailActivity : BaseActivity<ActivityWineDetailBinding>(R.layout.acti
         }
     }
 
+    /** 이전 화면에서부터 받은 와인 아이템[WineResult] */
+    private val wineResult: WineResult?
+        get() = intent.getSerializableExtra("wineData") as? WineResult
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val wineResult : WineResult = intent.getSerializableExtra("wineData") as WineResult
 
-        viewModel.getWineResult(wineResult)
+        wineResult?.let { viewModel.getWineResult(it) } ?: finish()
+
         binding.setVariable(BR.vm, viewModel)
         initFoodRecycler()
         viewModel.toastMessage.observe(this, Observer {
-            if(it) {
+            if (it) {
                 LikeDialog(
-                        content = getString(R.string.like_add)
+                    content = getString(R.string.like_add)
                 ).show(supportFragmentManager, "LikeDialog")
 
             }
         })
 
         viewModel.cancelMessage.observe(this, Observer {
-            if(it) {
+            if (it) {
                 val customToast = Toast(this)
                 customToast.drawCancelToast(this)
             }
         })
 
         viewModel.backButton.observe(this, Observer {
-            if(it) {
+            if (it) {
                 finish()
             }
         })
@@ -85,30 +87,31 @@ class WineDetailActivity : BaseActivity<ActivityWineDetailBinding>(R.layout.acti
         viewModel.loginWarningDlg.observe(this, Observer {
             if (it) {
                 ConfirmDialog(
-                        title = getString(R.string.login_warning_title),
-                        content = getString(R.string.login_warning_like),
-                        leftText = getString(R.string.login_warning_btn_left_text),
-                        leftClickListener = {
-                            it.dismiss()
-                        },
-                        rightText = getString(R.string.login_warning_btn_right_text),
-                        rightClickListener = {
-                            LoginClient.instance.run {
-                                if (isKakaoTalkLoginAvailable(this@WineDetailActivity)) {
-                                    loginWithKakaoTalk(this@WineDetailActivity, callback = callback)
-                                } else {
-                                    loginWithKakaoAccount(this@WineDetailActivity, callback = callback)
-                                }
+                    title = getString(R.string.login_warning_title),
+                    content = getString(R.string.login_warning_like),
+                    leftText = getString(R.string.login_warning_btn_left_text),
+                    leftClickListener = {
+                        it.dismiss()
+                    },
+                    rightText = getString(R.string.login_warning_btn_right_text),
+                    rightClickListener = {
+                        LoginClient.instance.run {
+                            if (isKakaoTalkLoginAvailable(this@WineDetailActivity)) {
+                                loginWithKakaoTalk(this@WineDetailActivity, callback = callback)
+                            } else {
+                                loginWithKakaoAccount(this@WineDetailActivity, callback = callback)
                             }
-                            it.dismiss()
+                        }
+                        it.dismiss()
 
-                        },
-                        cancelable = false
+                    },
+                    cancelable = false
                 ).show(supportFragmentManager, "LoginWarningDialog")
             }
         })
 
     }
+
     fun initFoodRecycler() {
         binding.rvWineFood.apply {
             adapter = wineFoodAdapter
@@ -127,6 +130,16 @@ class WineDetailActivity : BaseActivity<ActivityWineDetailBinding>(R.layout.acti
         binding.rvWineValue.apply {
             adapter = wineValueAdapter
             addItemDecoration(VerticalItemDecorator(10))
+        }
+
+        binding.clWineImg.setOnSingleClickListener {
+            val intent = Intent(this@WineDetailActivity, WebViewActivity::class.java)
+                .putExtra(
+                    Constant.STRING_EXTRA_WEB_URL_PARAMS,
+                    wineResult?.nmKor ?: wineResult?.nmEng
+                )
+
+            startActivity(intent)
         }
     }
 
