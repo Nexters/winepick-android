@@ -88,6 +88,17 @@ jobs:
       - name: CI 2-2. kakao_app_key.tar 압축 풀기
         run: tar xvf kakao_app_key.tar
 
+      # CI 2-3. google-service.json gpg 해독
+      - name: CI 3-3. Decrypt google-service.json
+        run: gpg --quiet --batch --yes --always-trust --decrypt --passphrase="$GOOGLE_JSON_KEY_TAR_PWD" --output services.tar services.tar.gpg
+
+        env:
+          GOOGLE_JSON_KEY_TAR_PWD: ${{ secrets.KAKAO_APP_KEY_TAR_PWD }}
+
+      # CI 2-4. services.tar 압축 풀기 (지정되었던 경로로 자동으로 파일이 만들어짐)
+      - name: CI 3-4. services.tar 압축 풀기
+        run: tar xvf services.tar
+
       # CD 3. 테스트용 apk 만들기 및 슬랙 메시지 전송
       # [slack-upload-file](https://github.com/marketplace/actions/slack-upload-file)
       - run: './gradlew assembleDebug'
