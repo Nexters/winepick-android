@@ -129,6 +129,181 @@
         <item>F</item>
     </string-array>
 
+    <string-array name="breads">
+        <item>밀가루 음식</item>
+    </string-array>
+    <string-array name="fishes">
+        <item>구운 연어</item>
+        <item>해산물</item>
+        <item>해물요리</item>
+        <item>연어</item>
+        <item>리치한 소스로 조리한 생선류</item>
+        <item>감바스 알 아히요</item>
+        <item>장어구이</item>
+        <item>붉은 살 생선</item>
+    </string-array>
+    <string-array name="meats">
+        <item>붉은 육류</item>
+        <item>붉은 육류 요리</item>
+        <item>양고기</item>
+        <item>소시지</item>
+        <item>송아지 요리</item>
+        <item>구운 고기</item>
+        <item>육류 요리</item>
+        <item>갈비구이</item>
+        <item>육류요리</item>
+        <item>그릴에 구운 바비큐</item>
+        <item>소시지구이</item>
+        <item>소고기</item>
+        <item>양념 갈비</item>
+        <item>돼지고기</item>
+        <item>양념이 강한 육류요리</item>
+        <item>살치살 구이 등 육류 오리</item>
+        <item>훈제 쇠고기등의 붉은살 육류나 닭고기</item>
+        <item>모든 종류의 고기요리</item>
+        <item>불고기</item>
+        <item>돼지 양념불고기</item>
+        <item>구운양고기</item>
+        <item>다양한 육류</item>
+        <item>소고기 육회</item>
+        <item>각종 육류 요리</item>
+        <item>유럽식 코스요리의 메인 안심</item>
+        <item>등심 요리와 양고기</item>
+        <item>각종 육류 또는 잘 숙성된 경성치즈</item>
+        <item>갈비찜</item>
+        <item>붉은 고기류</item>
+        <item>불고기 요리</item>
+        <item>소스가 진한 육류</item>
+        <item>한우 구이류</item>
+        <item>살라미</item>
+        <item>육류</item>
+        <item>그릴에 구운 고기</item>
+        <item>구운 연어 또는 닭고기부터 양고기와 소고기 스테이크</item>
+        <item>붉은 고기</item>
+        <item>그릴에 구운 요리</item>
+    </string-array>
+    <string-array name="lobstars">
+        <item>게</item>
+        <item>랍스터</item>
+    </string-array>
+    <string-array name="koreanFoods">
+        <item>아시아 요리</item>
+        <item>매운 음식</item>
+        <item>매홈한 한식 등</item>
+        <item>그릴에 구운 음식</item>
+        <item>매콤한 한국음식과도 잘 어울린다</item>
+        <item>강한 양념을 제외한 모든 음식과 잘 어울린다</item>
+        <item>정찬 요리</item>
+        <item>동양 음식</item>
+        <item>볶음밥</item>
+        <item>매운 음식</item>
+        <item>매홈한 한식</item>
+        <item>매콤한 한식</item>
+        <item>순대</item>
+        <item>보쌈</item>
+    </string-array>
+
+    <string-array name="italyFoods">
+        <item>파스타</item>
+        <item>볼로네제 파스타</item>
+        <item>토마토 파스타</item>
+        <item>토마토소스 파스타</item>
+        <item>소고기 스튜</item>
+        <item>미트소스 스파게티</item>
+        <item>크림소스 파스타</item>
+        <item>오일파스타</item>
+        <item>스프</item>
+        <item>스튜요리</item>
+        <item>스튜 및 파스타</item>
+        <item>거의 모든 이탈리아 요리</item>
+        <item>비프 스튜</item>
+        <item>토마토 소스 또는 크림 소스 베이스의 파스타와 리조또</item>
+        <item>소스가 진한 파스타</item>
+    </string-array>
+
+    <string-array name="hamburgers">
+
+    </string-array>
+    <string-array name="fruits">
+        <item>사과</item>
+        <item>과일</item>
+        <item>달콤한 과일</item>
+    </string-array>
+    <string-array name="curries">
+        <item>인도카레</item>
+    </string-array>
+    <string-array name="cheeses">
+        <item>치즈</item>
+        <item>부드러운 치즈</item>
+        <item>숙성 치즈</item>
+        <item>신선한 치즈</item>
+        <item>하드 치즈</item>
+        <item>치즈</item>
+        <item>고트</item>
+        <item>파마산 치즈</item>
+        <item>브뤼 치즈</item>
+        <item>잘 숙성된 체다 치즈</item>
+        <item>숙성된 치즈</item>
+        <item>블루치즈</item>
+        <item>브뤼치즈</item>
+        <item>향이 강한 치즈류</item>
+        <item>카나페</item>
+        <item>소프트 치즈</item>
+        <item>치즈와 궁합이 좋고 특히 트러플 크림 브리 치즈와 잘 어울림</item>
+        <item>숙성된 치즈 등</item>
+        <item>경성 중경성의 치즈류</item>
+    </string-array>
+    <string-array name="cakes">
+        <item>디저트</item>
+        <item>달콤한 후식</item>
+        <item>각종 디저트</item>
+        <item>가벼운 디저트</item>
+        <item>에피타이저</item>
+        <item>헤이즐넛 케이크</item>
+    </string-array>
+    <string-array name="shellfishes">
+        <item>조개류</item>
+        <item>관자 요리</item>
+        <item>조개</item>
+        <item>회, 조개류와 같은 해산물</item>
+    </string-array>
+    <string-array name="asianFoods">
+
+    </string-array>
+    <string-array name="pizzas">
+        <item>피자</item>
+    </string-array>
+    <string-array name="shrimps">
+
+    </string-array>
+    <string-array name="stakes">
+        <item>스테이크</item>
+        <item>찹스테이크</item>
+        <item>육즙가득한 스테이크</item>
+        <item>바비큐요리</item>
+    </string-array>
+    <string-array name="sushies">
+
+    </string-array>
+    <string-array name="vegetables">
+        <item>버섯</item>
+        <item>샐러드</item>
+        <item>익힌 채소</item>
+        <item>채소</item>
+        <item>야채</item>
+    </string-array>
+    <string-array name="chickens">
+        <item>치킨</item>
+        <item>훈제오리</item>
+        <item>가금류 고기</item>
+        <item>오리고기</item>
+        <item>가금류</item>
+        <item>오리고기 등의 가금류</item>
+        <item>가금류</item>
+        <item>푸아그라</item>
+        <item>가벼운 닭고기</item>
+    </string-array>
+
     <string-array name="wine_info">
         <item>라포데리나 브루넬로 디 몬탈치노 DOCG</item>
         <item>몬떼 레온 리미티드 에디션</item>
