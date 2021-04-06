@@ -125,9 +125,10 @@ class WineDetailViewModel(private val winePickRepository: WinePickRepository, pr
             }
         }
         _winePurpose.value = purposeStr
-        val wineFoods = _wineResult.value?.suitFood?.split(",") ?: listOf()
+        val wineFoods = _wineResult.value?.suitFood?.split(", ") ?: listOf()
         for (str in wineFoods) {
-            tmpWineFoods.add(WineFood(title = str, img = null))
+            val imgRes = winePickRepository.getResourceFromFoodName(str)
+            tmpWineFoods.add(WineFood(title = str, img = imgRes))
         }
         _wineFood.value = tmpWineFoods
         _wineFoodSize.value = tmpWineFoods.size

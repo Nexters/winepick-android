@@ -133,16 +133,29 @@
 
     <string-array name="breads">
         <item>밀가루 음식</item>
+        <item>패스트리</item>
     </string-array>
     <string-array name="fishes">
         <item>구운 연어</item>
         <item>해산물</item>
+        <item>해산물 요리</item>
         <item>해물요리</item>
         <item>연어</item>
         <item>리치한 소스로 조리한 생선류</item>
-        <item>감바스 알 아히요</item>
         <item>장어구이</item>
         <item>붉은 살 생선</item>
+        <item>숯불 구이 연어</item>
+        <item>참치</item>
+        <item>참치요리</item>
+        <item>참치 스테이크</item>
+        <item>캐비어</item>
+        <item>생선구이</item>
+        <item>매콤한 해산물</item>
+        <item>해산물요리</item>
+        <item>생선류</item>
+        <item>조리된 해산물</item>
+        <item>훈제연어</item>
+        <item>생선</item>
     </string-array>
     <string-array name="meats">
         <item>붉은 육류</item>
@@ -183,6 +196,21 @@
         <item>구운 연어 또는 닭고기부터 양고기와 소고기 스테이크</item>
         <item>붉은 고기</item>
         <item>그릴에 구운 요리</item>
+        <item>양갈비</item>
+        <item>갈비</item>
+        <item>바비큐</item>
+        <item>구은 양고기</item>
+        <item>구운 육류 요리</item>
+        <item>붉은 육류요리</item>
+        <item>강한 맛의 치</item>
+        <item>돼지고기요리</item>
+        <item>삼겹살</item>
+        <item>각종 붉은 육류 요리</item>
+        <item>모든 고기요리</item>
+        <item>모든 육류요리</item>
+        <item>양갈비구이</item>
+        <item>모든 육류</item>
+        <item>햄</item>
     </string-array>
     <string-array name="lobstars">
         <item>게</item>
@@ -203,10 +231,15 @@
         <item>매콤한 한식</item>
         <item>순대</item>
         <item>보쌈</item>
+        <item>전요리</item>
+        <item>튀김요리</item>
+        <item>가벼운 전식</item>
+        <item>분식</item>
+        <item>야식류</item>
     </string-array>
-
     <string-array name="italyFoods">
         <item>파스타</item>
+        <item>미트볼</item>
         <item>볼로네제 파스타</item>
         <item>토마토 파스타</item>
         <item>토마토소스 파스타</item>
@@ -219,17 +252,30 @@
         <item>스튜 및 파스타</item>
         <item>거의 모든 이탈리아 요리</item>
         <item>비프 스튜</item>
+        <item>스튜</item>
         <item>토마토 소스 또는 크림 소스 베이스의 파스타와 리조또</item>
         <item>소스가 진한 파스타</item>
+        <item>미트소스 파스타</item>
+        <item>소고기스튜</item>
+        <item>크림 파스타</item>
+        <item>라자냐</item>
+        <item>올리브</item>
+        <item>크림/오일 파스타</item>
+        <item>크림 수프</item>
     </string-array>
-
     <string-array name="hamburgers">
-
+        <item>햄버거</item>
     </string-array>
     <string-array name="fruits">
         <item>사과</item>
         <item>과일</item>
         <item>달콤한 과일</item>
+        <item>딸기</item>
+        <item>크랜베리</item>
+        <item>각종 과일</item>
+        <item>과일 안주</item>
+        <item>곶감</item>
+        <item>신선한 과일</item>
     </string-array>
     <string-array name="curries">
         <item>인도카레</item>
@@ -254,6 +300,10 @@
         <item>치즈와 궁합이 좋고 특히 트러플 크림 브리 치즈와 잘 어울림</item>
         <item>숙성된 치즈 등</item>
         <item>경성 중경성의 치즈류</item>
+        <item>강한 향의 치즈</item>
+        <item>노란색 치즈</item>
+        <item>숙성치즈</item>
+        <item>훈제 치즈</item>
     </string-array>
     <string-array name="cakes">
         <item>디저트</item>
@@ -262,21 +312,47 @@
         <item>가벼운 디저트</item>
         <item>에피타이저</item>
         <item>헤이즐넛 케이크</item>
+        <item>스낵</item>
+        <item>치즈 카나페</item>
+        <item>간단한 핑거푸드나 생선요리</item>
+        <item>견과류</item>
+        <item>달콤한 케익</item>
+        <item>간단한 쿠키</item>
+        <item>케익</item>
+        <item>푸딩류</item>
+        <item>쿠키</item>
+        <item>과일푸딩</item>
+        <item>과일 케이크</item>
+        <item>한과</item>
+        <item>간단한 핑거푸드 안주</item>
+        <item>까나페</item>
+        <item>파티용 웰컴 드링크</item>
+        <item>간단한 디저트류</item>
+        <item>딸기 디저트</item>
+        <item>달콤한 디저트</item>
+        <item>케이크</item>
     </string-array>
     <string-array name="shellfishes">
         <item>조개류</item>
         <item>관자 요리</item>
         <item>조개</item>
         <item>회, 조개류와 같은 해산물</item>
+        <item>화이트 소스를 가미한 굴</item>
+        <item>굴</item>
+
     </string-array>
     <string-array name="asianFoods">
-
+        <item>매콤한 아시안 퀴진</item>
+        <item>일식</item>
+        <item>매콤한 동남아 요리</item>
     </string-array>
     <string-array name="pizzas">
         <item>피자</item>
     </string-array>
     <string-array name="shrimps">
-
+        <item>새우요리</item>
+        <item>감바스 알 아히요</item>
+        <item>감바스</item>
     </string-array>
     <string-array name="stakes">
         <item>스테이크</item>
@@ -285,7 +361,9 @@
         <item>바비큐요리</item>
     </string-array>
     <string-array name="sushies">
-
+        <item>참치회</item>
+        <item>생선회</item>
+        <item>스시</item>
     </string-array>
     <string-array name="vegetables">
         <item>버섯</item>
@@ -293,6 +371,11 @@
         <item>익힌 채소</item>
         <item>채소</item>
         <item>야채</item>
+        <item>야채스프</item>
+        <item>치자</item>
+        <item>신선한 샐러드</item>
+        <item>식전주</item>
+        <item>해산물 샐러드</item>
     </string-array>
     <string-array name="chickens">
         <item>치킨</item>
@@ -304,6 +387,11 @@
         <item>가금류</item>
         <item>푸아그라</item>
         <item>가벼운 닭고기</item>
+        <item>닭고기요리</item>
+        <item>푸아그라</item>
+        <item>닭고기</item>
+        <item>칠면조</item>
+        <item>닭요리</item>
     </string-array>
 
     <string-array name="wine_info">

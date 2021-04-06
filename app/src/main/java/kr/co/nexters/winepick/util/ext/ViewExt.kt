@@ -10,6 +10,7 @@ import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isInvisible
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.BindingAdapter
@@ -106,6 +107,12 @@ fun View.setSelected(newIsSelected: Boolean) {
 @BindingAdapter("imageResource")
 fun setImageResource(imageView: ImageView, resource: Int) {
     imageView.setImageResource(resource)
+}
+
+@BindingAdapter("imageDrawableResource")
+fun setImageDrawableResource(imageView: ImageView, resource: Int) {
+    val drawable = ResourcesCompat.getDrawable(imageView.context.resources, resource, null)
+    imageView.setImageDrawable(drawable)
 }
 
 /**

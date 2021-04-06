@@ -68,9 +68,8 @@ class WindFoodViewHolder(private val binding: ItemWineFoodBinding) :
                 wineFood.title = "Appetizer"
             }
             else -> {
-                wineFood.img = R.drawable.bread_icon
+                wineFood.img = wineFood.img ?: R.drawable.bread_icon
             }
-
         }
     }
 }
