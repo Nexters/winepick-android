@@ -61,7 +61,7 @@ class WineFoodViewHolder(private val binding: ItemWineFoodBinding) :
 
     fun bind(wineFood: WineFood) {
         binding.wineFood = wineFood
-        wineFood.img = wineFood.img ?: R.drawable.bread_icon
+        wineFood.img = wineFood.img ?: R.drawable.food_other
     }
 }
 
@@ -96,7 +96,7 @@ class WineFeatureViewHolder(private val binding: ItemWineFeatureBinding) :
                 wineFood.title = "Appetizer"
             }
             else -> {
-                wineFood.img = wineFood.img ?: R.drawable.bread_icon
+                wineFood.img = wineFood.img ?: R.drawable.img_table
             }
         }
     }
