@@ -266,21 +266,17 @@
                         android:includeFontPadding="false"
                         android:layout_marginTop="10dp"/>
 
-
-
-
                     <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/rv_wine_feature"
                         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                        app:spanCount="3"
                         submitList="@{vm.wineFeature}"
                         tools:itemCount="3"
                         android:layout_marginTop="40dp"
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="20dp"
-                        tools:listitem="@layout/item_wine_food"
+                        tools:listitem="@layout/item_wine_feature"
                         app:layout_constraintTop_toBottomOf="@id/tv_wine_feature_detail"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"

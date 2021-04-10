@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
 import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
@@ -28,9 +29,13 @@ import timber.log.Timber
 
 class WineDetailActivity : BaseActivity<ActivityWineDetailBinding>(R.layout.activity_wine_detail) {
     override val viewModel: WineDetailViewModel by viewModel()
-    private val wineFoodAdapter: WineFoodAdapter by lazy { WineFoodAdapter(viewModel) }
+    private val wineFoodAdapter: WineFoodAdapter by lazy {
+        WineFoodAdapter(WineListType.FOOD, viewModel)
+    }
     private val wineValueAdapter: WineValueAdapter by lazy { WineValueAdapter(viewModel) }
-    private val wineFeatureAdapter: WineFoodAdapter by lazy { WineFoodAdapter(viewModel) }
+    private val wineFeatureAdapter: WineFoodAdapter by lazy {
+        WineFoodAdapter(WineListType.FEATURE, viewModel)
+    }
     private val authManager: AuthManager by inject()
     private val loginViewModel: LoginViewModel by viewModel()
 
@@ -110,6 +115,14 @@ class WineDetailActivity : BaseActivity<ActivityWineDetailBinding>(R.layout.acti
             }
         })
 
+        viewModel.wineFeature.observe(this, {
+            (binding.rvWineFeature.layoutManager as GridLayoutManager).spanCount = when (it.size) {
+                1 -> 1
+                2 -> 2
+                else -> 3
+            }
+        })
+
     }
 
     fun initFoodRecycler() {
@@ -124,9 +137,8 @@ class WineDetailActivity : BaseActivity<ActivityWineDetailBinding>(R.layout.acti
             adapter = wineFeatureAdapter
             addItemDecoration(HorizontalItemDecorator(8))
             addItemDecoration(VerticalItemDecorator(20))
-
-
         }
+
         binding.rvWineValue.apply {
             adapter = wineValueAdapter
             addItemDecoration(VerticalItemDecorator(10))

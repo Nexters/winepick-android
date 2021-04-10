@@ -106,7 +106,7 @@ class WineDetailViewModel(private val winePickRepository: WinePickRepository, pr
         wineCountryImage(_wineResult.value?.country ?: "")
         wineStore(_wineResult.value?.store)
 
-        val winePurposeData = _wineResult.value!!.purpose!!.split(",")
+        val winePurposeData = _wineResult.value?.purpose?.split(", ") ?: listOf()
 
         tmpWineFeatures.add(WineFood(title = _wineResult.value?.category ?: "", img = null))
         for (str in winePurposeData) {

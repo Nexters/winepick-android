@@ -1,46 +1,76 @@
 package kr.co.nexters.winepick.ui.detail
 
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.nexters.winepick.R
-import kr.co.nexters.winepick.WinePickApplication
 import kr.co.nexters.winepick.data.model.WineFood
-import kr.co.nexters.winepick.data.model.remote.wine.WineResult
+import kr.co.nexters.winepick.databinding.ItemWineFeatureBinding
 import kr.co.nexters.winepick.databinding.ItemWineFoodBinding
-import kr.co.nexters.winepick.databinding.ItemWineFoodBindingImpl
-import kr.co.nexters.winepick.databinding.ItemWineResultBinding
-import kr.co.nexters.winepick.ui.base.WineResultViewModel
-import kr.co.nexters.winepick.util.setOnSingleClickListener
 
 
-class WineFoodAdapter(val vm: WineDetailViewModel) :
-    ListAdapter<WineFood, WindFoodViewHolder>(WineFoodDiffUtilCallBack) {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WindFoodViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-        val binding: ItemWineFoodBinding =
-            DataBindingUtil.inflate(layoutInflater, R.layout.item_wine_food, parent, false)
-
-        return WindFoodViewHolder(binding)
+class WineFoodAdapter(val type: WineListType, val vm: WineDetailViewModel) :
+    ListAdapter<WineFood, RecyclerView.ViewHolder>(WineFoodDiffUtilCallBack) {
+    companion object {
+        const val TYPE_FEATURE = 0
+        const val TYPE_FOOD = 1
     }
 
-    override fun onBindViewHolder(holder: WindFoodViewHolder, position: Int) {
-        holder.bind(getItem(position))
+    override fun getItemViewType(position: Int): Int {
+        return if (type == WineListType.FEATURE) TYPE_FEATURE else TYPE_FOOD
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
+
+        return when (viewType) {
+            TYPE_FEATURE -> {
+                val binding: ItemWineFeatureBinding = DataBindingUtil.inflate(
+                    layoutInflater, R.layout.item_wine_feature, parent, false
+                )
+
+                WineFeatureViewHolder(binding)
+            }
+            else -> {
+                val binding: ItemWineFoodBinding = DataBindingUtil.inflate(
+                    layoutInflater, R.layout.item_wine_food, parent, false
+                )
+
+                WineFoodViewHolder(binding)
+            }
+        }
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (holder.itemViewType) {
+            TYPE_FEATURE -> {
+                (holder as WineFeatureViewHolder).bind(getItem(position))
+            }
+            else -> {
+                (holder as WineFoodViewHolder).bind(getItem(position))
+            }
+        }
     }
 }
 
-class WindFoodViewHolder(private val binding: ItemWineFoodBinding) :
+class WineFoodViewHolder(private val binding: ItemWineFoodBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     fun bind(wineFood: WineFood) {
         binding.wineFood = wineFood
-        when(wineFood.title) {
+        wineFood.img = wineFood.img ?: R.drawable.bread_icon
+    }
+}
+
+class WineFeatureViewHolder(private val binding: ItemWineFeatureBinding) :
+    RecyclerView.ViewHolder(binding.root) {
+
+    fun bind(wineFood: WineFood) {
+        binding.wineFood = wineFood
+        when (wineFood.title) {
             "레드" -> {
                 wineFood.img = R.drawable.img_red_small
                 wineFood.title = "Red Wine"
@@ -56,12 +86,10 @@ class WindFoodViewHolder(private val binding: ItemWineFoodBinding) :
             "테이블 와인" -> {
                 wineFood.img = R.drawable.img_table
                 wineFood.title = "Table"
-
             }
             "디저트 와인" -> {
                 wineFood.img = R.drawable.img_dessert
                 wineFood.title = "Dessert"
-
             }
             "에피타이저" -> {
                 wineFood.img = R.drawable.img_dessert
@@ -89,3 +117,5 @@ object WineFoodDiffUtilCallBack : DiffUtil.ItemCallback<WineFood>() {
         return oldItem.hashCode() == newItem.hashCode()
     }
 }
+
+enum class WineListType { FEATURE, FOOD }
