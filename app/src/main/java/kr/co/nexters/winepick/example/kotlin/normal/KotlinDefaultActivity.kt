@@ -2,6 +2,7 @@ package kr.co.nexters.winepick.example.kotlin.normal
 
 import android.os.Bundle
 import android.widget.Toast
+import dagger.hilt.android.AndroidEntryPoint
 import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.ui.base.BaseActivity
 import kr.co.nexters.winepick.ui.base.BaseViewModel
@@ -13,6 +14,7 @@ import kr.co.nexters.winepick.databinding.ActivityKotlinDefaultBinding
  *
  * @since v1.0.0 / 2021.01.28
  */
+@AndroidEntryPoint
 class KotlinDefaultActivity : BaseActivity<ActivityKotlinDefaultBinding>(
     R.layout.activity_kotlin_default
 ) {

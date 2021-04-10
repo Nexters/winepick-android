@@ -2,8 +2,10 @@ package kr.co.nexters.winepick.ui.home
 
 import android.content.Intent
 import androidx.fragment.app.DialogFragment
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.WinePickApplication
 import kr.co.nexters.winepick.constant.TestConstant.A
@@ -24,17 +26,19 @@ import kr.co.nexters.winepick.ui.search.SearchActivity
 import kr.co.nexters.winepick.ui.survey.SurveyActivity
 import kr.co.nexters.winepick.ui.type.TypeDetailActivity
 import kr.co.nexters.winepick.util.dpToPx
+import javax.inject.Inject
 
 /**
  * Kotlin 에서 사용하는 ViewModel 예
  *
  * @since v1.0.0 / 2021.01.28
  */
-class HomeViewModel(
-    private val repo: WinePickRepository,
+@HiltViewModel
+class HomeViewModel @Inject constructor(
     private val surveyRepository: SurveyRepository,
-    private val auth: AuthManager
-) : BaseViewModel() {
+    private val auth: AuthManager,
+    private val winePickRepository: WinePickRepository
+) : BaseViewModel(winePickRepository) {
     private var _likecnt = MutableLiveData<String>()
     var likeCnt : LiveData<String> = _likecnt
 
@@ -90,7 +94,7 @@ class HomeViewModel(
         showLoading()
         if (auth.token != "guest") {
             _isUser.value = true
-            repo.getUser(
+            winePickRepository.getUser(
                 userId = auth.id,
                 accessToken = auth.token,
                 onSuccess = {
@@ -140,7 +144,7 @@ class HomeViewModel(
     }
     fun getUserType(resultId: Int) {
         showLoading()
-        repo.getResult(
+        winePickRepository.getResult(
                 resultId = resultId,
                 onSuccess = {
                     val tempKeyword1 = it.keyword1.split(",")

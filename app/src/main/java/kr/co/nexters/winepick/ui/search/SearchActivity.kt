@@ -3,10 +3,12 @@ package kr.co.nexters.winepick.ui.search
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import kr.co.nexters.winepick.BR
 import kr.co.nexters.winepick.R
@@ -21,20 +23,21 @@ import kr.co.nexters.winepick.ui.component.LikeDialog
 import kr.co.nexters.winepick.ui.detail.WineDetailActivity
 import kr.co.nexters.winepick.ui.login.LoginViewModel
 import kr.co.nexters.winepick.util.*
-import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
+
+
 import timber.log.Timber
+import javax.inject.Inject
 
 /**
  * 검색 화면
  *
  * @since v1.0.0 / 2021.02.06
  */
+@AndroidEntryPoint
 class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_search) {
-    override val viewModel: SearchViewModel by viewModel()
-    private val authManager: AuthManager by inject()
-    private val searchRepository: SearchRepository by inject()
-    private val loginViewModel: LoginViewModel by viewModel()
+    override val viewModel: SearchViewModel by viewModels<SearchViewModel>()
+
+    @Inject lateinit var searchRepository: SearchRepository
 
     private var scrollListener: EndlessScrollListener? = null
 
@@ -44,23 +47,6 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
     private val searchFiltersFromHome: Array<String>
         get() = intent.getStringArrayExtra(Constant.STRING_EXTRA_SEARCH_FILTERS_FROM_HOME)
             ?: arrayOf()
-
-    private val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
-        if (error != null) {
-            Timber.e("로그인 실패 ${error}")
-        } else if (token != null) {
-            //Login Success
-            Timber.d("로그인 성공")
-            authManager.apply {
-                this.token = token.accessToken
-            }
-            UserApiClient.instance.me { user, error ->
-                val kakaoId = user!!.id
-                loginViewModel.addUserInfo(token.accessToken, authManager.testType, kakaoId)
-            }
-            Timber.d("로그인성공 - 토큰 ${authManager.token}")
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

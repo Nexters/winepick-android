@@ -3,15 +3,18 @@ package kr.co.nexters.winepick.util
 import android.app.Activity
 import android.content.SharedPreferences
 import androidx.annotation.VisibleForTesting
+import dagger.Provides
 import kr.co.nexters.winepick.WinePickApplication
 import org.jetbrains.annotations.NotNull
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * SharedPreference object class
  *
  * @since v1.0.0 / 2021.02.03
  */
-class SharedPrefs {
+class SharedPrefs @Inject constructor() {
     private val sharedPreferences: SharedPreferences by lazy {
         WinePickApplication.appContext!!.getSharedPreferences(
             kr.co.nexters.winepick.BuildConfig.APPLICATION_ID,

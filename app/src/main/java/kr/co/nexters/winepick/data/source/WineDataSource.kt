@@ -10,13 +10,14 @@ import kr.co.nexters.winepick.data.model.remote.wine.getWinesResponse
 import kr.co.nexters.winepick.di.send
 import kr.co.nexters.winepick.network.WinePickService
 import java.net.URLDecoder
+import javax.inject.Inject
 
 /**
  * 와인 api 요청 시 사용하는 DataSource
  *
  * @since v1.0.0 / 2021.02.08
  */
-class WineDataSource(private val winePickService: WinePickService) {
+class WineDataSource @Inject constructor(private val winePickService: WinePickService) {
     /** 테스트 모드 flag 값. true 일 시 앱 내 mock 데이터 사용 */
     val isMock = false
 

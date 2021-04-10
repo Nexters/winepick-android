@@ -2,11 +2,14 @@ package kr.co.nexters.winepick.ui.search
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kr.co.nexters.winepick.data.model.local.SearchFilterGroup
 import kr.co.nexters.winepick.data.model.local.SearchFilterItem
 import kr.co.nexters.winepick.data.repository.SearchRepository
+import kr.co.nexters.winepick.data.repository.WinePickRepository
 import kr.co.nexters.winepick.ui.base.BaseViewModel
 import timber.log.Timber
+import javax.inject.Inject
 
 /**
  * 검색 화면 ViewModel
@@ -14,7 +17,11 @@ import timber.log.Timber
  * @author ricky
  * @since v1.0.0 / 2021.02.06
  */
-class SearchFilterViewModel(private val searchRepository: SearchRepository) : BaseViewModel() {
+@HiltViewModel
+class SearchFilterViewModel @Inject constructor(
+    private val searchRepository: SearchRepository,
+    private val winePickRepository: WinePickRepository
+) : BaseViewModel(winePickRepository) {
     /**
      * 필터 화면을 실행 시 맨 처음에 보여지는 필터 아이템 데이터 목록 LiveData
      *

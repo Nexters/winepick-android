@@ -25,6 +25,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
 import kotlin.Unit;
 import kr.co.nexters.winepick.R;
 import kr.co.nexters.winepick.data.constant.Constant;
@@ -42,6 +45,7 @@ import kr.co.nexters.winepick.util.ViewExtKt;
 import timber.log.Timber;
 
 
+@AndroidEntryPoint
 public class SurveyResultActivity extends BaseActivity<ActivitySurveyResultBinding> {
     /**
      * 빈 생성자를 통해 layout ID 를 주입
@@ -50,8 +54,10 @@ public class SurveyResultActivity extends BaseActivity<ActivitySurveyResultBindi
         super(R.layout.activity_survey_result);
     }
 
-    WinePickRepository winePickRepository = org.koin.java.KoinJavaComponent.inject(WinePickRepository.class).getValue();
-    AuthManager authManager = org.koin.java.KoinJavaComponent.inject(AuthManager.class).getValue();
+    @Inject
+    WinePickRepository winePickRepository;
+    @Inject
+    AuthManager authManager;
 
     /**
      * ViewModel 을 사용하지 않으므로 null 리턴

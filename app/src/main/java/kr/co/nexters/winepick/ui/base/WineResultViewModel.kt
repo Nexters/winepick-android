@@ -4,7 +4,9 @@ import android.media.Image
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kr.co.nexters.winepick.data.model.remote.wine.WineResult
+import kr.co.nexters.winepick.data.repository.WinePickRepository
 import timber.log.Timber
+import javax.inject.Inject
 
 /**
  * wineResult 목록을 다루어야 할 시 상속받아야 하는 ViewModel
@@ -12,7 +14,9 @@ import timber.log.Timber
  *
  * @since v1.0.0 / 2021.02.24
  */
-abstract class WineResultViewModel : BaseViewModel() {
+abstract class WineResultViewModel constructor(
+    winePickRepository: WinePickRepository
+) : BaseViewModel(winePickRepository) {
     /** 검색 결과 list */
     protected val _results = MutableLiveData<List<WineResult>>(listOf())
     open val results: LiveData<List<WineResult>> = _results

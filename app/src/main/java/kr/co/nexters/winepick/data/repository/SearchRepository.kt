@@ -10,13 +10,14 @@ import kr.co.nexters.winepick.data.model.local.SearchFilterItem
 import kr.co.nexters.winepick.data.source.SearchDataSource
 import kr.co.nexters.winepick.ui.search.SearchActivity
 import java.util.*
+import javax.inject.Inject
 
 /**
  * 검색화면[SearchActivity] 관련 Repository
  *
  * @since v1.0.0 / 2021.02.10
  */
-class SearchRepository(searchDataSource: SearchDataSource) {
+class SearchRepository @Inject constructor(searchDataSource: SearchDataSource) {
     /** 원본 와인 목록 */
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     val wineInfos: List<String> = searchDataSource.getWineInfos()
