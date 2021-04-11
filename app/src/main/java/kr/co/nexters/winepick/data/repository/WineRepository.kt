@@ -10,13 +10,17 @@ import kr.co.nexters.winepick.data.model.remote.wine.WineResult
 import kr.co.nexters.winepick.data.source.WineDataSource
 import kr.co.nexters.winepick.util.SharedPrefs
 import java.util.*
+import javax.inject.Inject
 
 /**
  * Wine 관련 Repository
  *
  * @since v1.0.0 / 2021.02.04
  */
-class WineRepository(private val wineDataSource: WineDataSource, val sharedPrefs: SharedPrefs) {
+class WineRepository @Inject constructor(
+    private val wineDataSource: WineDataSource,
+    private val sharedPrefs: SharedPrefs
+) {
     /** 최근에 본 와인 목록. 2개만 저장한다. */
     private val _userViewWines: Queue<WineResult> = LinkedList()
     val userViewWines: List<WineResult>

@@ -3,23 +3,23 @@ package kr.co.nexters.winepick.example.kotlin.viewmodel
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 import kr.co.nexters.winepick.BR
 import kr.co.nexters.winepick.R
-import kr.co.nexters.winepick.ui.base.BaseFragment
 import kr.co.nexters.winepick.databinding.FragmentKotlinViewmodelBinding
+import kr.co.nexters.winepick.ui.base.BaseFragment
 
 /**
  * Kotlin 에서 사용하는 일반 프레그먼트 예
  *
  * @since v1.0.0 / 2021.01.28
  */
+@AndroidEntryPoint
 class KotlinViewModelFragment : BaseFragment<FragmentKotlinViewmodelBinding>(
     R.layout.fragment_kotlin_viewmodel
 ) {
-    override val viewModel: KotlinViewModel by lazy {
-        ViewModelProvider(this, viewModelFactory).get(KotlinViewModel::class.java)
-    }
+    override val viewModel: KotlinViewModel by viewModels<KotlinViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

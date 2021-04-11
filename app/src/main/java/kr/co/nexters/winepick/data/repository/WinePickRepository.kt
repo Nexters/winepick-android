@@ -1,6 +1,7 @@
 package kr.co.nexters.winepick.data.repository
 
 
+import android.content.Intent
 import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.WinePickApplication
 import kr.co.nexters.winepick.data.model.AccessTokenData
@@ -10,11 +11,16 @@ import kr.co.nexters.winepick.data.model.remote.user.UserResult
 import kr.co.nexters.winepick.data.model.remote.wine.WineResult
 import kr.co.nexters.winepick.data.response.PersonalityType
 import kr.co.nexters.winepick.data.response.UserData
+import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.network.WinePickService
+import kr.co.nexters.winepick.ui.home.HomeActivity
 import kr.co.nexters.winepick.util.safeEnqueue
 import timber.log.Timber
+import javax.inject.Inject
 
-class WinePickRepository(private val api: WinePickService) {
+class WinePickRepository @Inject constructor(
+    private val api: WinePickService, private val authManager: AuthManager
+) {
     val dictionaries: MutableMap<Int, Array<String>> = mutableMapOf()
 
     init {
@@ -152,4 +158,36 @@ class WinePickRepository(private val api: WinePickService) {
         )
     }
 
+    fun updateUser(
+        token: String,
+        personalityType: String?,
+        userId: Long,
+        successAction: (() -> Unit)? = null,
+        failAction: (() -> Unit)? = null
+    ) {
+        postUser(
+            data = AccessTokenData(token, personalityType!!, userId),
+            onSuccess = {
+                authManager.token = it.accessToken.toString()
+                authManager.autoLogin = true
+                authManager.id = it.id!!
+                authManager.testType = it.personalityType!!
+                successAction?.let { it() }
+
+                Intent(WinePickApplication.appContext, HomeActivity::class.java).apply {
+                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                }.run {
+                    WinePickApplication.getGlobalApplicationContext().startActivity(this)
+                }
+            },
+            onFailure = {
+                authManager.testType = "N"
+                failAction?.let { it() }
+
+                // _toastMeesageText.value = WinePickApplication.getGlobalApplicationContext()
+                //     .resources.getString(R.string.api_error)
+            }
+        )
+    }
 }

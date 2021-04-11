@@ -2,7 +2,10 @@ package kr.co.nexters.winepick.example.kotlin.viewmodel
 
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.lifecycle.ViewModelProvider
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.HiltAndroidApp
 import kr.co.nexters.winepick.BR
 import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.ui.base.BaseActivity
@@ -14,12 +17,11 @@ import kr.co.nexters.winepick.databinding.ActivityKotlinViewmodelBinding
  *
  * @since v1.0.0 / 2021.01.28
  */
+@AndroidEntryPoint
 class KotlinViewModelActivity : BaseActivity<ActivityKotlinViewmodelBinding>(
     R.layout.activity_kotlin_viewmodel
 ) {
-    override val viewModel: KotlinViewModel by lazy {
-        ViewModelProvider(this, viewModelFactory).get(KotlinViewModel::class.java)
-    }
+    override val viewModel: KotlinViewModel by viewModels<KotlinViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

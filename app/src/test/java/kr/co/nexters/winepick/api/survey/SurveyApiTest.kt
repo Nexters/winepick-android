@@ -1,12 +1,11 @@
 package kr.co.nexters.winepick.api.survey
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.runBlocking
 import kr.co.nexters.winepick.base.AndroidBaseTest
 import kr.co.nexters.winepick.data.constant.Constant
 import kr.co.nexters.winepick.data.source.SurveyDataSource
 import org.junit.Assert
-import org.junit.Rule
 import org.junit.Test
 
 /**
@@ -14,11 +13,8 @@ import org.junit.Test
  *
  * @since v1.0.0 / 2021.03.18
  */
+@HiltAndroidTest
 class SurveyApiTest : AndroidBaseTest() {
-    @JvmField
-    @Rule
-    val rule = InstantTaskExecutorRule()
-
     /** [SurveyDataSource.getSurvey] 테스트 */
     @Test
     fun getSurveyTest() = runBlocking {

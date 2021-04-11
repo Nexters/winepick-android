@@ -1,5 +1,6 @@
 package kr.co.nexters.winepick.api
 
+import dagger.hilt.android.testing.HiltAndroidTest
 import io.reactivex.rxjava3.observers.DisposableSingleObserver
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.JsonPrimitive
@@ -19,6 +20,7 @@ import java.net.URL
  *
  * @since v1.0.0 / 2021.02.04
  */
+@HiltAndroidTest
 class Retrofit2Test: AndroidBaseTest() {
     @Test
     fun retrofit2CoroutineTest() = runBlocking {

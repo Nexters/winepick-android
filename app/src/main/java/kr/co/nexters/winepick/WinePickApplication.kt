@@ -5,10 +5,6 @@ import android.content.Context
 import com.kakao.auth.*
 import com.kakao.sdk.common.KakaoSdk
 import dagger.hilt.android.HiltAndroidApp
-import kr.co.nexters.winepick.WinePickApplication.Companion.getGlobalApplicationContext
-import kr.co.nexters.winepick.di.moduleList
-import org.koin.android.ext.koin.androidContext
-import org.koin.core.context.startKoin
 import timber.log.Timber
 
 /**
@@ -18,6 +14,7 @@ import timber.log.Timber
  * @since v1.0.0 / 2021.01.28
  */
 
+@HiltAndroidApp
 class WinePickApplication : Application() {
     companion object {
         var appContext : Context? = null
@@ -32,14 +29,6 @@ class WinePickApplication : Application() {
         appContext = this
         KakaoSdk.init(this,getString(R.string.kakao_app_key))
         initTimber()
-        startKoinModules()
-    }
-
-    private fun startKoinModules() {
-        startKoin {
-            androidContext(this@WinePickApplication)
-            modules(moduleList)
-        }
     }
 
     private fun initTimber() {

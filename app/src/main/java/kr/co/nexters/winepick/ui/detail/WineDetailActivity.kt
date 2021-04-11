@@ -3,11 +3,13 @@ package kr.co.nexters.winepick.ui.detail
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
+import dagger.hilt.android.AndroidEntryPoint
 import kr.co.nexters.winepick.BR
 import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.data.constant.Constant
@@ -23,37 +25,18 @@ import kr.co.nexters.winepick.util.HorizontalItemDecorator
 import kr.co.nexters.winepick.util.VerticalItemDecorator
 import kr.co.nexters.winepick.util.drawCancelToast
 import kr.co.nexters.winepick.util.setOnSingleClickListener
-import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class WineDetailActivity : BaseActivity<ActivityWineDetailBinding>(R.layout.activity_wine_detail) {
-    override val viewModel: WineDetailViewModel by viewModel()
+    override val viewModel: WineDetailViewModel by viewModels<WineDetailViewModel>()
     private val wineFoodAdapter: WineFoodAdapter by lazy {
         WineFoodAdapter(WineListType.FOOD, viewModel)
     }
     private val wineValueAdapter: WineValueAdapter by lazy { WineValueAdapter(viewModel) }
     private val wineFeatureAdapter: WineFoodAdapter by lazy {
         WineFoodAdapter(WineListType.FEATURE, viewModel)
-    }
-    private val authManager: AuthManager by inject()
-    private val loginViewModel: LoginViewModel by viewModel()
-
-    private val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
-        if (error != null) {
-            Timber.e("로그인 실패 ${error}")
-        } else if (token != null) {
-            //Login Success
-            Timber.d("로그인 성공")
-            authManager.apply {
-                this.token = token.accessToken
-            }
-            UserApiClient.instance.me { user, error ->
-                val kakaoId = user!!.id
-                loginViewModel.addUserInfo(token.accessToken, authManager.testType, kakaoId)
-            }
-            Timber.d("로그인성공 - 토큰 ${authManager.token}")
-        }
     }
 
     /** 이전 화면에서부터 받은 와인 아이템[WineResult] */

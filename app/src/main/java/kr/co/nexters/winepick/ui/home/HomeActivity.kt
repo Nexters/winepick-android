@@ -2,11 +2,13 @@ package kr.co.nexters.winepick.ui.home
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
+import dagger.hilt.android.AndroidEntryPoint
 import kr.co.nexters.winepick.BR
 import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.WinePickApplication
@@ -18,32 +20,12 @@ import kr.co.nexters.winepick.ui.component.ConfirmDialog
 import kr.co.nexters.winepick.ui.login.LoginViewModel
 import kr.co.nexters.winepick.ui.survey.SurveyActivity
 import kr.co.nexters.winepick.util.dpToPx
-import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
-    override val viewModel: HomeViewModel by viewModel<HomeViewModel>()
-    private val authManager: AuthManager by inject()
-    private val loginViewModel: LoginViewModel by viewModel()
-
-    private val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
-        if (error != null) {
-            Timber.e("로그인 실패 ${error}")
-        } else if (token != null) {
-            //Login Success
-            Timber.d("로그인 성공")
-            authManager.apply {
-                this.token = token.accessToken
-            }
-            UserApiClient.instance.me { user, error ->
-                val kakaoId = user!!.id
-                loginViewModel.addUserInfo(token.accessToken, authManager.testType, kakaoId)
-            }
-            Timber.d("로그인성공 - 토큰 ${authManager.token}")
-        }
-    }
+    override val viewModel: HomeViewModel by viewModels<HomeViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

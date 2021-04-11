@@ -9,11 +9,13 @@ import kr.co.nexters.winepick.constant.AuthConstant.TEST
 import kr.co.nexters.winepick.constant.AuthConstant.TOKEN_KEY
 import kr.co.nexters.winepick.constant.AuthConstant.TYPE_NAME
 import kr.co.nexters.winepick.util.SharedPrefs
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  *  Koin을 사용한 AuthModule
  */
-class AuthManager(private val sharedPrefs: SharedPrefs) {
+class AuthManager @Inject constructor(val sharedPrefs: SharedPrefs) {
     var token: String
         get() {
             return sharedPrefs[TOKEN_KEY, ""] ?: ""
@@ -55,7 +57,7 @@ class AuthManager(private val sharedPrefs: SharedPrefs) {
 
     var typeName: String
         get() {
-            return sharedPrefs[TYPE_NAME,""] ?: ""
+            return sharedPrefs[TYPE_NAME, ""] ?: ""
         }
         set(value) {
             sharedPrefs[TYPE_NAME] = value

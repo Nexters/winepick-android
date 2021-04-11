@@ -1,5 +1,6 @@
 package kr.co.nexters.winepick.data.repository
 
+import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 import kr.co.nexters.winepick.base.AndroidBaseTest
@@ -14,6 +15,7 @@ import org.junit.Test
  *
  * @since v1.0.0 / 2021.02.24
  */
+@HiltAndroidTest
 class WineRepositoryTest : AndroidBaseTest() {
     private val userViewWines: List<WineResult>
         get() = wineRepository.userViewWines

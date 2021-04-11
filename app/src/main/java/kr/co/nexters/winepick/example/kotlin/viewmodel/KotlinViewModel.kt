@@ -2,14 +2,20 @@ package kr.co.nexters.winepick.example.kotlin.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kr.co.nexters.winepick.data.repository.WinePickRepository
 import kr.co.nexters.winepick.ui.base.BaseViewModel
+import javax.inject.Inject
 
 /**
  * Kotlin 에서 사용하는 ViewModel 예
  *
  * @since v1.0.0 / 2021.01.28
  */
-class KotlinViewModel : BaseViewModel() {
+@HiltViewModel
+class KotlinViewModel @Inject constructor(
+    private val winePickRepository: WinePickRepository
+) : BaseViewModel(winePickRepository) {
     private var _title = MutableLiveData<String>()
     var title: LiveData<String> = _title
 

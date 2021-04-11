@@ -3,10 +3,12 @@ package kr.co.nexters.winepick.ui.type
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
+import dagger.hilt.android.AndroidEntryPoint
 import kr.co.nexters.winepick.BR
 import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.WinePickApplication
@@ -22,37 +24,16 @@ import kr.co.nexters.winepick.ui.detail.WineDetailActivity
 import kr.co.nexters.winepick.ui.login.LoginViewModel
 import kr.co.nexters.winepick.ui.survey.SurveyActivity
 import kr.co.nexters.winepick.util.VerticalItemDecorator
-import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class TypeDetailActivity : BaseActivity<ActivityTypeDetailBinding>(
     R.layout.activity_type_detail
 ) {
-    override val viewModel : TypeDetailModel by viewModel<TypeDetailModel>()
-    private val authManager : AuthManager by inject()
+    override val viewModel : TypeDetailModel by viewModels<TypeDetailModel>()
     private val searchRecycler : RecentSearchAdapter by lazy { RecentSearchAdapter() }
-    private val loginViewModel : LoginViewModel by viewModel()
-    private val wineRepository : WineRepository by inject()
-
-    private val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
-        if (error != null) {
-            Timber.e("로그인 실패 ${error}")
-        }
-        else if (token != null) {
-            //Login Success
-            Timber.d("로그인 성공")
-            authManager.apply {
-                this.token = token.accessToken
-            }
-            UserApiClient.instance.me { user, error ->
-                val kakaoId = user!!.id
-                loginViewModel.addUserInfo(token.accessToken,authManager.testType, kakaoId)
-            }
-            Timber.d("로그인성공 - 토큰 ${authManager.token}")
-            onResume()
-        }
-    }
+    @Inject lateinit var wineRepository : WineRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

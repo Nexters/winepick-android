@@ -97,9 +97,6 @@
             android:name=".example.kotlin.normal.KotlinDefaultActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".example.java.viewmodel.JavaViewModelActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".example.kotlin.viewmodel.KotlinViewModelActivity"
             android:screenOrientation="portrait" />
         <activity

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import dagger.hilt.android.AndroidEntryPoint
 import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.data.constant.Constant
 import kr.co.nexters.winepick.databinding.ActivityWebViewBinding
@@ -16,6 +17,7 @@ import timber.log.Timber
  *
  * @since v1.0.0 / 2021.01.28
  */
+@AndroidEntryPoint
 class WebViewActivity : BaseActivity<ActivityWebViewBinding>(
     R.layout.activity_web_view
 ) {

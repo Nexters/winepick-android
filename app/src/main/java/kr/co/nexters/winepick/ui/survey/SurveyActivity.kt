@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.annotation.IdRes
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.WinePickApplication
@@ -25,15 +26,20 @@ import kr.co.nexters.winepick.util.SharedPrefs
 import kr.co.nexters.winepick.util.dpToPx
 import kr.co.nexters.winepick.util.setOnSingleClickListener
 import kr.co.nexters.winepick.util.toast
-import org.koin.android.ext.android.inject
 
+import javax.inject.Inject
+
+@AndroidEntryPoint
 class SurveyActivity : BaseActivity<ActivitySurveyBinding>(R.layout.activity_survey) {
     override val viewModel: BaseViewModel? = null
 
-    private val surveyRepository: SurveyRepository by inject()
-    private val winePickRepository: WinePickRepository by inject()
-    private val authManager: AuthManager by inject()
-    private val sharedPrefs: SharedPrefs by inject()
+    @Inject
+    lateinit var sharedPrefs: SharedPrefs
+
+    @Inject
+    lateinit var surveyRepository: SurveyRepository
+    @Inject
+    lateinit var winePickRepository: WinePickRepository
 
     /** 초기화 된 건지에 대한 유무 */
     val surveyReset: Boolean
