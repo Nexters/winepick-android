@@ -23,6 +23,11 @@ class WinePickApplication : Application() {
             checkNotNull(appContext) { "This Application does not inherit com.kakao.GlobalApplication" }
             return appContext!!
         }
+
+        fun getGlobalAppApplication(): WinePickApplication {
+            checkNotNull(appContext) { "This Application does not inherit com.kakao.GlobalApplication" }
+            return appContext!! as WinePickApplication
+        }
     }
     override fun onCreate() {
         super.onCreate()

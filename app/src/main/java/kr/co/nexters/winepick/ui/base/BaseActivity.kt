@@ -50,12 +50,12 @@ abstract class BaseActivity<B : ViewDataBinding>(
      */
     internal var deferred = CompletableDeferred<ActivityResult>()
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.AndroidViewModelFactory
     abstract val viewModel: BaseViewModel?
-    val viewModelFactory: ViewModelProvider.AndroidViewModelFactory by lazy {
-        ViewModelProvider.AndroidViewModelFactory.getInstance(application)
-    }
 
-    @Inject lateinit var authManager : AuthManager
+    @Inject
+    lateinit var authManager: AuthManager
 
     internal val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
         if (error != null) {

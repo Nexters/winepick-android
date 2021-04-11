@@ -1,9 +1,12 @@
 package kr.co.nexters.winepick.di
 
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
 import kr.co.nexters.winepick.BuildConfig
@@ -14,6 +17,7 @@ import kr.co.nexters.winepick.data.source.SurveyDataSource
 import kr.co.nexters.winepick.data.source.WineDataSource
 import kr.co.nexters.winepick.network.TestService
 import kr.co.nexters.winepick.network.WinePickService
+import kr.co.nexters.winepick.ui.base.BaseViewModel
 import kr.co.nexters.winepick.util.SharedPrefs
 import okhttp3.Cache
 import okhttp3.Interceptor
@@ -53,6 +57,29 @@ suspend fun <T> Call<T>.send(): Response<T> = suspendCoroutine {
             it.resumeWithException(throwable)
         }
     })
+}
+
+@Module
+@InstallIn(ActivityComponent::class)
+class ActivityModule {
+    @Provides
+    fun provideViewModelFactory(
+        winePickRepository: WinePickRepository
+    ): ViewModelProvider.AndroidViewModelFactory = ViewModelFactoryImpl(
+        WinePickApplication.getGlobalAppApplication(), winePickRepository
+    )
+
+    /**
+     * ViewModelFactory 구현체 (impl) 를 만드는 클래스
+     */
+    class ViewModelFactoryImpl(
+        val application: WinePickApplication,
+        val winePickRepository: WinePickRepository
+    ) : ViewModelProvider.AndroidViewModelFactory(application) {
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            return BaseViewModel(winePickRepository) as T
+        }
+    }
 }
 
 @Module
