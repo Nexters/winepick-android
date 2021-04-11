@@ -1,5 +1,6 @@
 package kr.co.nexters.winepick.data
 
+import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.runBlocking
 import kr.co.nexters.winepick.base.AndroidBaseTest
 import kr.co.nexters.winepick.util.SharedPrefs
@@ -12,6 +13,7 @@ import org.junit.Test
  *
  * @since v1.0.0 / 2021.02.03
  */
+@HiltAndroidTest
 class SharedPrefsTest : AndroidBaseTest() {
     companion object {
         val stringKey = "StringKey"

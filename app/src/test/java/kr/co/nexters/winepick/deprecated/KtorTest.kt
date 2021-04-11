@@ -1,5 +1,6 @@
 package kr.co.nexters.winepick.deprecated
 
+import dagger.hilt.android.testing.HiltAndroidTest
 import io.ktor.client.request.*
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.JsonPrimitive
@@ -23,6 +24,7 @@ import java.net.URL
  *
  * @since v1.0.0 / 2021.02.02
  */
+@HiltAndroidTest
 class KtorTest : AndroidBaseTest() {
     companion object {
         val httpClient = createHttpClient()

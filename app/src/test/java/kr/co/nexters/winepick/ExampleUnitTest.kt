@@ -1,6 +1,7 @@
 package kr.co.nexters.winepick
 
 import androidx.test.core.app.ActivityScenario
+import dagger.hilt.android.testing.HiltAndroidTest
 import kr.co.nexters.winepick.base.AndroidBaseTest
 import kr.co.nexters.winepick.example.kotlin.viewmodel.KotlinViewModelActivity
 import org.junit.Assert
@@ -10,6 +11,7 @@ import org.junit.Test
 /**
  * example 패키지 내에 있는 activity 를 테스트한다.
  */
+@HiltAndroidTest
 class ExampleUnitTest : AndroidBaseTest() {
     @Test
     fun kotlinViewModelActivityTitleTest() {

@@ -182,6 +182,12 @@ object AuthModule {
 object RepositoryModule {
     @Provides
     @Singleton
+    fun provideTestRepository(testService: TestService): TestRepository {
+        return TestRepository(testService)
+    }
+
+    @Provides
+    @Singleton
     fun provideSearchRepository(searchDataSource: SearchDataSource): SearchRepository {
         return SearchRepository(searchDataSource)
     }
