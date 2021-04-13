@@ -11,12 +11,12 @@
     <string name="acidity_detail">신맛의 정도를 뜻해요.\n너무 높으면 날카롭다는 느낌을 받아요.</string>
     <string name="body_detail">높을수록 묵직한 느낌이 들어요.\n와인 점도에는 알코올이 영향을 줍니다.</string>
     <string name="tannin_detail">탄닌은 포도의 껍질에서 나오는\n성분이예요. 높을수록 떫은맛이 강하죠.</string>
-    <string name="wine_feature">%s 특징</string>
+    <string name="wine_feature">%s 종류</string>
     <string name="wine_feature_detail">%1s는 %2s에 어울려요.</string>
     <string name="red_wine">Red Wine</string>
     <string name="white_wine">White Wine</string>
     <string name="sparkling_wine">Sparkling Wine</string>
-    <string name="wine_value_title">와인의 4가지 기준으로\n원하는 맛을 찾아보세요.</string>
+    <string name="wine_value_title">%s 특징</string>
     <string name="wine_value_sub_title">%1s의 당도와 바디감을 알려드릴게요.</string>
     <string name="wine_food_detail">%s와 잘 어울려요.</string>
     <string name="wine_food_title">함께하면\n더 맛있는 요리 %d</string>

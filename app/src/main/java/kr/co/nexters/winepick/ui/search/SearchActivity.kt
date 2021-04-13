@@ -115,7 +115,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
                 }
                 SearchAction.QUERY_SEARCH -> binding.etQuery.clearFocus()
                 SearchAction.EDIT_FILTER -> {
-                    toast("필터 변경 화면으로 이동")
+                    // toast("필터 변경 화면으로 이동")
                     binding.etQuery.clearFocus()
 
                     uiScope.launch {
@@ -131,7 +131,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
 
                         if (needToUpdate) {
                             recyclerViewClear()
-                            toast("검색 화면 목록 갱신 시작")
+                            // toast("검색 화면 목록 갱신 시작")
                             viewModel.querySearchClick(page = 0)
                         }
                     }
