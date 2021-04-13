@@ -11,13 +11,14 @@ import kr.co.nexters.winepick.data.response.DummyMovieResponse
 import kr.co.nexters.winepick.di.send
 import kr.co.nexters.winepick.network.TestService
 import okhttp3.RequestBody
+import javax.inject.Inject
 
 /**
  * 테스트 Repository
  *
  * @since v1.0.0 / 2021.02.04
  */
-class TestRepository(private val testService: TestService) {
+class TestRepository @Inject constructor(private val testService: TestService) {
     suspend fun getMovies(orderType: Int) = withContext(Dispatchers.IO) {
         // dataSource 가 필요한 경우 옮긴다.
         val response = testService.getMovies(orderType).send()

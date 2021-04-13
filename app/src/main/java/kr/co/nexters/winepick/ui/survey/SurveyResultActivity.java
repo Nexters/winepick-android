@@ -25,6 +25,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
 import kotlin.Unit;
 import kr.co.nexters.winepick.R;
 import kr.co.nexters.winepick.data.constant.Constant;
@@ -42,6 +45,7 @@ import kr.co.nexters.winepick.util.ViewExtKt;
 import timber.log.Timber;
 
 
+@AndroidEntryPoint
 public class SurveyResultActivity extends BaseActivity<ActivitySurveyResultBinding> {
     /**
      * 빈 생성자를 통해 layout ID 를 주입
@@ -50,8 +54,10 @@ public class SurveyResultActivity extends BaseActivity<ActivitySurveyResultBindi
         super(R.layout.activity_survey_result);
     }
 
-    WinePickRepository winePickRepository = org.koin.java.KoinJavaComponent.inject(WinePickRepository.class).getValue();
-    AuthManager authManager = org.koin.java.KoinJavaComponent.inject(AuthManager.class).getValue();
+    @Inject
+    WinePickRepository winePickRepository;
+    @Inject
+    AuthManager authManager;
 
     /**
      * ViewModel 을 사용하지 않으므로 null 리턴
@@ -151,7 +157,7 @@ public class SurveyResultActivity extends BaseActivity<ActivitySurveyResultBindi
             // Intent intent = new Intent(this, WineDetailActivity.class);
             // intent.putExtra("wineData", wineResult);
             // startActivity(intent);
-             return Unit.INSTANCE;
+            return Unit.INSTANCE;
         });
 
         // 나와 잘 맞는 타입 설정
@@ -164,7 +170,8 @@ public class SurveyResultActivity extends BaseActivity<ActivitySurveyResultBindi
         });
 
         // 와인 추천 키워드1 설정
-        binding.recommendMoveText1.setText(personalityType.getKeyword1());
+        String[] keyword1s = personalityType.getKeyword1().split(",");
+        if (keyword1s.length != 0) binding.recommendMoveText1.setText(keyword1s[0]);
         ViewExtKt.setOnSingleClickListener(binding.recommendMoveButtonLinear1, () -> {
             Intent intent = new Intent(this, SearchActivity.class);
             intent.putExtra(Constant.STRING_EXTRA_SEARCH_FILTERS, personalityType.getKeyword1());
@@ -172,7 +179,8 @@ public class SurveyResultActivity extends BaseActivity<ActivitySurveyResultBindi
             return Unit.INSTANCE;
         });
         // 와인 추천 키워드2 설정
-        binding.recommendMoveText2.setText(personalityType.getKeyword2());
+        String[] keyword2s = personalityType.getKeyword2().split(",");
+        if (keyword2s.length != 0) binding.recommendMoveText2.setText(keyword2s[0]);
         ViewExtKt.setOnSingleClickListener(binding.recommendMoveButtonLinear2, () -> {
             Intent intent = new Intent(this, SearchActivity.class);
             intent.putExtra(Constant.STRING_EXTRA_SEARCH_FILTERS, personalityType.getKeyword2());
@@ -188,7 +196,23 @@ public class SurveyResultActivity extends BaseActivity<ActivitySurveyResultBindi
 
         // 공유버튼 클릭 리스너
         ViewExtKt.setOnSingleClickListener(binding.shareButton, () -> {
-            shareBtnClick(personalityType);
+            ConfirmDialog dialog = new ConfirmDialog(
+                    DisplayExtKt.dpToPx(241),
+                    DisplayExtKt.dpToPx(202),
+                    "카카오톡 공유로 이동합니다",
+                    "결과를 카카오톡에서\n친구에게 공유해보세요!",
+                    "취소",
+                    null,
+                    "이동하기",
+                    ((dialogFragment) -> {
+                        shareBtnClick(personalityType);
+                        dialogFragment.dismiss();
+                        return Unit.INSTANCE;
+                    }),
+                    false
+            );
+            dialog.show(this.getSupportFragmentManager(), "KakaoShare");
+
             return Unit.INSTANCE;
         });
     }
@@ -199,9 +223,9 @@ public class SurveyResultActivity extends BaseActivity<ActivitySurveyResultBindi
                 DisplayExtKt.dpToPx(202),
                 "재검사 하시겠습니까?",
                 "재검사시,\n이전 결과는 삭제됩니다.",
-                "아니요",
+                "취소",
                 null,
-                "예",
+                "검사하기",
                 ((dialogFragment) -> {
                     authManager.setTestType("N");
                     Intent intent = new Intent(this, SurveyActivity.class);

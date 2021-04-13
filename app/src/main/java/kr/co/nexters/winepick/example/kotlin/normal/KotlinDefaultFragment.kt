@@ -3,6 +3,7 @@ package kr.co.nexters.winepick.example.kotlin.normal
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import dagger.hilt.android.AndroidEntryPoint
 import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.ui.base.BaseFragment
 import kr.co.nexters.winepick.ui.base.BaseViewModel
@@ -13,6 +14,7 @@ import kr.co.nexters.winepick.databinding.FragmentKotlinDefaultBinding
  *
  * @since v1.0.0 / 2021.01.28
  */
+@AndroidEntryPoint
 class KotlinDefaultFragment : BaseFragment<FragmentKotlinDefaultBinding>(
     R.layout.fragment_kotlin_default
 ) {

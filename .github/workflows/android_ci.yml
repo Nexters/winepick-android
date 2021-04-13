@@ -111,6 +111,8 @@ jobs:
         run: echo $TIME $F_TIME
         if: always()
 
+      # CI 3. 압축 파일 해독
+      # [Github action에 .gitignore 파일 포함하기](https://sys09270883.github.io/ci/cd/78/)
       # CI 3-1. kakao_app_key gpg 해독
       - name: CI 3-1. Decrypt kakao_app_key
         run: gpg --quiet --batch --yes --always-trust --decrypt --passphrase="$KAKAO_APP_KEY_TAR_PWD" --output kakao_app_key.tar kakao_app_key.tar.gpg
@@ -121,6 +123,17 @@ jobs:
       # CI 3-2. kakao_app_key.tar 압축 풀기 (지정되었던 경로로 자동으로 파일이 만들어짐)
       - name: CI 3-2. kakao_app_key.tar 압축 풀기
         run: tar xvf kakao_app_key.tar
+
+      # CI 3-3. google-service.json gpg 해독
+      - name: CI 3-3. Decrypt google-service.json
+        run: gpg --quiet --batch --yes --always-trust --decrypt --passphrase="$GOOGLE_JSON_KEY_TAR_PWD" --output services.tar services.tar.gpg
+
+        env:
+          GOOGLE_JSON_KEY_TAR_PWD: ${{ secrets.KAKAO_APP_KEY_TAR_PWD }}
+
+      # CI 3-4. services.tar 압축 풀기 (지정되었던 경로로 자동으로 파일이 만들어짐)
+      - name: CI 3-4. services.tar 압축 풀기
+        run: tar xvf services.tar
 
       # CI 4. 의존성 라이브러리 다운로드
       - name: CI 4. 의존성 라이브러리 다운로드

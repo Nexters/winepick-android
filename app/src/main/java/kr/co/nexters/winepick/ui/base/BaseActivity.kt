@@ -8,9 +8,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
+import com.kakao.sdk.auth.model.OAuthToken
+import com.kakao.sdk.user.UserApiClient
 import kotlinx.coroutines.*
+import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.component.LoadingAnimation
 import timber.log.Timber
+import javax.inject.Inject
 
 /**
  * BaseActivity
@@ -46,9 +50,28 @@ abstract class BaseActivity<B : ViewDataBinding>(
      */
     internal var deferred = CompletableDeferred<ActivityResult>()
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.AndroidViewModelFactory
     abstract val viewModel: BaseViewModel?
-    val viewModelFactory: ViewModelProvider.AndroidViewModelFactory by lazy {
-        ViewModelProvider.AndroidViewModelFactory.getInstance(application)
+
+    @Inject
+    lateinit var authManager: AuthManager
+
+    internal val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
+        if (error != null) {
+            Timber.e("로그인 실패 ${error}")
+        } else if (token != null) {
+            //Login Success
+            Timber.d("로그인 성공")
+            authManager.apply {
+                this.token = token.accessToken
+            }
+            UserApiClient.instance.me { user, error ->
+                val kakaoId = user!!.id
+                viewModel?.addUserInfo(token.accessToken, authManager.testType, kakaoId)
+            }
+            Timber.d("로그인성공 - 토큰 ${authManager.token}")
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

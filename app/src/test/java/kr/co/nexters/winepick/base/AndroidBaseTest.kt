@@ -1,52 +1,68 @@
 package kr.co.nexters.winepick.base
 
-import android.app.Application
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.core.app.ApplicationProvider
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.kakao.auth.KakaoSDK
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.HiltTestApplication
 import io.mockk.every
 import io.mockk.mockkStatic
 import io.mockk.unmockkStatic
 import kr.co.nexters.winepick.WinePickApplication
-import kr.co.nexters.winepick.data.repository.SearchRepository
-import kr.co.nexters.winepick.data.repository.SurveyRepository
-import kr.co.nexters.winepick.data.repository.TestRepository
-import kr.co.nexters.winepick.data.repository.WineRepository
+import kr.co.nexters.winepick.data.repository.*
 import kr.co.nexters.winepick.data.source.WineDataSource
-import kr.co.nexters.winepick.di.moduleList
 import kr.co.nexters.winepick.util.SharedPrefs
 import org.junit.After
 import org.junit.Before
+import org.junit.Rule
 import org.junit.runner.RunWith
-import org.koin.core.context.startKoin
-import org.koin.core.context.stopKoin
-import org.koin.test.KoinTest
-import org.koin.test.inject
+import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
+import javax.inject.Inject
 
 /**
  * Android 를 base 로 하는 테스트 클래스
  *
  * @since v1.0.0 / 2021.02.08
  */
-@RunWith(AndroidJUnit4::class)
-@Config(application = Application::class)
-abstract class AndroidBaseTest : KoinTest {
-    val testRepository: TestRepository by inject()
-    val searchRepository: SearchRepository by inject()
-    val wineRepository: WineRepository by inject()
-    val surveyRepository: SurveyRepository by inject()
+@RunWith(RobolectricTestRunner::class)
+@Config(application = HiltTestApplication::class)
+@HiltAndroidTest
+abstract class AndroidBaseTest {
+    @Rule
+    @JvmField
+    var hiltRule = HiltAndroidRule(this)
 
-    val wineDataSource: WineDataSource by inject()
+    @Rule
+    @JvmField
+    val liveDataRule = InstantTaskExecutorRule()
 
-    val sharedPrefs: SharedPrefs by inject()
+    @Inject
+    lateinit var testRepository: TestRepository
 
-    private val mockModule = moduleList
+    @Inject
+    lateinit var searchRepository: SearchRepository
+
+    @Inject
+    lateinit var wineRepository: WineRepository
+
+    @Inject
+    lateinit var winePickRepository: WinePickRepository
+
+    @Inject
+    lateinit var surveyRepository: SurveyRepository
+
+    @Inject
+    lateinit var wineDataSource: WineDataSource
+
+    @Inject
+    lateinit var sharedPrefs: SharedPrefs
 
     @Before
     fun setupAndroidBase() {
         WinePickApplication.appContext = ApplicationProvider.getApplicationContext()
-        startKoin { modules(mockModule) }
+        hiltRule.inject()
 
         println("${this::class.java.canonicalName} mockking start")
         mockkStatic(KakaoSDK::class)
@@ -58,6 +74,5 @@ abstract class AndroidBaseTest : KoinTest {
     @After
     fun tearDownAndroidBase() {
         unmockkStatic(KakaoSDK::class)
-        stopKoin()
     }
 }

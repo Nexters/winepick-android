@@ -9,6 +9,8 @@ import android.widget.Button
 import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isInvisible
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.BindingAdapter
@@ -21,6 +23,7 @@ import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.ui.survey.SurveyFragment
 import kr.co.nexters.winepick.util.ui.OnSingleClickListener
 import org.jetbrains.annotations.NotNull
+
 
 fun View.setVisible() {
     this.visibility = View.VISIBLE
@@ -71,6 +74,12 @@ fun View.hideKeyboard() {
     imm?.hideSoftInputFromWindow(windowToken, 0)
 }
 
+/** 일반 뷰에서 키보드 보이기 */
+fun View.showKeyboard() {
+    val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+    imm?.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
+}
+
 @BindingAdapter(
     value = ["beforeTextChanged", "onTextChanged", "onAfterTextChanged"],
     requireAll = false
@@ -98,6 +107,12 @@ fun View.setSelected(newIsSelected: Boolean) {
 @BindingAdapter("imageResource")
 fun setImageResource(imageView: ImageView, resource: Int) {
     imageView.setImageResource(resource)
+}
+
+@BindingAdapter("imageDrawableResource")
+fun setImageDrawableResource(imageView: ImageView, resource: Int) {
+    val drawable = ResourcesCompat.getDrawable(imageView.context.resources, resource, null)
+    imageView.setImageDrawable(drawable)
 }
 
 /**

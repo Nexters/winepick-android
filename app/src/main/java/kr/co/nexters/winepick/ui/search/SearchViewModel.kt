@@ -5,6 +5,7 @@ import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.subjects.PublishSubject
 import kotlinx.coroutines.launch
 import kr.co.nexters.winepick.data.model.LikeWine
@@ -17,6 +18,7 @@ import kr.co.nexters.winepick.data.repository.WineRepository
 import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.WineResultViewModel
 import timber.log.Timber
+import javax.inject.Inject
 
 /**
  * 검색 화면 ViewModel
@@ -24,10 +26,11 @@ import timber.log.Timber
  * @author ricky
  * @since v1.0.0 / 2021.02.06
  */
-class SearchViewModel(
+@HiltViewModel
+class SearchViewModel @Inject constructor(
     private val searchRepository: SearchRepository, private val wineRepository: WineRepository,
     private val winePickRepository: WinePickRepository, private val authManager: AuthManager
-) : WineResultViewModel() {
+) : WineResultViewModel(winePickRepository) {
     val tag = this::class.java.canonicalName
 
     /** 검색 창 입력 내용 */
@@ -74,6 +77,9 @@ class SearchViewModel(
     private val _searchResultType = MutableLiveData<SearchType>()
     val searchResultType: LiveData<SearchType> = _searchResultType
 
+    private var _loginWarningDlg : MutableLiveData<Boolean> = MutableLiveData()
+    val loginWarningDlg : LiveData<Boolean> = _loginWarningDlg
+
     init {
         _searchAction.onNext(SearchAction.NONE)
     }
@@ -82,6 +88,10 @@ class SearchViewModel(
         super.onResume()
         // 도수의 경우 2개로 인식되므로 -1 처리를 해준다.
         _filterNum.value = searchRepository.userSearchFilterItems.filter { it.selected }.size - 1
+    }
+
+    fun initEmptyAction(){
+        _searchFrontPage.value = SearchFront.RECOMMEND
     }
 
     fun prevDataClear() {
@@ -289,6 +299,8 @@ class SearchViewModel(
             } else {
                 addLike(newWineResult)
             }
+        } else {
+            _loginWarningDlg.value = true
         }
     }
 

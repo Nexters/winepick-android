@@ -1,5 +1,6 @@
 package kr.co.nexters.winepick.data.repository
 
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.decodeFromString
@@ -9,10 +10,11 @@ import kr.co.nexters.winepick.data.constant.Constant
 import kr.co.nexters.winepick.data.model.*
 import kr.co.nexters.winepick.data.source.SurveyDataSource
 import kr.co.nexters.winepick.util.SharedPrefs
+import javax.inject.Inject
 
-class SurveyRepository(
+class SurveyRepository @Inject constructor(
     private val surveyDataSource: SurveyDataSource,
-    private val sharedPrefs: SharedPrefs
+    private var sharedPrefs: SharedPrefs
 ) {
     /** 인메모리에 저장되어 있는 설문 목록. 해당 값은 로깅 또는 참조용으로만 사용된다. */
     private val immutableSurveys: List<Survey>

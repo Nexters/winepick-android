@@ -15,6 +15,7 @@ import kr.co.nexters.winepick.data.model.WineFood
 import kr.co.nexters.winepick.data.model.remote.wine.WineResult
 import kr.co.nexters.winepick.data.model.remote.wine.WineValue
 import kr.co.nexters.winepick.databinding.ItemWineResultBinding
+import kr.co.nexters.winepick.databinding.ItemWineValueBinding
 import kr.co.nexters.winepick.databinding.ItemWineValueBindingImpl
 import kr.co.nexters.winepick.ui.base.WineResultViewModel
 import kr.co.nexters.winepick.ui.search.WineResultViewHolder
@@ -25,12 +26,13 @@ class WineValueAdapter(val vm: WineDetailViewModel) :
     ListAdapter<WineValue, WineValueViewHolder>(WineValueDiffUtilCallBack) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WineValueViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding: ItemWineValueBindingImpl =
+        val binding: ItemWineValueBinding =
             DataBindingUtil.inflate(layoutInflater, R.layout.item_wine_value, parent, false)
 
         return WineValueViewHolder(binding).apply {
-
-
+            binding.imgWineDetailIcon.setOnClickListener {
+                binding.wineValue = binding.wineValue!!.apply { hintVisible = !this.hintVisible!! }
+            }
         }
     }
 
@@ -39,7 +41,7 @@ class WineValueAdapter(val vm: WineDetailViewModel) :
     }
 }
 
-class WineValueViewHolder(private val binding: ItemWineValueBindingImpl) :
+class WineValueViewHolder(private val binding: ItemWineValueBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     fun bind(wineValue: WineValue) {

@@ -6,6 +6,8 @@ import android.view.View;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import javax.inject.Inject;
+import dagger.hilt.android.AndroidEntryPoint;
 import kotlin.Unit;
 import kr.co.nexters.winepick.data.model.SurveyAnswerType;
 import kr.co.nexters.winepick.data.model.SurveyInfo;
@@ -16,6 +18,7 @@ import kr.co.nexters.winepick.ui.base.BaseViewModel;
 import kr.co.nexters.winepick.util.ViewExtKt;
 import timber.log.Timber;
 
+@AndroidEntryPoint
 public class SurveyFragment extends BaseFragment<FragmentSurveyBinding> {
     public SurveyFragment(int layoutResId) {
         super(layoutResId);
@@ -28,7 +31,8 @@ public class SurveyFragment extends BaseFragment<FragmentSurveyBinding> {
     }
 
     int currentStage = 0;
-    SurveyRepository surveyRepository = org.koin.java.KoinJavaComponent.inject(SurveyRepository.class).getValue();
+    @Inject
+    SurveyRepository surveyRepository;
     SurveyInfo surveyInfo;
 
     @Override
@@ -47,12 +51,12 @@ public class SurveyFragment extends BaseFragment<FragmentSurveyBinding> {
         }
 
         ViewExtKt.setOnSingleClickListener(binding.surveyAnswerA, () -> {
-            ((SurveyActivity)requireActivity()).nextSurvey(SurveyAnswerType.ANSWER_A);
+            ((SurveyActivity) requireActivity()).nextSurvey(SurveyAnswerType.ANSWER_A);
             return Unit.INSTANCE;
         });
 
         ViewExtKt.setOnSingleClickListener(binding.surveyAnswerB, () -> {
-            ((SurveyActivity)requireActivity()).nextSurvey(SurveyAnswerType.ANSWER_B);
+            ((SurveyActivity) requireActivity()).nextSurvey(SurveyAnswerType.ANSWER_B);
             return Unit.INSTANCE;
         });
     }

@@ -2,7 +2,9 @@ package kr.co.nexters.winepick.ui.like
 
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.lifecycle.Observer
+import dagger.hilt.android.AndroidEntryPoint
 import kr.co.nexters.winepick.BR
 import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.databinding.ActivityLikeListBinding
@@ -14,14 +16,14 @@ import kr.co.nexters.winepick.util.VerticalItemDecorator
 import kr.co.nexters.winepick.util.drawCancelToast
 import kr.co.nexters.winepick.util.drawLikeToast
 import kr.co.nexters.winepick.util.hideKeyboard
-import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class LikeListActivity : BaseActivity<ActivityLikeListBinding>(
     R.layout.activity_like_list
 ) {
-    private val wineLikeAdpater: WineResultAdapter by lazy { WineResultAdapter(viewModel) }
-    override val viewModel: LikeViewModel by viewModel<LikeViewModel>()
+    private val wineLikeAdpater: WineResultAdapter by lazy { WineResultAdapter(viewModel,authManager) }
+    override val viewModel: LikeViewModel by viewModels<LikeViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.setVariable(BR.vm, viewModel)

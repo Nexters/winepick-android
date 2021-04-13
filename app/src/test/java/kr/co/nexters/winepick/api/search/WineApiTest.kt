@@ -1,5 +1,6 @@
 package kr.co.nexters.winepick.api.search
 
+import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.runBlocking
 import kr.co.nexters.winepick.base.AndroidBaseTest
 import kr.co.nexters.winepick.data.source.WineDataSource
@@ -11,6 +12,7 @@ import org.junit.Test
  *
  * @since v1.0.0 / 2021.02.09
  */
+@HiltAndroidTest
 class WineApiTest : AndroidBaseTest() {
     val testToken = "EVO0DpWNUiHSnDFQzsW78NMrKacksSgSaZs1EQopb7gAAAF3s0NnqQ"
 

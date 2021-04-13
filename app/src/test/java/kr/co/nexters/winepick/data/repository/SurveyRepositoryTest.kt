@@ -1,6 +1,6 @@
 package kr.co.nexters.winepick.data.repository
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
@@ -9,7 +9,6 @@ import kr.co.nexters.winepick.data.constant.Constant
 import kr.co.nexters.winepick.data.model.Survey
 import kr.co.nexters.winepick.data.model.SurveyAnswerType
 import org.junit.Assert
-import org.junit.Rule
 import org.junit.Test
 
 /**
@@ -17,11 +16,8 @@ import org.junit.Test
  *
  * @since v1.0.0 / 2021.03.18
  */
+@HiltAndroidTest
 class SurveyRepositoryTest : AndroidBaseTest() {
-    @JvmField
-    @Rule
-    val rule = InstantTaskExecutorRule()
-
     /** 직접 설문 목록을 새로 받아 푸는 과정을 진행한다. */
     @Test
     fun markingSurveyTest() = runBlocking {

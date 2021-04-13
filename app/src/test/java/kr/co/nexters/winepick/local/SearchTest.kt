@@ -1,10 +1,9 @@
 package kr.co.nexters.winepick.local
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.runBlocking
 import kr.co.nexters.winepick.base.AndroidBaseTest
 import kr.co.nexters.winepick.data.repository.SearchRepository
-import kr.co.nexters.winepick.util.SharedPrefs
 import org.junit.After
 import org.junit.Assert
 import org.junit.Rule
@@ -15,11 +14,8 @@ import org.junit.Test
  *
  * @since v1.0.0 / 2021.02.09
  */
+@HiltAndroidTest
 class SearchTest : AndroidBaseTest() {
-    @JvmField
-    @Rule
-    val rule = InstantTaskExecutorRule()
-
     @After
     fun tearDown() {
         sharedPrefs.clear()
