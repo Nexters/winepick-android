@@ -76,8 +76,8 @@ class SearchViewModel @Inject constructor(
     private val _searchResultType = MutableLiveData<SearchType>()
     val searchResultType: LiveData<SearchType> = _searchResultType
 
-    private var _loginWarningDlg : MutableLiveData<Boolean> = MutableLiveData()
-    val loginWarningDlg : LiveData<Boolean> = _loginWarningDlg
+    private var _loginWarningDlg: MutableLiveData<Boolean> = MutableLiveData()
+    val loginWarningDlg: LiveData<Boolean> = _loginWarningDlg
 
     init {
         _searchAction.onNext(SearchAction.NONE)
@@ -89,7 +89,7 @@ class SearchViewModel @Inject constructor(
         _filterNum.value = searchRepository.userSearchFilterItems.filter { it.selected }.size - 1
     }
 
-    fun initEmptyAction(){
+    fun initEmptyAction() {
         _searchFrontPage.value = SearchFront.RECOMMEND
     }
 
@@ -158,10 +158,10 @@ class SearchViewModel @Inject constructor(
      *
      * @param recommendValue 검색할 키워드 (기본값은 query liveData 내의 value 이다.)
      */
-    fun queryRecommendClick(recommendValue: String = "", page: Int) {
+    fun queryRecommendClick(recommendValue: String = "#", page: Int) {
         _searchResultType.value = SearchType.RECOMMEND
 
-        if(page == 0)
+        if (page == 0)
             _initAction.onNext(SearchType.RECOMMEND)
 
         if (!query.value.equals(recommendValue)) {
@@ -169,7 +169,8 @@ class SearchViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-            searchRepository.getWineInfosLikeQuery(recommendValue)
+            val parsingRecommendValue = recommendValue.removePrefix("#")
+            searchRepository.getWineInfosLikeQuery(parsingRecommendValue)
 
             this@SearchViewModel.page = page
 
@@ -177,7 +178,7 @@ class SearchViewModel @Inject constructor(
                 wineRepository.getWinesKeyword(
                     size = 10,
                     page = page,
-                    keyword = recommendValue
+                    keyword = parsingRecommendValue
                 )?.wineResult ?: listOf()
             } catch (throwable: Throwable) {
                 listOf()
@@ -193,9 +194,13 @@ class SearchViewModel @Inject constructor(
      * @param queryValue 검색할 키워드 (기본값은 query liveData 내의 value 이다.)
      */
     fun querySearchClick(queryValue: String = query.value ?: "", page: Int) {
+        if (queryValue.startsWith("#")) {
+            queryRecommendClick(queryValue, page)
+            return
+        }
         _searchResultType.value = SearchType.DEFAULT
 
-        if(page == 0)
+        if (page == 0)
             _initAction.onNext(SearchType.DEFAULT)
 
         if (!query.value.equals(queryValue)) {
