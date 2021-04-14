@@ -3,7 +3,7 @@ package kr.co.nexters.winepick.api.survey
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.runBlocking
 import kr.co.nexters.winepick.base.AndroidBaseTest
-import kr.co.nexters.winepick.data.constant.Constant
+import kr.co.nexters.winepick.constant.Constant
 import kr.co.nexters.winepick.data.source.SurveyDataSource
 import org.junit.Assert
 import org.junit.Test

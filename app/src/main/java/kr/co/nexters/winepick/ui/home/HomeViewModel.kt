@@ -1,8 +1,6 @@
 package kr.co.nexters.winepick.ui.home
 
 import android.content.Intent
-import androidx.fragment.app.DialogFragment
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,18 +12,15 @@ import kr.co.nexters.winepick.constant.TestConstant.C
 import kr.co.nexters.winepick.constant.TestConstant.D
 import kr.co.nexters.winepick.constant.TestConstant.E
 import kr.co.nexters.winepick.constant.TestConstant.F
-import kr.co.nexters.winepick.data.constant.Constant
+import kr.co.nexters.winepick.constant.Constant
 import kr.co.nexters.winepick.data.model.SurveyInfo
 import kr.co.nexters.winepick.data.repository.SurveyRepository
 import kr.co.nexters.winepick.data.repository.WinePickRepository
 import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.BaseViewModel
-import kr.co.nexters.winepick.ui.component.ConfirmDialog
 import kr.co.nexters.winepick.ui.like.LikeListActivity
 import kr.co.nexters.winepick.ui.search.SearchActivity
-import kr.co.nexters.winepick.ui.survey.SurveyActivity
 import kr.co.nexters.winepick.ui.type.TypeDetailActivity
-import kr.co.nexters.winepick.util.dpToPx
 import javax.inject.Inject
 
 /**

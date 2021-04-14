@@ -1,7 +1,5 @@
 package kr.co.nexters.winepick.data.model
 
-import kr.co.nexters.winepick.data.response.PersonalityType
-
 /**
  * addUser Request Data
  */

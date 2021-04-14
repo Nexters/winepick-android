@@ -13,7 +13,6 @@ import kr.co.nexters.winepick.databinding.DialogConfirmDialogBinding
 import kr.co.nexters.winepick.util.dpToPx
 import kr.co.nexters.winepick.util.setGone
 
-
 /**
  * 두개의 버튼을 가지고 있는 DialogFragment
  *

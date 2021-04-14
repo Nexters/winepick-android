@@ -3,14 +3,11 @@ package kr.co.nexters.winepick.di
 import kr.co.nexters.winepick.constant.AuthConstant.AUTO_LOGIN_KEY
 import kr.co.nexters.winepick.constant.AuthConstant.EXPIRE_KEY
 import kr.co.nexters.winepick.constant.AuthConstant.ID
-import kr.co.nexters.winepick.constant.AuthConstant.RECENT_SEARCH1
-import kr.co.nexters.winepick.constant.AuthConstant.RECENT_SEARCH2
 import kr.co.nexters.winepick.constant.AuthConstant.TEST
 import kr.co.nexters.winepick.constant.AuthConstant.TOKEN_KEY
 import kr.co.nexters.winepick.constant.AuthConstant.TYPE_NAME
 import kr.co.nexters.winepick.util.SharedPrefs
 import javax.inject.Inject
-import javax.inject.Singleton
 
 /**
  *  Koin을 사용한 AuthModule

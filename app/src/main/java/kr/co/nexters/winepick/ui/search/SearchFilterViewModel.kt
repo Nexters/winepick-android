@@ -14,7 +14,6 @@ import javax.inject.Inject
 /**
  * 검색 화면 ViewModel
  *
- * @author ricky
  * @since v1.0.0 / 2021.02.06
  */
 @HiltViewModel

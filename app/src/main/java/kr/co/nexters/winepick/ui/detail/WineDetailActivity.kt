@@ -7,27 +7,26 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.kakao.sdk.auth.LoginClient
-import com.kakao.sdk.auth.model.OAuthToken
-import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.AndroidEntryPoint
 import kr.co.nexters.winepick.BR
 import kr.co.nexters.winepick.R
-import kr.co.nexters.winepick.data.constant.Constant
+import kr.co.nexters.winepick.constant.Constant
 import kr.co.nexters.winepick.data.model.remote.wine.WineResult
 import kr.co.nexters.winepick.databinding.ActivityWineDetailBinding
-import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.BaseActivity
 import kr.co.nexters.winepick.ui.component.ConfirmDialog
 import kr.co.nexters.winepick.ui.component.LikeDialog
-import kr.co.nexters.winepick.ui.login.LoginViewModel
 import kr.co.nexters.winepick.ui.webview.WebViewActivity
 import kr.co.nexters.winepick.util.HorizontalItemDecorator
 import kr.co.nexters.winepick.util.VerticalItemDecorator
 import kr.co.nexters.winepick.util.drawCancelToast
 import kr.co.nexters.winepick.util.setOnSingleClickListener
-import timber.log.Timber
-import javax.inject.Inject
 
+/**
+ * 와인 상세 화면
+ *
+ * @since v1.0.0 / 2021.03.15
+ */
 @AndroidEntryPoint
 class WineDetailActivity : BaseActivity<ActivityWineDetailBinding>(R.layout.activity_wine_detail) {
     override val viewModel: WineDetailViewModel by viewModels<WineDetailViewModel>()

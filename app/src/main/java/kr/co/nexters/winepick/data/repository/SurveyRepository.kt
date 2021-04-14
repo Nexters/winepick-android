@@ -1,12 +1,11 @@
 package kr.co.nexters.winepick.data.repository
 
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import kr.co.nexters.winepick.data.constant.Constant
+import kr.co.nexters.winepick.constant.Constant
 import kr.co.nexters.winepick.data.model.*
 import kr.co.nexters.winepick.data.source.SurveyDataSource
 import kr.co.nexters.winepick.util.SharedPrefs

@@ -9,15 +9,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.WinePickApplication
-import kr.co.nexters.winepick.data.constant.Constant
+import kr.co.nexters.winepick.constant.Constant
 import kr.co.nexters.winepick.data.model.PutUserRequest
 import kr.co.nexters.winepick.data.model.SurveyAnswerType
 import kr.co.nexters.winepick.data.model.SurveyInfo
-import kr.co.nexters.winepick.data.model.remote.user.UserResult
 import kr.co.nexters.winepick.data.repository.SurveyRepository
 import kr.co.nexters.winepick.data.repository.WinePickRepository
 import kr.co.nexters.winepick.databinding.ActivitySurveyBinding
-import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.BaseActivity
 import kr.co.nexters.winepick.ui.base.BaseViewModel
 import kr.co.nexters.winepick.ui.base.navigate

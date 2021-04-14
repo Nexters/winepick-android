@@ -2,11 +2,9 @@ package kr.co.nexters.winepick.ui.base
 
 import android.content.Intent
 import androidx.lifecycle.LiveData
-import kr.co.nexters.winepick.ui.component.LoadingAnimation
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -14,7 +12,7 @@ import kotlinx.coroutines.launch
 import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.WinePickApplication
 import kr.co.nexters.winepick.data.repository.WinePickRepository
-import kr.co.nexters.winepick.di.AuthManager
+import kr.co.nexters.winepick.ui.component.LoadingAnimation
 import kr.co.nexters.winepick.ui.home.HomeActivity
 import timber.log.Timber
 import javax.inject.Inject

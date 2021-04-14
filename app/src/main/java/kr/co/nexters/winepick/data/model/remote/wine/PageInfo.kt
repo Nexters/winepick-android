@@ -3,7 +3,7 @@ package kr.co.nexters.winepick.data.model.remote.wine
 import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kr.co.nexters.winepick.data.constant.DependencyServer
+import kr.co.nexters.winepick.constant.DependencyServer
 import kr.co.nexters.winepick.network.WinePickService
 
 /**

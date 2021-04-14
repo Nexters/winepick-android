@@ -8,7 +8,7 @@ import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.data.model.remote.wine.WineResult
 import kr.co.nexters.winepick.util.inflate
 
-class RecentSearchAdapter() : RecyclerView.Adapter<RecentSearchAdapter.ViewHolder>() {
+class RecentSearchAdapter : RecyclerView.Adapter<RecentSearchAdapter.ViewHolder>() {
 
     private var data : List<WineResult> = emptyList()
 

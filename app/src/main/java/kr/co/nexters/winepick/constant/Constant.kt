@@ -1,4 +1,4 @@
-package kr.co.nexters.winepick.data.constant
+package kr.co.nexters.winepick.constant
 
 /**
  * WinePick 앱에서 사용하는 상수 모음

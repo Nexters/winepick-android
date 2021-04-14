@@ -9,13 +9,11 @@ import kotlinx.coroutines.launch
 import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.data.repository.SurveyRepository
 import kr.co.nexters.winepick.databinding.ActivitySplashBinding
-import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.BaseActivity
 import kr.co.nexters.winepick.ui.base.BaseViewModel
 import kr.co.nexters.winepick.ui.home.HomeActivity
 import kr.co.nexters.winepick.ui.login.LoginActivity
 import kr.co.nexters.winepick.util.startActivity
-
 import java.util.*
 import javax.inject.Inject
 

@@ -1,12 +1,10 @@
 package kr.co.nexters.winepick.ui.base
 
-import android.media.Image
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kr.co.nexters.winepick.data.model.remote.wine.WineResult
 import kr.co.nexters.winepick.data.repository.WinePickRepository
 import timber.log.Timber
-import javax.inject.Inject
 
 /**
  * wineResult 목록을 다루어야 할 시 상속받아야 하는 ViewModel

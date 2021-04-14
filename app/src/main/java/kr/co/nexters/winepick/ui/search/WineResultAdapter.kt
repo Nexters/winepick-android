@@ -1,16 +1,12 @@
 package kr.co.nexters.winepick.ui.search
 
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.nexters.winepick.R
-import kr.co.nexters.winepick.WinePickApplication
 import kr.co.nexters.winepick.data.model.remote.wine.WineResult
 import kr.co.nexters.winepick.databinding.ItemWineResultBinding
 import kr.co.nexters.winepick.di.AuthManager

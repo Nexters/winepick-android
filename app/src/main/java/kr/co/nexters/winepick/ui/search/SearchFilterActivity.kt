@@ -14,24 +14,20 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.constraintlayout.widget.ConstraintSet.CHAIN_SPREAD_INSIDE
 import androidx.constraintlayout.widget.ConstraintSet.WRAP_CONTENT
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.slider.RangeSlider
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import kr.co.nexters.winepick.BR
 import kr.co.nexters.winepick.R
-import kr.co.nexters.winepick.data.constant.Constant
+import kr.co.nexters.winepick.constant.Constant
 import kr.co.nexters.winepick.data.model.local.SearchFilterCategory
 import kr.co.nexters.winepick.data.model.local.SearchFilterGroup
 import kr.co.nexters.winepick.data.model.local.SearchFilterItem
 import kr.co.nexters.winepick.databinding.ActivitySearchFilterBinding
 import kr.co.nexters.winepick.ui.base.BaseActivity
-import kr.co.nexters.winepick.ui.home.HomeViewModel
 import kr.co.nexters.winepick.util.dpToPx
 import kr.co.nexters.winepick.util.setOnSingleClickListener
-
 import timber.log.Timber
-
 
 /**
  * 검색 필터 변경 화면

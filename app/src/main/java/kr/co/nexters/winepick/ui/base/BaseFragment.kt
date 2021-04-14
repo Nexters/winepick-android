@@ -15,7 +15,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
-import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.ui.component.LoadingAnimation
 
 /**
