@@ -290,7 +290,7 @@
                         app:layout_constraintStart_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/recommend_text1" />
 
-                    <LinearLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/recommend_move_button_linear1"
                         android:layout_width="match_parent"
                         android:layout_height="55dp"
@@ -304,39 +304,48 @@
                             android:id="@+id/recommend_move_wine_icon1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
                             android:layout_marginStart="20dp"
+                            android:gravity="center"
                             android:lineSpacingExtra="-2sp"
                             android:text="🍷"
                             android:textColor="#000000"
                             android:textSize="25sp"
-                            android:textStyle="normal" />
+                            android:textStyle="normal"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
                             android:id="@+id/recommend_move_text1"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
                             android:layout_marginStart="16dp"
                             android:lineSpacingExtra="0sp"
                             android:text="달콤함이 매력적인 레드 와인"
                             android:textColor="#000000"
                             android:textSize="14sp"
-                            android:textStyle="normal" />
+                            android:textStyle="normal"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toRightOf="@+id/recommend_move_wine_icon1"
+                            app:layout_constraintRight_toLeftOf="@id/recommend_move_arrow_image1"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageView
                             android:id="@+id/recommend_move_arrow_image1"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:layout_gravity="center|end"
+                            android:layout_gravity="center_vertical|end"
                             android:layout_marginEnd="12dp"
                             android:layout_weight="1"
                             android:background="#00FFFFFF"
                             android:padding="0dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
                             app:srcCompat="@drawable/right_arrow_black" />
-                    </LinearLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <LinearLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/recommend_move_button_linear2"
                         android:layout_width="match_parent"
                         android:layout_height="55dp"
@@ -351,17 +360,20 @@
                             android:id="@+id/recommend_move_wine_icon2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
                             android:layout_marginStart="20dp"
+                            android:gravity="center"
                             android:lineSpacingExtra="-2sp"
                             android:text="🍷"
                             android:textColor="#000000"
                             android:textSize="25sp"
-                            android:textStyle="normal" />
+                            android:textStyle="normal"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
                             android:id="@+id/recommend_move_text2"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginStart="16dp"
@@ -369,19 +381,25 @@
                             android:text="상큼한 과일향을 품는 와인"
                             android:textColor="#000000"
                             android:textSize="14sp"
-                            android:textStyle="normal" />
+                            android:textStyle="normal"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toRightOf="@id/recommend_move_wine_icon2"
+                            app:layout_constraintRight_toLeftOf="@id/recommend_move_arrow_image2"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageView
                             android:id="@+id/recommend_move_arrow_image2"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:layout_gravity="center|end"
                             android:layout_marginEnd="12dp"
                             android:layout_weight="1"
                             android:background="#00FFFFFF"
                             android:padding="0dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
                             app:srcCompat="@drawable/right_arrow_black" />
-                    </LinearLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <Button
                         android:id="@+id/btn_replay_survey"
