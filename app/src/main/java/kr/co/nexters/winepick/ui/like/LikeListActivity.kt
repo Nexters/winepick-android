@@ -8,15 +8,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import kr.co.nexters.winepick.BR
 import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.databinding.ActivityLikeListBinding
-import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.BaseActivity
-import kr.co.nexters.winepick.ui.search.SearchFront
 import kr.co.nexters.winepick.ui.search.WineResultAdapter
-import kr.co.nexters.winepick.util.VerticalItemDecorator
 import kr.co.nexters.winepick.util.drawCancelToast
-import kr.co.nexters.winepick.util.drawLikeToast
-import kr.co.nexters.winepick.util.hideKeyboard
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class LikeListActivity : BaseActivity<ActivityLikeListBinding>(

@@ -135,6 +135,28 @@ jobs:
       - name: CI 3-4. services.tar 압축 풀기
         run: tar xvf services.tar
 
+      # CI 3-5. winepick gpg 해독
+      - name: CI 3-5. Decrypt keystore
+        run: gpg --quiet --batch --yes --always-trust --decrypt --passphrase="$KEY_STORE_TAR_PWD" --output keystore.tar keystore.tar.gpg
+
+        env:
+          KEY_STORE_TAR_PWD: ${{ secrets.KAKAO_APP_KEY_TAR_PWD }}
+
+      # CI 3-6. keystore.tar 압축 풀기 (지정되었던 경로로 자동으로 파일이 만들어짐)
+      - name: CI 3-6. keystore.tar 압축 풀기
+        run: tar xvf keystore.tar
+
+      # CI 3-7. signing_config gpg 해독
+      - name: CI 3-7. Decrypt signing_config.tar.gpg
+        run: gpg --quiet --batch --yes --always-trust --decrypt --passphrase="$SIGNING_CONFIG_TAR_PWD" --output signing_config.tar signing_config.tar.gpg
+
+        env:
+          SIGNING_CONFIG_TAR_PWD: ${{ secrets.KAKAO_APP_KEY_TAR_PWD }}
+
+      # CI 3-8. signing_config.tar 압축 풀기 (지정되었던 경로로 자동으로 파일이 만들어짐)
+      - name: CI 3-8. signing_config.tar 압축 풀기
+        run: tar xvf signing_config.tar
+
       # CI 4. 의존성 라이브러리 다운로드
       - name: CI 4. 의존성 라이브러리 다운로드
         run: ./gradlew androidDependencies

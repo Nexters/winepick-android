@@ -10,11 +10,8 @@ import android.view.ViewGroup
 import android.view.Window
 import androidx.fragment.app.DialogFragment
 import kr.co.nexters.winepick.R
-import kr.co.nexters.winepick.databinding.DialogConfirmDialogBinding
 import kr.co.nexters.winepick.databinding.DialogLikeBinding
-import kr.co.nexters.winepick.ui.splash.SplashActivity
 import kr.co.nexters.winepick.util.dpToPx
-import kr.co.nexters.winepick.util.setGone
 
 
 /**

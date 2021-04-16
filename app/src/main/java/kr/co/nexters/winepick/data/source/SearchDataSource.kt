@@ -5,7 +5,7 @@ import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.json.Json
 import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.WinePickApplication
-import kr.co.nexters.winepick.data.constant.Constant.PREF_KEY_WINE_INFOS
+import kr.co.nexters.winepick.constant.Constant.PREF_KEY_WINE_INFOS
 import kr.co.nexters.winepick.data.model.local.SearchFilterCategory
 import kr.co.nexters.winepick.data.model.local.SearchFilterGroup
 import kr.co.nexters.winepick.data.model.local.SearchFilterItem

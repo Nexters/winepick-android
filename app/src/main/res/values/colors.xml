@@ -20,16 +20,11 @@
     <color name="colorGrayea">#eaeaea</color>
     <color name="colorPink">#ff3985</color>
 
-
     <!-- main -->
-    <color name="colorLightRed">#f25942</color>
-    <color name="colorWhite4c">#4cffffff</color>
+    <color name="colorLightRed">#ff3985</color>
     <color name="colorGrayeb">#ebebeb</color>
     <color name="colorGray82">#828282</color>
     <color name="colorGrayf9">#f9f9f9</color>
-
-
-
 
     <!-- like -->
     <color name="colorBlack66">#66000000</color>

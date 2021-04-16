@@ -1,12 +1,11 @@
 package kr.co.nexters.winepick.data.repository
 
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import kr.co.nexters.winepick.data.constant.Constant
+import kr.co.nexters.winepick.constant.Constant
 import kr.co.nexters.winepick.data.model.*
 import kr.co.nexters.winepick.data.source.SurveyDataSource
 import kr.co.nexters.winepick.util.SharedPrefs
@@ -131,12 +130,12 @@ class SurveyRepository @Inject constructor(
     /** 사람의 성향을 분석한다. */
     private fun getPeopleVersion(): PersonVersion {
         val analysis = surveys.take(3)
-            .filter { it.selectedAnswer == SurveyAnswerType.ANSWER_A }
+        if (analysis.size != 3) return PersonVersion.UNKNOWN
 
         // 사람의 성향값 뽑아내기
-        return when {
-            (0..1).contains(analysis.size) -> PersonVersion.INTROVERSION   // 내향형
-            (2..3).contains(analysis.size) -> PersonVersion.EXTROVERSION   // 외향형
+        return when (analysis.last().selectedAnswer) {
+            SurveyAnswerType.ANSWER_A -> PersonVersion.EXTROVERSION   // 외향형
+            SurveyAnswerType.ANSWER_B -> PersonVersion.INTROVERSION   // 내향형
             else -> PersonVersion.UNKNOWN
         }
     }

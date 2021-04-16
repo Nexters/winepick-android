@@ -30,7 +30,7 @@ import javax.inject.Inject;
 import dagger.hilt.android.AndroidEntryPoint;
 import kotlin.Unit;
 import kr.co.nexters.winepick.R;
-import kr.co.nexters.winepick.data.constant.Constant;
+import kr.co.nexters.winepick.constant.Constant;
 import kr.co.nexters.winepick.data.repository.SearchRepositoryKt;
 import kr.co.nexters.winepick.data.repository.WinePickRepository;
 import kr.co.nexters.winepick.data.response.PersonalityType;

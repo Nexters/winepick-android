@@ -6,7 +6,6 @@ import kr.co.nexters.winepick.ui.search.MeasureHelper
 /**
  * 각 행마다 가변적인 아이템 개수가 들어가는 경우 implement 해주어야 하는 interface
  *
- * @author ricky
  * @since v1.0.0 / 2021.02.17
  */
 interface MultipleSpanHelper<VH : RecyclerView.ViewHolder> {

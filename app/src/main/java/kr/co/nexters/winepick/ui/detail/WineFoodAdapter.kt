@@ -11,7 +11,11 @@ import kr.co.nexters.winepick.data.model.WineFood
 import kr.co.nexters.winepick.databinding.ItemWineFeatureBinding
 import kr.co.nexters.winepick.databinding.ItemWineFoodBinding
 
-
+/**
+ * WineFoodAdapter (feature, food)
+ *
+ * @since v1.0.0 / 2021.03.30
+ */
 class WineFoodAdapter(val type: WineListType, val vm: WineDetailViewModel) :
     ListAdapter<WineFood, RecyclerView.ViewHolder>(WineFoodDiffUtilCallBack) {
     companion object {

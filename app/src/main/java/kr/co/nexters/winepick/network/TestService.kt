@@ -14,7 +14,6 @@ import retrofit2.http.Query
 /**
  * UnitTest 에서 사용하는 Retrofit2 인터페이스
  *
- * @author ricky
  * @since v1.0.0 / 2021.02.04
  */
 interface TestService {

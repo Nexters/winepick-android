@@ -12,10 +12,7 @@ import kr.co.nexters.winepick.data.repository.WinePickRepository
 import kr.co.nexters.winepick.data.repository.WineRepository
 import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.BaseViewModel
-import kr.co.nexters.winepick.ui.home.HomeActivity
 import kr.co.nexters.winepick.ui.login.LoginActivity
-import kr.co.nexters.winepick.ui.search.SearchActivity
-import timber.log.Timber
 import javax.inject.Inject
 
 /**

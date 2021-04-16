@@ -10,7 +10,6 @@ import timber.log.Timber
 /**
  * WinePick Application 클래스
  *
- * @author ricky
  * @since v1.0.0 / 2021.01.28
  */
 

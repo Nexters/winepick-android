@@ -320,3 +320,11 @@ fabric.properties
 # Kakao_API_AppKey
 app/src/main/res/values/kakao_api_appkey.xml
 kakao_app_key.tar
+
+# Keystore files
+app/winepick
+keystore.tar
+
+# Signing config files
+signingconfig.properties
+signing_config.tar

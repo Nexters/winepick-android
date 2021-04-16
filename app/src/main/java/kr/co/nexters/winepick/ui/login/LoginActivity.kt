@@ -4,24 +4,21 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.databinding.library.baseAdapters.BR
 import com.kakao.sdk.auth.LoginClient
-import com.kakao.sdk.auth.model.OAuthToken
-import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.AndroidEntryPoint
 import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.databinding.ActivityLoginBinding
-import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.BaseActivity
 import kr.co.nexters.winepick.ui.home.HomeActivity
 import kr.co.nexters.winepick.util.startActivity
 import kr.co.nexters.winepick.util.toast
 
-
-import timber.log.Timber
-
+/**
+ * 로그인 화면
+ *
+ * @since v1.0.0 / 2021.02.08
+ */
 @AndroidEntryPoint
-class LoginActivity : BaseActivity<ActivityLoginBinding>(
-    R.layout.activity_login
-) {
+class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login) {
     override val viewModel: LoginViewModel by viewModels<LoginViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
