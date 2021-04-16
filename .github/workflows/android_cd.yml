@@ -88,15 +88,48 @@ jobs:
       - name: CI 2-2. kakao_app_key.tar 압축 풀기
         run: tar xvf kakao_app_key.tar
 
+      # CI 2-3. google-service.json gpg 해독
+      - name: CI 2-3. Decrypt google-service.json
+        run: gpg --quiet --batch --yes --always-trust --decrypt --passphrase="$GOOGLE_JSON_KEY_TAR_PWD" --output services.tar services.tar.gpg
+
+        env:
+          GOOGLE_JSON_KEY_TAR_PWD: ${{ secrets.KAKAO_APP_KEY_TAR_PWD }}
+
+      # CI 2-4. services.tar 압축 풀기 (지정되었던 경로로 자동으로 파일이 만들어짐)
+      - name: CI 2-4. services.tar 압축 풀기
+        run: tar xvf services.tar
+
+      # CI 2-5. winepick gpg 해독
+      - name: CI 2-5. Decrypt keystore
+        run: gpg --quiet --batch --yes --always-trust --decrypt --passphrase="$KEY_STORE_TAR_PWD" --output keystore.tar keystore.tar.gpg
+
+        env:
+          KEY_STORE_TAR_PWD: ${{ secrets.KAKAO_APP_KEY_TAR_PWD }}
+
+      # CI 2-6. keystore.tar 압축 풀기 (지정되었던 경로로 자동으로 파일이 만들어짐)
+      - name: CI 2-6. keystore.tar 압축 풀기
+        run: tar xvf keystore.tar
+
+      # CI 2-7. signing_config gpg 해독
+      - name: CI 2-7. Decrypt signing_config.tar.gpg
+        run: gpg --quiet --batch --yes --always-trust --decrypt --passphrase="$SIGNING_CONFIG_TAR_PWD" --output signing_config.tar signing_config.tar.gpg
+
+        env:
+          SIGNING_CONFIG_TAR_PWD: ${{ secrets.KAKAO_APP_KEY_TAR_PWD }}
+
+      # CI 2-8. signing_config.tar 압축 풀기 (지정되었던 경로로 자동으로 파일이 만들어짐)
+      - name: CI 2-8. signing_config.tar 압축 풀기
+        run: tar xvf signing_config.tar
+
       # CD 3. 테스트용 apk 만들기 및 슬랙 메시지 전송
       # [slack-upload-file](https://github.com/marketplace/actions/slack-upload-file)
-      - run: './gradlew assembleDebug'
+      - run: './gradlew assembleRelease'
       - uses: MeilCli/slack-upload-file@v1
         with:
           slack_token: ${{ secrets.SLACK_READ_WRITE_TOKEN }}
           channels: ${{ secrets.SLACK_CHANNEL_DEPLOY }}
-          file_path: 'app/build/outputs/apk/debug/app-debug.apk'
-          file_name: 'app-debug.apk'
+          file_path: 'app/build/outputs/apk/release/app-release.apk'
+          file_name: 'app-release.apk'
           file_type: 'apk'
           initial_comment: '${{ github.ref }} 테스트 앱 슬랙 배포 성공'
 
@@ -104,8 +137,8 @@ jobs:
       - name: CD 4. 테스트용 apk artifact 업로드
         uses: actions/upload-artifact@v2
         with:
-          name: app-debug.apk
-          path: app/build/outputs/apk/debug/app-debug.apk
+          name: app-release.apk
+          path: app/build/outputs/apk/release/app-release.apk
 
       # CD 5. 실패할 경우 슬랙에 실패 메시지 전송
       - name: CD 5. PR 전용 실패 메시지 전송

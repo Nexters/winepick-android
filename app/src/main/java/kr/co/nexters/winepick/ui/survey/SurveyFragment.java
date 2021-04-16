@@ -1,51 +1,74 @@
 package kr.co.nexters.winepick.ui.survey;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.inject.Inject;
+import dagger.hilt.android.AndroidEntryPoint;
+import kotlin.Unit;
+import kr.co.nexters.winepick.data.model.SurveyAnswerType;
+import kr.co.nexters.winepick.data.model.SurveyInfo;
+import kr.co.nexters.winepick.data.repository.SurveyRepository;
+import kr.co.nexters.winepick.databinding.FragmentSurveyBinding;
+import kr.co.nexters.winepick.ui.base.BaseFragment;
+import kr.co.nexters.winepick.ui.base.BaseViewModel;
+import kr.co.nexters.winepick.util.ViewExtKt;
+import timber.log.Timber;
 
-import kr.co.nexters.winepick.R;
-
-public class SurveyFragment extends Fragment {
-
-    SurveyActivity activity;
-
-    @Override
-    public void onAttach(@Nonnull Context context) {
-        super.onAttach(context);
-        activity = (SurveyActivity) getActivity();
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        activity = null;
+@AndroidEntryPoint
+public class SurveyFragment extends BaseFragment<FragmentSurveyBinding> {
+    public SurveyFragment(int layoutResId) {
+        super(layoutResId);
     }
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_survey, container, false);
+    protected BaseViewModel getViewModel() {
+        return null;
+    }
 
-        Button button = rootView.findViewById(R.id.survey_answer_A);
+    int currentStage = 0;
+    @Inject
+    SurveyRepository surveyRepository;
+    SurveyInfo surveyInfo;
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                activity.onFragmentChange(1);
-            }
+    @Override
+    public void onViewCreated(@NotNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        surveyInfo = surveyRepository.getCurrentSurvey();
+
+        if (surveyInfo != null) {
+            Timber.i("data: %s", surveyInfo);
+            currentStage = surveyInfo.getNumber();
+            setData(surveyInfo.getSurvey().getContent(),
+                    surveyInfo.getSurvey().getAnswersA(),
+                    surveyInfo.getSurvey().getAnswersB(),
+                    (currentStage + 1) + "");
+        }
+
+        ViewExtKt.setOnSingleClickListener(binding.surveyAnswerA, () -> {
+            ((SurveyActivity) requireActivity()).nextSurvey(SurveyAnswerType.ANSWER_A);
+            return Unit.INSTANCE;
         });
 
-        return rootView;
+        ViewExtKt.setOnSingleClickListener(binding.surveyAnswerB, () -> {
+            ((SurveyActivity) requireActivity()).nextSurvey(SurveyAnswerType.ANSWER_B);
+            return Unit.INSTANCE;
+        });
+    }
+
+    public void setData(String text, String ansA, String ansB, String num) {
+        Timber.i(ansA);
+        Timber.i(ansB);
+
+        binding.surveyQuestionText.setText(text);
+        binding.currentSurveyNumberText.setText("0" + num);
+        binding.allSurveyNumberText.setText("0" + num + " / 06");
+        binding.surveyAnswerA.setText(ansA);
+        binding.surveyAnswerB.setText(ansB);
     }
 }

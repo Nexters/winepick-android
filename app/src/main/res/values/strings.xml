@@ -2,6 +2,25 @@
     <string name="app_name">WinePick</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="app_name_lower">winepick</string>
+    <string name="api_error">통신이 원활하지 않습니다. 잠시 후 다시 시도해주세요.</string>
+
+
+    <!--winedetail-->
+    <string name="wine_img_check">와인 이미지 확인하기</string>
+    <string name="sweetness_detail">말 그대로 단맛의 정도예요.\n스위트,드라이 등으로 표현하기도 해요.</string>
+    <string name="acidity_detail">신맛의 정도를 뜻해요.\n너무 높으면 날카롭다는 느낌을 받아요.</string>
+    <string name="body_detail">높을수록 묵직한 느낌이 들어요.\n와인 점도에는 알코올이 영향을 줍니다.</string>
+    <string name="tannin_detail">탄닌은 포도의 껍질에서 나오는\n성분이예요. 높을수록 떫은맛이 강하죠.</string>
+    <string name="wine_feature">%s 종류</string>
+    <string name="wine_feature_detail">%1s는 %2s에 어울려요.</string>
+    <string name="red_wine">Red Wine</string>
+    <string name="white_wine">White Wine</string>
+    <string name="sparkling_wine">Sparkling Wine</string>
+    <string name="wine_value_title">%s 특징</string>
+    <string name="wine_value_sub_title">%1s의 당도와 바디감을 알려드릴게요.</string>
+    <string name="wine_food_detail">%s와 잘 어울려요.</string>
+    <string name="wine_food_title">함께하면\n더 맛있는 요리 %d</string>
+
 
     <!--home-->
     <string name="home_guest_title">나에게 어울리는 와인은?</string>
@@ -10,8 +29,8 @@
     <string name="home_search_title">오늘은 어떤 와인을\n도전해볼까요?</string>
     <string name="home_wine_type">내 와인타입</string>
     <string name="home_wine_retest">다시 테스트하기</string>
-    <string name="home_wine_research">최근에 검색한 와인</string>
-    <string name="home_wine_research_content">클릭하면 검색 결과로 이어져요.</string>
+    <string name="home_wine_research">최근에 본 와인</string>
+    <string name="home_wine_research_content">클릭하면 와인 정보를 볼 수 있어요.</string>
     <string name="home_wine_type_guest">로그인하고\n나에게 맞는 와인을 추천받아보세요!</string>
     <string name="home_guest_start">시작하기</string>
 
@@ -22,14 +41,50 @@
 
     <!--typedetail-->
     <string name="type_title">당신의 성향은</string>
+    <string name="type_a_name">고양이</string>
+    <string name="type_b_name">곰</string>
+    <string name="type_c_name">토끼</string>
+    <string name="type_d_name">햄스터</string>
+    <string name="type_e_name">펭귄</string>
+    <string name="type_f_name">강아지</string>
+    <string name="type_a_detail">센치한 도도형</string>
+    <string name="type_b_detail">고독한 배려쟁이형</string>
+    <string name="type_c_detail">멀뚱멀뚱 무적형</string>
+    <string name="type_d_detail">도전적 다다익선형</string>
+    <string name="type_e_detail">모여모여 친목형</string>
+    <string name="type_f_detail">수다쟁이 댕댕이형</string>
+
 
     <!-- login warning -->
     <string name="login_warning_title">로그인 하시겠습니까?</string>
     <string name="login_warning_like">좋아요 기능은\n로그인이 필요합니다.</string>
+    <string name="login_warning_btn_left_text">아니요</string>
+    <string name="login_warning_btn_right_text">네</string>
+
+    <!-- detail -->
+    <string name="title_activity_detail">DetailActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <!-- survey? -->
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <!-- test warning -->
+    <string name="test_warning_title">재검사 하시겠습니까?</string>
+    <string name="test_warning_content">재검사시,\n이전결과는 삭제됩니다.</string>
+    <string name="test_warning_btn_left_text">아니요</string>
+    <string name="test_warning_btn_right_text">네</string>
 
     <!-- home_like -->
+    <string name="like_add">좋아요한 와인에\n담겼어요!</string>
     <string name="home_like_num">좋아요한 와인 %d</string>
     <string name="like_cancel">좋아요가 취소되었습니다.</string>
+
+    <string name="web_view_images_search_url">https://www.google.com/search?q=%s&amp;source=lnms&amp;tbm=isch</string>
 
     <!-- search -->
     <!-- DataBinding String.format 링크 : https://gogorchg.tistory.com/entry/AndroidDataBinding-String-Format-%EC%A0%81%EC%9A%A9%ED%95%98%EA%B8%B0 -->
@@ -43,7 +98,7 @@
     <string name="search_recommend_title">빠른 키워드</string>
     <string name="search_result_taste_value">%d</string>
     <array name="search_recommends">
-        <item>#혼자 집에서 쉴때</item>
+        <item>#혼자 집에서 쉴 때</item>
         <item>#집들이 선물</item>
         <item>#20대에게 인기 많은</item>
     </array>
@@ -65,6 +120,279 @@
         <item>5.0</item>
         <item>16.0</item>
     </array>
+
+    <string-array name="personality_alphabet">
+        <item>N</item>
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+        <item>D</item>
+        <item>E</item>
+        <item>F</item>
+    </string-array>
+
+    <string-array name="breads">
+        <item>밀가루 음식</item>
+        <item>패스트리</item>
+    </string-array>
+    <string-array name="fishes">
+        <item>구운 연어</item>
+        <item>해산물</item>
+        <item>해산물 요리</item>
+        <item>해물요리</item>
+        <item>연어</item>
+        <item>리치한 소스로 조리한 생선류</item>
+        <item>장어구이</item>
+        <item>붉은 살 생선</item>
+        <item>숯불 구이 연어</item>
+        <item>참치</item>
+        <item>참치요리</item>
+        <item>참치 스테이크</item>
+        <item>캐비어</item>
+        <item>생선구이</item>
+        <item>매콤한 해산물</item>
+        <item>해산물요리</item>
+        <item>생선류</item>
+        <item>조리된 해산물</item>
+        <item>훈제연어</item>
+        <item>생선</item>
+    </string-array>
+    <string-array name="meats">
+        <item>붉은 육류</item>
+        <item>붉은 육류 요리</item>
+        <item>양고기</item>
+        <item>소시지</item>
+        <item>송아지 요리</item>
+        <item>구운 고기</item>
+        <item>육류 요리</item>
+        <item>갈비구이</item>
+        <item>육류요리</item>
+        <item>그릴에 구운 바비큐</item>
+        <item>소시지구이</item>
+        <item>소고기</item>
+        <item>양념 갈비</item>
+        <item>돼지고기</item>
+        <item>양념이 강한 육류요리</item>
+        <item>살치살 구이 등 육류 오리</item>
+        <item>훈제 쇠고기등의 붉은살 육류나 닭고기</item>
+        <item>모든 종류의 고기요리</item>
+        <item>불고기</item>
+        <item>돼지 양념불고기</item>
+        <item>구운양고기</item>
+        <item>다양한 육류</item>
+        <item>소고기 육회</item>
+        <item>각종 육류 요리</item>
+        <item>유럽식 코스요리의 메인 안심</item>
+        <item>등심 요리와 양고기</item>
+        <item>각종 육류 또는 잘 숙성된 경성치즈</item>
+        <item>갈비찜</item>
+        <item>붉은 고기류</item>
+        <item>불고기 요리</item>
+        <item>소스가 진한 육류</item>
+        <item>한우 구이류</item>
+        <item>살라미</item>
+        <item>육류</item>
+        <item>그릴에 구운 고기</item>
+        <item>구운 연어 또는 닭고기부터 양고기와 소고기 스테이크</item>
+        <item>붉은 고기</item>
+        <item>그릴에 구운 요리</item>
+        <item>양갈비</item>
+        <item>갈비</item>
+        <item>바비큐</item>
+        <item>구은 양고기</item>
+        <item>구운 육류 요리</item>
+        <item>붉은 육류요리</item>
+        <item>강한 맛의 치</item>
+        <item>돼지고기요리</item>
+        <item>삼겹살</item>
+        <item>각종 붉은 육류 요리</item>
+        <item>모든 고기요리</item>
+        <item>모든 육류요리</item>
+        <item>양갈비구이</item>
+        <item>모든 육류</item>
+        <item>햄</item>
+    </string-array>
+    <string-array name="lobstars">
+        <item>게</item>
+        <item>랍스터</item>
+    </string-array>
+    <string-array name="koreanFoods">
+        <item>아시아 요리</item>
+        <item>매운 음식</item>
+        <item>매홈한 한식 등</item>
+        <item>그릴에 구운 음식</item>
+        <item>매콤한 한국음식과도 잘 어울린다</item>
+        <item>강한 양념을 제외한 모든 음식과 잘 어울린다</item>
+        <item>정찬 요리</item>
+        <item>동양 음식</item>
+        <item>볶음밥</item>
+        <item>매운 음식</item>
+        <item>매홈한 한식</item>
+        <item>매콤한 한식</item>
+        <item>순대</item>
+        <item>보쌈</item>
+        <item>전요리</item>
+        <item>튀김요리</item>
+        <item>가벼운 전식</item>
+        <item>분식</item>
+        <item>야식류</item>
+    </string-array>
+    <string-array name="italyFoods">
+        <item>파스타</item>
+        <item>미트볼</item>
+        <item>볼로네제 파스타</item>
+        <item>토마토 파스타</item>
+        <item>토마토소스 파스타</item>
+        <item>소고기 스튜</item>
+        <item>미트소스 스파게티</item>
+        <item>크림소스 파스타</item>
+        <item>오일파스타</item>
+        <item>스프</item>
+        <item>스튜요리</item>
+        <item>스튜 및 파스타</item>
+        <item>거의 모든 이탈리아 요리</item>
+        <item>비프 스튜</item>
+        <item>스튜</item>
+        <item>토마토 소스 또는 크림 소스 베이스의 파스타와 리조또</item>
+        <item>소스가 진한 파스타</item>
+        <item>미트소스 파스타</item>
+        <item>소고기스튜</item>
+        <item>크림 파스타</item>
+        <item>라자냐</item>
+        <item>올리브</item>
+        <item>크림/오일 파스타</item>
+        <item>크림 수프</item>
+    </string-array>
+    <string-array name="hamburgers">
+        <item>햄버거</item>
+    </string-array>
+    <string-array name="fruits">
+        <item>사과</item>
+        <item>과일</item>
+        <item>달콤한 과일</item>
+        <item>딸기</item>
+        <item>크랜베리</item>
+        <item>각종 과일</item>
+        <item>과일 안주</item>
+        <item>곶감</item>
+        <item>신선한 과일</item>
+    </string-array>
+    <string-array name="curries">
+        <item>인도카레</item>
+    </string-array>
+    <string-array name="cheeses">
+        <item>치즈</item>
+        <item>부드러운 치즈</item>
+        <item>숙성 치즈</item>
+        <item>신선한 치즈</item>
+        <item>하드 치즈</item>
+        <item>치즈</item>
+        <item>고트</item>
+        <item>파마산 치즈</item>
+        <item>브뤼 치즈</item>
+        <item>잘 숙성된 체다 치즈</item>
+        <item>숙성된 치즈</item>
+        <item>블루치즈</item>
+        <item>브뤼치즈</item>
+        <item>향이 강한 치즈류</item>
+        <item>카나페</item>
+        <item>소프트 치즈</item>
+        <item>치즈와 궁합이 좋고 특히 트러플 크림 브리 치즈와 잘 어울림</item>
+        <item>숙성된 치즈 등</item>
+        <item>경성 중경성의 치즈류</item>
+        <item>강한 향의 치즈</item>
+        <item>노란색 치즈</item>
+        <item>숙성치즈</item>
+        <item>훈제 치즈</item>
+    </string-array>
+    <string-array name="cakes">
+        <item>디저트</item>
+        <item>달콤한 후식</item>
+        <item>각종 디저트</item>
+        <item>가벼운 디저트</item>
+        <item>에피타이저</item>
+        <item>헤이즐넛 케이크</item>
+        <item>스낵</item>
+        <item>치즈 카나페</item>
+        <item>간단한 핑거푸드나 생선요리</item>
+        <item>견과류</item>
+        <item>달콤한 케익</item>
+        <item>간단한 쿠키</item>
+        <item>케익</item>
+        <item>푸딩류</item>
+        <item>쿠키</item>
+        <item>과일푸딩</item>
+        <item>과일 케이크</item>
+        <item>한과</item>
+        <item>간단한 핑거푸드 안주</item>
+        <item>까나페</item>
+        <item>파티용 웰컴 드링크</item>
+        <item>간단한 디저트류</item>
+        <item>딸기 디저트</item>
+        <item>달콤한 디저트</item>
+        <item>케이크</item>
+    </string-array>
+    <string-array name="shellfishes">
+        <item>조개류</item>
+        <item>관자 요리</item>
+        <item>조개</item>
+        <item>회, 조개류와 같은 해산물</item>
+        <item>화이트 소스를 가미한 굴</item>
+        <item>굴</item>
+
+    </string-array>
+    <string-array name="asianFoods">
+        <item>매콤한 아시안 퀴진</item>
+        <item>일식</item>
+        <item>매콤한 동남아 요리</item>
+    </string-array>
+    <string-array name="pizzas">
+        <item>피자</item>
+    </string-array>
+    <string-array name="shrimps">
+        <item>새우요리</item>
+        <item>감바스 알 아히요</item>
+        <item>감바스</item>
+    </string-array>
+    <string-array name="stakes">
+        <item>스테이크</item>
+        <item>찹스테이크</item>
+        <item>육즙가득한 스테이크</item>
+        <item>바비큐요리</item>
+    </string-array>
+    <string-array name="sushies">
+        <item>참치회</item>
+        <item>생선회</item>
+        <item>스시</item>
+    </string-array>
+    <string-array name="vegetables">
+        <item>버섯</item>
+        <item>샐러드</item>
+        <item>익힌 채소</item>
+        <item>채소</item>
+        <item>야채</item>
+        <item>야채스프</item>
+        <item>치자</item>
+        <item>신선한 샐러드</item>
+        <item>식전주</item>
+        <item>해산물 샐러드</item>
+    </string-array>
+    <string-array name="chickens">
+        <item>치킨</item>
+        <item>훈제오리</item>
+        <item>가금류 고기</item>
+        <item>오리고기</item>
+        <item>가금류</item>
+        <item>오리고기 등의 가금류</item>
+        <item>가금류</item>
+        <item>푸아그라</item>
+        <item>가벼운 닭고기</item>
+        <item>닭고기요리</item>
+        <item>푸아그라</item>
+        <item>닭고기</item>
+        <item>칠면조</item>
+        <item>닭요리</item>
+    </string-array>
 
     <string-array name="wine_info">
         <item>라포데리나 브루넬로 디 몬탈치노 DOCG</item>

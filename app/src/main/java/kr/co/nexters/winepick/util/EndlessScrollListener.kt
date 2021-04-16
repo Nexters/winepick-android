@@ -49,5 +49,10 @@ abstract class EndlessScrollListener(
         }
     }
 
+    fun reset(){
+        currentPage = 0
+        previousTotalItemCount = 0
+    }
+
     abstract fun onLoadMore(page: Int)
 }

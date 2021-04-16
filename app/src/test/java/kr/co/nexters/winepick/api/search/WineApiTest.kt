@@ -1,8 +1,8 @@
 package kr.co.nexters.winepick.api.search
 
+import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.runBlocking
 import kr.co.nexters.winepick.base.AndroidBaseTest
-import kr.co.nexters.winepick.data.repository.WineRepository
 import kr.co.nexters.winepick.data.source.WineDataSource
 import org.junit.Assert
 import org.junit.Test
@@ -12,29 +12,50 @@ import org.junit.Test
  *
  * @since v1.0.0 / 2021.02.09
  */
+@HiltAndroidTest
 class WineApiTest : AndroidBaseTest() {
     val testToken = "EVO0DpWNUiHSnDFQzsW78NMrKacksSgSaZs1EQopb7gAAAF3s0NnqQ"
 
     /** [WineDataSource.getWines] 테스트 */
     @Test
     fun getWinesTest() = runBlocking {
-        val result = WineDataSource.getWines(testToken, 10, 0)
+        val result = wineDataSource.getWines(10, 0)
 
         println("$result")
 
         Assert.assertNotNull(result)
 
-        val resultEmptyList = WineDataSource.getWines(testToken, 20, 4)
+        val resultEmptyList = wineDataSource.getWines(20, 4)
 
         println("$resultEmptyList")
 
         Assert.assertNotNull(resultEmptyList)
     }
 
+    /** [WineDataSource.getWines] 테스트 */
+    @Test
+    fun getWinesKeywordTest() = runBlocking {
+        val result = wineDataSource.getWinesKeyword(10, 0, "혼자 집에서 쉴 때")
+
+        println("$result")
+
+        Assert.assertNotNull(result)
+
+        // 이상한 값을 넣을 시 500 에러가 발생하여야 한다.
+        try {
+            val resultEmptyList = wineDataSource.getWinesKeyword(20, 0, "")
+            println("$resultEmptyList")
+            Assert.assertNotNull(resultEmptyList)
+        } catch (throwable: Throwable) {
+            Assert.assertTrue(throwable.message?.contains("500") == true)
+            println("$throwable")
+        }
+    }
+
     /** [WineDataSource.getWine] 테스트 */
     @Test
     fun getWineTest() = runBlocking {
-        val result = WineDataSource.getWine(testToken, 2)
+        val result = wineDataSource.getWine(2)
 
         print("$result")
 
@@ -44,11 +65,10 @@ class WineApiTest : AndroidBaseTest() {
     /** [WineDataSource.getWines] 테스트 */
     @Test
     fun getWinesFilterTest() = runBlocking {
-        val resultTemp = WineRepository.getWinesFilter(
-            testToken,
+        val resultTemp = wineDataSource.getWinesFilter(
             wineName = "쁘띠폴리",
             keywords = listOf("달콤한"),
-            pageSize = 1
+            size = 1
         )
 
         print("$resultTemp")

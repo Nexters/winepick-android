@@ -1,0 +1,903 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.detail.DetailActivity">
+
+
+    <ImageButton
+        android:id="@+id/back_arrow_button"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="42dp"
+        android:background="#00FFFFFF"
+        android:padding="0dp"
+        android:src="@drawable/back_arrow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/floating_eclipse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/floating_shadow"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/back_arrow_button"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="NotSibling">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/scroll_constraint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/detail_constraint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <ImageView
+                    android:id="@+id/match_store"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/emart_24"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/detail_constraint" />
+
+                <TextView
+                    android:id="@+id/wine_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:lineSpacingExtra="0sp"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/match_store"
+                    android:text="라포데리나 브루넬로 디 몬탈치노 DOCG" />
+
+                <TextView
+                    android:id="@+id/wine_sub_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:lineSpacingExtra="0sp"
+                    android:textColor="#adadad"
+                    android:textSize="14sp"
+                    android:textStyle="normal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/wine_title"
+                    android:text="La Poderina Brunello Ei Montalcino DOCG" />
+
+                <ImageView
+                    android:id="@+id/country_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/australia"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/wine_sub_title" />
+
+                <TextView
+                    android:id="@+id/country_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="5dp"
+                    android:textColor="#828282"
+                    android:textSize="11sp"
+                    android:textStyle="normal"
+                    app:layout_constraintStart_toEndOf="@+id/country_icon"
+                    app:layout_constraintTop_toBottomOf="@+id/wine_sub_title"
+                    android:text="호주" />
+
+                <TextView
+                    android:id="@+id/wine_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:lineSpacingExtra="0sp"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/country_text"
+                    android:text="31,300원" />
+
+                <TextView
+                    android:id="@+id/wine_sub_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:lineSpacingExtra="0sp"
+                    android:textColor="#9f9f9f"
+                    android:textSize="13sp"
+                    android:textStyle="normal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/wine_price"
+                    android:text="100ml 당 : 6,374원, 총 용량 : 750ml" />
+
+                <TextView
+                    android:id="@+id/wine_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:lineSpacingExtra="11sp"
+                    android:textColor="#000000"
+                    android:textSize="14sp"
+                    android:textStyle="normal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/wine_sub_price"
+                    android:text="클라우디 베이는 엷은 초록색을 띄고 있으며 신선한
+    열대과일과 라임향, 풋풋한 풀내음을 느낄 수 있습니다.
+    입안에서는 산뜻함과 깔끔한 여운이 특징적입니다." />
+
+                <LinearLayout
+                    android:id="@+id/image_check_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_marginTop="24dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@+id/wine_content">
+
+                    <TextView
+                        android:id="@+id/wine_image_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="20dp"
+                        android:lineSpacingExtra="-2sp"
+                        android:text="🍷"
+                        android:textColor="#000000"
+                        android:textSize="25sp"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/wine_image_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="15dp"
+                        android:lineSpacingExtra="0sp"
+                        android:text="와인 이미지 확인하기"
+                        android:textColor="#000000"
+                        android:textSize="14sp"
+                        android:textStyle="normal" />
+
+                    <ImageView
+                        android:id="@+id/wine_image_button"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="128dp"
+                        android:layout_marginEnd="12dp"
+                        android:background="#00FFFFFF"
+                        android:padding="0dp"
+                        app:srcCompat="@drawable/right_arrow_black" />
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/point_constraint"
+                android:layout_width="match_parent"
+                android:layout_height="342dp"
+                android:layout_marginTop="56dp"
+                android:background="@drawable/detail_gray_color"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/detail_constraint">
+
+                <TextView
+                    android:id="@+id/wine_point_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="64dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:lineSpacingExtra="0sp"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/point_constraint"
+                    android:text="몬탈치노 특징" />
+
+                <TextView
+                    android:id="@+id/wine_point_sub_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:lineSpacingExtra="0sp"
+                    android:textColor="#000000"
+                    android:textSize="15sp"
+                    android:textStyle="normal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/wine_point_text"
+                    android:text="몬탈치노는 에피타이저, 테이블에 어울려요." />
+
+                <LinearLayout
+                    android:id="@+id/wine_point_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/wine_point_sub_text">
+
+                    <LinearLayout
+                        android:layout_width="148dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/detail_radius"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/red_wine" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center_horizontal"
+                            android:lineSpacingExtra="0sp"
+                            android:textColor="#000000"
+                            android:textSize="14sp"
+                            android:textStyle="normal"
+                            android:text="Red Wine" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="148dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/detail_radius"
+                        android:layout_marginLeft="16dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/table" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center_horizontal"
+                            android:lineSpacingExtra="0sp"
+                            android:textColor="#000000"
+                            android:textSize="14sp"
+                            android:textStyle="normal"
+                            android:text="Table" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/characterist_constraint"
+                android:layout_width="match_parent"
+                android:layout_height="459dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/point_constraint" >
+
+                <TextView
+                    android:id="@+id/wine_characterist_text1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="64dp"
+                    android:lineSpacingExtra="10sp"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:text="신선한 과일향의" />
+
+                <TextView
+                    android:id="@+id/wine_characterist_text2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:lineSpacingExtra="10sp"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/wine_characterist_text1"
+                    android:text="몬탈치노" />
+
+                <TextView
+                    android:id="@+id/wine_characterist_sub_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:lineSpacingExtra="-1sp"
+                    android:textColor="#000000"
+                    android:textSize="15sp"
+                    android:textStyle="normal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/wine_characterist_text2"
+                    android:text="몬탈치노의 당도와 바디감을 알려드릴게요." />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/characterist_linear_sweet"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="21dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/wine_characterist_sub_text">
+
+                    <TextView
+                        android:id="@+id/sweet_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:lineSpacingExtra="0sp"
+                        android:textColor="#000000"
+                        android:textSize="15sp"
+                        android:textStyle="normal"
+                        android:layout_marginEnd="3dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:text="당도" />
+
+                    <ImageView
+                        android:id="@+id/question_icon_sweet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/question"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/sweet_text"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/bubble_sweet"
+                        android:layout_width="215dp"
+                        android:layout_height="56dp"
+                        android:layout_marginStart="8dp"
+                        android:src="@drawable/bubble"
+                        app:layout_constraintStart_toEndOf="@+id/question_icon_sweet"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/bubble_sweet_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="@+id/bubble_sweet"
+                        app:layout_constraintTop_toTopOf="@+id/bubble_sweet"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="8dp"
+                        android:textStyle="normal"
+                        android:textSize="12sp"
+                        android:textColor="#80000000"
+                        android:text="말 그대로 단맛의 정도예요." />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="@+id/bubble_sweet"
+                        app:layout_constraintStart_toStartOf="@+id/bubble_sweet_text"
+                        android:layout_marginBottom="8dp"
+                        android:textStyle="normal"
+                        android:textSize="12sp"
+                        android:textColor="#80000000"
+                        android:text="스위트, 드라이 등으로 표현하기도 해요." />
+
+                    <ImageView
+                        android:id="@+id/total_width_sweet"
+                        android:layout_width="0dp"
+                        android:layout_height="13dp"
+                        android:layout_marginStart="32dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/question_icon_sweet"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/question_icon_sweet"
+                        app:layout_constraintTop_toTopOf="@+id/question_icon_sweet"
+                        app:srcCompat="@drawable/set_radius_gray_bar" />
+
+                    <ImageView
+                        android:id="@+id/paint_width_sweet"
+                        android:layout_width="33dp"
+                        android:layout_height="13dp"
+                        android:layout_marginStart="32dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/question_icon_sweet"
+                        app:layout_constraintStart_toEndOf="@+id/question_icon_sweet"
+                        app:layout_constraintTop_toTopOf="@+id/question_icon_sweet"
+                        app:srcCompat="@drawable/set_radius_pink_bar" />
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:lineSpacingExtra="10sp"
+                        android:textColor="#ababab"
+                        android:textSize="10sp"
+                        android:textStyle="normal"
+                        app:layout_constraintStart_toStartOf="@+id/total_width_sweet"
+                        app:layout_constraintTop_toBottomOf="@+id/total_width_sweet"
+                        android:text="낮음" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:lineSpacingExtra="10sp"
+                        android:textColor="#ababab"
+                        android:textSize="10sp"
+                        android:textStyle="normal"
+                        android:layout_marginTop="3dp"
+                        app:layout_constraintEnd_toEndOf="@+id/total_width_sweet"
+                        app:layout_constraintTop_toBottomOf="@+id/total_width_sweet"
+                        android:text="높음" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/characterist_linear_sparkling"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/characterist_linear_sweet">
+
+                    <TextView
+                        android:id="@+id/sparkling_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:lineSpacingExtra="0sp"
+                        android:textColor="#000000"
+                        android:textSize="15sp"
+                        android:textStyle="normal"
+                        android:layout_marginEnd="3dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:text="산도" />
+
+                    <ImageView
+                        android:id="@+id/question_icon_sparkling"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/question"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/sparkling_text"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/bubble_sparkling"
+                        android:layout_width="215dp"
+                        android:layout_height="56dp"
+                        android:layout_marginStart="8dp"
+                        android:src="@drawable/bubble"
+                        app:layout_constraintStart_toEndOf="@+id/question_icon_sparkling"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/bubble_sparkling_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="@+id/bubble_sparkling"
+                        app:layout_constraintTop_toTopOf="@+id/bubble_sparkling"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="8dp"
+                        android:textStyle="normal"
+                        android:textSize="12sp"
+                        android:textColor="#80000000"
+                        android:text="신맛의 정도를 뜻해요." />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="@+id/bubble_sparkling"
+                        app:layout_constraintStart_toStartOf="@+id/bubble_sparkling_text"
+                        android:layout_marginBottom="8dp"
+                        android:textStyle="normal"
+                        android:textSize="12sp"
+                        android:textColor="#80000000"
+                        android:text="너무 높으면 날카롭다는 느낌을 받아요." />
+
+                    <ImageView
+                        android:id="@+id/total_width_sparkling"
+                        android:layout_width="0dp"
+                        android:layout_height="13dp"
+                        android:layout_marginStart="32dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/question_icon_sparkling"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/question_icon_sparkling"
+                        app:layout_constraintTop_toTopOf="@+id/question_icon_sparkling"
+                        app:srcCompat="@drawable/set_radius_gray_bar" />
+
+                    <ImageView
+                        android:id="@+id/paint_width_sparkling"
+                        android:layout_width="33dp"
+                        android:layout_height="13dp"
+                        android:layout_marginStart="32dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/question_icon_sparkling"
+                        app:layout_constraintStart_toEndOf="@+id/question_icon_sparkling"
+                        app:layout_constraintTop_toTopOf="@+id/question_icon_sparkling"
+                        app:srcCompat="@drawable/set_radius_pink_bar" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:lineSpacingExtra="10sp"
+                        android:textColor="#ababab"
+                        android:textSize="10sp"
+                        android:textStyle="normal"
+                        android:layout_marginTop="3dp"
+                        app:layout_constraintStart_toStartOf="@+id/total_width_sparkling"
+                        app:layout_constraintTop_toBottomOf="@+id/total_width_sparkling"
+                        android:text="낮음" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:lineSpacingExtra="10sp"
+                        android:textColor="#ababab"
+                        android:textSize="10sp"
+                        android:textStyle="normal"
+                        android:layout_marginTop="3dp"
+                        app:layout_constraintEnd_toEndOf="@+id/total_width_sparkling"
+                        app:layout_constraintTop_toBottomOf="@+id/total_width_sparkling"
+                        android:text="높음" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/characterist_linear_weight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/characterist_linear_sparkling">
+
+                    <TextView
+                        android:id="@+id/weight_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:lineSpacingExtra="0sp"
+                        android:textColor="#000000"
+                        android:textSize="15sp"
+                        android:textStyle="normal"
+                        android:layout_marginEnd="3dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:text="바디" />
+
+                    <ImageView
+                        android:id="@+id/question_icon_weight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/question"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/weight_text"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/bubble_weight"
+                        android:layout_width="215dp"
+                        android:layout_height="56dp"
+                        android:layout_marginStart="8dp"
+                        android:src="@drawable/bubble"
+                        app:layout_constraintStart_toEndOf="@+id/question_icon_weight"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/bubble_weight_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="@+id/bubble_weight"
+                        app:layout_constraintTop_toTopOf="@+id/bubble_weight"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="8dp"
+                        android:textStyle="normal"
+                        android:textSize="12sp"
+                        android:textColor="#80000000"
+                        android:text="높을수록 묵직한 느낌이 들어요." />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="@+id/bubble_weight"
+                        app:layout_constraintStart_toStartOf="@+id/bubble_weight_text"
+                        android:layout_marginBottom="8dp"
+                        android:textStyle="normal"
+                        android:textSize="12sp"
+                        android:textColor="#80000000"
+                        android:text="와인 점도에는 알코올이 영향을 줍니다." />
+
+                    <ImageView
+                        android:id="@+id/total_width_weight"
+                        android:layout_width="0dp"
+                        android:layout_height="13dp"
+                        android:layout_marginStart="32dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/question_icon_weight"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/question_icon_weight"
+                        app:layout_constraintTop_toTopOf="@+id/question_icon_weight"
+                        app:srcCompat="@drawable/set_radius_gray_bar" />
+
+                    <ImageView
+                        android:id="@+id/paint_width_weight"
+                        android:layout_width="33dp"
+                        android:layout_height="13dp"
+                        android:layout_marginStart="32dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/question_icon_weight"
+                        app:layout_constraintStart_toEndOf="@+id/question_icon_weight"
+                        app:layout_constraintTop_toTopOf="@+id/question_icon_weight"
+                        app:srcCompat="@drawable/set_radius_pink_bar" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:lineSpacingExtra="10sp"
+                        android:textColor="#ababab"
+                        android:textSize="10sp"
+                        android:textStyle="normal"
+                        android:layout_marginTop="3dp"
+                        app:layout_constraintStart_toStartOf="@+id/total_width_weight"
+                        app:layout_constraintTop_toBottomOf="@+id/total_width_weight"
+                        android:text="가벼움" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:lineSpacingExtra="10sp"
+                        android:textColor="#ababab"
+                        android:textSize="10sp"
+                        android:textStyle="normal"
+                        android:layout_marginTop="3dp"
+                        app:layout_constraintEnd_toEndOf="@+id/total_width_weight"
+                        app:layout_constraintTop_toBottomOf="@+id/total_width_weight"
+                        android:text="무거움" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/characterist_linear_astringent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/characterist_linear_weight">
+
+                    <TextView
+                        android:id="@+id/astringent_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:lineSpacingExtra="0sp"
+                        android:textColor="#000000"
+                        android:textSize="15sp"
+                        android:textStyle="normal"
+                        android:layout_marginEnd="3dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:text="타닌" />
+
+                    <ImageView
+                        android:id="@+id/question_icon_astringent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/question"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/astringent_text"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/bubble_astringent"
+                        android:layout_width="215dp"
+                        android:layout_height="56dp"
+                        android:layout_marginStart="8dp"
+                        android:src="@drawable/bubble"
+                        app:layout_constraintStart_toEndOf="@+id/question_icon_astringent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/bubble_astringent_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="@+id/bubble_astringent"
+                        app:layout_constraintTop_toTopOf="@+id/bubble_astringent"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="8dp"
+                        android:textStyle="normal"
+                        android:textSize="12sp"
+                        android:textColor="#80000000"
+                        android:text="탄닌은 포도의 껍질에서 나오는" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="@+id/bubble_astringent"
+                        app:layout_constraintStart_toStartOf="@+id/bubble_astringent_text"
+                        android:layout_marginBottom="8dp"
+                        android:textStyle="normal"
+                        android:textSize="12sp"
+                        android:textColor="#80000000"
+                        android:text="성분이에요. 높을수록 떫은맛이 강하죠." />
+
+                    <ImageView
+                        android:id="@+id/total_width_astringent"
+                        android:layout_width="0dp"
+                        android:layout_height="13dp"
+                        android:layout_marginStart="32dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/question_icon_astringent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/question_icon_astringent"
+                        app:layout_constraintTop_toTopOf="@+id/question_icon_astringent"
+                        app:srcCompat="@drawable/set_radius_gray_bar" />
+
+                    <ImageView
+                        android:id="@+id/paint_width_astringent"
+                        android:layout_width="33dp"
+                        android:layout_height="13dp"
+                        android:layout_marginStart="32dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/question_icon_astringent"
+                        app:layout_constraintStart_toEndOf="@+id/question_icon_astringent"
+                        app:layout_constraintTop_toTopOf="@+id/question_icon_astringent"
+                        app:srcCompat="@drawable/set_radius_pink_bar" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:lineSpacingExtra="10sp"
+                        android:textColor="#ababab"
+                        android:textSize="10sp"
+                        android:textStyle="normal"
+                        android:layout_marginTop="3dp"
+                        app:layout_constraintStart_toStartOf="@+id/total_width_astringent"
+                        app:layout_constraintTop_toBottomOf="@+id/total_width_astringent"
+                        android:text="가벼움" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:lineSpacingExtra="10sp"
+                        android:textColor="#ababab"
+                        android:textSize="10sp"
+                        android:textStyle="normal"
+                        android:layout_marginTop="3dp"
+                        app:layout_constraintEnd_toEndOf="@+id/total_width_astringent"
+                        app:layout_constraintTop_toBottomOf="@+id/total_width_astringent"
+                        android:text="무거움" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/wine_with_constraint"
+                android:layout_width="match_parent"
+                android:layout_height="492dp"
+                android:background="@drawable/detail_gray_color"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/characterist_constraint">
+
+                <TextView
+                    android:id="@+id/wine_with_text1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:textColor="#000000"
+                    android:lineSpacingExtra="10sp"
+                    android:layout_marginTop="61dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/wine_with_constraint"
+                    android:text="함께하면" />
+
+                <TextView
+                    android:id="@+id/wine_with_text2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="10sp"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/wine_with_text1"
+                    android:text="더 맛있는 요리 6" />
+
+                <TextView
+                    android:id="@+id/wine_with_sub_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="0sp"
+                    android:textColor="#000000"
+                    android:textSize="15sp"
+                    android:textStyle="normal"
+                    android:layout_marginTop="11dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/wine_with_text2"
+                    android:text="해산물, 향이 강한 요리와 잘 어울려요." />
+
+                <LinearLayout
+                    android:id="@+id/wine_with_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="43dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/wine_with_sub_text">
+
+                    <LinearLayout
+                        android:layout_width="94dp"
+                        android:layout_height="117dp"
+                        android:background="@drawable/detail_radius"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="27dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/bread" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center_horizontal"
+                            android:layout_marginTop="15dp"
+                            android:lineSpacingExtra="3sp"
+                            android:textColor="#000000"
+                            android:textSize="12sp"
+                            android:textStyle="normal"
+                            android:text="빵" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

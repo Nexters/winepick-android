@@ -3,15 +3,12 @@ package kr.co.nexters.winepick.ui.search
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.lifecycle.LifecycleObserver
+import kr.co.nexters.winepick.R
+import kr.co.nexters.winepick.data.model.local.SearchFilterGroup
 import kr.co.nexters.winepick.data.model.local.SearchFilterItem
 import kr.co.nexters.winepick.databinding.LayoutSearchFilterItemBinding
-import kr.co.nexters.winepick.util.setOnSingleClickListener
-import timber.log.Timber
 
 /**
  * 검색 필터 설정화면에서 사용하는 아이템 뷰
@@ -32,6 +29,14 @@ class SearchFilterItemButton(
         binding.vm = viewModel
         binding.searchFilterItem = searchFilterItem
         binding.lifecycleOwner = activity
+        if (searchFilterItem.group == SearchFilterGroup.CONVENIENCE) {
+            when (searchFilterItem.value) {
+                "CU" -> binding.tbFilterItem.setBackgroundResource(R.drawable.bg_search_filter_item_cu)
+                "GS25" -> binding.tbFilterItem.setBackgroundResource(R.drawable.bg_search_filter_item_gs_25)
+                "이마트 24" -> binding.tbFilterItem.setBackgroundResource(R.drawable.bg_search_filter_item_emart_24)
+                "세븐일레븐" -> binding.tbFilterItem.setBackgroundResource(R.drawable.bg_search_filter_item_seven_eleven)
+            }
+        }
 
         binding.executePendingBindings()
     }

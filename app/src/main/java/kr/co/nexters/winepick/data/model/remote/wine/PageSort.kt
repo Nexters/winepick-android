@@ -1,8 +1,8 @@
 package kr.co.nexters.winepick.data.model.remote.wine
 
+import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kr.co.nexters.winepick.data.constant.DependencyServer
 import kr.co.nexters.winepick.network.WinePickService
 
 /**
@@ -14,14 +14,16 @@ import kr.co.nexters.winepick.network.WinePickService
  * @param unsorted
  */
 @Serializable
-@DependencyServer
 data class PageSort(
     @SerialName("empty")
+    @SerializedName("empty")
     val empty: Boolean? = null,
 
     @SerialName("sorted")
+    @SerializedName("sorted")
     val sorted: Boolean? = null,
 
     @SerialName("unsorted")
+    @SerializedName("unsorted")
     val unsorted: Boolean? = null
 )

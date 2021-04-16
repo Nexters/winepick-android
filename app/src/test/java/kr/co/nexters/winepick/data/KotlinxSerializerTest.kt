@@ -1,5 +1,6 @@
 package kr.co.nexters.winepick.data
 
+import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
@@ -14,6 +15,7 @@ import org.junit.Test
  *
  * @since v1.0.0 / 2021.02.02
  */
+@HiltAndroidTest
 class KotlinxSerializerTest {
     @Test
     fun jsonSerializerParseTest() {

@@ -3,29 +3,39 @@ package kr.co.nexters.winepick.ui.home
 import android.content.Intent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.WinePickApplication
-import kr.co.nexters.winepick.constant.testConstant.Companion.A
-import kr.co.nexters.winepick.constant.testConstant.Companion.B
-import kr.co.nexters.winepick.constant.testConstant.Companion.C
-import kr.co.nexters.winepick.constant.testConstant.Companion.D
-import kr.co.nexters.winepick.constant.testConstant.Companion.E
-import kr.co.nexters.winepick.constant.testConstant.Companion.F
+import kr.co.nexters.winepick.constant.TestConstant.A
+import kr.co.nexters.winepick.constant.TestConstant.B
+import kr.co.nexters.winepick.constant.TestConstant.C
+import kr.co.nexters.winepick.constant.TestConstant.D
+import kr.co.nexters.winepick.constant.TestConstant.E
+import kr.co.nexters.winepick.constant.TestConstant.F
+import kr.co.nexters.winepick.constant.Constant
+import kr.co.nexters.winepick.data.model.SurveyInfo
+import kr.co.nexters.winepick.data.repository.SurveyRepository
 import kr.co.nexters.winepick.data.repository.WinePickRepository
 import kr.co.nexters.winepick.di.AuthManager
 import kr.co.nexters.winepick.ui.base.BaseViewModel
 import kr.co.nexters.winepick.ui.like.LikeListActivity
 import kr.co.nexters.winepick.ui.search.SearchActivity
-import kr.co.nexters.winepick.ui.survey.SurveyActivity
 import kr.co.nexters.winepick.ui.type.TypeDetailActivity
+import javax.inject.Inject
 
 /**
  * Kotlin 에서 사용하는 ViewModel 예
  *
  * @since v1.0.0 / 2021.01.28
  */
-class HomeViewModel(private val repo: WinePickRepository, private val auth: AuthManager) : BaseViewModel() {
-    private var _likecnt = MutableLiveData<Int>()
-    var likeCnt : LiveData<Int> = _likecnt
+@HiltViewModel
+class HomeViewModel @Inject constructor(
+    private val surveyRepository: SurveyRepository,
+    private val auth: AuthManager,
+    private val winePickRepository: WinePickRepository
+) : BaseViewModel(winePickRepository) {
+    private var _likecnt = MutableLiveData<String>()
+    var likeCnt : LiveData<String> = _likecnt
 
     private var _isTest : MutableLiveData<Boolean> = MutableLiveData()
     val isTest : LiveData<Boolean>
@@ -35,90 +45,169 @@ class HomeViewModel(private val repo: WinePickRepository, private val auth: Auth
     val isUser : LiveData<Boolean>
         get() = _isUser
 
+    private var _loginWarningDlg : MutableLiveData<Boolean> = MutableLiveData()
+    val loginWarningDlg : LiveData<Boolean> = _loginWarningDlg
 
     private var _keyword1 = MutableLiveData<String>()
     var keyword1 : LiveData<String> = _keyword1
     private var _keyword2 = MutableLiveData<String>()
     var keyword2 : LiveData<String> = _keyword2
 
+    private var _testImg = MutableLiveData<Int>()
+    var testImg : LiveData<Int> = _testImg
+
+    private var _currentSurvey = MutableLiveData<SurveyInfo>()
+    var currentSurvey : LiveData<SurveyInfo> = _currentSurvey
+
+    lateinit var keywordList1 : Array<String>
+    lateinit var keywordList2: Array<String>
+
 
     /** 생성자 */
     init {
-        _likecnt.value = 0
+        _likecnt.value = "0"
         _isTest.value = false
         _isUser.value = false
-        if (!auth.test_type.isNullOrEmpty()) {
+        _loginWarningDlg.value = false
+
+        getUserTestInfo()
+        getUserLikes()
+    }
+
+    /** 유저 테스트 내역을 확인하여 그에 따른 데이터 설정을 해준다. */
+    fun getUserTestInfo() {
+        if (auth.testType != "N") {
             _isTest.value = true
+            setUserPersonalType()
+        } else {
+            _isTest.value = false
+            _testImg.value = 0
         }
+    }
+
+    fun getUserLikes(){
+        showLoading()
         if (auth.token != "guest") {
             _isUser.value = true
-        }
-
-    }
-    fun getUserLikes(){
-        repo.getUser(
-            accessToken = auth.token,
-            onSuccess = {
-                _likecnt.value = it.likes
-                if(it.personalityType != null) {
-                    setUserPersonalType()
+            winePickRepository.getUser(
+                userId = auth.id,
+                accessToken = auth.token,
+                onSuccess = {
+                    if (it.likes!! > 99) {
+                        _likecnt.value = "99+"
+                    }
+                    _likecnt.value = it.likes.toString()
+                    hideLoading()
+                },
+                onFailure = {
+                    hideLoading()
                 }
-            },
-            onFailure = {
-            }
-        )
+            )
+        } else
+            hideLoading()
     }
-
-
 
     fun setUserPersonalType() {
-        return when(auth.test_type) {
-            "A" -> {getUserType(A)}
-            "B" -> {getUserType(B)}
-            "C" -> {getUserType(C)}
-            "D" -> {getUserType(D)}
-            "E" -> {getUserType(E)}
-            "F" -> {getUserType(F)}
+        return when(auth.testType) {
+            "A" -> {
+                getUserType(A)
+                _testImg.value = R.drawable.img_test_a
+            }
+            "B" -> {
+                getUserType(B)
+                _testImg.value = R.drawable.img_test_b
+            }
+            "C" -> {
+                getUserType(C)
+                _testImg.value = R.drawable.img_test_c
+            }
+            "D" -> {
+                getUserType(D)
+                _testImg.value = R.drawable.img_test_d
+            }
+            "E" -> {
+                getUserType(E)
+                _testImg.value = R.drawable.img_test_e
+            }
+            "F" -> {
+                getUserType(F)
+                _testImg.value = R.drawable.img_test_f
+            }
             else -> {}
 
         }
     }
-    fun getUserType(resultId : Int) {
-        repo.getResult(
-            resultId = resultId,
-            onSuccess = {
-                _keyword1.value = it.keyword1
-                _keyword2.value = it.keyword2
-            },
-            onFailure = {
+    fun getUserType(resultId: Int) {
+        showLoading()
+        winePickRepository.getResult(
+                resultId = resultId,
+                onSuccess = {
+                    val tempKeyword1 = it.keyword1.split(",")
+                    val tempKeyword2 = it.keyword2.split(",")
+                    _keyword1.value = tempKeyword1[0]!!
+                    _keyword2.value = tempKeyword2[0]!!
+                    keywordList1 = tempKeyword1.subList(1, tempKeyword1.size).toTypedArray()
+                    keywordList2 = tempKeyword2.subList(1, tempKeyword2.size).toTypedArray()
 
-            }
+                    hideLoading()
+                },
+                onFailure = {
+                    hideLoading()
+                }
         )
+
+    }
+    fun keyword1Click() {
+        Intent(WinePickApplication.appContext, SearchActivity::class.java).apply {
+            putExtra(Constant.STRING_EXTRA_SEARCH_FILTERS_FROM_HOME,keywordList1)
+        }.run {
+            WinePickApplication.getGlobalApplicationContext().startActivity(this.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+        }
+
+    }
+    fun keyword2Click() {
+        Intent(WinePickApplication.appContext, SearchActivity::class.java).apply {
+            putExtra(Constant.STRING_EXTRA_SEARCH_FILTERS_FROM_HOME,keywordList2)
+        }.run {
+            WinePickApplication.getGlobalApplicationContext().startActivity(this.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+        }
+
     }
 
     fun testClick() {
-        Intent()
-        WinePickApplication.getGlobalApplicationContext().startActivity(Intent(WinePickApplication.appContext,SurveyActivity::class.java)
-            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+        _currentSurvey.value = surveyRepository.getCurrentSurvey()
     }
 
     fun searchClick() {
-        WinePickApplication.getGlobalApplicationContext().startActivity(Intent(WinePickApplication.appContext,SearchActivity::class.java)
-            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+        WinePickApplication.getGlobalApplicationContext().startActivity(Intent(WinePickApplication.appContext, SearchActivity::class.java)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
     }
     fun likeClick() {
-        WinePickApplication.getGlobalApplicationContext().startActivity(Intent(WinePickApplication.appContext,
-            LikeListActivity::class.java)
-            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+        if(isUser.value!!) {
+            WinePickApplication.getGlobalApplicationContext().startActivity(
+                    Intent(
+                            WinePickApplication.appContext,
+                            LikeListActivity::class.java
+                    )
+                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            )
+        } else {
+            _loginWarningDlg.value = true
+        }
     }
     fun myTypeClick() {
         WinePickApplication.getGlobalApplicationContext().startActivity(Intent(WinePickApplication.appContext,
-            TypeDetailActivity::class.java)
-            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                TypeDetailActivity::class.java)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
     }
     /** UI 의 onDestroy 개념으로 생각하면 편할듯 */
     override fun onCleared() {
         super.onCleared()
     }
 
+    override fun onResume() {
+        super.onResume()
+        getUserTestInfo()
+        getUserLikes()
+    }
 }

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="wineFood"
+            type="kr.co.nexters.winepick.data.model.WineFood" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_wine_food"
+        android:layout_width="match_parent"
+        android:layout_height="136dp"
+        android:layout_gravity="center"
+        android:background="@drawable/bg_wine_border_white_10">
+
+        <ImageView
+            android:id="@+id/iv_wine_food"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="26dp"
+            android:scaleType="fitXY"
+            app:imageResource="@{wineFood.img}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/bread_icon" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/notosans_cjk_kr_regular"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="@{wineFood.title}"
+            android:textColor="@color/black"
+            android:textSize="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_wine_food"
+            tools:text="sdajkfladsjlfkajslfjs" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

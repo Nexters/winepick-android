@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="wineResult"
+            type="kr.co.nexters.winepick.data.model.remote.wine.WineResult" />
+
+        <variable
+            name="vm"
+            type="kr.co.nexters.winepick.ui.base.WineResultViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="16dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/img_search_result_image"
+            android:layout_width="120dp"
+            android:layout_height="0dp"
+            app:imageResource="@{wineResult.wineImg}"
+            android:background="@drawable/bg_search_wine_gray_10"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="W, 4:3"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/item_search_result_dummy" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btn_search_result_heart"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:background="@{wineResult.likeYn? @drawable/like_success :@drawable/like_false}"
+            app:layout_constraintLeft_toLeftOf="@id/img_search_result_image"
+            app:layout_constraintTop_toTopOf="@id/img_search_result_image" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_result_right"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/img_search_result_image"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_search_result_nm_kor"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{wineResult.nmKor}"
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                android:textStyle="normal"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="라포데리나 브루넬로 디 몬탈치노" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_search_result_nm_kor"
+                android:id="@+id/img_search_result_country"
+                tools:src="@drawable/us_icon"
+                app:imageResource="@{wineResult.wineCountryImg}"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_search_result_country"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="4dp"
+                android:text="@{wineResult.country}"
+                android:textColor="@color/search_result_country_text_color"
+                android:textSize="11dp"
+                android:textStyle="normal"
+                app:layout_constraintLeft_toRightOf="@id/img_search_result_country"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_search_result_nm_kor"
+                tools:text="몰도바" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_search_result_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@{@string/search_result_price(wineResult.price)}"
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_search_result_country"
+                tools:text="31,300원" />
+
+            <LinearLayout
+                android:id="@+id/layout_search_result_tastes"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <include
+                        android:id="@+id/layout_search_result_taste_sweetness"
+                        layout="@layout/layout_search_result_taste"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:title="@{`단맛`}"
+                        tools:value="@{wineResult.sweetness}" />
+
+                    <include
+                        android:id="@+id/layout_search_result_taste_acidity"
+                        layout="@layout/layout_search_result_taste"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        tools:title="@{`산미`}"
+                        tools:value="@{wineResult.acidity}" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:orientation="horizontal">
+
+                    <include
+                        android:id="@+id/layout_search_result_taste_body"
+                        layout="@layout/layout_search_result_taste"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:title="@{`묵직함`}"
+                        tools:value="@{wineResult.body}" />
+
+                    <include
+                        android:id="@+id/layout_search_result_taste_tannin"
+                        layout="@layout/layout_search_result_taste"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="6dp"
+                        tools:title="@{`부드러움`}"
+                        tools:value="@{wineResult.tannin}" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

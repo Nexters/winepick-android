@@ -1,8 +1,9 @@
 package kr.co.nexters.winepick.data.model.remote.wine
 
+import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kr.co.nexters.winepick.data.constant.DependencyServer
+import kr.co.nexters.winepick.constant.DependencyServer
 import kr.co.nexters.winepick.network.WinePickService
 
 /**
@@ -10,8 +11,8 @@ import kr.co.nexters.winepick.network.WinePickService
  * [WinePickService.getWines] 의 data.pageable 의 구조
  *
  * @param offset
- * @param pageNumber
- * @param pageSize
+ * @param page
+ * @param size
  * @param paged
  * @param sort
  * @param unpaged
@@ -20,20 +21,26 @@ import kr.co.nexters.winepick.network.WinePickService
 @DependencyServer
 data class PageInfo(
     @SerialName("offset")
+    @SerializedName("offset")
     val offset: Int? = null,
 
-    @SerialName("pageNumber")
-    val pageNumber: Int? = null,
+    @SerialName("page")
+    @SerializedName("page")
+    val page: Int? = null,
 
-    @SerialName("pageSize")
-    val pageSize: Int? = null,
+    @SerialName("size")
+    @SerializedName("size")
+    val size: Int? = null,
 
     @SerialName("paged")
+    @SerializedName("paged")
     val paged: Boolean? = null,
 
     @SerialName("sort")
+    @SerializedName("sort")
     val sort: PageSort? = null,
 
     @SerialName("unpaged")
+    @SerializedName("unpaged")
     val unpaged: Boolean? = null
 )

@@ -2,19 +2,25 @@ package kr.co.nexters.winepick.ui.search
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kr.co.nexters.winepick.data.model.local.SearchFilterGroup
 import kr.co.nexters.winepick.data.model.local.SearchFilterItem
 import kr.co.nexters.winepick.data.repository.SearchRepository
+import kr.co.nexters.winepick.data.repository.WinePickRepository
 import kr.co.nexters.winepick.ui.base.BaseViewModel
 import timber.log.Timber
+import javax.inject.Inject
 
 /**
  * 검색 화면 ViewModel
  *
- * @author ricky
  * @since v1.0.0 / 2021.02.06
  */
-class SearchFilterViewModel : BaseViewModel() {
+@HiltViewModel
+class SearchFilterViewModel @Inject constructor(
+    private val searchRepository: SearchRepository,
+    private val winePickRepository: WinePickRepository
+) : BaseViewModel(winePickRepository) {
     /**
      * 필터 화면을 실행 시 맨 처음에 보여지는 필터 아이템 데이터 목록 LiveData
      *
@@ -39,8 +45,8 @@ class SearchFilterViewModel : BaseViewModel() {
 
     init {
         _prevFilterItems.value = mutableListOf<SearchFilterItem>()
-            .apply { addAll(SearchRepository.userSearchFilterItems) }
-        _changedFilterItems.addAll(SearchRepository.userSearchFilterItems)
+            .apply { addAll(searchRepository.userSearchFilterItems) }
+        _changedFilterItems.addAll(searchRepository.userSearchFilterItems)
     }
 
     /** 클릭으로 인해 변경된, 필터 아이템 내용을 반영한다. */
@@ -49,7 +55,7 @@ class SearchFilterViewModel : BaseViewModel() {
 
         val prevUpdatedItem = when (needToUpdateItem.group) {
             // 중복 가능한 경우 (맛, 이벤트)
-            SearchFilterGroup.TASTE, SearchFilterGroup.EVENT -> null
+            SearchFilterGroup.TASTE, SearchFilterGroup.EVENT, SearchFilterGroup.CONVENIENCE -> null
             // 중복 불가능한 경우
             else -> {
                 // 비활성화 시켜주어야 하는 아이템 찾기 (등록한 게 없는 경우 null)
@@ -62,12 +68,12 @@ class SearchFilterViewModel : BaseViewModel() {
 
         val newUpdatedItem = needToUpdateItem.copy(selected = !needToUpdateItem.selected)
 
-        if (SearchRepository.updateFilterItems(newUpdatedItem, prevUpdatedItem)) {
+        if (searchRepository.updateFilterItems(newUpdatedItem, prevUpdatedItem)) {
             logChangedFilterItems(newUpdatedItem)
             _changeSearchFilterItem.value = newUpdatedItem
             prevUpdatedItem?.let {
-                logChangedFilterItems(prevUpdatedItem)
-                _changeSearchFilterItem.value = prevUpdatedItem
+                logChangedFilterItems(it)
+                _changeSearchFilterItem.value = it
             }
         }
     }
@@ -81,7 +87,7 @@ class SearchFilterViewModel : BaseViewModel() {
 
         val newUpdatedItem = needToReplaceItem.copy(value = newSliderValue)
 
-        if (SearchRepository.updateFilterItems(newUpdatedItem)) {
+        if (searchRepository.updateFilterItems(newUpdatedItem)) {
             logChangedFilterItems(newUpdatedItem)
             _changeSearchFilterItem.value = newUpdatedItem
         }
@@ -116,7 +122,7 @@ class SearchFilterViewModel : BaseViewModel() {
         // 여기까지 왔으면 변경된 내용이 없거나, 변경된 내역을 기억하면 안되는 것이므로
         // SearchRepository 에 저장되어 있는 내용도 롤백시킨다.
         // (prevFilterItems 은 null 일 수가 없다.)
-        SearchRepository.rollbackFilterItems(prevFilterItems.value!!)
+        searchRepository.rollbackFilterItems(prevFilterItems.value!!)
 
         return needToUpdate
     }

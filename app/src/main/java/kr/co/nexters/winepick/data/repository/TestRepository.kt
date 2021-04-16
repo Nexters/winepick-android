@@ -8,19 +8,20 @@ import kotlinx.coroutines.withContext
 import kr.co.nexters.winepick.data.model.DummyDetailMovie
 import kr.co.nexters.winepick.data.response.DummyMovieCommentResponse
 import kr.co.nexters.winepick.data.response.DummyMovieResponse
-import kr.co.nexters.winepick.network.NetworkModules
-import kr.co.nexters.winepick.network.NetworkModules.send
+import kr.co.nexters.winepick.di.send
+import kr.co.nexters.winepick.network.TestService
 import okhttp3.RequestBody
+import javax.inject.Inject
 
 /**
  * 테스트 Repository
  *
  * @since v1.0.0 / 2021.02.04
  */
-object TestRepository {
+class TestRepository @Inject constructor(private val testService: TestService) {
     suspend fun getMovies(orderType: Int) = withContext(Dispatchers.IO) {
         // dataSource 가 필요한 경우 옮긴다.
-        val response = NetworkModules.testRetrofit.getMovies(orderType).send()
+        val response = testService.getMovies(orderType).send()
 
         /** statusCode 별 처리 */
         when (response.code()) {
@@ -33,13 +34,13 @@ object TestRepository {
     }
 
     fun getMoviesRx(orderType: Int): Single<DummyMovieResponse> {
-        return NetworkModules.testRetrofit.getMoviesRx(orderType)
+        return testService.getMoviesRx(orderType)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }
 
     suspend fun getMovie(id: String) = withContext(Dispatchers.IO) {
-        val response = NetworkModules.testRetrofit.getMovie(id).send()
+        val response = testService.getMovie(id).send()
 
         /** statusCode 별 처리 */
         when (response.code()) {
@@ -52,13 +53,13 @@ object TestRepository {
     }
 
     fun getMovieRx(id: String): Single<DummyDetailMovie> {
-        return NetworkModules.testRetrofit.getMovieRx(id)
+        return testService.getMovieRx(id)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }
 
     suspend fun postComment(body: RequestBody) = withContext(Dispatchers.IO) {
-        val response = NetworkModules.testRetrofit.postComment(body).send()
+        val response = testService.postComment(body).send()
 
         /** statusCode 별 처리 */
         when (response.code()) {
@@ -71,7 +72,7 @@ object TestRepository {
     }
 
     fun postCommentRx(body: RequestBody): Single<DummyMovieCommentResponse> {
-        return NetworkModules.testRetrofit.postCommentRx(body)
+        return testService.postCommentRx(body)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }

@@ -1,5 +1,6 @@
 package kr.co.nexters.winepick.data
 
+import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.runBlocking
 import kr.co.nexters.winepick.base.AndroidBaseTest
 import kr.co.nexters.winepick.util.SharedPrefs
@@ -12,6 +13,7 @@ import org.junit.Test
  *
  * @since v1.0.0 / 2021.02.03
  */
+@HiltAndroidTest
 class SharedPrefsTest : AndroidBaseTest() {
     companion object {
         val stringKey = "StringKey"
@@ -24,7 +26,7 @@ class SharedPrefsTest : AndroidBaseTest() {
     @After
     fun tearDown(){
         // 프리퍼런스 초기화
-        SharedPrefs.clear()
+        sharedPrefs.clear()
     }
 
     @Test
@@ -38,68 +40,68 @@ class SharedPrefsTest : AndroidBaseTest() {
         println()
 
         println("default Value print")
-        println(SharedPrefs[stringKey, "abcd"])
-        println(SharedPrefs[intKey, 3])
-        println(SharedPrefs[longKey, 3L])
-        println(SharedPrefs[floatKey, 5f])
-        println(SharedPrefs[booleanKey, true])
+        println(sharedPrefs[stringKey, "abcd"])
+        println(sharedPrefs[intKey, 3])
+        println(sharedPrefs[longKey, 3L])
+        println(sharedPrefs[floatKey, 5f])
+        println(sharedPrefs[booleanKey, true])
         println()
 
         println("set & get print")
-        SharedPrefs[stringKey] = "abcd"
-        SharedPrefs[intKey] = 3
-        SharedPrefs[longKey] = 3L
-        SharedPrefs[floatKey] = 5f
-        SharedPrefs[booleanKey] = true
-        println(SharedPrefs[stringKey, "efgh"])
-        println(SharedPrefs[intKey, 33333])
-        println(SharedPrefs[longKey, 333L])
-        println(SharedPrefs[floatKey, 533f])
-        println(SharedPrefs[booleanKey, false])
+        sharedPrefs[stringKey] = "abcd"
+        sharedPrefs[intKey] = 3
+        sharedPrefs[longKey] = 3L
+        sharedPrefs[floatKey] = 5f
+        sharedPrefs[booleanKey] = true
+        println(sharedPrefs[stringKey, "efgh"])
+        println(sharedPrefs[intKey, 33333])
+        println(sharedPrefs[longKey, 333L])
+        println(sharedPrefs[floatKey, 533f])
+        println(sharedPrefs[booleanKey, false])
         println()
 
         println("getAll print")
-        println(SharedPrefs.all)
+        println(sharedPrefs.all)
         println()
 
         println("minusAssign & contains print")
-        SharedPrefs -= stringKey
-        println(stringKey in SharedPrefs)
-        println(intKey in SharedPrefs)
-        println(longKey in SharedPrefs)
-        println(floatKey in SharedPrefs)
-        println(booleanKey in SharedPrefs)
+        sharedPrefs -= stringKey
+        println(stringKey in sharedPrefs)
+        println(intKey in sharedPrefs)
+        println(longKey in sharedPrefs)
+        println(floatKey in sharedPrefs)
+        println(booleanKey in sharedPrefs)
         println()
 
         println("clear print")
-        SharedPrefs.clear()
-        println(SharedPrefs[stringKey, "a"])
-        println(SharedPrefs[intKey, -1])
-        println(SharedPrefs[longKey, 0L])
-        println(SharedPrefs[floatKey, 0.0F])
-        println(SharedPrefs[booleanKey, false])
+        sharedPrefs.clear()
+        println(sharedPrefs[stringKey, "a"])
+        println(sharedPrefs[intKey, -1])
+        println(sharedPrefs[longKey, 0L])
+        println(sharedPrefs[floatKey, 0.0F])
+        println(sharedPrefs[booleanKey, false])
     }
 
     @Test
     fun sharedPrefTest() = runBlocking {
         // default Value print
-        Assert.assertTrue("abcd" == SharedPrefs[stringKey, "abcd"])
-        Assert.assertTrue(3 == SharedPrefs[intKey, 3])
-        Assert.assertTrue(3L == SharedPrefs[longKey, 3L])
-        Assert.assertTrue(5f == SharedPrefs[floatKey, 5f])
-        Assert.assertTrue(true == SharedPrefs[booleanKey, true])
+        Assert.assertTrue("abcd" == sharedPrefs[stringKey, "abcd"])
+        Assert.assertTrue(3 == sharedPrefs[intKey, 3])
+        Assert.assertTrue(3L == sharedPrefs[longKey, 3L])
+        Assert.assertTrue(5f == sharedPrefs[floatKey, 5f])
+        Assert.assertTrue(true == sharedPrefs[booleanKey, true])
 
         // set & get test
-        SharedPrefs[stringKey] = "abcd"
-        SharedPrefs[intKey] = 3
-        SharedPrefs[longKey] = 3L
-        SharedPrefs[floatKey] = 5f
-        SharedPrefs[booleanKey] = true
-        Assert.assertEquals("abcd", SharedPrefs[stringKey, "efgh"])
-        Assert.assertEquals(3, SharedPrefs[intKey, 33333])
-        Assert.assertEquals(3L, SharedPrefs[longKey, 333L])
-        Assert.assertEquals(5f, SharedPrefs[floatKey, 533f])
-        Assert.assertEquals(true, SharedPrefs[booleanKey, false])
+        sharedPrefs[stringKey] = "abcd"
+        sharedPrefs[intKey] = 3
+        sharedPrefs[longKey] = 3L
+        sharedPrefs[floatKey] = 5f
+        sharedPrefs[booleanKey] = true
+        Assert.assertEquals("abcd", sharedPrefs[stringKey, "efgh"])
+        Assert.assertEquals(3, sharedPrefs[intKey, 33333])
+        Assert.assertEquals(3L, sharedPrefs[longKey, 333L])
+        Assert.assertEquals(5f, sharedPrefs[floatKey, 533f])
+        Assert.assertEquals(true, sharedPrefs[booleanKey, false])
 
         // getAll test
         val answerMap = mapOf(
@@ -112,39 +114,39 @@ class SharedPrefsTest : AndroidBaseTest() {
         answerMap.forEach {
             when (it.value) {
                 is String -> {
-                    Assert.assertEquals(SharedPrefs[it.key, "efgh"], it.value)
+                    Assert.assertEquals(sharedPrefs[it.key, "efgh"], it.value)
                 }
                 is Int -> {
-                    Assert.assertEquals(SharedPrefs[it.key, 33333], it.value)
+                    Assert.assertEquals(sharedPrefs[it.key, 33333], it.value)
                 }
                 is Long -> {
-                    Assert.assertEquals(SharedPrefs[it.key, 333L], it.value)
+                    Assert.assertEquals(sharedPrefs[it.key, 333L], it.value)
                 }
                 is Float -> {
-                    Assert.assertEquals(SharedPrefs[it.key, 533f], it.value)
+                    Assert.assertEquals(sharedPrefs[it.key, 533f], it.value)
                 }
                 is Boolean -> {
-                    Assert.assertEquals(SharedPrefs[it.key, false], it.value)
+                    Assert.assertEquals(sharedPrefs[it.key, false], it.value)
                 }
             }
 
         }
 
         // minusAssign & contains test
-        SharedPrefs -= stringKey
-        Assert.assertFalse(stringKey in SharedPrefs)
-        Assert.assertTrue(intKey in SharedPrefs)
-        Assert.assertTrue(longKey in SharedPrefs)
-        Assert.assertTrue(floatKey in SharedPrefs)
-        Assert.assertTrue(booleanKey in SharedPrefs)
+        sharedPrefs -= stringKey
+        Assert.assertFalse(stringKey in sharedPrefs)
+        Assert.assertTrue(intKey in sharedPrefs)
+        Assert.assertTrue(longKey in sharedPrefs)
+        Assert.assertTrue(floatKey in sharedPrefs)
+        Assert.assertTrue(booleanKey in sharedPrefs)
         println()
 
         // clear test
-        SharedPrefs.clear()
-        Assert.assertEquals("a", SharedPrefs[stringKey, "a"])
-        Assert.assertEquals(-1, SharedPrefs[intKey, -1])
-        Assert.assertEquals(0L, SharedPrefs[longKey, 0L])
-        Assert.assertEquals(0.0F, SharedPrefs[floatKey, 0.0F])
-        Assert.assertEquals(false, SharedPrefs[booleanKey, false])
+        sharedPrefs.clear()
+        Assert.assertEquals("a", sharedPrefs[stringKey, "a"])
+        Assert.assertEquals(-1, sharedPrefs[intKey, -1])
+        Assert.assertEquals(0L, sharedPrefs[longKey, 0L])
+        Assert.assertEquals(0.0F, sharedPrefs[floatKey, 0.0F])
+        Assert.assertEquals(false, sharedPrefs[booleanKey, false])
     }
 }

@@ -3,15 +3,18 @@ package kr.co.nexters.winepick.util
 import android.app.Activity
 import android.content.SharedPreferences
 import androidx.annotation.VisibleForTesting
+import dagger.Provides
 import kr.co.nexters.winepick.WinePickApplication
 import org.jetbrains.annotations.NotNull
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * SharedPreference object class
  *
  * @since v1.0.0 / 2021.02.03
  */
-object SharedPrefs {
+class SharedPrefs @Inject constructor() {
     private val sharedPreferences: SharedPreferences by lazy {
         WinePickApplication.appContext!!.getSharedPreferences(
             kr.co.nexters.winepick.BuildConfig.APPLICATION_ID,
@@ -62,21 +65,23 @@ object SharedPrefs {
     operator fun <T> get(key: String, @NotNull defaultValue: T): T? {
         when (defaultValue) {
             is String -> {
-                return sharedPreferences.getString(key, defaultValue) as T
+                return sharedPreferences.getString(key, defaultValue) as T?
             }
             is Int -> {
-                return sharedPreferences.getInt(key, defaultValue) as T
+                return sharedPreferences.getInt(key, defaultValue) as T?
             }
             is Long -> {
-                return sharedPreferences.getLong(key, defaultValue) as T
+                return sharedPreferences.getLong(key, defaultValue) as T?
             }
             is Float -> {
-                return sharedPreferences.getFloat(key, defaultValue) as T
+                return sharedPreferences.getFloat(key, defaultValue) as T?
             }
             is Boolean -> {
-                return sharedPreferences.getBoolean(key, defaultValue) as T
+                return sharedPreferences.getBoolean(key, defaultValue) as T?
             }
-            else -> return null
+            else -> {
+                return null
+            }
         }
     }
 

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="wineValue"
+            type="kr.co.nexters.winepick.data.model.remote.wine.WineValue" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_wine_sweetness"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="56dp">
+
+        <TextView
+            android:id="@+id/tv_wine_sweetness"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/notosans_cjk_kr_medium"
+            android:includeFontPadding="false"
+            android:text="@{wineValue.wineTitle}"
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="당도" />
+
+
+        <ImageButton
+            android:id="@+id/img_wine_detail_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:background="@drawable/question"
+            app:layout_constraintBottom_toBottomOf="@id/tv_wine_sweetness"
+            app:layout_constraintStart_toEndOf="@id/tv_wine_sweetness"
+            app:layout_constraintTop_toTopOf="@id/tv_wine_sweetness" />
+
+
+        <ProgressBar
+            android:id="@+id/pb_wine_detail"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="14dp"
+            android:layout_marginLeft="32dp"
+            android:max="5"
+            android:progress="@{wineValue.wineNumber}"
+            android:progressDrawable="@drawable/bg_progress"
+            app:layout_constraintBottom_toBottomOf="@id/tv_wine_sweetness"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/img_wine_detail_icon"
+            app:layout_constraintTop_toTopOf="@id/tv_wine_sweetness" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:fontFamily="@font/notosans_cjk_kr_regular"
+            android:includeFontPadding="false"
+            android:text="@{wineValue.wineLow}"
+            android:textColor="@color/colorGrayab"
+            android:textSize="10dp"
+            app:layout_constraintStart_toStartOf="@id/pb_wine_detail"
+            app:layout_constraintTop_toBottomOf="@id/pb_wine_detail"
+            tools:text="낮음" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:fontFamily="@font/notosans_cjk_kr_regular"
+            android:includeFontPadding="false"
+            android:text="@{wineValue.wineHigh}"
+            android:textColor="@color/colorGrayab"
+            android:textSize="10dp"
+            app:layout_constraintEnd_toEndOf="@id/pb_wine_detail"
+            app:layout_constraintTop_toBottomOf="@id/pb_wine_detail"
+            tools:text="높음" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_wine_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/bubble"
+            android:paddingVertical="8dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="8dp"
+            android:visibility="@{wineValue.hintVisible ? View.VISIBLE : View.GONE }"
+            app:layout_constraintBottom_toBottomOf="@id/img_wine_detail_icon"
+            app:layout_constraintStart_toEndOf="@id/img_wine_detail_icon"
+            app:layout_constraintTop_toTopOf="@id/img_wine_detail_icon">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/notosans_cjk_kr_light"
+                android:includeFontPadding="false"
+                android:text="@{wineValue.wineDetail}"
+                android:textColor="@color/colorBlack80"
+                android:textSize="12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>
+
