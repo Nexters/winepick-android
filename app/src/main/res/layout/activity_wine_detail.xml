@@ -238,8 +238,9 @@
 
                     <TextView
                         android:id="@+id/tv_wine_feature"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="24dp"
                         android:layout_marginStart="24dp"
                         android:fontFamily="@font/notosans_cjk_kr_bold"
                         android:includeFontPadding="false"
@@ -247,6 +248,7 @@
                         android:textColor="@color/black"
                         android:textSize="20dp"
                         app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:text="와인 특징" />
 
@@ -302,7 +304,7 @@
 
                     <TextView
                         android:id="@+id/tv_wine_value"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/notosans_cjk_kr_bold"
                         android:includeFontPadding="false"
@@ -310,6 +312,7 @@
                         android:textSize="20dp"
                         android:text="@{@string/wine_value_title(vm.wineName)}"
                         app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:text="와인의 4가지 기준으로\n원하는 맛을 찾아보세요." />
 

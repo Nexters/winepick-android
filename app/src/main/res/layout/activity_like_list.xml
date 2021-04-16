@@ -5,7 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
+
         <variable
             name="vm"
             type="kr.co.nexters.winepick.ui.like.LikeViewModel" />
@@ -16,57 +18,67 @@
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_like_title"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:id="@+id/cl_like_title"
-            android:paddingHorizontal="24dp"
             android:background="@color/white"
+            android:paddingHorizontal="24dp"
             app:layout_constraintDimensionRatio="3:1"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent">
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
 
             <ImageView
+                android:id="@+id/iv_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/iv_back"
+                android:layout_marginTop="20dp"
                 android:padding="10dp"
-                app:onSingleClick="@{vm::backClick}"
                 android:src="@drawable/back_arrow"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="20dp"/>
+                app:onSingleClick="@{vm::backClick}" />
 
             <TextView
+                android:id="@+id/tv_like_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/tv_like_title"
-                app:layout_constraintVertical_bias="0.83"
-                android:text="@{@string/home_like_num(vm.likeNum)}"
-                android:textSize="20dp"
-                android:textColor="@color/black"
                 android:fontFamily="@font/notosans_cjk_kr_bold"
                 android:includeFontPadding="false"
+                android:text="@{@string/home_like_num(vm.likeNum)}"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintVertical_bias="0.83" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_like_list"
+            submitList="@{vm.results}"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:id="@+id/rv_like_list"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:background="@color/white"
             android:orientation="vertical"
-            submitList="@{vm.results}"
-            tools:listitem="@layout/item_wine_result"
-            app:layout_constraintTop_toBottomOf="@id/cl_like_title"
+            android:paddingHorizontal="24dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@id/cl_like_title"
+            tools:listitem="@layout/item_wine_result" />
 
+        <View
+            android:id="@+id/view_shadows"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:background="@drawable/bottom_shadows"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_like_title" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
