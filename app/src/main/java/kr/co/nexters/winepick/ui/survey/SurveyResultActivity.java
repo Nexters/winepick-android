@@ -259,23 +259,16 @@ public class SurveyResultActivity extends BaseActivity<ActivitySurveyResultBindi
         FeedTemplate params = FeedTemplate
                 .newBuilder(ContentObject.newBuilder("내 와인 타입은? " + personalityType.getPersonDetail(),
                         "https://raw.githubusercontent.com/riflockle7/ref/master/1.%20ImageRef/winepick/kakao_share_img_" + personalityType.getAnswerType() + ".png",
-                        LinkObject.newBuilder().setWebUrl("https://developers.kakao.com")
-                                .setMobileWebUrl("https://developers.kakao.com").build())
+                        LinkObject.newBuilder().build())
                         .setDescrption(personalityType.getDescription())
                         .build())
                 .addButton(new ButtonObject("앱에서 보기", LinkObject.newBuilder()
-                        .setWebUrl("'https://developers.kakao.com")
-                        .setMobileWebUrl("'https://developers.kakao.com")
-                        .setAndroidExecutionParams("key1=value1")
-                        .setIosExecutionParams("key1=value1")
+                        .setAndroidExecutionParams("personality=" + personalityType.getAnswerType())
+                        .setIosExecutionParams("personality=" + personalityType.getAnswerType())
                         .build()))
                 .build();
 
-        Map<String, String> serverCallbackArgs = new HashMap<String, String>();
-        serverCallbackArgs.put("user_id", "${current_user_id}");
-        serverCallbackArgs.put("product_id", "${shared_product_id}");
-
-        KakaoLinkService.getInstance().sendDefault(this, params, serverCallbackArgs, new ResponseCallback<KakaoLinkResponse>() {
+        KakaoLinkService.getInstance().sendDefault(this, params, new ResponseCallback<KakaoLinkResponse>() {
             @Override
             public void onFailure(ErrorResult errorResult) {
                 Logger.e(errorResult.toString());
@@ -284,6 +277,8 @@ public class SurveyResultActivity extends BaseActivity<ActivitySurveyResultBindi
             @Override
             public void onSuccess(KakaoLinkResponse result) {
                 // 템플릿 밸리데이션과 쿼터 체크가 성공적으로 끝남. 톡에서 정상적으로 보내졌는지 보장은 할 수 없다. 전송 성공 유무는 서버콜백 기능을 이용하여야 한다.
+                Timber.w("KAKAO_API warning messages: %s", result.getWarningMsg());
+                Timber.w("KAKAO_API argument messages: %s", result.getWarningMsg());
             }
         });
     }
