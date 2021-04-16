@@ -5,7 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
+
         <variable
             name="wineResult"
             type="kr.co.nexters.winepick.data.model.remote.wine.WineResult" />
@@ -17,16 +19,16 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:background="@color/white"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:paddingVertical="16dp">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_search_result_image"
             android:layout_width="120dp"
             android:layout_height="0dp"
-            app:imageResource="@{wineResult.wineImg}"
             android:background="@drawable/bg_search_wine_gray_10"
+            app:imageResource="@{wineResult.wineImg}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="W, 4:3"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -57,6 +59,8 @@
                 android:id="@+id/tv_search_result_nm_kor"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
                 android:text="@{wineResult.nmKor}"
                 android:textColor="@color/black"
                 android:textSize="15dp"
@@ -67,20 +71,20 @@
                 tools:text="라포데리나 브루넬로 디 몬탈치노" />
 
             <ImageView
+                android:id="@+id/img_search_result_country"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:imageResource="@{wineResult.wineCountryImg}"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_search_result_nm_kor"
-                android:id="@+id/img_search_result_country"
-                tools:src="@drawable/us_icon"
-                app:imageResource="@{wineResult.wineCountryImg}"/>
+                tools:src="@drawable/us_icon" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_search_result_country"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
                 android:layout_marginLeft="4dp"
+                android:layout_marginTop="2dp"
                 android:text="@{wineResult.country}"
                 android:textColor="@color/search_result_country_text_color"
                 android:textSize="11dp"
