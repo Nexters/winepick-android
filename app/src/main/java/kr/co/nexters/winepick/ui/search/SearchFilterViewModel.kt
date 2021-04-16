@@ -72,8 +72,8 @@ class SearchFilterViewModel @Inject constructor(
             logChangedFilterItems(newUpdatedItem)
             _changeSearchFilterItem.value = newUpdatedItem
             prevUpdatedItem?.let {
-                logChangedFilterItems(prevUpdatedItem)
-                _changeSearchFilterItem.value = prevUpdatedItem
+                logChangedFilterItems(it)
+                _changeSearchFilterItem.value = it
             }
         }
     }
