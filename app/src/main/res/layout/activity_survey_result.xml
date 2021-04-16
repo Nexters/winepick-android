@@ -300,14 +300,14 @@
                         android:elevation="2dp"
                         android:orientation="horizontal">
 
-                        <TextView
+                        <ImageView
                             android:id="@+id/recommend_move_wine_icon1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
                             android:gravity="center"
                             android:lineSpacingExtra="-2sp"
-                            android:text="🍷"
+                            android:src="@drawable/btn_wine_recommend"
                             android:textColor="#000000"
                             android:textSize="25sp"
                             android:textStyle="normal"
@@ -356,14 +356,14 @@
                         android:elevation="2dp"
                         android:orientation="horizontal">
 
-                        <TextView
+                        <ImageView
                             android:id="@+id/recommend_move_wine_icon2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
                             android:gravity="center"
                             android:lineSpacingExtra="-2sp"
-                            android:text="🍷"
+                            android:src="@drawable/btn_wine_recommend"
                             android:textColor="#000000"
                             android:textSize="25sp"
                             android:textStyle="normal"
