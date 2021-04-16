@@ -53,6 +53,8 @@ class TypeDetailModel @Inject constructor(
     private var _testWarningDlg: MutableLiveData<Boolean> = MutableLiveData()
     val testWarningDlg: LiveData<Boolean> = _testWarningDlg
 
+    private var _isGuestMode: MutableLiveData<Boolean> = MutableLiveData()
+    val isGuestMode: LiveData<Boolean> = _isGuestMode
 
     /** 생성자 */
     init {
@@ -76,42 +78,58 @@ class TypeDetailModel @Inject constructor(
         _backButton.value = true
     }
 
-    fun setUserPersonalType() {
-        return when (authManager.testType) {
+    fun setGuestMode(deepLinkPersonalityType: String?) {
+        _isGuestMode.value = deepLinkPersonalityType != null
+    }
+
+    fun setUserPersonalType(type: String = authManager.testType) {
+        return when (type) {
             "A" -> {
-                authManager.typeName = WinePickApplication.getGlobalApplicationContext()
+                val typeAnimalName = WinePickApplication.getGlobalApplicationContext()
                     .getString(R.string.type_a_name)
-                getUserType(TestConstant.A)
+                if (isGuestMode.value == false)
+                    authManager.typeName = typeAnimalName
+                getUserType(TestConstant.A, typeAnimalName)
                 _testImg.value = R.drawable.img_test_mid_a
             }
             "B" -> {
-                authManager.typeName = WinePickApplication.getGlobalApplicationContext()
+                val typeAnimalName = WinePickApplication.getGlobalApplicationContext()
                     .getString(R.string.type_b_name)
-                getUserType(TestConstant.B)
+                if (isGuestMode.value == false)
+                    authManager.typeName = typeAnimalName
+                getUserType(TestConstant.B, typeAnimalName)
                 _testImg.value = R.drawable.img_test_mid_b
             }
             "C" -> {
-                authManager.typeName = WinePickApplication.getGlobalApplicationContext()
+                val typeAnimalName = WinePickApplication.getGlobalApplicationContext()
                     .getString(R.string.type_c_name)
-                getUserType(TestConstant.C)
+                if (isGuestMode.value == false)
+                    authManager.typeName = typeAnimalName
+                getUserType(TestConstant.C, typeAnimalName)
                 _testImg.value = R.drawable.img_test_mid_c
             }
             "D" -> {
-                authManager.typeName = WinePickApplication.getGlobalApplicationContext()
+                val typeAnimalName = WinePickApplication.getGlobalApplicationContext()
                     .getString(R.string.type_d_name)
-                getUserType(TestConstant.D)
+                if (isGuestMode.value == false)
+                    authManager.typeName = typeAnimalName
+                getUserType(TestConstant.D, typeAnimalName)
                 _testImg.value = R.drawable.img_test_mid_d
             }
             "E" -> {
-                authManager.typeName = WinePickApplication.getGlobalApplicationContext()
+                val typeAnimalName = WinePickApplication.getGlobalApplicationContext()
                     .getString(R.string.type_e_name)
-                getUserType(TestConstant.E)
+                if (isGuestMode.value == false)
+                    authManager.typeName = typeAnimalName
+                getUserType(TestConstant.E, typeAnimalName)
                 _testImg.value = R.drawable.img_test_mid_e
             }
             "F" -> {
-                authManager.typeName = WinePickApplication.getGlobalApplicationContext()
+                val typeAnimalName = WinePickApplication.getGlobalApplicationContext()
                     .getString(R.string.type_f_name)
-                getUserType(TestConstant.F)
+                if (isGuestMode.value == false)
+                    authManager.typeName = typeAnimalName
+                getUserType(TestConstant.F, typeAnimalName)
                 _testImg.value = R.drawable.img_test_mid_f
             }
             else -> {
@@ -120,12 +138,12 @@ class TypeDetailModel @Inject constructor(
         }
     }
 
-    fun getUserType(resultId: Int) {
+    fun getUserType(resultId: Int, typeAnimalName: String) {
         showLoading()
         repo.getResult(
             resultId = resultId,
             onSuccess = {
-                _typeName.value = it.personDetail + ", " + authManager.typeName
+                _typeName.value = it.personDetail + ", " + typeAnimalName
                 _typeDesc.value = it.description
                 hideLoading()
             },
@@ -165,6 +183,8 @@ class TypeDetailModel @Inject constructor(
 
     override fun onResume() {
         super.onResume()
-        setUserPersonalType()
+
+        if (isGuestMode.value == false)
+            setUserPersonalType()
     }
 }

@@ -89,6 +89,11 @@ abstract class BaseActivity<B : ViewDataBinding>(
             else
                 LoadingAnimation.dismiss()
         })
+
+        viewModel?.loginIntent?.observe(this, {
+            startActivity(it)
+            finish()
+        })
     }
 
     @CallSuper

@@ -30,10 +30,22 @@ class TypeDetailActivity : BaseActivity<ActivityTypeDetailBinding>(
     private val searchRecycler : RecentSearchAdapter by lazy { RecentSearchAdapter() }
     @Inject lateinit var wineRepository : WineRepository
 
+    private val deepLinkPersonalityType: String?
+        get() = intent.getStringExtra(Constant.STRING_EXTRA_DEEP_LINK_PERSONALITY_TYPE)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.setVariable(BR.vm, viewModel)
-        binding.vm!!.setUserPersonalType()
+        binding.vm!!.setGuestMode(deepLinkPersonalityType)
+
+        deepLinkPersonalityType?.let {
+            binding.vm!!.setUserPersonalType(it)
+            binding.tvHomeType.text = resources.getString(R.string.type_detail_title_guest)
+        } ?: kotlin.run {
+            binding.vm!!.setUserPersonalType()
+            binding.tvHomeType.text = resources.getString(R.string.type_detail_title)
+        }
+
         viewModel.backButton.observe(this, {
             if (it) finish()
         })
@@ -112,5 +124,4 @@ class TypeDetailActivity : BaseActivity<ActivityTypeDetailBinding>(
         super.onResume()
         viewModel.onResume()
     }
-
 }

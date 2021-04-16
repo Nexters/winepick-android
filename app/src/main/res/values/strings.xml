@@ -40,6 +40,8 @@
 
 
     <!--typedetail-->
+    <string name="type_detail_title">내 와인타입</string>
+    <string name="type_detail_title_guest">해당 와인타입</string>
     <string name="type_title">당신의 성향은</string>
     <string name="type_a_name">고양이</string>
     <string name="type_b_name">곰</string>

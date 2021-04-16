@@ -11,6 +11,7 @@ import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.BindingAdapter
@@ -50,6 +51,11 @@ fun View.setRound(curveRadius: Float) {
 @BindingAdapter("app:isInvisible")
 fun View.setInvisible(isInvisible: Boolean) {
     this.isInvisible = isInvisible
+}
+
+@BindingAdapter("app:isGone")
+fun View.setGone(isGone: Boolean) {
+    this.isGone = isGone
 }
 
 /** 1초의 인터벌을 가지는 클릭 리스너를 등록한다. */

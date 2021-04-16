@@ -35,6 +35,14 @@ open class BaseViewModel @Inject constructor(
     internal val _toastMeesageText = MutableLiveData("")
     val toastMessageText: LiveData<String> = _toastMeesageText
 
+    /**
+     * Login Result Intent 정보
+     * TODO ViewModel 내에서 startActivity 를 하는 것이 안티패턴이며
+     *      해당 LiveData 는 ViewModel 내 startActivity 로직 없애면서 삭제 필요
+     */
+    internal val _loginIntent = MutableLiveData<Intent>()
+    val loginIntent: LiveData<Intent> = _loginIntent
+
     /** viewModelScope 에서 Exception 이 발생할 시 처리하는 핸들러 */
     val vmExceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
         Timber.i("$coroutineContext $throwable")
@@ -76,7 +84,7 @@ open class BaseViewModel @Inject constructor(
                 addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }.run {
-                WinePickApplication.getGlobalApplicationContext().startActivity(this)
+                _loginIntent.value = this
             }
         }, {
             _toastMeesageText.value = WinePickApplication.getGlobalApplicationContext()
