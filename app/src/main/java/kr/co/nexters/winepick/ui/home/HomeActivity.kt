@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
-import com.kakao.sdk.auth.LoginClient
+import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.AndroidEntryPoint
 import kr.co.nexters.winepick.BR
 import kr.co.nexters.winepick.R
@@ -36,12 +36,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
                     },
                     rightText = getString(R.string.login_warning_btn_right_text),
                     rightClickListener = {
-                        LoginClient.instance.run {
-                            if (isKakaoTalkLoginAvailable(this@HomeActivity)) {
-                                loginWithKakaoTalk(this@HomeActivity, callback = callback)
-                            } else {
-                                loginWithKakaoAccount(this@HomeActivity, callback = callback)
-                            }
+                        if (UserApiClient.instance.isKakaoTalkLoginAvailable(this@HomeActivity)) {
+                            UserApiClient.instance.loginWithKakaoTalk(this@HomeActivity, callback = callback)
+                        } else {
+                            UserApiClient.instance.loginWithKakaoAccount(this@HomeActivity, callback = callback)
                         }
                         it.dismiss()
 

@@ -66,8 +66,8 @@ abstract class BaseActivity<B : ViewDataBinding>(
             authManager.apply {
                 this.token = token.accessToken
             }
-            UserApiClient.instance.me { user, error ->
-                val kakaoId = user!!.id
+            UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
+                val kakaoId = tokenInfo!!.id
                 viewModel?.addUserInfo(token.accessToken, authManager.testType, kakaoId)
             }
             Timber.d("로그인성공 - 토큰 ${authManager.token}")
