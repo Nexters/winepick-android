@@ -6,7 +6,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
-import com.kakao.sdk.auth.LoginClient
+import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.AndroidEntryPoint
 import kr.co.nexters.winepick.BR
 import kr.co.nexters.winepick.R
@@ -82,12 +82,10 @@ class WineDetailActivity : BaseActivity<ActivityWineDetailBinding>(R.layout.acti
                     },
                     rightText = getString(R.string.login_warning_btn_right_text),
                     rightClickListener = {
-                        LoginClient.instance.run {
-                            if (isKakaoTalkLoginAvailable(this@WineDetailActivity)) {
-                                loginWithKakaoTalk(this@WineDetailActivity, callback = callback)
-                            } else {
-                                loginWithKakaoAccount(this@WineDetailActivity, callback = callback)
-                            }
+                        if (UserApiClient.instance.isKakaoTalkLoginAvailable(this@WineDetailActivity)) {
+                            UserApiClient.instance.loginWithKakaoTalk(this, callback = callback)
+                        } else {
+                            UserApiClient.instance.loginWithKakaoAccount(this@WineDetailActivity, callback = callback)
                         }
                         it.dismiss()
 

@@ -3,7 +3,7 @@ package kr.co.nexters.winepick.ui.login
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.databinding.library.baseAdapters.BR
-import com.kakao.sdk.auth.LoginClient
+import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.AndroidEntryPoint
 import kr.co.nexters.winepick.R
 import kr.co.nexters.winepick.databinding.ActivityLoginBinding
@@ -26,12 +26,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         binding.setVariable(BR.vm, viewModel)
         binding.apply {
             btnLogin.setOnClickListener {
-                LoginClient.instance.run {
-                    if (isKakaoTalkLoginAvailable(this@LoginActivity)) {
-                        loginWithKakaoTalk(this@LoginActivity, callback = callback)
-                    } else {
-                        loginWithKakaoAccount(this@LoginActivity, callback = callback)
-                    }
+                if (UserApiClient.instance.isKakaoTalkLoginAvailable(this@LoginActivity)) {
+                    UserApiClient.instance.loginWithKakaoTalk(this@LoginActivity, callback = callback)
+                } else {
+                    UserApiClient.instance.loginWithKakaoAccount(this@LoginActivity, callback = callback)
                 }
             }
             tvGuest.setOnClickListener {
