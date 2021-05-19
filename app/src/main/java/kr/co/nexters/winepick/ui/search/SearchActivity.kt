@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
-import com.kakao.sdk.auth.LoginClient
+import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import kr.co.nexters.winepick.BR
@@ -181,12 +181,10 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
                     },
                     rightText = getString(R.string.login_warning_btn_right_text),
                     rightClickListener = {
-                        LoginClient.instance.run {
-                            if (isKakaoTalkLoginAvailable(this@SearchActivity)) {
-                                loginWithKakaoTalk(this@SearchActivity, callback = callback)
-                            } else {
-                                loginWithKakaoAccount(this@SearchActivity, callback = callback)
-                            }
+                        if (UserApiClient.instance.isKakaoTalkLoginAvailable(this@SearchActivity)) {
+                            UserApiClient.instance.loginWithKakaoTalk(this@SearchActivity, callback = callback)
+                        } else {
+                            UserApiClient.instance.loginWithKakaoAccount(this@SearchActivity, callback = callback)
                         }
                         it.dismiss()
 

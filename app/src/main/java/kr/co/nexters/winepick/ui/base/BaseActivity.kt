@@ -64,11 +64,11 @@ abstract class BaseActivity<B : ViewDataBinding>(
             //Login Success
             Timber.d("로그인 성공")
             authManager.apply {
-                this.token = token.accessToken
+                this.token = token.refreshToken
             }
-            UserApiClient.instance.me { user, error ->
-                val kakaoId = user!!.id
-                viewModel?.addUserInfo(token.accessToken, authManager.testType, kakaoId)
+            UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
+                val kakaoId = tokenInfo!!.id
+                viewModel?.addUserInfo(token.refreshToken, authManager.testType, kakaoId)
             }
             Timber.d("로그인성공 - 토큰 ${authManager.token}")
         }
