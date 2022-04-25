@@ -15,7 +15,7 @@ on:
 jobs:
   # CI 작업
   integration:
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-18.04
     steps:
       # 데이터 로깅 작업 : 작업을 위한 로깅 작업을 진행한다.
       # 로깅1. github context
